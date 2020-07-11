@@ -33,10 +33,25 @@ class Eingabefeld {
 
   /**
 	* Gibt das Eingabefeld als Passwort aus
+  * @param Eingabefeld $bezugsfeld gibt das Eingabefeld an, mit demselben Inhalt an
 	* @return string HTML-Code für ein Eingabefeld
 	*/
-  public function passwortfeld () : string {
-    return "<input type=\"password\" id=\"$this->id\" name=\"$this->id\" value=\"$this->wert\" class=\"dshUiEingabefeld $this->klasse\">";
+  public function passwortfeld ($bezugsfeld = null) : string {
+    $pruefen =  "";
+    $zusatz = "";
+    if ($bezugsfeld !== null) {
+      $pruefen = " onchange=\"dshUiCheckPasswortFeld('".$bezugsfeld->getId()."', '$this->id')\"";
+      $zusatz = "</td><td><span id=\"".$this->id."Pruefen\" class=\"dshUiPruefen0\"></span>"
+    }
+    return "<input type=\"password\" id=\"$this->id\" name=\"$this->id\" value=\"$this->wert\" class=\"dshUiEingabefeld $this->klasse\"$pruefen>$zusatz";
+  }
+
+  /**
+	* Gibt das Eingabefeld als Mailfeld aus
+	* @return string HTML-Code für ein Eingabefeld
+	*/
+  public function mailfeld () : string {
+    return "<input type=\"password\" id=\"$this->id\" name=\"$this->id\" value=\"$this->wert\" class=\"dshUiEingabefeld $this->klasse\" onchange=\"dshUiCheckMailFeld('$this->id')\"></td><td><span id=\"".$this->id."Pruefen\" class=\"dshUiPruefen0\"></span>";
   }
 
   /**
@@ -104,8 +119,16 @@ class Eingabefeld {
   public function schieber () : string {
     $schieberwert = 0;
     if ($this->wert == 1) {$schieberwert = 1;}
-    $code = "<span class=\"dshUiSchieberAussen $this->klasse\" onclick=\"dshUiSchieber('$this->id')\"><span class=\"dshUiSchieberInnen$schieberwert\" id=\"$this->id"."Schieber\"></span></span>";
+    $code = "<span class=\"dshUiSchieberAussen $this->klasse\" onclick=\"dshUiSchieber('$this->id')\"><span class=\"dshUiSchieber dshUiSchieberInnen$schieberwert\" id=\"$this->id"."Schieber\"></span></span>";
     return "<input type=\"hidden\" id=\"$this->id\" name=\"$this->id\" value=\"$schieberwert\">";
+  }
+
+  /**
+	* Gibt die ID des Eingabefeldes aus
+	* @return string ID des Eingabefeldes
+	*/
+  public function getId() : string {
+    return $this->id;
   }
 }
 ?>

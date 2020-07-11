@@ -27,6 +27,7 @@ function dshUiTageswahlGenerieren(id, tag, monat, jahr) {
   var erster = new Date(jahr, monat-1, 1);
   var wochentag = getDay(erster) + 1;
   var letzter = getDate(new Date (jahr, monat, 0));
+  if (tag > letzer) {tag = letzer;}
   var nr = 1;
   var klassenzusatz = "";
 
@@ -159,4 +160,41 @@ function dshUiFuehrendeNull(x) {
 	} else {
 		return false;
 	}
+}
+
+function dshUiSchieber(id) {
+  var wert = document.getElementById(id).value;
+  var neuerwert = 0;
+  if (wert == 0) {
+    neuerwert = 1;
+  }
+  document.getElementById(id).value = neuerwerts;
+  document.getElementById(id+'Schieber').classList.add("dshUiSchieberInnen"+neuerwert);
+  document.getElementById(id+'Schieber').classList.remove("dshUiSchieberInnen"+wert);
+}
+
+function dshUiCheckPasswortFeld(idvergleich, idpruefen) {
+  var vergleich = document.getElementById(idvergleich).value;
+  var pruefen = document.getElementById(idpruefen).value;
+  if (vergleich == pruefen) {
+    document.getElementById(idpruefen+'Pruefen').classList.add("dshUiPruefen1");
+    document.getElementById(idpruefen+'Pruefen').classList.remove("dshUiPruefen0");
+  } else {
+    document.getElementById(idpruefen+'Pruefen').classList.add("dshUiPruefen0");
+    document.getElementById(idpruefen+'Pruefen').classList.remove("dshUiPruefen1");
+  }
+}
+
+function dshUiCheckMail(mail) {
+  return mail.match(/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]{2,}$/);
+}
+
+function dshUiCheckMailFeld(id) {
+  var mail = document.getElementById(id).value;
+  if (dshUiCheckMail(mail)) {
+    document.getElementById(id+'Pruefen').classList.add("dshUiPruefen1");
+    document.getElementById(id+'Pruefen').classList.remove("dshUiPruefen0");
+  } else {
+    document.getElementById(id+'Pruefen').classList.add("dshUiPruefen0");
+    document.getElementById(id
 }
