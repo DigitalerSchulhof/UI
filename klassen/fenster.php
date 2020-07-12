@@ -6,7 +6,7 @@ use UI\Fensteraktion;
 *Eingabefelder erstellen
 */
 class Fenster {
-  /** @var boolean Enthält den Auslöser des Events */
+  /** @var bool Enthält den Auslöser des Events */
   private $schliessen;
   /** @var string Enthält den Titel des Fensters */
   private $titel;

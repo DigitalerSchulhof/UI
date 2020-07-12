@@ -34,7 +34,10 @@ class Schaltflaeche {
     if ($this->event == null) {$zusatzklasse = " dshUiKnopfPassiv";}
     else {$eventattribute = $this->event.ausgabe();}
     if ($art != "") {$zusatzklasse = " dshUiKnopf".$art;}
-    return "<span class=\"dshUiKnopf$zusatzklasse\"$eventattribute>".$this->$text."</span>";
+
+    $tag = $this->event->getTag();
+
+    return "<$tag class=\"dshUiKnopf$zusatzklasse\"$eventattribute>".$this->$text."</$tag>";
   }
 
   /**
@@ -47,20 +50,27 @@ class Schaltflaeche {
     if ($this->event == null) {$zusatzklasse = " dshUiKnopfPassiv";}
     else {$eventattribute = $this->event.ausgabe();}
     if ($art != "") {$zusatzklasse = " dshUiKnopf".$art;}
-    return "<span class=\"dshUiKnopfMini$zusatzklasse\"$eventattribute>".$this->$text."</span>";
+
+    $tag = $this->event->getTag();
+
+    return "<$tag class=\"dshUiKnopfMini$zusatzklasse\"$eventattribute>".$this->$text."</$tag>";
   }
 
   /**
-	* Gibt die Schaltfläche als normalen Knopf aus
-	* @return string HTML-Code für eine Schaltfläche
-	*/
-  public function iconknopf ($art) : string {
+   * Gibt die Schaltfläche als normalen Knopf aus
+   * @param  string $art Die Art des Knopfes
+   * @return string      HTML-Code der Schaltfläche
+   */
+  public function iconknopf ($art = "") : string {
     $zusatzklasse = "";
     $eventattribut = "";
     if ($this->event == null) {$zusatzklasse = " dshUiKnopfPassiv";}
-    else {$eventattribute = $this->event.ausgabe();}
+    else {$eventattribute = $this->event->ausgabe();}
     if ($art != "") {$zusatzklasse = " dshUiKnopf".$art;}
-    return "<span class=\"dshUiKnopfMini$zusatzklasse\"$eventattribute><i class=\"".$this->$icon."\"></i><span>".$this->$text."</span></span>";
+
+    $tag = $this->event->getTag();
+
+    return "<$tag class=\"dshUiKnopfMini$zusatzklasse\"$eventattribute><i class=\"".$this->icon."\"></i> <span>".$this->text."</span></$tag>";
   }
 }
 ?>
