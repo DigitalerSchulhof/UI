@@ -44,7 +44,7 @@ class Fenster {
       $code .= "<div class=\"dshUiFensterTitelzeile\">";
         $code .= "<span class=\"dshUiFensterTitel\">$this->titel</span>";
         if ($this->schliessen) {
-          $aktion = new Aktion("onclick", "dshUiFensterSchliessen()");
+          $aktion = new Aktion("onclick", "ui.fenster.schliessen()");
           $code .= "<span class=\"dshUiFensterSchliessen\"".$aktion->ausgabe()."><i class=\"fas fa-window-close\"></i></span>";
         }
       $code .= "</div>";

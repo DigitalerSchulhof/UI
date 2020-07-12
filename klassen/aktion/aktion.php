@@ -14,6 +14,7 @@ class Aktion {
 	*/
   public function __construct($ausloeser, $event) {
     $this->events = array();
+    $ausloeser = strtolower($ausloeser);
     $this->events[] = $ausloeser;
     $this->events[$ausloeser][] = $e;
   }
@@ -40,6 +41,7 @@ class Aktion {
   * @param string $e Das anzufügende Event
 	*/
   public function dazu ($ausloeser, $e, $vorne = false) {
+    $ausloeser = strtolower($ausloeser);
     if (!in_array($ausloeser, $this->events)) {
       $this->events[] = $ausloeser;
     }

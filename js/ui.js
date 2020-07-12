@@ -74,6 +74,91 @@ var ui = {
       } else {
         return false;
       }
+    },
+    laden: {
+      icon: () => {return "<div class=\"dshuUiLadenIcon\"><div></div><div></div><div></div><div></div></div>";},
+      balken: {
+        speicher: (id, belegt, gesamt, art) => {
+          var belegt = belegt || null;
+          var gesamt = gesamt || null;
+          var art = art || null;
+          var zusatzklasse = "";
+          if (art !== null) {
+            zusatzklasse = " dshUiLadenBalken"+art;
+          }
+
+          var code = "<div id=\""+id+"\" class=\"dshUiLadenBalkenAussen"+zusatzklasse+"\"><div class=\"dshUiLadenBalkenInnen\"></div></div>";
+          if ((belegt !== null) && (gesamt != null)) {
+            code += "<p class=\"dshUiLadenErklaerung\">"+ui.generieren.laden.speicher(belegt, gesammt)+"</p>";
+          }
+          return code;
+        },
+        zeit: (id, beginn, aktuell, ende, art) => {
+          var beginn = beginn || null;
+          var aktuell = aktuell || null;
+          var ende = ende || null;
+          var art = art || null;
+          var zusatzklasse = "";
+          if (art !== null) {
+            zusatzklasse = " dshUiLadenBalken"+art;
+          }
+
+          var code = "<div id=\""+id+"\" class=\"dshUiLadenBalkenAussen"+zusatzklasse+"\"><div class=\"dshUiLadenBalkenInnen\"></div></div>";
+          if ((beginn !== null) && (aktuell != null) && (ende != null)) {
+            code += "<p class=\"dshUiLadenErklaerung\">"+ui.generieren.laden.zeit(beginn, aktuell, ende)+"</p>";
+          }
+          return code;
+        }
+      },
+      speicher: (x, gesamt) => {
+        return "<span>"+ui.generieren.speicherplatz(x)+" ("+ui.generieren.prozent(x, gesamt)+"%) von "+ui.generieren.speicherplatz(gesamt)+" belegt. Frei: ("+(100-ui.generieren.prozent(x, gesamt))+"%)</span>";
+      },
+      zeit: (beginn, aktuell, ende) => {
+        return "<span>Begonnen um "+ui.generieren.zeit(beginn)+". Zeit bis: "+ui.generieren.zeit(ende)+". Frei: ("+(100-ui.generieren.prozent(x, gesamt))+"%)</span>";
+      }
+    },
+    prozent: (x, gesamt) => {
+      return (Math.round(x/gesamt*10000)/100);
+    },
+    zeit: (x) => {
+      var datum = new Date(x);
+      return datum.getHours()+":"+datum.getMinutes()+" Uhr";
+    },
+    komma: (x) => {
+      return (Math.round(bytes*100)/100).toString().replace('.', ',');
+    },
+    speicherplatz: (bytes) => {
+      if (bytes/1000 > 1) {
+        bytes = bytes/1000;
+        if (bytes/1000 > 1) {
+          bytes = bytes/1000;
+          if (bytes/1000 > 1) {
+            bytes = bytes/1000;
+            if (bytes/1000 > 1) {
+              bytes = bytes/1000;
+              if (bytes/1000 > 1) {
+                bytes = bytes/1000;
+                if (bytes/1000 > 1) {
+                  bytes = bytes/1000;
+                  bytes = (Math.round(bytes*100)/100).toString().replace('.', ',');
+                  return bytes+" EB";
+                }
+                bytes = (Math.round(bytes*100)/100).toString().replace('.', ',');
+                return bytes+" PB";
+              }
+              bytes = (Math.round(bytes*100)/100).toString().replace('.', ',');
+              return bytes+" TB";
+            }
+            bytes = (Math.round(bytes*100)/100).toString().replace('.', ',');
+            return bytes+" GB";
+          }
+          bytes = (Math.round(bytes*100)/100).toString().replace('.', ',');
+          return bytes+" MB";
+        }
+        bytes = (Math.round(bytes*100)/100).toString().replace('.', ',');
+        return bytes+" KB";
+      }
+      return bytes+" B";
     }
   },
   check: {
@@ -244,4 +329,18 @@ var ui = {
       $("#"+id+nr).classList.add("dshKnopfToggled");
     }
   },
+  laden: {
+    balken: {
+      prozent: (id, x) => {
+        $("#"+id+"Innen").style.width = x+"%";
+      }
+    }
+  },
+  fenster: {
+    schliessen: () => {
+      $("#dshUiBlende").style.display = "none";
+    },
+    anzeigen: () {
+      $("#dshUiBlende").style.display = "block";
+    }
 }
