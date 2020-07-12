@@ -39,11 +39,16 @@ class Aktion {
   * @param string $ausloeser die Ursache des Events
   * @param string $e Das anzufügende Event
 	*/
-  public function dazu ($ausloeser, $e) {
+  public function dazu ($ausloeser, $e, $vorne = false) {
     if (!in_array($ausloeser, $this->events)) {
       $this->events[] = $ausloeser;
     }
-    $this->events[$ausloeser][] = $e;
+    if ($vorne) {
+      \array_unshift($this->events[$ausloeser], $e);
+    }
+    else {
+      $this->events[$ausloeser][] = $e;
+    }
   }
 }
 ?>

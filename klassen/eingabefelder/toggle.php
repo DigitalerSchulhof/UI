@@ -38,7 +38,8 @@ class Toggle extends Eingabefeld {
       if ($this->wert == $i) {
         $toggled = " dshKnopfToggled";
       }
-      $code .= "<span id=\"$this->id"."$i\"class=\"dshUiKnopf$toggled $this->klasse\" onclick=\"dshUiToggle('$this->id', '$i', '$anzahl');".$this->event->ausgabe()."\">$this->$text</span> ";
+      $this->aktion.dazu("onclick", "ui.toggle.aktion('$this->id', '$i', '$anzahl')", true);
+      $code .= "<span id=\"$this->id"."$i\"class=\"dshUiKnopf$toggled $this->klasse\"".$this->event->ausgabe()."\">$this->$text</span> ";
     }
 
     return $code."<input type=\"hidden\" id=\"$this->id\" name=\"$this->id\" value=\"$this->wert\">";

@@ -1,100 +1,70 @@
 <?php
-namespace UI\Fenster;
+namespace UI;
+use UI\Fensteraktion;
 
 /**
 *Eingabefelder erstellen
 */
 class Fenster {
-  /** @var string Enthält die Id des Eingabefeldes */
-  protected $breite;
-  /** @var string Enthält den Typ des Eingabefeldes */
-  protected $titel;
-  /** @var string Enthält die CSS-Klasse des Eingabefeldes */
-  protected $klasse;
+  /** @var boolean Enthält den Auslöser des Events */
+  private $schliessen;
+  /** @var string Enthält den Titel des Fensters */
+  private $titel;
+  /** @var string Enthält den Inhalt des Fensters */
+  private $inhalt;
+  /** @var string Enthält die CSS-Klasse des Fensters */
+  private $klasse;
+  /** @var Fensteraktion[] Enthält alle Aktionen des Fensters */
+  private $fensteraktionen;
+
 
 	/**
-	* @param string $id
-	* @param string $wert
-	* @param string $klasse
+	* @param string $ausloeser
+	* @param string[] $event
 	*/
-  public function __construct($id, $wert="", $klasse="") {
-    $this->id = $id;
-    $this->wert = $wert;
+  public function __construct($titel, $inhalt, $fensteraktionen, $schliessen = true, $klasse = "") {
+    $this->schlissen = $schliessen;
+    $this->titel = $titel;
+    $this->inhalt = $inhalt;
+    $this->fensteraktionen = $fensteraktionen;
     $this->klasse = $klasse;
   }
 
   /**
-	* Gibt das Eingabefeld als Textfeld aus
-	* @return string HTML-Code für ein Eingabefeld
+	* Gibt das Fenster als Code aus
+	* @return string HTML-Code für das Fenster
 	*/
-  public function textfeld () : string {
-    return "<input type=\"text\" id=\"$this->id\" name=\"$this->id\" value=\"$this->wert\" class=\"dshUiEingabefeld $this->klasse\">";
-  }
-
-  /**
-	* Gibt das Eingabefeld als Passwort aus
-	* @return string HTML-Code für ein Eingabefeld
-	*/
-  public function passwortfeld () : string {
-    return "<input type=\"password\" id=\"$this->id\" name=\"$this->id\" value=\"$this->wert\" class=\"dshUiEingabefeld $this->klasse\">";
-  }
-
-  /**
-	* Gibt das Eingabefeld als Farbfeld aus
-	* @return string HTML-Code für ein Eingabefeld
-	*/
-  public function farbfeld () : string {
-    return "<input type=\"color\" id=\"$this->id\" name=\"$this->id\" value=\"$this->wert\" class=\"dshUiEingabefeld dshUiFarbfeld $this->klasse\">";
-  }
-
-  /**
-	* Gibt das Eingabefeld als Datumfeld aus
-	* @return string HTML-Code für ein Eingabefeld
-	*/
-  public function datumfeld () : string {
-    $datum = explode(".", $this->wert);
-    if (count($datum) != 3) {
-      $datum[0] = date("d");
-      $datum[1] = date("m");
-      $datum[2] = date("Y");
+  public function ausgabe () : string {
+    $zusatzklasse = "";
+    if ($this->klasse != "") {
+      $zusatzklasse = " ".$klasse;
     }
+    $code = "<div class=\"dshUiFenster$zusatzklasse\">";
+      // Fensteritel
+      $code .= "<div class=\"dshUiFensterTitelzeile\">";
+        $code .= "<span class=\"dshUiFensterTitel\">$this->titel</span>";
+        if ($this->schliessen) {
+          $aktion = new Aktion("onclick", "dshUiFensterSchliessen()");
+          $code .= "<span class=\"dshUiFensterSchliessen\"".$aktion->ausgabe()."><i class=\"fas fa-window-close\"></i></span>";
+        }
+      $code .= "</div>";
 
-    $code = "<input type=\"text\" id=\"$this->id"."T\" name=\"$this->id"."T\" value=\"".$datum[0]."\" class=\"dshUiEingabefeld dshUiDatumfeldT $this->klasse\" onfocus=\"dshUiDatumsanzeige('$this->id', true)\" onblur=\"dshUiDatumsanzeige('$this->id', false)\"> ";
-    $code .= "<input type=\"text\" id=\"$this->id"."M\" name=\"$this->id"."M\" value=\"".$datum[1]."\" class=\"dshUiEingabefeld dshUiDatumfeldM $this->klasse\" onfocus=\"dshUiDatumsanzeige('$this->id', true)\" onblur=\"dshUiDatumsanzeige('$this->id', false)\"> ";
-    $code .= "<input type=\"text\" id=\"$this->id"."J\" name=\"$this->id"."J\" value=\"".$datum[2]."\" class=\"dshUiEingabefeld dshUiDatumfeldJ $this->klasse\" onfocus=\"dshUiDatumsanzeige('$this->id', true)\" onblur=\"dshUiDatumsanzeige('$this->id', false)\"> ";
-    $code .= "<div class=\"dshUiDatumwahl\" id=\"$this->id"."Datumwahl\"></div>";
-    return $code;
-  }
+      // Fensterinhalt
+      $code .= "<div>";
+        $code .= $this->inhalt;
+      $code .= "</div>";
 
-  /**
-	* Gibt das Eingabefeld als Uhrzeitfeld aus
-	* @param boolean $sekunde soll ein Feld für Sekunden angegeben werden?
-	* @return string HTML-Code für ein Eingabefeld
-	*/
-  public function uhrzeitfeld ($sekunde = false) : string {
-    $uhrzeit = explode(":", $this->wert);
-    if ((count($uhrzeit) != 3) && (count($uhrzeit) != 2)) {
-      $datum[0] = date("H");
-      $datum[1] = date("i");
-      if (count($datum) == 2) {
-        $datum[2] = date("s");
+      // Fensteraktionen ausgeben
+      if (count($fensteraktionen) > 0) {
+        $code .= "<div class=\"dshUiFensterAktionen\">";
+          foreach ($fensteraktionen as $f) {
+            $code .= $f->ausgabe();
+          }
+        $code .= "</div>";
       }
-    }
+    $code .= "</div>";
 
-    $code = "<input type=\"text\" id=\"$this->id"."Std\" name=\"$this->id"."Std\" value=\"".$datum[0]."\" class=\"dshUiEingabefeld dshUiUhrzeitfeldStd $this->klasse\"> ";
-    $code .= "<input type=\"text\" id=\"$this->id"."Min\" name=\"$this->id"."Min\" value=\"".$datum[1]."\" class=\"dshUiEingabefeld dshUiUhrzeitfeldMin $this->klasse\">";
-    if ($sekunde) {
-      $code .= " <input type=\"text\" id=\"$this->id"."Sek\" name=\"$this->id"."Sek\" value=\"".$datum[1]."\" class=\"dshUiUhrzeitfeldSek $this->klasse\">";
-    }
     return $code;
-  }
-
-  /**
-	* Gibt das Textbereich als Uhrzeitfeld aus
-	* @return string HTML-Code für ein Eingabefeld
-	*/
-  public function textbereich () : string {
-    return "<textarea id=\"$this->id\" name=\"$this->id\" class=\"dshUiEingabefeld dshUiTextbereich $this->klasse\">$this->wert</textarea>";
   }
 }
 ?>
