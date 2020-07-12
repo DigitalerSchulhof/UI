@@ -1,11 +1,11 @@
 function dshUiDatumsanzeige(id, an) {
-  var feld = document.getElementById(id+'Datumwahl');
+  var feld = $("#"+id+"Datumwahl");
   if (!an) {
     feld.style.display = "none";
   } else {
-    var tag = document.getElementById(id+'T').value;
-    var monat = document.getElementById(id+'M').value;
-    var jahr = document.getElementById(id+'J').value;
+    var tag = $("#"+id+"T").value;
+    var monat = $("#"+id+"M").value;
+    var jahr = $("#"+id+"J").value;
 
     dshUiTageswahlGenerieren(id, tag, monat, jahr);
     feld.style.display = "block";
@@ -72,14 +72,14 @@ function dshUiTageswahlGenerieren(id, tag, monat, jahr) {
   code += "</tr>";
 
   code += "</table>";
-  document.getElementById(id+'Datumwahl').innerHTML = code;
+  $("#"+id+"Datumwahl").innerHTML = code;
 }
 
 function dshUiTageswahl(id, tag, monat, jahr) {
-  var tag = document.getElementById(id+'T').value = dshUiFuehrendeNull(tag);
-  var monat = document.getElementById(id+'M').value = dshUiFuehrendeNull(monat);
-  var jahr = document.getElementById(id+'J').value = dshUiFuehrendeNull(jahr);
-  document.getElementById(id+'Datumwahl').display = none;
+  var tag = $("#"+id+"T").value = dshUiFuehrendeNull(tag);
+  var monat = $("#"+id+"M").value = dshUiFuehrendeNull(monat);
+  var jahr = $("#"+id+"J").value = dshUiFuehrendeNull(jahr);
+  $("#"+id+"Datumwahl").display = none;
 }
 
 function dshUiMonatsname(monat) {
@@ -163,25 +163,25 @@ function dshUiFuehrendeNull(x) {
 }
 
 function dshUiSchieber(id) {
-  var wert = document.getElementById(id).value;
+  var wert = $("#"+id).value;
   var neuerwert = 0;
   if (wert == 0) {
     neuerwert = 1;
   }
-  document.getElementById(id).value = neuerwerts;
-  document.getElementById(id+'Schieber').classList.add("dshUiSchieberInnen"+neuerwert);
-  document.getElementById(id+'Schieber').classList.remove("dshUiSchieberInnen"+wert);
+  $("#"+id).value = neuerwerts;
+  $("#"+id+"Schieber").classList.add("dshUiSchieberInnen"+neuerwert);
+  $("#"+id+"Schieber").classList.remove("dshUiSchieberInnen"+wert);
 }
 
 function dshUiCheckPasswortFeld(idvergleich, idpruefen) {
-  var vergleich = document.getElementById(idvergleich).value;
-  var pruefen = document.getElementById(idpruefen).value;
+  var vergleich = $("#"+idvergleich).value;
+  var pruefen = $("#"+idpruefen).value;
   if (vergleich == pruefen) {
-    document.getElementById(idpruefen+'Pruefen').classList.add("dshUiPruefen1");
-    document.getElementById(idpruefen+'Pruefen').classList.remove("dshUiPruefen0");
+    $("#"+idpruefen+"Pruefen").classList.add("dshUiPruefen1");
+    $("#"+idpruefen+"Pruefen").classList.remove("dshUiPruefen0");
   } else {
-    document.getElementById(idpruefen+'Pruefen').classList.add("dshUiPruefen0");
-    document.getElementById(idpruefen+'Pruefen').classList.remove("dshUiPruefen1");
+    $("#"+idpruefen+"Pruefen").classList.add("dshUiPruefen0");
+    $("#"+idpruefen+"Pruefen").classList.remove("dshUiPruefen1");
   }
 }
 
@@ -190,58 +190,58 @@ function dshUiCheckMail(mail) {
 }
 
 function dshUiCheckMailFeld(id) {
-  var mail = document.getElementById(id).value;
+  var mail = $("#"+id).value;
   if (dshUiCheckMail(mail)) {
-    document.getElementById(id+'Pruefen').classList.add("dshUiPruefen1");
-    document.getElementById(id+'Pruefen').classList.remove("dshUiPruefen0");
+    $("#"+id+"Pruefen").classList.add("dshUiPruefen1");
+    $("#"+id+"Pruefen").classList.remove("dshUiPruefen0");
   } else {
-    document.getElementById(id+'Pruefen').classList.add("dshUiPruefen0");
-    document.getElementById(id+'Pruefen').classList.remove("dshUiPruefen1");
+    $("#"+id+"Pruefen").classList.add("dshUiPruefen0");
+    $("#"+id+"Pruefen").classList.remove("dshUiPruefen1");
   }
 }
 
 
 function dshUiCheckDatumFeld(id) {
   var jetzt = new Date();
-  var tag = document.getElementById(id+'T').value;
+  var tag = $("#"+id+"T").value;
   if (!dshUiIstZahl(tag)) {tag = jetzt.getDate();}
-  var monat = document.getElementById(id+'M').value;
+  var monat = $("#"+id+"M").value;
   if (!dshUiIstZahl(monat)) {monat = jetzt.getMonth()+1;}
-  var jahr = document.getElementById(id+'J').value;
+  var jahr = $("#"+id+"J").value;
   if (!dshUiIstZahl(jahr)) {jahr = jetzt.getFullYear();}
 
   jetzt = new Date(jahr, monat, tag);
 
-  document.getElementById(id+'T').value = dshUiFuehrendeNull(jetzt.getDate());
-  document.getElementById(id+'M').value = dshUiFuehrendeNull(jetzt.getMonth()+1);
-  document.getElementById(id+'J').value = dshUiFuehrendeNull(jetzt.getFullYear());
+  $("#"+id+"T").value = dshUiFuehrendeNull(jetzt.getDate());
+  $("#"+id+"M").value = dshUiFuehrendeNull(jetzt.getMonth()+1);
+  $("#"+id+"J").value = dshUiFuehrendeNull(jetzt.getFullYear());
 }
 
 
 function dshUiCheckUhrzeitFeld(id sekunden) {
   var jetzt = new Date();
-  var stunde = document.getElementById(id+'Std').value;
+  var stunde = $("#"+id+"Std").value;
   if (!dshUiIstZahl(stunde)) {stunde = jetzt.getHours();}
-  var minute = document.getElementById(id+'Min').value;
+  var minute = $("#"+id+"Min").value;
   if (!dshUiIstZahl(minute)) {minute = jetzt.getMinutes();}
   if (sekunden) {
-    var sekunde = document.getElementById(id+'Sek').value;
+    var sekunde = $("#"+id+"Sek").value;
     if (!dshUiIstZahl(sekunde)) {sekunde = jetzt.getSeconds();}
     jetzt = jetzt = new Date(2020, 07, 01, stunde, minute, sekunde);
-    document.getElementById(id+'Std').value = dshUiFuehrendeNull(jetzt.getHours());
-    document.getElementById(id+'Min').value = dshUiFuehrendeNull(jetzt.getMinutes());
-    document.getElementById(id+'Sek').value = dshUiFuehrendeNull(jetzt.getSeconds());
+    $("#"+id+"Std").value = dshUiFuehrendeNull(jetzt.getHours());
+    $("#"+id+"Min").value = dshUiFuehrendeNull(jetzt.getMinutes());
+    $("#"+id+"Sek").value = dshUiFuehrendeNull(jetzt.getSeconds());
   }
   else {
     jetzt = jetzt = new Date(2020, 07, 01, stunde, minute);
-    document.getElementById(id+'Std').value = dshUiFuehrendeNull(jetzt.getHours());
-    document.getElementById(id+'Min').value = dshUiFuehrendeNull(jetzt.getMinutes());
+    $("#"+id+"Std").value = dshUiFuehrendeNull(jetzt.getHours());
+    $("#"+id+"Min").value = dshUiFuehrendeNull(jetzt.getMinutes());
   }
 }
 
 function dshUiToggle(id, nr, anzahl) {
   for (var i=0; i<anzahl; i++) {
-    document.getElementById(id+i).classList.remove("dshKnopfToggled");
+    $("#"+id+i).classList.remove("dshKnopfToggled");
   }
-  document.getElementById(id+nr).classList.add("dshKnopfToggled");
+  $("#"+id+nr).classList.add("dshKnopfToggled");
 }
