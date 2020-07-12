@@ -1,20 +1,19 @@
 <?php
 namespace UI;
 use UI\Fensteraktion;
+use UI\Konstanten;
 
-/**
-*Eingabefelder erstellen
-*/
+
 class Fenster {
-  /** @var bool Enthält den Auslöser des Events */
+  /** @var bool Schließen-Button im Fenster anzeigen */
   private $schliessen;
-  /** @var string Enthält den Titel des Fensters */
+  /** @var string Titel des Fensters */
   private $titel;
-  /** @var string Enthält den Inhalt des Fensters */
+  /** @var string Inhalt des Fensters */
   private $inhalt;
-  /** @var string Enthält die CSS-Klasse des Fensters */
+  /** @var string CSS-Klasse des Fensters */
   private $klasse;
-  /** @var Fensteraktion[] Enthält alle Aktionen des Fensters */
+  /** @var Fensteraktion[] Aktionen des Fensters */
   private $fensteraktionen;
 
 
@@ -45,7 +44,7 @@ class Fenster {
         $code .= "<span class=\"dshUiFensterTitel\">$this->titel</span>";
         if ($this->schliessen) {
           $aktion = new Aktion("onclick", "ui.fenster.schliessen()");
-          $code .= "<span class=\"dshUiFensterSchliessen\"".$aktion->ausgabe()."><i class=\"fas fa-window-close\"></i></span>";
+          $code .= "<span class=\"dshUiFensterSchliessen\"".$aktion->ausgabe()."><i class=\"".UI\Konstanten::SCHLIESSEN."\"></i></span>";
         }
       $code .= "</div>";
 
