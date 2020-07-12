@@ -218,7 +218,7 @@ function dshUiCheckDatumFeld(id) {
 }
 
 
-function dshUiCheckUhrzeitFeld (id sekunden) {
+function dshUiCheckUhrzeitFeld(id sekunden) {
   var jetzt = new Date();
   var stunde = document.getElementById(id+'Std').value;
   if (!dshUiIstZahl(stunde)) {stunde = jetzt.getHours();}
@@ -237,4 +237,11 @@ function dshUiCheckUhrzeitFeld (id sekunden) {
     document.getElementById(id+'Std').value = dshUiFuehrendeNull(jetzt.getHours());
     document.getElementById(id+'Min').value = dshUiFuehrendeNull(jetzt.getMinutes());
   }
+}
+
+function dshUiToggle(id, nr, anzahl) {
+  for (var i=0; i<anzahl; i++) {
+    document.getElementById(id+i).classList.remove("dshKnopfToggled");
+  }
+  document.getElementById(id+nr).classList.add("dshKnopfToggled");
 }
