@@ -196,7 +196,8 @@ function dshUiCheckMailFeld(id) {
     document.getElementById(id+'Pruefen').classList.remove("dshUiPruefen0");
   } else {
     document.getElementById(id+'Pruefen').classList.add("dshUiPruefen0");
-    document.getElementById(id
+    document.getElementById(id+'Pruefen').classList.remove("dshUiPruefen1");
+  }
 }
 
 
@@ -208,7 +209,6 @@ function dshUiCheckDatumFeld(id) {
   if (!dshUiIstZahl(monat)) {monat = jetzt.getMonth()+1;}
   var jahr = document.getElementById(id+'J').value;
   if (!dshUiIstZahl(jahr)) {jahr = jetzt.getFullYear();}
-
 
   jetzt = new Date(jahr, monat, tag);
 
@@ -237,10 +237,4 @@ function dshUiCheckUhrzeitFeld (id sekunden) {
     document.getElementById(id+'Std').value = dshUiFuehrendeNull(jetzt.getHours());
     document.getElementById(id+'Min').value = dshUiFuehrendeNull(jetzt.getMinutes());
   }
-}
-
-
-
-
-
 }
