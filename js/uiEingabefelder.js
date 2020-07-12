@@ -198,3 +198,49 @@ function dshUiCheckMailFeld(id) {
     document.getElementById(id+'Pruefen').classList.add("dshUiPruefen0");
     document.getElementById(id
 }
+
+
+function dshUiCheckDatumFeld(id) {
+  var jetzt = new Date();
+  var tag = document.getElementById(id+'T').value;
+  if (!dshUiIstZahl(tag)) {tag = jetzt.getDate();}
+  var monat = document.getElementById(id+'M').value;
+  if (!dshUiIstZahl(monat)) {monat = jetzt.getMonth()+1;}
+  var jahr = document.getElementById(id+'J').value;
+  if (!dshUiIstZahl(jahr)) {jahr = jetzt.getFullYear();}
+
+
+  jetzt = new Date(jahr, monat, tag);
+
+  document.getElementById(id+'T').value = dshUiFuehrendeNull(jetzt.getDate());
+  document.getElementById(id+'M').value = dshUiFuehrendeNull(jetzt.getMonth()+1);
+  document.getElementById(id+'J').value = dshUiFuehrendeNull(jetzt.getFullYear());
+}
+
+
+function dshUiCheckUhrzeitFeld (id sekunden) {
+  var jetzt = new Date();
+  var stunde = document.getElementById(id+'Std').value;
+  if (!dshUiIstZahl(stunde)) {stunde = jetzt.getHours();}
+  var minute = document.getElementById(id+'Min').value;
+  if (!dshUiIstZahl(minute)) {minute = jetzt.getMinutes();}
+  if (sekunden) {
+    var sekunde = document.getElementById(id+'Sek').value;
+    if (!dshUiIstZahl(sekunde)) {sekunde = jetzt.getSeconds();}
+    jetzt = jetzt = new Date(2020, 07, 01, stunde, minute, sekunde);
+    document.getElementById(id+'Std').value = dshUiFuehrendeNull(jetzt.getHours());
+    document.getElementById(id+'Min').value = dshUiFuehrendeNull(jetzt.getMinutes());
+    document.getElementById(id+'Sek').value = dshUiFuehrendeNull(jetzt.getSeconds());
+  }
+  else {
+    jetzt = jetzt = new Date(2020, 07, 01, stunde, minute);
+    document.getElementById(id+'Std').value = dshUiFuehrendeNull(jetzt.getHours());
+    document.getElementById(id+'Min').value = dshUiFuehrendeNull(jetzt.getMinutes());
+  }
+}
+
+
+
+
+
+}
