@@ -300,11 +300,11 @@ var ui = {
     aktion: (id) => {
       var mail = $("#"+id).value;
       if (ui.check.mail(mail)) {
-        $("#"+id+"Pruefen").classList.add("dshUiPruefen1");
-        $("#"+id+"Pruefen").classList.remove("dshUiPruefen0");
+        $("#"+id).classList.add("dshUiPruefen1");
+        $("#"+id).classList.remove("dshUiPruefen0");
       } else {
-        $("#"+id+"Pruefen").classList.add("dshUiPruefen0");
-        $("#"+id+"Pruefen").classList.remove("dshUiPruefen1");
+        $("#"+id).classList.add("dshUiPruefen0");
+        $("#"+id).classList.remove("dshUiPruefen1");
       }
     }
   },
@@ -313,11 +313,11 @@ var ui = {
       var vergleich = $("#"+idvergleich).value;
       var pruefen = $("#"+idpruefen).value;
       if (vergleich == pruefen) {
-        $("#"+idpruefen+"Pruefen").classList.add("dshUiPruefen1");
-        $("#"+idpruefen+"Pruefen").classList.remove("dshUiPruefen0");
+        $("#"+idpruefen).classList.add("dshUiPruefen1");
+        $("#"+idpruefen).classList.remove("dshUiPruefen0");
       } else {
-        $("#"+idpruefen+"Pruefen").classList.add("dshUiPruefen0");
-        $("#"+idpruefen+"Pruefen").classList.remove("dshUiPruefen1");
+        $("#"+idpruefen).classList.add("dshUiPruefen0");
+        $("#"+idpruefen).classList.remove("dshUiPruefen1");
       }
     }
   },
