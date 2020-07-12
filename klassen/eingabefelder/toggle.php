@@ -1,19 +1,20 @@
 <?php
 namespace UI;
+use UI\Aktion;
 
 /**
 *Eingabefelder erstellen
 */
 class Toggle extends Eingabefeld {
-  /** @var string Enthält das auszulösende */
-  protected $event;
+  /** @var Aktion Enthält das auszulösende */
+  private $event;
   /** @var string[] Enthält den Text der Toggles */
-  protected $text;
+  private $text;
 
 	/**
 	* @param string $id
 	* @param string[] $text
-	* @param string $event
+	* @param Aktion $event
 	* @param string $wert
 	* @param string $klasse
 	*/
@@ -37,7 +38,7 @@ class Toggle extends Eingabefeld {
       if ($this->wert == $i) {
         $toggled = " dshKnopfToggled";
       }
-      $code .= "<span id=\"$this->id"."$i\"class=\"dshUiKnopf$toggled $this->klasse\" onclick=\"dshUiToggle('$this->id', '$i', '$anzahl');$this->event\">$this->$text</span> ";
+      $code .= "<span id=\"$this->id"."$i\"class=\"dshUiKnopf$toggled $this->klasse\" onclick=\"dshUiToggle('$this->id', '$i', '$anzahl');".$this->event->ausgabe()."\">$this->$text</span> ";
     }
 
     return $code."<input type=\"hidden\" id=\"$this->id\" name=\"$this->id\" value=\"$this->wert\">";
