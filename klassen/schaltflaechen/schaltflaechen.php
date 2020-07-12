@@ -6,8 +6,6 @@ use UI\Aktion;
 *Schaltflächen erstellen
 */
 class Schaltflaeche {
-  /** @var string Enthält die Id der Schaltfläche */
-  protected $id;
   /** @var string Enthält den Text der Schaltfläches */
   protected $text;
   /** @var Aktion Enthält das Event, das die Schaltfläche auslöst */
@@ -16,11 +14,11 @@ class Schaltflaeche {
   protected $icon;
 
 	/**
-	* @param string $id
 	* @param string $text
+	* @param Aktion $event enthält das Event des Knopfes
+  * @param string $icon enthält den Klassennamen für FontAwesome-Icons
 	*/
-  public function __construct($id, $text, $event=null, $icon="") {
-    $this->id = $id;
+  public function __construct($text, $event=null, $icon="") {
     $this->text = $text;
     $this->event = $event;
     $this->icon = $icon;
@@ -36,7 +34,7 @@ class Schaltflaeche {
     if ($this->event == null) {$zusatzklasse = " dshUiKnopfPassiv";}
     else {$eventattribute = $this->event.ausgabe();}
     if ($art != "") {$zusatzklasse = " dshUiKnopf".$art;}
-    return "<span id=\"$this->id\" class=\"dshUiKnopf$zusatzklasse\"$eventattribute>".$this->$text."</span>";
+    return "<span class=\"dshUiKnopf$zusatzklasse\"$eventattribute>".$this->$text."</span>";
   }
 
   /**
@@ -49,7 +47,7 @@ class Schaltflaeche {
     if ($this->event == null) {$zusatzklasse = " dshUiKnopfPassiv";}
     else {$eventattribute = $this->event.ausgabe();}
     if ($art != "") {$zusatzklasse = " dshUiKnopf".$art;}
-    return "<span id=\"$this->id\" class=\"dshUiKnopfMini$zusatzklasse\"$eventattribute>".$this->$text."</span>";
+    return "<span class=\"dshUiKnopfMini$zusatzklasse\"$eventattribute>".$this->$text."</span>";
   }
 
   /**
@@ -62,7 +60,7 @@ class Schaltflaeche {
     if ($this->event == null) {$zusatzklasse = " dshUiKnopfPassiv";}
     else {$eventattribute = $this->event.ausgabe();}
     if ($art != "") {$zusatzklasse = " dshUiKnopf".$art;}
-    return "<span id=\"$this->id\" class=\"dshUiKnopfMini$zusatzklasse\"$eventattribute><i class=\"".$this->$icon."\"></i><span>".$this->$text."</span></span>";
+    return "<span class=\"dshUiKnopfMini$zusatzklasse\"$eventattribute><i class=\"".$this->$icon."\"></i><span>".$this->$text."</span></span>";
   }
 }
 ?>
