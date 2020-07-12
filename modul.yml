@@ -4,7 +4,3 @@ modul:
   lehrernetz: false
   autor: Digitaler Schulhof
   version: 1.0
-  benötigt:
-    - DSH/Core
-  erweitert:
-    - DSH/Core

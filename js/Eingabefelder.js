@@ -1,247 +1,247 @@
-function dshUiDatumsanzeige(id, an) {
-  var feld = $("#"+id+"Datumwahl");
-  if (!an) {
-    feld.style.display = "none";
-  } else {
-    var tag = $("#"+id+"T").value;
-    var monat = $("#"+id+"M").value;
-    var jahr = $("#"+id+"J").value;
-
-    dshUiTageswahlGenerieren(id, tag, monat, jahr);
-    feld.style.display = "block";
-  }
-}
-
-function dshUiTageswahlGenerieren(id, tag, monat, jahr) {
-  var code = "<table>";
-  code += "<tr><th onclick=\"dshUiTageswahlGenerieren('"+id+"', '"+tag+"', '"+(monat-1)+"', '"+jahr+"')\"><i class=\"fas fa-angle-double-left\"></i></th>";
-  code += "<th>"+dshUiMonatsname(monat)+" "+jahr+"</th>";
-  code += "<th colspan=\"5\" onclick=\"dshUiTageswahlGenerieren('"+id+"', '"+tag+"', '"+(monat+1)+"', '"+jahr+"')\"><i class=\"fas fa-angle-double-right\"></i></th>";
-  code += "</tr>";
-  code += "<tr>";
-  for (var i=1; i<=7; i++) {
-    code += "<td>"+dshUiTagesnameKurz(i)+"</td>";
-  }
-  code += "</tr>";
-
-  var erster = new Date(jahr, monat-1, 1);
-  var wochentag = getDay(erster) + 1;
-  var letzter = getDate(new Date (jahr, monat, 0));
-  if (tag > letzer) {tag = letzer;}
-  var nr = 1;
-  var klassenzusatz = "";
-
-  code += "<tr>";
-  // leer auffüllen, falls nicht mit Montag begonnen wird
-  for (var i=1; i<wochentag; i++) {
-    code += "<td class=\"dshUiTageswahlButtonBlind\"></td>";
-  }
-  for (var i=wochentag; i<=7; i++) {
-    if (nr == tag) {
-      klassenzusatz = " dshUiTagGewaehlt";
-    } else {
-      klassenzusatz = "";
+var ui = {
+  generieren: {
+    monatsname: {
+      lang: (monat) => {
+        switch (monat) {
+          case 1: return "Januar";
+          case 2: return "Februar";
+          case 3: return "März";
+          case 4: return "April";
+          case 5: return "Mai";
+          case 6: return "Juni";
+          case 7: return "Juli";
+          case 8: return "August";
+          case 9: return "September";
+          case 10: return "Oktober";
+          case 11: return "November";
+          case 12: return "Dezember";
+          default: return false;
+        }
+      },
+      kurz: (monat) => {
+        switch (monat) {
+          case 1: return "JAN";
+          case 2: return "FEB";
+          case 3: return "MÄR";
+          case 4: return "APR";
+          case 5: return "MAI";
+          case 6: return "Juni";
+          case 7: return "Juli";
+          case 8: return "AUG";
+          case 9: return "SEP";
+          case 10: return "OKT";
+          case 11: return "NOV";
+          case 12: return "DEZ";
+          default: return false;
+        }
+      }
+    },
+    tagesname: {
+      lang: (tag) => {
+        switch (tag) {
+          case 0: return "Sonntag"
+          case 1: return "Montag";
+          case 2: return "Dienstag";
+          case 3: return "Mittwoch";
+          case 4: return "Donnerstag";
+          case 5: return "Freitag";
+          case 6: return "Samstag";
+          case 7: return "Sonntag";
+          default: return false;
+        }
+      },
+      kurz: (tag) => {
+        switch (tag) {
+          case 0: return "SO"
+          case 1: return "MO";
+          case 2: return "DI";
+          case 3: return "MI";
+          case 4: return "DO";
+          case 5: return "FR";
+          case 6: return "SA";
+          case 7: return "SO";
+          default: return false;
+        }
+      }
+    },
+    fuehrendeNull: (x) => {
+      if (ui.check.natZahl(x)) {
+        if (x.length < 2) {
+          return "0"+x;
+        } else {
+          return ""+x;
+        }
+      } else {
+        return false;
+      }
     }
-    code += "<td class=\"dshUiTageswahlButton"+klassenzusatz+"\" onclick=\"dshUiTageswahl('"+id+"', '"+nr+"', '"+monat+"', '"+jahr+"')\">"+nr+"</td>";
-    nr ++;
-  }
-  code += "</tr>";
-  wochentag = 1;
+  },
+  check: {
+    zahl: (x) => x.match(/^-?[0-9]+$/),
+    natZahl: (x) => x.match(/^[0-9]+$/),
+    mail: (x) => x.match(/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]{2,}$/),
+  },
+  datumsanzeige: {
+    aktion: () => {
+      var feld = $("#"+id+"Datumwahl");
+      if (!an) {
+        feld.style.display = "none";
+      } else {
+        var tag   = $("#"+id+"T").value;
+        var monat = $("#"+id+"M").value;
+        var jahr  = $("#"+id+"J").value;
 
-  while (nr <= letzter) {
-    if (wochentag == 8) {
-      code += "</tr>";
-      wochentag = 1;
+        feld.innerHTML = ui.datumsanzeige.tageswahl.generieren(id, tag, monat, jahr);
+        feld.style.display = "block";
+      }
+    },
+    checkTag: (id) => {
+      var jetzt = new Date();
+      var tag = $("#"+id+"T").value;
+      if (!ui.check.natZahl(tag)) {tag = jetzt.getDate();}
+      var monat = $("#"+id+"M").value;
+      if (!ui.check.natZahl(monat)) {monat = jetzt.getMonth()+1;}
+      var jahr = $("#"+id+"J").value;
+      if (!ui.check.natZahl(jahr)) {jahr = jetzt.getFullYear();}
+
+      jetzt = new Date(jahr, monat, tag);
+
+      $("#"+id+"T").value = ui.generieren.fuehrendeNull(jetzt.getDate());
+      $("#"+id+"M").value = ui.generieren.fuehrendeNull(jetzt.getMonth()+1);
+      $("#"+id+"J").value = ui.generieren.fuehrendeNull(jetzt.getFullYear());
+    },
+    checkUhrzeit: (id, sekunden) => {
+      var jetzt = new Date();
+      var stunde = $("#"+id+"Std").value;
+      if (!ui.check.natZahl(stunde)) {stunde = jetzt.getHours();}
+      var minute = $("#"+id+"Min").value;
+      if (!ui.check.natZahl(minute)) {minute = jetzt.getMinutes();}
+      if (sekunden) {
+        var sekunde = $("#"+id+"Sek").value;
+        if (!ui.check.natZahl(sekunde)) {sekunde = jetzt.getSeconds();}
+        jetzt = jetzt = new Date(2020, 07, 01, stunde, minute, sekunde);
+        $("#"+id+"Sek").value = ui.generieren.fuehrendeNull(jetzt.getSeconds());
+      }
+      else {
+        jetzt = jetzt = new Date(2020, 07, 01, stunde, minute);
+      }
+      $("#"+id+"Std").value = ui.generieren.fuehrendeNull(jetzt.getHours());
+      $("#"+id+"Min").value = ui.generieren.fuehrendeNull(jetzt.getMinutes());
+    },
+    tageswahl: {
+      generieren: () => {
+        var code = "<table>";
+        code += "<tr><th onclick=\"dshUiTageswahlGenerieren('"+id+"', '"+tag+"', '"+(monat-1)+"', '"+jahr+"')\"><i class=\"fas fa-angle-double-left\"></i></th>";
+        code += "<th>"+ui.generieren.monatsname.lang(monat)+" "+jahr+"</th>";
+        code += "<th colspan=\"5\" onclick=\"dshUiTageswahlGenerieren('"+id+"', '"+tag+"', '"+(monat+1)+"', '"+jahr+"')\"><i class=\"fas fa-angle-double-right\"></i></th>";
+        code += "<tr>";
+        code += "</tr>";
+        for (var i=1; i<=7; i++) {
+          code += "<td>"+ui.generieren.tagesname.kurz(i)+"</td>";
+        }
+        code += "</tr>";
+
+        var erster = new Date(jahr, monat-1, 1);
+        var wochentag = erster.getDay() + 1;
+        var letzter = new Date (jahr, monat, 0).getDate();
+        if (tag > letzer) {tag = letzer;}
+        var nr = 1;
+        var klassenzusatz = "";
+
+        code += "<tr>";
+        // leer auffüllen, falls nicht mit Montag begonnen wird
+        for (var i=1; i<wochentag; i++) {
+          code += "<td class=\"dshUiTageswahlButtonBlind\"></td>";
+        }
+        for (var i=wochentag; i<=7; i++) {
+          if (nr == tag) {
+            klassenzusatz = " dshUiTagGewaehlt";
+          } else {
+            klassenzusatz = "";
+          }
+          code += "<td class=\"dshUiTageswahlButton"+klassenzusatz+"\" onclick=\"dshUiTageswahl('"+id+"', '"+nr+"', '"+monat+"', '"+jahr+"')\">"+nr+"</td>";
+          nr ++;
+        }
+        code += "</tr>";
+        wochentag = 1;
+
+        while (nr <= letzter) {
+          if (wochentag == 8) {
+            code += "</tr>";
+            wochentag = 1;
+          }
+          if (wochentag == 1) {code += "<tr>";}
+          if (nr == tag) {
+            klassenzusatz = " dshUiTagGewaehlt";
+          } else {
+            klassenzusatz = "";
+          }
+          code += "<td class=\"dshUiTageswahlButton"+klassenzusatz+"\" onclick=\"dshUiTageswahl('"+id+"', '"+nr+"', '"+monat+"', '"+jahr+"')\">"+nr+"</td>";
+          nr ++;
+          wochentag ++;
+        }
+
+        // leer auffüllen, falls nicht am Sonntag geendet
+        for (var i=wochentag; i<=7; i++) {
+          code += "<td class=\"dshUiTageswahlButtonBlind\"></td>";
+          nr ++;
+        }
+        code += "</tr>";
+
+        code += "</table>";
+        return code;
+      },
+      aktion: (id) => {
+        var tag = $("#"+id+"T").value   = ui.generieren.fuehrendeNull(tag);
+        var monat = $("#"+id+"M").value = ui.generieren.fuehrendeNull(monat);
+        var jahr = $("#"+id+"J").value  = ui.generieren.fuehrendeNull(jahr);
+        $("#"+id+"Datumwahl").display = none;
+      }
     }
-    if (wochentag == 1) {code += "<tr>";}
-    if (nr == tag) {
-      klassenzusatz = " dshUiTagGewaehlt";
-    } else {
-      klassenzusatz = "";
+  },
+  schieber: {
+    aktion: (id) => {
+      var wert = $("#"+id).value;
+      var neuerwert = 0;
+      if (wert == 0) {
+        neuerwert = 1;
+      }
+      $("#"+id).value = neuerwerts;
+      $("#"+id+"Schieber").classList.add("dshUiSchieberInnen"+neuerwert);
+      $("#"+id+"Schieber").classList.remove("dshUiSchieberInnen"+wert);
     }
-    code += "<td class=\"dshUiTageswahlButton"+klassenzusatz+"\" onclick=\"dshUiTageswahl('"+id+"', '"+nr+"', '"+monat+"', '"+jahr+"')\">"+nr+"</td>";
-    nr ++;
-    wochentag ++;
-  }
-
-  // leer auffüllen, falls nicht am Sonntag geendet
-  for (var i=wochentag; i<=7; i++) {
-    code += "<td class=\"dshUiTageswahlButtonBlind\"></td>";
-    nr ++;
-  }
-  code += "</tr>";
-
-  code += "</table>";
-  $("#"+id+"Datumwahl").innerHTML = code;
-}
-
-function dshUiTageswahl(id, tag, monat, jahr) {
-  var tag = $("#"+id+"T").value = dshUiFuehrendeNull(tag);
-  var monat = $("#"+id+"M").value = dshUiFuehrendeNull(monat);
-  var jahr = $("#"+id+"J").value = dshUiFuehrendeNull(jahr);
-  $("#"+id+"Datumwahl").display = none;
-}
-
-function dshUiMonatsname(monat) {
-  switch (monat) {
-    case 1: return "Januar";
-    case 2: return "Februar";
-    case 3: return "März";
-    case 4: return "April";
-    case 5: return "Mai";
-    case 6: return "Juni";
-    case 7: return "Juli";
-    case 8: return "August";
-    case 9: return "September";
-    case 10: return "Oktober";
-    case 11: return "November";
-    case 12: return "Dezember";
-    default: retrun false;
-  }
-}
-
-function dshUiMonatsnameKurz(monat) {
-  switch (monat) {
-    case 1: return "JAN";
-    case 2: return "FEB";
-    case 3: return "MÄR";
-    case 4: return "APR";
-    case 5: return "MAI";
-    case 6: return "Juni";
-    case 7: return "Juli";
-    case 8: return "AUG";
-    case 9: return "SEP";
-    case 10: return "OKT";
-    case 11: return "NOV";
-    case 12: return "DEZ";
-    default: retrun false;
-  }
-}
-
-function dshUiTagesname(tag) {
-  switch (tag) {
-    case 0: return "Sonntag"
-    case 1: return "Montag";
-    case 2: return "Dienstag";
-    case 3: return "Mittwoch";
-    case 4: return "Donnerstag";
-    case 5: return "Freitag";
-    case 6: return "Samstag";
-    case 7: return "Sonntag";
-    default: retrun false;
-  }
-}
-
-function dshUiTagesnameKurz(tag) {
-  switch (tag) {
-    case 0: return "SO"
-    case 1: return "MO";
-    case 2: return "DI";
-    case 3: return "MI";
-    case 4: return "DO";
-    case 5: return "FR";
-    case 6: return "SA";
-    case 7: return "SO";
-    default: retrun false;
-  }
-}
-
-function dshUiIstZahl(x) {
-	return x.match(/^[0-9]+$/);
-}
-
-function dshUiFuehrendeNull(x) {
-	if (dshUiIstZahl(x)) {
-		if (x.length < 2) {
-			return "0"+x;
-		} else {
-			return x;
-		}
-	} else {
-		return false;
-	}
-}
-
-function dshUiSchieber(id) {
-  var wert = $("#"+id).value;
-  var neuerwert = 0;
-  if (wert == 0) {
-    neuerwert = 1;
-  }
-  $("#"+id).value = neuerwerts;
-  $("#"+id+"Schieber").classList.add("dshUiSchieberInnen"+neuerwert);
-  $("#"+id+"Schieber").classList.remove("dshUiSchieberInnen"+wert);
-}
-
-function dshUiCheckPasswortFeld(idvergleich, idpruefen) {
-  var vergleich = $("#"+idvergleich).value;
-  var pruefen = $("#"+idpruefen).value;
-  if (vergleich == pruefen) {
-    $("#"+idpruefen+"Pruefen").classList.add("dshUiPruefen1");
-    $("#"+idpruefen+"Pruefen").classList.remove("dshUiPruefen0");
-  } else {
-    $("#"+idpruefen+"Pruefen").classList.add("dshUiPruefen0");
-    $("#"+idpruefen+"Pruefen").classList.remove("dshUiPruefen1");
-  }
-}
-
-function dshUiCheckMail(mail) {
-  return mail.match(/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]{2,}$/);
-}
-
-function dshUiCheckMailFeld(id) {
-  var mail = $("#"+id).value;
-  if (dshUiCheckMail(mail)) {
-    $("#"+id+"Pruefen").classList.add("dshUiPruefen1");
-    $("#"+id+"Pruefen").classList.remove("dshUiPruefen0");
-  } else {
-    $("#"+id+"Pruefen").classList.add("dshUiPruefen0");
-    $("#"+id+"Pruefen").classList.remove("dshUiPruefen1");
-  }
-}
-
-
-function dshUiCheckDatumFeld(id) {
-  var jetzt = new Date();
-  var tag = $("#"+id+"T").value;
-  if (!dshUiIstZahl(tag)) {tag = jetzt.getDate();}
-  var monat = $("#"+id+"M").value;
-  if (!dshUiIstZahl(monat)) {monat = jetzt.getMonth()+1;}
-  var jahr = $("#"+id+"J").value;
-  if (!dshUiIstZahl(jahr)) {jahr = jetzt.getFullYear();}
-
-  jetzt = new Date(jahr, monat, tag);
-
-  $("#"+id+"T").value = dshUiFuehrendeNull(jetzt.getDate());
-  $("#"+id+"M").value = dshUiFuehrendeNull(jetzt.getMonth()+1);
-  $("#"+id+"J").value = dshUiFuehrendeNull(jetzt.getFullYear());
-}
-
-
-function dshUiCheckUhrzeitFeld(id sekunden) {
-  var jetzt = new Date();
-  var stunde = $("#"+id+"Std").value;
-  if (!dshUiIstZahl(stunde)) {stunde = jetzt.getHours();}
-  var minute = $("#"+id+"Min").value;
-  if (!dshUiIstZahl(minute)) {minute = jetzt.getMinutes();}
-  if (sekunden) {
-    var sekunde = $("#"+id+"Sek").value;
-    if (!dshUiIstZahl(sekunde)) {sekunde = jetzt.getSeconds();}
-    jetzt = jetzt = new Date(2020, 07, 01, stunde, minute, sekunde);
-    $("#"+id+"Std").value = dshUiFuehrendeNull(jetzt.getHours());
-    $("#"+id+"Min").value = dshUiFuehrendeNull(jetzt.getMinutes());
-    $("#"+id+"Sek").value = dshUiFuehrendeNull(jetzt.getSeconds());
-  }
-  else {
-    jetzt = jetzt = new Date(2020, 07, 01, stunde, minute);
-    $("#"+id+"Std").value = dshUiFuehrendeNull(jetzt.getHours());
-    $("#"+id+"Min").value = dshUiFuehrendeNull(jetzt.getMinutes());
-  }
-}
-
-function dshUiToggle(id, nr, anzahl) {
-  for (var i=0; i<anzahl; i++) {
-    $("#"+id+i).classList.remove("dshKnopfToggled");
-  }
-  $("#"+id+nr).classList.add("dshKnopfToggled");
+  },
+  mail: {
+    aktion: (id) => {
+      var mail = $("#"+id).value;
+      if (ui.check.mail(mail)) {
+        $("#"+id+"Pruefen").classList.add("dshUiPruefen1");
+        $("#"+id+"Pruefen").classList.remove("dshUiPruefen0");
+      } else {
+        $("#"+id+"Pruefen").classList.add("dshUiPruefen0");
+        $("#"+id+"Pruefen").classList.remove("dshUiPruefen1");
+      }
+    }
+  },
+  passwort: {
+    aktion: (idvergleich, idpruefen) => {
+      var vergleich = $("#"+idvergleich).value;
+      var pruefen = $("#"+idpruefen).value;
+      if (vergleich == pruefen) {
+        $("#"+idpruefen+"Pruefen").classList.add("dshUiPruefen1");
+        $("#"+idpruefen+"Pruefen").classList.remove("dshUiPruefen0");
+      } else {
+        $("#"+idpruefen+"Pruefen").classList.add("dshUiPruefen0");
+        $("#"+idpruefen+"Pruefen").classList.remove("dshUiPruefen1");
+      }
+    }
+  },
+  toggle: {
+    aktion: (id, nr, anzahl) => {
+      for (var i=0; i<anzahl; i++) {
+        $("#"+id+i).classList.remove("dshKnopfToggled");
+      }
+      $("#"+id+nr).classList.add("dshKnopfToggled");
+    }
+  },
 }

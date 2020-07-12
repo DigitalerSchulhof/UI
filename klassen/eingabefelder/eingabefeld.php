@@ -43,7 +43,7 @@ class Eingabefeld {
     if ($bezugsfeld !== null) {
       $aktion = new Aktion("onchange", "dshUiCheckPasswortFeld('".$bezugsfeld->getId()."', '$this->id')");
       $pruefen = $aktion->ausgabe();
-      $zusatz = "</td><td><span id=\"".$this->id."Pruefen\" class=\"dshUiPruefen0\"></span>"
+      $zusatz = "</td><td><span id=\"".$this->id."Pruefen\" class=\"dshUiPruefen0\"></span>";
     }
     return "<input type=\"password\" id=\"$this->id\" name=\"$this->id\" value=\"$this->wert\" class=\"dshUiEingabefeld $this->klasse\"$pruefen>$zusatz";
   }
@@ -82,7 +82,7 @@ class Eingabefeld {
     $aktion->dazu("onchange", "dshUiCheckDatumFeld('$this->id')");
     $aktion->dazu("onkeyup", "dshUiCheckDatumFeld('$this->id')");
 
-    $code = "<input type=\"text\" id=\"$this->id"."T\" name=\"$this->id"."T"\" value=\"".$datum[0]."\" class=\"dshUiEingabefeld dshUiDatumfeldT $this->klasse\"".$aktion->ausgabe()."> ";
+    $code = "<input type=\"text\" id=\"$this->id"."T\" name=\"$this->id"."T\" value=\"".$datum[0]."\" class=\"dshUiEingabefeld dshUiDatumfeldT $this->klasse\"".$aktion->ausgabe()."> ";
     $code .= "<input type=\"text\" id=\"$this->id"."M\" name=\"$this->id"."M\" value=\"".$datum[1]."\" class=\"dshUiEingabefeld dshUiDatumfeldM $this->klasse\"".$aktion->ausgabe()."> ";
     $code .= "<input type=\"text\" id=\"$this->id"."J\" name=\"$this->id"."J\" value=\"".$datum[2]."\" class=\"dshUiEingabefeld dshUiDatumfeldJ $this->klasse\"".$aktion->ausgabe()."> ";
     $code .= "<div class=\"dshUiDatumwahl\" id=\"$this->id"."Datumwahl\"></div>";
@@ -107,7 +107,7 @@ class Eingabefeld {
     $aktion = new Aktion("onchange", "dshUiCheckUhrzeitFeld('$this->id', $sekunde)");
     $aktion->dazu("onkeyup", "dshUiCheckUhrzeitFeld('$this->id', $sekunde)");
 
-    $code = "<input type=\"text\" id=\"$this->id"."Std\" name=\"$this->id"."Std"\" value=\"".$datum[0]."\" class=\"dshUiEingabefeld dshUiUhrzeitfeldStd $this->klasse\"".$aktion->ausgabe()."> ";
+    $code = "<input type=\"text\" id=\"$this->id"."Std\" name=\"$this->id"."Std\" value=\"".$datum[0]."\" class=\"dshUiEingabefeld dshUiUhrzeitfeldStd $this->klasse\"".$aktion->ausgabe()."> ";
     $code .= "<input type=\"text\" id=\"$this->id"."Min\" name=\"$this->id"."Min\" value=\"".$datum[1]."\" class=\"dshUiEingabefeld dshUiUhrzeitfeldMin $this->klasse\"".$aktion->ausgabe().">";
     if ($sekunde) {
       $code .= " <input type=\"text\" id=\"$this->id"."Sek\" name=\"$this->id"."Sek\" value=\"".$datum[1]."\" class=\"dshUiUhrzeitfeldSek $this->klasse\"".$aktion->ausgabe().">";

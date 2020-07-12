@@ -59,7 +59,7 @@ class Fenster {
       $datum[2] = date("Y");
     }
 
-    $code = "<input type=\"text\" id=\"$this->id"."T\" name=\"$this->id"."T"\" value=\"".$datum[0]."\" class=\"dshUiEingabefeld dshUiDatumfeldT $this->klasse\" onfocus=\"dshUiDatumsanzeige('$this->id', true)\" onblur=\"dshUiDatumsanzeige('$this->id', false)\"> ";
+    $code = "<input type=\"text\" id=\"$this->id"."T\" name=\"$this->id"."T\" value=\"".$datum[0]."\" class=\"dshUiEingabefeld dshUiDatumfeldT $this->klasse\" onfocus=\"dshUiDatumsanzeige('$this->id', true)\" onblur=\"dshUiDatumsanzeige('$this->id', false)\"> ";
     $code .= "<input type=\"text\" id=\"$this->id"."M\" name=\"$this->id"."M\" value=\"".$datum[1]."\" class=\"dshUiEingabefeld dshUiDatumfeldM $this->klasse\" onfocus=\"dshUiDatumsanzeige('$this->id', true)\" onblur=\"dshUiDatumsanzeige('$this->id', false)\"> ";
     $code .= "<input type=\"text\" id=\"$this->id"."J\" name=\"$this->id"."J\" value=\"".$datum[2]."\" class=\"dshUiEingabefeld dshUiDatumfeldJ $this->klasse\" onfocus=\"dshUiDatumsanzeige('$this->id', true)\" onblur=\"dshUiDatumsanzeige('$this->id', false)\"> ";
     $code .= "<div class=\"dshUiDatumwahl\" id=\"$this->id"."Datumwahl\"></div>";
@@ -81,7 +81,7 @@ class Fenster {
       }
     }
 
-    $code = "<input type=\"text\" id=\"$this->id"."Std\" name=\"$this->id"."Std"\" value=\"".$datum[0]."\" class=\"dshUiEingabefeld dshUiUhrzeitfeldStd $this->klasse\"> ";
+    $code = "<input type=\"text\" id=\"$this->id"."Std\" name=\"$this->id"."Std\" value=\"".$datum[0]."\" class=\"dshUiEingabefeld dshUiUhrzeitfeldStd $this->klasse\"> ";
     $code .= "<input type=\"text\" id=\"$this->id"."Min\" name=\"$this->id"."Min\" value=\"".$datum[1]."\" class=\"dshUiEingabefeld dshUiUhrzeitfeldMin $this->klasse\">";
     if ($sekunde) {
       $code .= " <input type=\"text\" id=\"$this->id"."Sek\" name=\"$this->id"."Sek\" value=\"".$datum[1]."\" class=\"dshUiUhrzeitfeldSek $this->klasse\">";

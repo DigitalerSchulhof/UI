@@ -2,7 +2,7 @@
 namespace UI;
 
 /**
-*Eingabefelder erstellen
+* Eingabefelder erstellen
 */
 class Aktion {
   /** @var string[][] Enthält das JS-Ziel des Events */
