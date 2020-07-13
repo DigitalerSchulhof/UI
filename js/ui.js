@@ -321,12 +321,14 @@ var ui = {
       }
     }
   },
-  toggle: {
-    aktion: (id, nr, anzahl) => {
+  togglegruppe: {
+    aktion: (id, nr, anzahl, wert) => {
+      $("#"+id).value = wert;
+      $("#"+id+"KnopfId").value = nr;
       for (var i=0; i<anzahl; i++) {
-        $("#"+id+i).classList.remove("dshKnopfToggled");
+        $("#"+id+"Knopf"+i).classList.remove("dshKnopfToggled");
       }
-      $("#"+id+nr).classList.add("dshKnopfToggled");
+      $("#"+id+"Knopf"+nr).classList.add("dshKnopfToggled");
     }
   },
   laden: {

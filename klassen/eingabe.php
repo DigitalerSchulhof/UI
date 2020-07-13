@@ -65,21 +65,21 @@ class Uhrzeitfeld extends Eingabe {
   public function ausgabe($sekunden = false) : string {
     $uhrzeit = explode(":", $this->wert);
     if ((count($uhrzeit) != 3) && (count($uhrzeit) != 2)) {
-      $datum[0] = date("H");
-      $datum[1] = date("i");
+      $uhrzeit[0] = date("H");
+      $uhrzeit[1] = date("i");
       if (count($datum) == 2) {
-        $datum[2] = date("s");
+        $uhrzeit[2] = date("s");
       }
     }
 
-    $this->aktion->dazu("onchange", "ui.datumsanzeige.checkUhrzeit('$this->id', $sekunde)", true);
-    $this->aktion->dazu("onkeyup",  "ui.datumsanzeige.checkUhrzeit('$this->id', $sekunde)", true);
+    $this->aktion->dazu("onchange", "ui.datumsanzeige.checkUhrzeit('$this->id', $sekunden)", true);
+    $this->aktion->dazu("onkeyup",  "ui.datumsanzeige.checkUhrzeit('$this->id', $sekunden)", true);
 
-    $code   = "<input type=\"text\" id=\"{$this->id}S\" name=\"{$this->id}Std\" value=\"{$datum[0]}\" class=\"dshUiEingabefeld dshUiUhrzeitfeldStd $this->klasse\"{$this->aktion->ausgabe()}> ";
-    $code .= " <input type=\"text\" id=\"{$this->id}Min\" name=\"{$this->id}Min\" value=\"{$datum[1]}\" class=\"dshUiEingabefeld dshUiUhrzeitfeldMin $this->klasse\"{$this->aktion->ausgabe()}>";
+    $code   = "<input type=\"text\" id=\"{$this->id}S\" name=\"{$this->id}Std\" value=\"{$uhrzeit[0]}\" class=\"dshUiEingabefeld dshUiUhrzeitfeldStd $this->klasse\"{$this->aktion->ausgabe()}>";
+    $code .= " : <input type=\"text\" id=\"{$this->id}Min\" name=\"{$this->id}Min\" value=\"{$uhrzeit[1]}\" class=\"dshUiEingabefeld dshUiUhrzeitfeldMin $this->klasse\"{$this->aktion->ausgabe()}>";
 
-    if ($sekunde) {
-      $code .= " <input type=\"text\" id=\"$this->id"."Sek\" name=\"$this->id"."Sek\" value=\"".$datum[1]."\" class=\"dshUiUhrzeitfeldSek $this->klasse\"".$aktion->ausgabe().">";
+    if ($sekunden) {
+      $code .= " : <input type=\"text\" id=\"$this->id"."Sek\" name=\"$this->id"."Sek\" value=\"".$uhrzeit[2]."\" class=\"dshUiEingabefeld dshUiUhrzeitfeldSek $this->klasse\"".$this->aktion->ausgabe().">";
     }
     return $code;
   }
@@ -107,12 +107,6 @@ class Datumfeld extends Eingabe {
   }
 }
 
-class Farbfeld extends Eingabe {
-  public function ausgabe() : string {
-    return "<input placeholder=\"$this->platzhalter\" type=\"color\" id=\"$this->id\" name=\"$this->id\" value=\"$this->wert\" class=\"dshUiEingabefeld dshUiFarbfeld $this->klasse{$this->aktion->ausgabe()}\">";
-  }
-}
-
 class Schieber extends Eingabe {
   public function ausgabe() : string {
     $schieberwert = 0;
@@ -120,8 +114,8 @@ class Schieber extends Eingabe {
     $this->aktion->dazu("onclick", "ui.schieber.aktion('$this->id')", true);
 
     if ($this->wert == 1) {$schieberwert = 1;}
-    $code = "<span class=\"dshUiSchieberAussen $this->klasse\"".$this->aktion->ausgabe()."><span class=\"dshUiSchieber dshUiSchieberInnen$schieberwert\" id=\"$this->id"."Schieber\"></span></span>";
-    return "<input type=\"hidden\" id=\"$this->id\" name=\"$this->id\" value=\"$schieberwert\">";
+    $code = "<span class=\"dshUiSchieberAussen dshUiSchieber$schieberwert $this->klasse\" id=\"$this->id"."Schieber\"".$this->aktion->ausgabe()."><span class=\"dshUiSchieber\"></span></span>";
+    return $code."<input type=\"hidden\" id=\"$this->id\" name=\"$this->id\" value=\"$schieberwert\">";
   }
 }
 
@@ -144,73 +138,6 @@ class Textfeld extends Eingabe {
 
   public function ausgabe() : string {
     return "<input placeholder=\"$this->platzhalter\" type=\"text\" id=\"$this->id\" name=\"$this->id\" value=\"$this->wert\" class=\"dshUiEingabefeld $this->klasse\"{$this->aktion->ausgabe()}>";
-  }
-}
-
-
-
-class Passwortfeld extends Textfeld {
-   /**
-    * Gibt den HTML-Code zurück
-    * @param Passwortfeld $bezugsfeld Eingabefeld, mit dem verglichen wird
-    * @return string Der HTML-Code
-    */
-  public function ausgabe($bezugsfeld = null) : string {
-    $pruefen =  "";
-    $zusatz = "";
-    if ($bezugsfeld !== null) {
-      $this->aktion->dazu("onchange", "ui.passwort.aktion('".$bezugsfeld->getId()."', '$this->id')");
-    }
-    return "<input placeholder=\"$this->platzhalter\" type=\"password\" id=\"$this->id\" name=\"$this->id\" value=\"$this->wert\" class=\"dshUiEingabefeld $this->klasse\"$pruefen{$this->aktion->ausgabe()}>$zusatz";
-  }
-}
-
-class Mailfeld extends Textfeld {
-  public function ausgabe() : string {
-    $this->aktion->dazu("onchange", "ui.mail.aktion('$this->id')");
-    return "<input placeholder=\"$this->platzhalter\" type=\"password\" id=\"$this->id\" name=\"$this->id\" value=\"$this->wert\" class=\"dshUiEingabefeld $this->klasse\" ".$this->aktion->ausgabe()."></td><td><span id=\"".$this->id."Pruefen\" class=\"dshUiPruefen0\"></span>";
-  }
-}
-
-class Textarea extends Textfeld {
-  public function ausgabe() : string {
-    return "<textarea placeholder=\"$this->platzhalter\" id=\"$this->id\" name=\"$this->id\" class=\"dshUiEingabefeld dshUiTextbereich $this->klasse\"{$this->aktion->ausgabe()}>$this->wert</textarea>";
-  }
-}
-
-
-
-class Toggle extends Eingabe {
-  /** @var string[] Enthält den Text der Toggles */
-  private $text;
-
-	/**
-	* @param string $id
-	* @param string[] $text
-	* @param Aktion $event
-	* @param string $wert
-	* @param string $klasse
-	*/
-  public function __construct($id, $text, $event, $wert = 0, $klasse = "") {
-    if ($wert >= count($text)) {$wert = 0;}
-    parent::__construct($id, $wert, $klasse, $event);
-    $this->text = $text;
-  }
-
-  public function ausgabe() : string {
-    $code = "";
-    if ($this->wert >= count($text)) {$this->wert = 0;}
-    $anzahl = count($text);
-    for ($i=0; $i<$anzahl; $i++) {
-      $toggled = "";
-      if ($this->wert == $i) {
-        $toggled = " dshKnopfToggled";
-      }
-      $this->aktion.dazu("onclick", "ui.toggle.aktion('$this->id', '$i', '$anzahl')", true);
-      $code .= "<span id=\"$this->id"."$i\"class=\"dshUiKnopf$toggled $this->klasse\"".$this->event->ausgabe()."\">$this->$text</span> ";
-    }
-
-    return $code."<input type=\"hidden\" id=\"$this->id\" name=\"$this->id\" value=\"$this->wert\">";
   }
 }
 
@@ -239,13 +166,52 @@ class Zahlfeld extends Eingabe {
 
   public function ausgabe() : string {
     $code = "<input type=\"number\" id=\"$this->id\" name=\"$this->id\"";
-    $code .= " value=\"$this->wert\" class=\"dsh_eingabefeld $this->klasse\"";
-    if ($min != null) {$code .= " min=\"$this->min\"";}
-    if ($max != null) {$code .= " max=\"$this->max\"";}
-    if ($schritt != null) {$code .= " step=\"$this->schritt\"";}
+    $code .= " value=\"$this->wert\" class=\"dshUiEingabefeld dshUiZahlfeld $this->klasse\"";
+    if ($this->min != null) {$code .= " min=\"$this->min\"";}
+    if ($this->max != null) {$code .= " max=\"$this->max\"";}
+    if ($this->schritt != null) {$code .= " step=\"$this->schritt\"";}
     return $code.">";
   }
 }
+
+
+
+class Farbfeld extends Textfeld {
+  public function ausgabe() : string {
+    return "<input placeholder=\"$this->platzhalter\" type=\"color\" id=\"$this->id\" name=\"$this->id\" value=\"$this->wert\" class=\"dshUiEingabefeld dshUiFarbfeld $this->klasse{$this->aktion->ausgabe()}\">";
+  }
+}
+
+class Passwortfeld extends Textfeld {
+   /**
+    * Gibt den HTML-Code zurück
+    * @param Passwortfeld $bezugsfeld Eingabefeld, mit dem verglichen wird
+    * @return string Der HTML-Code
+    */
+  public function ausgabe($bezugsfeld = null) : string {
+    $pruefen =  "";
+    $zusatz = "";
+    if ($bezugsfeld !== null) {
+      $this->aktion->dazu("onchange", "ui.passwort.aktion('".$bezugsfeld->getId()."', '$this->id')");
+    }
+    return "<input placeholder=\"$this->platzhalter\" type=\"password\" id=\"$this->id\" name=\"$this->id\" value=\"$this->wert\" class=\"dshUiEingabefeld $this->klasse\"$pruefen{$this->aktion->ausgabe()}>$zusatz";
+  }
+}
+
+class Mailfeld extends Textfeld {
+  public function ausgabe() : string {
+    $this->aktion->dazu("onchange", "ui.mail.aktion('$this->id')");
+    return "<input placeholder=\"$this->platzhalter\" type=\"text\" id=\"$this->id\" name=\"$this->id\" value=\"$this->wert\" class=\"dshUiEingabefeld $this->klasse\" ".$this->aktion->ausgabe()."></td><td><span id=\"".$this->id."Pruefen\" class=\"dshUiPruefen0\"></span>";
+  }
+}
+
+class Textarea extends Textfeld {
+  public function ausgabe() : string {
+    return "<textarea placeholder=\"$this->platzhalter\" id=\"$this->id\" name=\"$this->id\" class=\"dshUiEingabefeld dshUiTextarea $this->klasse\"{$this->aktion->ausgabe()}>$this->wert</textarea>";
+  }
+}
+
+
 
 class Option {
   /** @var string Beschreibung der Option */
@@ -271,6 +237,14 @@ class Option {
   }
 
   /**
+   * Gibt den Text der Option zurück
+   * @return string Text der Option
+   */
+  public function getText() : string {
+    return $this->text;
+  }
+
+  /**
    * Gibt den Code der Option zurück
    * @param  string $wert Wert, der gewählt wurde
    * @return string       Code der Option
@@ -283,19 +257,76 @@ class Option {
     return "<option value=\"{$this->wert}\"$wahl>{$this->text}</option>";
   }
 }
+
+class Togglegruppe extends Eingabe {
+  /** @var Option[] Optionen der Togglebuttons */
+  private $optionen;
+
+  /**
+   * @param string $id       ID der Togglebuttons
+   * @param string $text Text der ersten Option
+   * @param string $textwert Wert der ersten Option
+   * @param string $wert     Wert der Togglebuttons
+   * @param string $klasse   CSS-Klasse der Togglebuttons
+   * @param Aktion $aktion   Aktion der Togglebuttons
+   */
+  public function __construct($id, $text, $textwert, $wert = "", $klasse = "", $aktion = null) {
+    parent::__construct($id, $wert, $klasse, $aktion);
+    $this->optionen = array();
+    $this->optionen[] = new Option ($text, $textwert);
+  }
+
+  /**
+   * Fügt der Select-Box eine Option hinzu
+   * @param  string $text Text der Option
+   * @param  string $wert Wert der Option
+   */
+  public function dazu($text, $wert) {
+    $this->optionen[] = new Option ($text, $wert);
+  }
+
+  /**
+   * Gibt die Togglebuttons aus
+   * @return string Code der Togglebuttons
+   */
+  public function ausgabe() : string {
+    $code   = "";
+    $knopfId = 0;
+    $anzahl = count($this->optionen);
+
+    for ($i=0; $i<$anzahl; $i++) {
+      if ($this->optionen[$i]->getWert() == $this->wert) {
+        $knopfId = $i;
+        $toggled = " dshUiToggled";
+      }
+      else {$toggled = "";}
+      $aktionen = $this->aktion->klonen();
+      $aktionen->dazu("onclick", "ui.toggle.aktion('$this->id', '$i', '$anzahl', '{$this->optionen[$i]->getWert()}')", true);
+      $code .= "<span id=\"{$this->id}Knopf$i\" class=\"dshUiToggle $toggled $this->klasse\"{$aktionen->ausgabe()}>{$this->optionen[$i]->getText()}</span> ";
+    }
+
+    $code .= "<input type=\"hidden\" id=\"$this->id\" name=\"$this->id\" value=\"{$this->optionen[$knopfId]->getWert()}\">";
+    $code .= "<input type=\"hidden\" id=\"{$this->id}KnopfId\" name=\"{$this->id}KnopfId\" value=\"$knopfId\">";
+    return $code;
+  }
+}
+
 class Auswahl extends Eingabe {
   /** @var Option[] Optionen der Selectbox */
   private $optionen;
 
   /**
-   * @param [type] $text Text der ersten Option
-   * @param [type] $wert Wert der ersten Option
+   * @param string $id       ID der Selectbox
+   * @param string $text Text der ersten Option
+   * @param string $textwert Wert der ersten Option
+   * @param string $wert     Wert der Selectbox
+   * @param string $klasse   CSS-Klasse der Selectbox
+   * @param Aktion $aktion   Aktion der Selectbox
    */
-  public function __construct($text = null, $wert = null) {
+  public function __construct($id, $text, $textwert, $wert = "", $klasse = "", $aktion = null) {
+    parent::__construct($id, $wert, $klasse, $aktion);
     $this->optionen = array();
-    if (($text != null) && ($wert != null)) {
-      $this->optionen[] = new Option ($text, $wert);
-    }
+    $this->optionen[] = new Option ($text, $textwert);
   }
 
   /**
@@ -312,7 +343,7 @@ class Auswahl extends Eingabe {
    * @return string Code der Selectbox
    */
   public function ausgabe() : string {
-    $code   = "<select id=\"$this->id\" name=\"$this->id\" class=\"dsh_selectfeld $this->klasse\">";
+    $code   = "<select id=\"$this->id\" name=\"$this->id\" class=\"dshUiEingabefeld dshUiSelectfeld $this->klasse\"{$this->aktion->ausgabe()}>";
     foreach ($this->optionen as $opt) {
       $code .= $opt->ausgabe($this->wert);
     }

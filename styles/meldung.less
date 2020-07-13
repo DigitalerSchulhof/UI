@@ -1,85 +1,107 @@
+// LAYOUT;
+
 .dshUiMeldung {
   margin-top: 10px;
   margin-bottom: 10px;
-  background: #dddddd;
 }
 
   .dshUiMeldungTitel {
-    background: #000000;
     padding: 5px 10px 4px 10px;
   }
 
     .dshUiMeldungTitel * {
       font-weight: bold;
-      color: #ffffff;
     }
 
   .dshUiMeldungInhalt {
-    border-left: 5px solid #000000;
     padding: 5px 10px 5px 5px;
   }
 
+
+// FARBEN;
+
+.dshUiMeldung {
+  background: @abstufung1;
+}
+
+  .dshUiMeldungTitel {
+    background: @abstufung4;
+  }
+
+    .dshUiMeldungTitel * {
+      color: @schriftfarbeNegativ;
+    }
+
+  .dshUiMeldungInhalt {
+    border-left: 5px solid @abstufung4;
+  }
+
 .dshUiMeldungErfolg {
-    background-color: #c7ff77;
+    background-color: @erfolgHintergrund;
   }
 
   .dshUiMeldungErfolg .dshUiMeldungTitel {
-    background-color: #65ad00;
+    background-color: @erfolgAkzent;
   }
 
   .dshUiMeldungErfolg .dshUiMeldungInhalt {
-    border-color: #65ad00;
+    border-color: @erfolgAkzent;
   }
 
 .dshUiMeldungInfo {
-    background-color: #94d1ff;
+    background-color: @infoHintergrund;
   }
 
   .dshUiMeldungInfo .dshUiMeldungTitel {
-    background-color: #3399cc;
+    background-color: @infoAkzent;
   }
 
   .dshUiMeldungInfo .dshUiMeldungInhalt {
-    border-color: #3399cc;
+    border-color: @infoAkzent;
   }
 
 .dshUiMeldungWarnung, .dshUiMeldungSchutz {
-    background-color: #ffd95a;
+    background-color: @warnungHintergrund;
   }
 
   .dshUiMeldungWarnung .dshUiMeldungTitel,
   .dshUiMeldungSchutz .dshUiMeldungTitel {
-    background-color: #d17600;
+    background-color: @warnungAkzent;
   }
 
   .dshUiMeldungWarnung .dshUiMeldungInhalt,
   .dshUiMeldungSchutz .dshUiMeldungInhalt {
-    border-color: #d17600;
+    border-color: @warnungAkzent;
   }
 
 .dshUiMeldungFehler {
-    background-color: #f49461;
+    background-color: @fehlerHintergrund;
   }
 
   .dshUiMeldungFehler .dshUiMeldungTitel {
-    background-color: #ca4f0c;
+    background-color: @fehlerAkzent;
   }
 
   .dshUiMeldungFehler .dshUiMeldungInhalt {
-    border-color: #ca4f0c;
+    border-color: @fehlerAkzent;
   }
 
 .dshUiMeldungLaden {
-    background-color: #dddddd;
+    background-color: @abstufung1;
   }
 
   .dshUiMeldungLaden .dshUiMeldungTitel {
-    background-color: #999999;
+    background-color: @abstufung4;
   }
+
+  .dshUiMeldungLaden .dshUiMeldungInhalt {
+    border-color: @abstufung4;
+  }
+
+  // LAYOUT;
 
   .dshUiMeldungLaden .dshUiMeldungInhalt {
     border: 5px dashed;
     border-top: none;
-    border-color: #999999;
     padding: 5px;
   }

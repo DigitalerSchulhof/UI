@@ -1,0 +1,67 @@
+// LAYOUT;
+
+.dshUiKnopf, .dshUiKnopfMini, .dshUiKnopfIcon, .dshUiKnopfGross, .dshUiToggle {
+  display: inline-block;
+  border-radius: @radius2;
+  cursor: pointer;
+  transition: 250ms ease-in-out;
+}
+
+.dshUiKnopf, .dshUiKnopfIcon, .dshUiKnopfGross, .dshUiToggle {padding: 3px 6px;}
+.dshUiKnopfMini {padding: 3px 5px;}
+
+.dshUiKnopfPassiv {
+  border-style: dashed !important;
+  cursor: not-allowed !important;
+}
+
+// FARBEN;
+
+.dshUiKnopf, .dshUiKnopfMini, .dshUiKnopfIcon, .dshUiKnopfGross, .dshUiToggle {
+  position: relative;
+  background-color: @abstufung2;
+  border: 1px solid @abstufung3;
+  color: @schriftfarbePositiv;
+}
+
+.dshUiKnopfErfolg, .dshUiToggled  {
+  background-color: @erfolgHintergrund;
+  border: 1px solid @erfolgAkzent;
+}
+.dshUiKnopfInfo    {
+  background-color: @infoHintergrund;
+  border: 1px solid @infoAkzent;
+}
+.dshUiKnopfWarnung {
+  background-color: @warnungHintergrund;
+  border: 1px solid @warnungAkzent;
+}
+.dshUiKnopfFehler {
+  background-color: @fehlerHintergrund;
+  border: 1px solid @fehlerAkzent;
+}
+
+.dshUiKnopfPassiv {
+  background-color: @seitenhintergrund !important;
+}
+
+.dshUiKnopf:hover, .dshUiKnopfMini:hover, .dshUiKnopfIcon:hover, .dshUiKnopfGross:hover, .dshUiToggle:hover {
+  color: @schriftfarbeNegativ;
+  background-color: @abstufung3;
+}
+
+.dshUiKnopfErfolg:hover, .dshUiToggle:hover  {
+  background-color: @erfolgAkzent;
+}
+
+.dshUiKnopfInfo:hover    {
+  background-color: @infoAkzent;
+}
+
+.dshUiKnopfWarnung:hover {
+  background-color: @warnungAkzent;
+}
+
+.dshUiKnopfFehler:hover  {
+  background-color: @fehlerAkzent;
+}

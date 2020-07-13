@@ -41,8 +41,8 @@ class Aktion {
 	*/
   public function dazu($ausloeser, $e, $vorne = false) {
     $ausloeser = strtolower($ausloeser);
-    if (!in_array($ausloeser, $this->events)) {
-      $this->events[] = $ausloeser;
+    if (!isset($this->events[$ausloeser])) {
+      $this->events[$ausloeser] = array();
     }
     if ($vorne) {
       array_unshift($this->events[$ausloeser], $e);
@@ -71,6 +71,20 @@ class Aktion {
     } else {
       return "span";
     }
+  }
+
+  /**
+   * Erstellt einen Klon dieses Objekts und gibt es zurück
+   * @return Aktion Klon dieser Aktion
+   */
+  public function klonen() : Aktion {
+    $klon = new Aktion();
+    foreach ($this->events as $a => $funktionen) {
+      foreach ($funktionen as $e) {
+        $klon->dazu($a, $e);
+      }
+    }
+    return $klon;
   }
 }
 

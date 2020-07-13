@@ -1,0 +1,48 @@
+// LAYOUT;
+
+.dshUiHinweis {
+  position: absolute;
+  overflow: hidden;
+  max-height: 0px;
+  padding: 0px 5px;
+  transition: 250ms ease-in-out;
+  width: 150px;
+	transition-delay: 1s;
+}
+
+.dshUiHinweisOR {
+  bottom: 25px;
+  left: 0px;
+  text-align: left;
+}
+
+.dshUiHinweisOL {
+  bottom: 25px;
+  right: 0px;
+  text-align: right;
+}
+
+.dshUiHinweisUR {
+  top: 25px;
+  left: 0px;
+  text-align: left;
+}
+
+.dshUiHinweisUL {
+  top: 25px;
+  right: 0px;
+  text-align: right;
+}
+
+.dshUiKnopfMini:hover .dshUiHinweis {
+  max-height: 50px;
+  padding: 5px;
+  border-radius: @radius2;
+}
+
+// FARBEN;
+
+.dshUiHinweis {
+  background: @hinweiseHintergrund;
+  color: @schriftfarbeNegativ;
+}
