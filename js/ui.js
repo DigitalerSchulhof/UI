@@ -76,7 +76,7 @@ var ui = {
       }
     },
     laden: {
-      icon: () => {return "<div class=\"dshuUiLadenIcon\"><div></div><div></div><div></div><div></div></div>";},
+      icon: () => "<div class=\"dshUiLadenIcon\"><div></div><div></div><div></div><div></div></div>",
       balken: {
         speicher: (id, belegt, gesamt, art) => {
           var belegt = belegt || null;
@@ -110,23 +110,15 @@ var ui = {
           return code;
         }
       },
-      speicher: (x, gesamt) => {
-        return "<span>"+ui.generieren.speicherplatz(x)+" ("+ui.generieren.prozent(x, gesamt)+"%) von "+ui.generieren.speicherplatz(gesamt)+" belegt. Frei: ("+(100-ui.generieren.prozent(x, gesamt))+"%)</span>";
-      },
-      zeit: (beginn, aktuell, ende) => {
-        return "<span>Begonnen um "+ui.generieren.zeit(beginn)+". Zeit bis: "+ui.generieren.zeit(ende)+". Frei: ("+(100-ui.generieren.prozent(x, gesamt))+"%)</span>";
-      }
+      speicher: (x, gesamt) => "<span>"+ui.generieren.speicherplatz(x)+" ("+ui.generieren.prozent(x, gesamt)+"%) von "+ui.generieren.speicherplatz(gesamt)+" belegt. Frei: ("+(100-ui.generieren.prozent(x, gesamt))+"%)</span>",
+      zeit: (beginn, aktuell, ende) => "<span>Begonnen um "+ui.generieren.zeit(beginn)+". Zeit bis: "+ui.generieren.zeit(ende)+". Frei: ("+(100-ui.generieren.prozent(x, gesamt))+"%)</span>"
     },
-    prozent: (x, gesamt) => {
-      return (Math.round(x/gesamt*10000)/100);
-    },
+    prozent: (x, gesamt) => Math.round(x/gesamt*10000)/100,
     zeit: (x) => {
       var datum = new Date(x);
       return datum.getHours()+":"+datum.getMinutes()+" Uhr";
     },
-    komma: (x) => {
-      return (Math.round(bytes*100)/100).toString().replace('.', ',');
-    },
+    komma: (x) => (Math.round(bytes*100)/100).toString().replace('.', ','),
     speicherplatz: (bytes) => {
       if (bytes/1000 > 1) {
         bytes = bytes/1000;
@@ -162,9 +154,9 @@ var ui = {
     }
   },
   check: {
-    zahl: (x) => x.match(/^-?[0-9]+$/),
-    natZahl: (x) => x.match(/^[0-9]+$/),
-    mail: (x) => x.match(/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]{2,}$/),
+    zahl: (x) => x.toString().match(/^-?[0-9]+$/),
+    natZahl: (x) => x.toString().match(/^[0-9]+$/),
+    mail: (x) => x.toString().match(/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]{2,}$/),
   },
   datumsanzeige: {
     aktion: () => {
@@ -204,17 +196,17 @@ var ui = {
       if (sekunden) {
         var sekunde = $("#"+id+"Sek").value;
         if (!ui.check.natZahl(sekunde)) {sekunde = jetzt.getSeconds();}
-        jetzt = jetzt = new Date(2020, 07, 01, stunde, minute, sekunde);
+        jetzt = jetzt = new Date(2020, 03, 19, stunde, minute, sekunde);
         $("#"+id+"Sek").value = ui.generieren.fuehrendeNull(jetzt.getSeconds());
       }
       else {
-        jetzt = jetzt = new Date(2020, 07, 01, stunde, minute);
+        jetzt = jetzt = new Date(2020, 03, 19, stunde, minute);
       }
       $("#"+id+"Std").value = ui.generieren.fuehrendeNull(jetzt.getHours());
       $("#"+id+"Min").value = ui.generieren.fuehrendeNull(jetzt.getMinutes());
     },
     tageswahl: {
-      generieren: () => {
+      generieren: (id, tag, monat, jahr) => {
         var code = "<table>";
         code += "<tr><th onclick=\"dshUiTageswahlGenerieren('"+id+"', '"+tag+"', '"+(monat-1)+"', '"+jahr+"')\"><i class=\"fas fa-angle-double-left\"></i></th>";
         code += "<th>"+ui.generieren.monatsname.lang(monat)+" "+jahr+"</th>";
@@ -229,7 +221,7 @@ var ui = {
         var erster = new Date(jahr, monat-1, 1);
         var wochentag = erster.getDay() + 1;
         var letzter = new Date (jahr, monat, 0).getDate();
-        if (tag > letzer) {tag = letzer;}
+        if (tag > letzter) {tag = letzter;}
         var nr = 1;
         var klassenzusatz = "";
 
@@ -291,7 +283,7 @@ var ui = {
       if (wert == 0) {
         neuerwert = 1;
       }
-      $("#"+id).value = neuerwerts;
+      $("#"+id).value = neuerwert;
       $("#"+id+"Schieber").classList.add("dshUiSchieberInnen"+neuerwert);
       $("#"+id+"Schieber").classList.remove("dshUiSchieberInnen"+wert);
     }
@@ -342,7 +334,8 @@ var ui = {
     schliessen: () => {
       $("#dshUiBlende").style.display = "none";
     },
-    anzeigen: () {
+    anzeigen: () => {
       $("#dshUiBlende").style.display = "block";
     }
+  }
 }

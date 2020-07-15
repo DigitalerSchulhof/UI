@@ -1,3 +1,5 @@
 <?php
-	allesEinbinden(__DIR__."/../klassen");
+	include_once("$KLASSEN/element.php");
+	include_once("$KLASSEN/eingabe.php");
+
 ?>

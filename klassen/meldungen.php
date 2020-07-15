@@ -25,11 +25,11 @@ class Meldung {
     $this->titel = $titel;
     $this->inhalt = $inhalt;
     if ($icon == null) {
-      if ($art == "erfolg") {$icon = new Icon(Konstanten::ERFOLG);}
-      else if ($art == "info") {$icon = new Icon(Konstanten::INFORMATION);}
-      else if ($art == "fehler") {$icon = new Icon(Konstanten::FEHLER);}
+      if ($art == "erfolg")       {$icon = new Icon(Konstanten::ERFOLG);}
+      else if ($art == "info")    {$icon = new Icon(Konstanten::INFORMATION);}
+      else if ($art == "fehler")  {$icon = new Icon(Konstanten::FEHLER);}
       else if ($art == "warnung") {$icon = new Icon(Konstanten::WARNUNG);}
-      else if ($art == "schutz") {$icon = new Icon(Konstanten::SCHUTZ);}
+      else if ($art == "schutz")  {$icon = new Icon(Konstanten::SCHUTZ);}
       else if ($art == "laden") {
         $icon = new Icon(Konstanten::LADEN);
         $this->inhalt  = "<div class=\"dshUiLaden\">".(new Ladesymbol())->ausgabe();

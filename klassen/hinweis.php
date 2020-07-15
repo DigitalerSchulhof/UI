@@ -2,7 +2,7 @@
 namespace UI;
 
 /**
-*Schaltflächen erstellen
+* Schaltflächen erstellen
 */
 class Hinweis {
   /** @var string Inhalt des Hinweises */

@@ -2,7 +2,8 @@
 namespace UI;
 
 class Konstanten {
-const SCHLIESSEN = "fas fa-times";
+
+	const SCHLIESSEN = "fas fa-times";
 	const PERSON = "fa fa-user";
 	const FEHLER = "fas fa-exclamation-triangle";
 	const WARNUNG = "fas fa-question-circle";
@@ -11,5 +12,6 @@ const SCHLIESSEN = "fas fa-times";
 	const SCHUTZ = "fas fa-shield-alt";
 	const LADEN = "fas fa-spinner";
 	const DEFAULT = "fas fa-box";
+
 }
 ?>
