@@ -17,16 +17,17 @@ abstract class Eingabe extends Element {
   /**
    * Erstellt eine neue Eingabe
    *
-   * @param string $id ID des Eingabeelements
+   * @param   string $id ID des Eingabeelements
    */
   public function __construct($id) {
+    parent::__construct();
     $this->id = $id;
   }
 
   /**
 	 * Gibt den Code des öffnenden Tags zurück (Ohne < >)
-	 * @param string ...$nicht Attribute, die ignoriert werden sollen
-	 * @return string Der Code des öffnenden Tags
+	 * @param    string ...$nicht Attribute, die ignoriert werden sollen
+	 * @return   string Der Code des öffnenden Tags
 	 */
 	public function codeAuf(...$nicht) : string {
     $rueck = parent::codeAuf(...$nicht);
@@ -40,8 +41,8 @@ abstract class Eingabe extends Element {
 
   /**
    * Setzt den Wert des Eingabefelds
-   * @param string $wert :)
-   * @return self
+   * @param   string $wert :)
+   * @return  self
    */
   public function setWert($wert) : self {
     $this->wert = $wert;
@@ -50,13 +51,16 @@ abstract class Eingabe extends Element {
 
   /**
    * Gibt den Wert des Eingabefelds zurück
-   * @return string
+   * @return  string
    */
   public function getWert() : string {
     return $this->wert;
   }
 }
 
+/**
+ * @author DSH
+ */
 abstract class PlatzhalterEingabe extends Eingabe {
   /** @var string Platzhalter des Eingabefelds */
   protected $platzhalter = null;
@@ -64,7 +68,7 @@ abstract class PlatzhalterEingabe extends Eingabe {
   /**
    * Erstellt eine neue Eingabe
    *
-   * @param string $id ID des Eingabeelements
+   * @param   string $id ID des Eingabeelements
    */
   public function __construct($id) {
     parent::__construct($id);
@@ -74,8 +78,8 @@ abstract class PlatzhalterEingabe extends Eingabe {
 
   /**
    * Gibt den Code des öffnenden Tags zurück (Ohne < >)
-   * @param string ...$nicht Attribute, die ignoriert werden sollen
-   * @return string Der Code des öffnenden Tags
+   * @param   string ...$nicht Attribute, die ignoriert werden sollen
+   * @return  string Der Code des öffnenden Tags
    */
   public function codeAuf(...$nicht) : string {
     $rueck = parent::codeAuf(...$nicht);
@@ -87,8 +91,8 @@ abstract class PlatzhalterEingabe extends Eingabe {
 
   /**
    * Setzt den Platzhalter des Eingabefelds
-   * @param string $platzhalter :)
-   * @return self
+   * @param   string $platzhalter :)
+   * @return  self
    */
   public function setPlatzhalter($platzhalter) : self {
     $this->platzhalter = $platzhalter;
@@ -97,13 +101,16 @@ abstract class PlatzhalterEingabe extends Eingabe {
 
   /**
    * Gibt den Platzhalter des Eingabefelds zurück
-   * @return string
+   * @return  string
    */
   public function getPlatzhalter() : string {
     return $this->platzhalter;
   }
 }
 
+/**
+ * @author DSH
+ */
 class Uhrzeitfeld extends Eingabe {
   protected $typ = "text";
   /** @var boolean Ob bei der Ausgabe Sekunden angezeigt werden sollen */
@@ -124,23 +131,25 @@ class Uhrzeitfeld extends Eingabe {
     if($this->zeigeSekunden)
       $sekunden = "1";
 
-    $this->wegAktion("onchange", "onkeyup");
-    $this->dazuAktion("onchange", "ui.datumsanzeige.checkUhrzeit(\"{$this->getID()}\", $sekunden)");
-    $this->dazuAktion("onkeyup",  "ui.datumsanzeige.checkUhrzeit(\"{$this->getID()}\", $sekunden)");
+    $this->aktionen->setFunktion("onchange", 3, "ui.datumsanzeige.checkUhrzeit('{$this->id}', $sekunden)");
+    $this->aktionen->setFunktion("onkeyup",  3, "ui.datumsanzeige.checkUhrzeit('{$this->id}', $sekunden)");
 
-    $code    = "<{$this->codeAuf("id", "value", "class")} id=\"{$this->getId()}Std\" value=\"{$uhrzeit[0]}\" class=\"dshUiEingabefeld dshUiUhrzeitfeldStd".join(" ", array_merge(array(""), $this->klassen))."\">{$this->codeZu()}";
+    $code    = "<{$this->codeAuf("id", "value", "class")} id=\"{$this->id}Std\" value=\"{$uhrzeit[0]}\" class=\"dshUiEingabefeld dshUiUhrzeitfeldStd".join(" ", array_merge(array(""), $this->klassen))."\">{$this->codeZu()}";
     $code   .= " : ";
-    $code   .= "<{$this->codeAuf("id", "value", "class")} id=\"{$this->getId()}Min\" value=\"{$uhrzeit[1]}\" class=\"dshUiEingabefeld dshUiUhrzeitfeldMin".join(" ", array_merge(array(""), $this->klassen))."\">{$this->codeZu()}";
+    $code   .= "<{$this->codeAuf("id", "value", "class")} id=\"{$this->id}Min\" value=\"{$uhrzeit[1]}\" class=\"dshUiEingabefeld dshUiUhrzeitfeldMin".join(" ", array_merge(array(""), $this->klassen))."\">{$this->codeZu()}";
 
     if ($this->zeigeSekunden) {
       $code .= " : ";
-      $code .= "<{$this->codeAuf("id", "value", "class")} id=\"{$this->getId()}Sek\" value=\"$uhrzeit[2]\" class=\"dshUiEingabefeld dshUiUhrzeitfeldSek".join(" ", array_merge(array(""), $this->klassen))."\">{$this->codeZu()}";
+      $code .= "<{$this->codeAuf("id", "value", "class")} id=\"{$this->id}Sek\" value=\"$uhrzeit[2]\" class=\"dshUiEingabefeld dshUiUhrzeitfeldSek".join(" ", array_merge(array(""), $this->klassen))."\">{$this->codeZu()}";
     }
 
     return $code;
   }
 }
 
+/**
+ * @author DSH
+ */
 class Datumfeld extends Eingabe {
   protected $typ = "text";
 
@@ -153,21 +162,23 @@ class Datumfeld extends Eingabe {
       $datum[2] = date("Y");
     }
 
-    $this->wegAktion("onfocus", "onblur", "onchange", "onkeyup");
-    $this->dazuAktion("onfocus",  "ui.datumsanzeige.tageswahl.generieren(\"{$this->getId()}\", true)");
-    $this->dazuAktion("onblur",   "ui.datumsanzeige.tageswahl.generieren(\"{$this->getId()}\", false)");
-    $this->dazuAktion("onchange", "ui.datumsanzeige.checkTag(\"{$this->getId()}\")");
-    $this->dazuAktion("onkeyup",  "ui.datumsanzeige.checkTag(\"{$this->getId()}\")");
+    $this->aktionen->setFunktion("onfocus",  3, "ui.datumsanzeige.tageswahl.generieren('{$this->id}', true)");
+    $this->aktionen->setFunktion("onblur",   3, "ui.datumsanzeige.tageswahl.generieren('{$this->id}', false)");
+    $this->aktionen->setFunktion("onchange", 3, "ui.datumsanzeige.checkTag('{$this->id}')");
+    $this->aktionen->setFunktion("onkeyup",  3, "ui.datumsanzeige.checkTag('{$this->id}')");
 
-    $code  = "<{$this->codeAuf("id", "value", "class")} id=\"{$this->getId()}T\" value=\"{$datum[0]}\" class=\"dshUiEingabefeld dshUiDatumfeldT".join(" ", array_merge(array(""), $this->klassen))."\">{$this->codeZu()} ";
-    $code .= "<{$this->codeAuf("id", "value", "class")} id=\"{$this->getId()}M\" value=\"{$datum[1]}\" class=\"dshUiEingabefeld dshUiDatumfeldM".join(" ", array_merge(array(""), $this->klassen))."\">{$this->codeZu()} ";
-    $code .= "<{$this->codeAuf("id", "value", "class")} id=\"{$this->getId()}J\" value=\"{$datum[2]}\" class=\"dshUiEingabefeld dshUiDatumfeldJ".join(" ", array_merge(array(""), $this->klassen))."\">{$this->codeZu()} ";
-    $code .= "<div class=\"dshUiDatumwahl\" id=\"{$this->getId()}Datumwahl\"></div>";
+    $code  = "<{$this->codeAuf("id", "value", "class")} id=\"{$this->id}T\" value=\"{$datum[0]}\" class=\"dshUiEingabefeld dshUiDatumfeldT".join(" ", array_merge(array(""), $this->klassen))."\">{$this->codeZu()} ";
+    $code .= "<{$this->codeAuf("id", "value", "class")} id=\"{$this->id}M\" value=\"{$datum[1]}\" class=\"dshUiEingabefeld dshUiDatumfeldM".join(" ", array_merge(array(""), $this->klassen))."\">{$this->codeZu()} ";
+    $code .= "<{$this->codeAuf("id", "value", "class")} id=\"{$this->id}J\" value=\"{$datum[2]}\" class=\"dshUiEingabefeld dshUiDatumfeldJ".join(" ", array_merge(array(""), $this->klassen))."\">{$this->codeZu()} ";
+    $code .= "<div class=\"dshUiDatumwahl\" id=\"{$this->id}Datumwahl\"></div>";
 
     return $code;
   }
 }
 
+/**
+ * @author DSH
+ */
 class Schieber extends Eingabe {
   protected $tag = "span";
 
@@ -176,29 +187,34 @@ class Schieber extends Eingabe {
     if($this->wert === 1)
       $wert = "1";
 
-    $this->wegAktion("onclick");
-    $this->dazuAktion("onclick",  "ui.schieber.aktion(\"{$this->getId()}\")");
+    $this->aktionen->setFunktion("onclick",  3, "ui.schieber.aktion('{$this->id}')");
 
-    $code  = "<{$this->codeAuf("id", "value", "class")} id=\"{$this->getId()}Schieber\" class=\"dshUiSchieberAussen dshUiSchieber$wert".join(" ", array_merge(array(""), $this->klassen))."\"><span class=\"dshUiSchieber\"></span>{$this->codeZu()}";
-    $code .= "<input type=\"hidden\" id=\"{$this->getId()}\" value=\"$wert\">";
+    $code  = "<{$this->codeAuf("id", "value", "class")} id=\"{$this->id}Schieber\" class=\"dshUiSchieberAussen dshUiSchieber$wert".join(" ", array_merge(array(""), $this->klassen))."\"><span class=\"dshUiSchieber\"></span>{$this->codeZu()}";
+    $code .= "<input type=\"hidden\" id=\"{$this->id}\" value=\"$wert\">";
 
     return $code;
   }
 }
 
+/**
+ * @author DSH
+ */
 class Textfeld extends PlatzhalterEingabe {
   protected $typ = "text";
 
   /**
    * Erstellt eine neue Eingabe
    *
-   * @param string $id ID des Eingabeelements
+   * @param   string $id ID des Eingabeelements
    */
   public function __construct($id) {
     parent::__construct($id);
   }
 }
 
+/**
+ * @author DSH
+ */
 class Zahlenfeld extends PlatzhalterEingabe {
   protected $typ = "number";
 
@@ -212,10 +228,10 @@ class Zahlenfeld extends PlatzhalterEingabe {
   /**
    * Erstellt eine neue Eingabe
    *
-   * @param string $id ID des Eingabeelements
-   * @param string $min Minimalwert des Zahlbereichs
-   * @param string $max Maximalwert des Zahlbereichs
-   * @param string $schritt Schrittweite des Zahlbereichs
+   * @param   string $id ID des Eingabeelements
+   * @param   string $min Minimalwert des Zahlbereichs
+   * @param   string $max Maximalwert des Zahlbereichs
+   * @param   string $schritt Schrittweite des Zahlbereichs
    */
   public function __construct($id, $min = null, $max = null, $schritt = null) {
     parent::__construct($id);
@@ -227,8 +243,8 @@ class Zahlenfeld extends PlatzhalterEingabe {
 
   /**
    * Gibt den Code des öffnenden Tags zurück (Ohne < >)
-   * @param string ...$nicht Attribute, die ignoriert werden sollen
-   * @return string Der Code des öffnenden Tags
+   * @param   string ...$nicht Attribute, die ignoriert werden sollen
+   * @return  string Der Code des öffnenden Tags
    */
   public function codeAuf(...$nicht) : string {
     $rueck = parent::codeAuf(...$nicht);
@@ -243,13 +259,16 @@ class Zahlenfeld extends PlatzhalterEingabe {
   }
 }
 
+/**
+ * @author DSH
+ */
 class Farbfeld extends Textfeld {
   protected $typ = "color";
 
   /**
    * Erstellt eine neue Eingabe
    *
-   * @param string $id ID des Eingabeelements
+   * @param   string $id ID des Eingabeelements
    */
   public function __construct($id) {
     parent::__construct($id);
@@ -257,6 +276,9 @@ class Farbfeld extends Textfeld {
   }
 }
 
+/**
+ * @author DSH
+ */
 class Passwortfeld extends Textfeld {
   protected $typ = "password";
   /** @var Textfeld $bezug Textfeld, mit dem das Passwort verglichen werden soll */
@@ -265,8 +287,8 @@ class Passwortfeld extends Textfeld {
   /**
    * Erstellt eine neue Eingabe
    *
-   * @param string $id ID des Eingabeelements
-   * @param Textfeld $bezug Textfeld, mit dem das Passwort verglichen werden soll
+   * @param   string $id ID des Eingabeelements
+   * @param   Textfeld $bezug Textfeld, mit dem das Passwort verglichen werden soll
    */
   public function __construct($id, $bezug = null) {
     parent::__construct($id);
@@ -275,8 +297,8 @@ class Passwortfeld extends Textfeld {
 
   /**
    * Setzt das Bezugsfeld des Eingabefelds
-   * @param Textfeld $bezug :)
-   * @return self
+   * @param   Textfeld $bezug :)
+   * @return  self
    */
   public function setBezugsfeld($bezug) : self {
     $this->bezug = $bezug;
@@ -285,7 +307,7 @@ class Passwortfeld extends Textfeld {
 
   /**
    * Gibt das Bezugsfeld des Eingabefelds zurück
-   * @return Textfeld
+   * @return  Textfeld
    */
   public function getBezugsfeld() : Textfeld {
     return $this->bezug;
@@ -293,31 +315,35 @@ class Passwortfeld extends Textfeld {
 
   public function __toString() : string {
     if($this->bezug !== null) {
-      $this->wegAktion("onchange");
-      $this->dazuAktion("onchange", "ui.passwort.aktion(\"{$this->bezug->getId()}\", \"{$this->getId()}\")");
+      $this->aktionen->setFunktion("onchange", 3, "ui.passwort.aktion('{$this->bezug->id}', \"{$this->id}')");
     }
 
     return parent::__toString();
   }
 }
 
+/**
+ * @author DSH
+ */
 class Mailfeld extends Textfeld {
   protected $typ = "text";
 
   public function __toString() : string {
-    $this->wegAktion("onchange");
-    $this->dazuAktion("onchange", "ui.mail.aktion(\"{$this->getId()}\")");
-    return parent::__toString()."</td><td><span id=\"{$this->getId()}Pruefen\" class=\"dshUiPruefen0\"></span>";
+    $this->aktionen->setFunktion("onchange", 3,  "ui.mail.aktion('{$this->id}')");
+    return parent::__toString()."</td><td><span id=\"{$this->id}Pruefen\" class=\"dshUiPruefen0\"></span>";
   }
 }
 
+/**
+ * @author DSH
+ */
 class Textarea extends Textfeld {
   protected $tag = "textarea";
 
   /**
    * Erstellt eine neue Eingabe
    *
-   * @param string $id ID der Textarea
+   * @param   string $id ID der Textarea
    */
   public function __construct($id) {
     parent::__construct($id);
@@ -420,12 +446,12 @@ class Togglegruppe extends Eingabe {
       }
       else {$toggled = "";}
       $aktionen = $this->aktion->klonen();
-      $aktionen->dazu("onclick", "ui.toggle.aktion(\"$this->getId()\", \"$i\", \"$anzahl\", \"{$this->optionen[$i]->getWert()}\")", true);
-      $code .= "<span id=\"{$this->getId()}Knopf$i\" class=\"dshUiToggle $toggled $this->klasse\"{$aktionen->ausgabe()}>{$this->optionen[$i]->getText()}</span> ";
+      $aktionen->dazu("onclick", "ui.toggle.aktion('$this->id', '$i', '$anzahl', '{$this->optionen[$i]->getWert()}')", true);
+      $code .= "<span id='{$this->id}Knopf$i' class='dshUiToggle $toggled $this->klasse'{$aktionen->ausgabe()}>{$this->optionen[$i]->getText()}</span> ";
     }
 
-    $code .= "<input type=\"hidden\" id=\"$this->getId()\" name=\"$this->getId()\" value=\"{$this->optionen[$knopfId]->getWert()}\">";
-    $code .= "<input type=\"hidden\" id=\"{$this->getId()}KnopfId\" name=\"{$this->getId()}KnopfId\" value=\"$knopfId\">";
+    $code .= "<input type='hidden' id='$this->id' name='$this->id' value='{$this->optionen[$knopfId]->getWert()}'>";
+    $code .= "<input type='hidden' id='{$this->id}KnopfId' name='{$this->id}KnopfId' value='$knopfId'>";
     return $code;
   }
 }
@@ -462,7 +488,7 @@ class Auswahl extends Eingabe {
    * @return string Code der Selectbox
    */
   public function __toString() : string {
-    $code   = "<select id=\"$this->getId()\" name=\"$this->getId()\" class=\"dshUiEingabefeld dshUiSelectfeld $this->klasse\"{$this->aktion->ausgabe()}>";
+    $code   = "<select id=\"$this->id\" name=\"$this->id\" class=\"dshUiEingabefeld dshUiSelectfeld $this->klasse\"{$this->aktion->ausgabe()}>";
     foreach ($this->optionen as $opt) {
       $code .= $opt->ausgabe($this->wert);
     }

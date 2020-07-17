@@ -1,5 +1,6 @@
 <?php
-	include_once("$KLASSEN/element.php");
-	include_once("$KLASSEN/eingabe.php");
+	include_once("$KLASSEN/elemente/aktionen.php");
+	include_once("$KLASSEN/elemente/element.php");
+	include_once("$KLASSEN/elemente/eingabe.php");
 
 ?>

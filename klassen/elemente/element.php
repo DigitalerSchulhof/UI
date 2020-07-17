@@ -13,20 +13,20 @@ abstract class Element {
 	protected $klassen = array();
 	/** @var string ID des Elements - Weggelassen wenn <code>null</code> */
 	protected $id = null;
-	/** @var string[][] Aktionen des Elements */
-	protected $aktionen = array();
+	/** @var Aktionen Aktionen des Elements */
+	protected $aktionen = null;
 
 	/**
 	 * Erzeugt ein neues UI-Element
 	 */
 	public function __construct() {
-
+		$this->aktionen = new Aktionen();
 	}
 
 	/**
 	 * Fügt eine oder mehrere CSS-Klasse(n) hinzu
-	 * @param string ...$klassen Hinzuzufügende CSS-Klasse(n)
-	 * @return self
+	 * @param 	string ...$klassen Hinzuzufügende CSS-Klasse(n)
+	 * @return 	self
 	 */
 	public function dazuKlasse(...$klassen) : self {
 		$this->klassen = array_merge($this->klassen, $klassen);
@@ -35,8 +35,8 @@ abstract class Element {
 
 	/**
 	 * Entfernt eine oder mehrere CSS-Klasse(n)
-	 * @param string ...$klassen Zu entfernende Klasse(n)
-	 * @return self
+	 * @param 	string ...$klassen Zu entfernende Klasse(n)
+	 * @return 	self
 	 */
 	public function wegKlasse(...$klassen) : self {
 		$this->klassen = array_diff($this->klassen, $klassen);
@@ -45,8 +45,8 @@ abstract class Element {
 
 	/**
 	 * Gibt zurück, ob eine CSS-Klasse vorhanden ist
-	 * @param string $klasse Die zu prüfende Klasse
-	 * @return boolean Ob die Klasse vorhanden ist
+	 * @param 	string $klasse Die zu prüfende Klasse
+	 * @return 	boolean Ob die Klasse vorhanden ist
 	 */
 	public function hatKlasse($klasse) : boolean {
 		return in_array($klasse, $this->klassen);
@@ -54,8 +54,8 @@ abstract class Element {
 
 	/**
 	 * Setzt die ID
-	 * @param string $id :)
-	 * @return self
+	 * @param 	string $id :)
+	 * @return 	self
 	 */
 	public function setID($id) : self {
 		$this->id = $id;
@@ -64,7 +64,7 @@ abstract class Element {
 
 	/**
 	 * Gibt die ID zurück
-	 * @return string
+	 * @return 	string
 	 */
 	public function getID() : string {
 		return $this->id;
@@ -72,8 +72,8 @@ abstract class Element {
 
 	/**
 	 * Setzt den Tag
-	 * @param string $tag :)
-	 * @return self
+	 * @param 	string $tag :)
+	 * @return 	self
 	 */
 	public function setTag($tag) : self {
 		$this->tag = $tag;
@@ -82,38 +82,34 @@ abstract class Element {
 
 	/**
 	 * Gibt den Tag zurück
-	 * @return string
+	 * @return 	string
 	 */
 	public function getTag() : string {
 		return $this->tag;
 	}
 
 	/**
-	 * Fügt einen oder mehrere Eventhandler hinzu
-	 * @param string $listener Event, auf das gehört werden soll
-	 * @param string ...$handler Was passiert, wenn das Event auftritt
-	 * @return self
+	 * Gibt die Aktionen als Objekt zurück
+	 * @return 	Aktionen
 	 */
-	public function dazuAktion($listener, ...$handler) : self {
-		$this->aktionen[$listener] = array_merge($this->aktionen[$listener] ?? array(), $handler);
-		return $this;
+	public function getAktionen() : Aktionen {
+		return $this->aktionen;
 	}
 
 	/**
-	 * Entfernt alle Aktionen des(/der) übergebenen Events
-	 * @param string ...$listener Zu entfernende(s) Eventlistener
-	 * @return self
+	 * Überschreibt die Aktionen
+	 * @param 	Aktionen $aktionen :)
+	 * @return 	self
 	 */
-	public function wegAktion(...$listener) : self {
-		foreach($listener as $listener)
-			unset($this->aktionen[$listener]);
+	public function setAktionen($aktionen) : self {
+		$this->aktionen = $aktionen;
 		return $this;
 	}
 
 	/**
 	 * Gibt den Code des öffnenden Tags zurück (Ohne < >)
-	 * @param string ...$nicht Attribute, die ignoriert werden sollen
-	 * @return string Der Code des öffnenden Tags
+	 * @param 	string ...$nicht Attribute, die ignoriert werden sollen
+	 * @return 	string Der Code des öffnenden Tags
 	 */
 	public function codeAuf(...$nicht) : string {
 		$rueck = $this->tag;
@@ -126,24 +122,15 @@ abstract class Element {
 		if(count($this->klassen) > 0 && !in_array("class", $nicht))
 			$rueck .= " class='".join(" ", $this->klassen)."'";
 
-		foreach($this->aktionen as $listener => $handler) {
-			if(in_array($listener, $nicht))
-				continue;
-			$rueck .= " $listener='";
-			foreach($handler as $hi => $h) {
-				if($hi > 0)
-					$rueck .= ";";
-				$rueck .= "$h";
-			}
-			$rueck .= "'";
-		}
+		if($this->aktionen !== null && $this->aktionen->count() > 0 && !in_array("aktionen", $nicht))
+			$rueck .= " {$this->aktionen}";
 
 		return $rueck;
 	}
 
 	/**
 	 * Gibt den Code des schließenden Tags zurück (Mit < >)
-	 * @return string Der Code des schließenden Tags
+	 * @return 	string Der Code des schließenden Tags
 	 */
 	public function codeZu() : string {
 		if($this->tag === null)
@@ -158,12 +145,7 @@ abstract class Element {
 	/**
    * Gibt den HTML-Code des Elements zurück
    *
-   * Folgende Werte sind verfügbar:
-   * - $this->class: 			CSS-Klassenliste in "class="-Form
-   * - $this->id:					Elemente-ID in "id="-Form
-   * - $this->attribute:	$this->class und $this->id zusammengesetzt mit Leerzeichen am Anfgang
-   *
-   * @return string HTML-Code
+   * @return 	string HTML-Code
    */
 	 public function __toString() : string {
      return "<{$this->codeAuf()}>{$this->codeZu()}";
@@ -181,10 +163,11 @@ class InhaltElement extends Element {
 
 	/**
 	 * Erzeugt ein neues UI-Element
-	 * @param string $tag Tag des Elements
-	 * @param string $inhalt Inhalt des Absatzes
+	 * @param 	string $tag Tag des Elements
+	 * @param 	string $inhalt Inhalt des Absatzes
 	 */
 	 public function __construct($tag, $inhalt = "") {
+		 parent::__construct();
 		 $this->tag			= $tag;
 		 $this->inhalt 	= $inhalt;
 	}
