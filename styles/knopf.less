@@ -10,8 +10,7 @@
 .dshUiKnopf, .dshUiKnopfIcon, .dshUiKnopfGross, .dshUiToggle {padding: 3px 6px;}
 .dshUiKnopfMini {padding: 3px 5px;}
 
-.dshUiKnopfPassiv {
-  border-style: dashed !important;
+.dshUiKnopfPassiv, .dshUiKnopfGesperrt, .dshUiKnopfEingeschraenkt {
   cursor: not-allowed !important;
 }
 
@@ -26,22 +25,25 @@
 
 .dshUiKnopfErfolg, .dshUiToggled  {
   background-color: @erfolgHintergrund;
-  border: 1px solid @erfolgAkzent;
+  border-color: @erfolgAkzent;
 }
 .dshUiKnopfInfo    {
   background-color: @infoHintergrund;
-  border: 1px solid @infoAkzent;
+  border-color: @infoAkzent;
 }
 .dshUiKnopfWarnung {
   background-color: @warnungHintergrund;
-  border: 1px solid @warnungAkzent;
+  border-color: @warnungAkzent;
 }
 .dshUiKnopfFehler {
   background-color: @fehlerHintergrund;
-  border: 1px solid @fehlerAkzent;
+  border-color: @fehlerAkzent;
+}
+.dshUiKnopfEingeschraenkt {
+  border-color: @fehlerAkzent;
 }
 
-.dshUiKnopfPassiv {
+.dshUiKnopfPassiv, .dshUiKnopfGesperrt, .dshUiKnopfEingeschraenkt {
   background-color: @seitenhintergrund !important;
 }
 
@@ -64,4 +66,8 @@
 
 .dshUiKnopfFehler:hover  {
   background-color: @fehlerAkzent;
+}
+
+.dshUiKnopfPassiv:hover, .dshUiKnopfGesperrt:hover, .dshUiKnopfEingeschraenkt:hover {
+  background-color: @seitenhintergrund !important;
 }

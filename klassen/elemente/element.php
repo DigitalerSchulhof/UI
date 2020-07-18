@@ -38,7 +38,7 @@ abstract class Element {
 	 * @param 	string ...$klassen Zu entfernende Klasse(n)
 	 * @return 	self
 	 */
-	public function wegKlasse(...$klassen) : self {
+	public function removeKlasse(...$klassen) : self {
 		$this->klassen = array_diff($this->klassen, $klassen);
 		return $this;
 	}
