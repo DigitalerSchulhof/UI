@@ -28,7 +28,7 @@ abstract class Element {
 	 * @param 	string ...$klassen Hinzuzufügende CSS-Klasse(n)
 	 * @return 	self
 	 */
-	public function dazuKlasse(...$klassen) : self {
+	public function addKlasse(...$klassen) : self {
 		$this->klassen = array_merge($this->klassen, $klassen);
 		return $this;
 	}
@@ -106,6 +106,14 @@ abstract class Element {
 		return $this;
 	}
 
+  /**
+   * Gibt sich selbst zurück. Der Übersicht haber
+   * @return self
+   */
+  public function self() : self {
+    return $this;
+  }
+
 	/**
 	 * Gibt den Code des öffnenden Tags zurück (Ohne < >)
 	 * @param 	string ...$nicht Attribute, die ignoriert werden sollen
@@ -163,12 +171,10 @@ class InhaltElement extends Element {
 
 	/**
 	 * Erzeugt ein neues UI-Element
-	 * @param 	string $tag Tag des Elements
 	 * @param 	string $inhalt Inhalt des Absatzes
 	 */
-	 public function __construct($tag, $inhalt = "") {
+	 public function __construct($inhalt = "") {
 		 parent::__construct();
-		 $this->tag			= $tag;
 		 $this->inhalt 	= $inhalt;
 	}
 

@@ -72,7 +72,7 @@ abstract class PlatzhalterEingabe extends Eingabe {
    */
   public function __construct($id) {
     parent::__construct($id);
-    $this->dazuKlasse("dshUiEingabefeld");
+    $this->addKlasse("dshUiEingabefeld");
   }
 
 
@@ -238,7 +238,7 @@ class Zahlenfeld extends PlatzhalterEingabe {
     $this->min      = $min;
     $this->max      = $max;
     $this->schritt  = $schritt;
-    $this->dazuKlasse("dshUiZahlfeld");
+    $this->addKlasse("dshUiZahlfeld");
   }
 
   /**
@@ -272,7 +272,7 @@ class Farbfeld extends Textfeld {
    */
   public function __construct($id) {
     parent::__construct($id);
-    $this->dazuKlasse("dshUiFarbfeld");
+    $this->addKlasse("dshUiFarbfeld");
   }
 }
 
@@ -347,7 +347,7 @@ class Textarea extends Textfeld {
    */
   public function __construct($id) {
     parent::__construct($id);
-    $this->dazuKlasse("dshUiTextarea");
+    $this->addKlasse("dshUiTextarea");
   }
 
   public function __toString() : string {
@@ -426,7 +426,7 @@ class Togglegruppe extends Eingabe {
    * @param string $text Text der Option
    * @param string $wert Wert der Option
    */
-  public function dazu($text, $wert) {
+  public function add($text, $wert) {
     $this->optionen[] = new Option ($text, $wert);
   }
 
@@ -446,7 +446,7 @@ class Togglegruppe extends Eingabe {
       }
       else {$toggled = "";}
       $aktionen = $this->aktion->klonen();
-      $aktionen->dazu("onclick", "ui.toggle.aktion('$this->id', '$i', '$anzahl', '{$this->optionen[$i]->getWert()}')", true);
+      $aktionen->add("onclick", "ui.toggle.aktion('$this->id', '$i', '$anzahl', '{$this->optionen[$i]->getWert()}')", true);
       $code .= "<span id='{$this->id}Knopf$i' class='dshUiToggle $toggled $this->klasse'{$aktionen->ausgabe()}>{$this->optionen[$i]->getText()}</span> ";
     }
 
@@ -479,7 +479,7 @@ class Auswahl extends Eingabe {
    * @param string $text Text der Option
    * @param string $wert Wert der Option
    */
-  public function dazu($text, $wert) {
+  public function add($text, $wert) {
     $this->optionen[] = new Option ($text, $wert);
   }
 

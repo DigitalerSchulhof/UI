@@ -3,7 +3,7 @@ namespace UI\Elemente;
 
 /**
  * @author DSH
- * 
+ *
  * Aktionen enthällt alle on*-Aktionen eines Elements, sowie was dann passiert.
  * Auslöser haben Funktionen, die als <code>auslöser="funktion;funktion;funktion" auslöser="funktion;funktion"</code> ausgegeben werden.
  * Funktionen haben eine Priorität, die zugleich als Platz gilt. Je höher die Priorität, desto weiter vorne steht die Funktion bei der Ausgabe der Aktionen.
@@ -24,7 +24,7 @@ class Aktionen {
 	}
 
 	/**
-	 * Überschreibt die Funktionen mit der angegebenen Priorität. <b>Zuvor übergebene Funktionen dieser Priorität dieses Auslösers gehen verloren!</b><br>Funktionen können über {@see UI\Elemente\Aktionen::dazuAktion} angehängt werden.
+	 * Überschreibt die Funktionen mit der angegebenen Priorität. <b>Zuvor übergebene Funktionen dieser Priorität dieses Auslösers gehen verloren!</b><br>Funktionen können über {@see UI\Elemente\Aktionen::addAktion} angehängt werden.
 	 * @param 	string $ausloeser Auslöser der Funktionen
 	 * @param 	int $prioritaet Priorität der Funktionen
 	 * @param 	string ...$funktionen Was passiert, wenn der Auslöser auftritt - <code>null</code> zum Leeren
@@ -46,8 +46,8 @@ class Aktionen {
 	 * @param 	string ...$funktionen Was passiert, wenn der Auslöser auftritt
 	 * @return 	self
 	 */
-	public function dazuFunktion($ausloeser, ...$funktionen) : self {
-		return $this->dazuFunktionPrioritaet($ausloeser, -1, ...$funktionen);
+	public function addFunktion($ausloeser, ...$funktionen) : self {
+		return $this->addFunktionPrioritaet($ausloeser, -1, ...$funktionen);
 	}
 
 	/**
@@ -57,7 +57,7 @@ class Aktionen {
 	 * @param 	string ...$funktionen Was passiert, wenn der Auslöser auftritt
 	 * @return 	self
 	 */
-	public function dazuFunktionPrioritaet($ausloeser, $prioritaet, ...$funktionen) : self {
+	public function addFunktionPrioritaet($ausloeser, $prioritaet, ...$funktionen) : self {
 		$ak 	= $this->aktionen[$ausloeser] ?? array();
 		$akp 	= $ak[$prioritaet] ?? array();
 		$this->aktionen[$ausloeser][$prioritaet] = array_merge($akp, $funktionen);
@@ -69,7 +69,7 @@ class Aktionen {
 	 * @param 	string ...$ausloeser Auslöser, dessen(/deren) Funktionen gelöscht werden sollen
 	 * @return 	self
 	 */
-	public function wegFunktionen(...$ausloeser) : self {
+	public function removeFunktionen(...$ausloeser) : self {
 		foreach($ausloeser as $asl)
 			unset($this->aktionen[$asl]);
 		return $this;

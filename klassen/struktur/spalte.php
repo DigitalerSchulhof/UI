@@ -1,13 +1,12 @@
 <?php
-namespace UI;
+namespace UI\Struktur;
+use UI;
 
-class Spalte {
+class Spalte extends UI\Elemente\Element {
   /** @var string Typ der Spalte */
   private $typ;
   /** @var string[] Elemente der Spalte */
   private $elemente;
-  /** @var string CSS-Zusatzklassen dieser Spalte */
-  private $klasse;
 
   /**
    * Erstellt eine neue Spalte
@@ -45,7 +44,7 @@ class Spalte {
    * Fügt ein Element der Spalte hinzu
    * @param  string $element Hinzuzufügendes Element
    */
-  public function dazu($element) {
+  public function add($element) {
     $this->elemente[] = $element;
   }
 }
@@ -86,9 +85,8 @@ class Zeile {
    * Fügt eine Spalte der Zeile hinzu
    * @param Spalte $spalte Hinzuzufügende Spalte
    */
-  public function dazu($spalte) {
+  public function add($spalte) {
     $this->spalten[] = $spalte;
   }
-
 }
 ?>
