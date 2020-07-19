@@ -44,7 +44,7 @@
 .dshUiSchieberAussen {
   display: inline-block;
   width: 40px;
-  border: 1px solid @abstufung2;
+  border: 1px solid;
   border-radius: calc(@radius5 + 2px);
   line-height: 0;
 }
@@ -53,17 +53,14 @@
   display: inline-block;
   height: 20px;
   width: 20px;
-  background-color: @seitenhintergrund;
   border-radius: @radius5;
 }
 
 .dshUiSchieber0 {
-  background: @fehlerHintergrund;
   text-align: left;
 }
 
 .dshUiSchieber1 {
-  background: @erfolgHintergrund;
   text-align: right;
 }
 
@@ -71,7 +68,7 @@
 
 .dshUiEingabefeld {
   border-color: @abstufung2;
-  border-bottom-color: 1px solid @abstufung4;
+  border-bottom-color: @abstufung4;
   color: @schriftfarbePositiv;
 }
 
@@ -88,4 +85,20 @@
 .dshUiPruefen1 {
   border-color: @erfolgHintergrund !important;
   border-bottom-color: @erfolgAkzent !important;
+}
+
+.dshUiSchieberAussen {
+  border-color: @abstufung2;
+}
+
+.dshUiSchieber {
+  background-color: @seitenhintergrund;
+}
+
+.dshUiSchieber0 {
+  background: @fehlerHintergrund;
+}
+
+.dshUiSchieber1 {
+  background: @erfolgHintergrund;
 }
