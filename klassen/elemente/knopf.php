@@ -32,6 +32,7 @@ class Knopf extends UI\Elemente\InhaltElement {
     if ($self->aktionen->count() === 0) {
       $self->addKlasse("dshUiKnopfPassiv");
     }
+    $self->addKlasse("dshUiKnopf");
     $self->addKlasse("dshUiKnopf{$self->art}");
 
     return $self;

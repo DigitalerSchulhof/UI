@@ -140,16 +140,18 @@ class Uhrzeitfeld extends Eingabe {
     if($this->zeigeSekunden)
       $sekunden = "1";
 
-    $this->aktionen->setFunktion("onchange", 3, "ui.datumsanzeige.checkUhrzeit('{$this->id}', $sekunden)");
-    $this->aktionen->setFunktion("onkeyup",  3, "ui.datumsanzeige.checkUhrzeit('{$this->id}', $sekunden)");
+    $self = clone $this;
 
-    $code    = "<{$this->codeAuf(false, "id", "value", "class")} id=\"{$this->id}Std\" value=\"{$uhrzeit[0]}\" class=\"dshUiEingabefeld dshUiUhrzeitfeldStd".join(" ", array_merge(array(""), $this->klassen))."\">{$this->codeZu()}";
+    $self->aktionen->addFunktionPrioritaet("onchange", 3, "ui.datumsanzeige.checkUhrzeit('{$self->id}', $sekunden)");
+    $self->aktionen->addFunktionPrioritaet("onkeyup",  3, "ui.datumsanzeige.checkUhrzeit('{$self->id}', $sekunden)");
+
+    $code    = "<{$self->codeAuf(false, "id", "value", "class")} id=\"{$self->id}Std\" value=\"{$uhrzeit[0]}\" class=\"dshUiEingabefeld dshUiUhrzeitfeldStd".join(" ", array_merge(array(""), $self->klassen))."\">{$self->codeZu()}";
     $code   .= " : ";
-    $code   .= "<{$this->codeAuf(false, "id", "value", "class")} id=\"{$this->id}Min\" value=\"{$uhrzeit[1]}\" class=\"dshUiEingabefeld dshUiUhrzeitfeldMin".join(" ", array_merge(array(""), $this->klassen))."\">{$this->codeZu()}";
+    $code   .= "<{$self->codeAuf(false, "id", "value", "class")} id=\"{$self->id}Min\" value=\"{$uhrzeit[1]}\" class=\"dshUiEingabefeld dshUiUhrzeitfeldMin".join(" ", array_merge(array(""), $self->klassen))."\">{$self->codeZu()}";
 
-    if ($this->zeigeSekunden) {
+    if ($self->zeigeSekunden) {
       $code .= " : ";
-      $code .= "<{$this->codeAuf(false, "id", "value", "class")} id=\"{$this->id}Sek\" value=\"$uhrzeit[2]\" class=\"dshUiEingabefeld dshUiUhrzeitfeldSek".join(" ", array_merge(array(""), $this->klassen))."\">{$this->codeZu()}";
+      $code .= "<{$self->codeAuf(false, "id", "value", "class")} id=\"{$self->id}Sek\" value=\"$uhrzeit[2]\" class=\"dshUiEingabefeld dshUiUhrzeitfeldSek".join(" ", array_merge(array(""), $self->klassen))."\">{$self->codeZu()}";
     }
 
     return $code;
@@ -168,15 +170,17 @@ class Datumfeld extends Eingabe {
       $datum[2] = date("Y");
     }
 
-    $this->aktionen->setFunktion("onfocus",  3, "ui.datumsanzeige.tageswahl.generieren('{$this->id}', true)");
-    $this->aktionen->setFunktion("onblur",   3, "ui.datumsanzeige.tageswahl.generieren('{$this->id}', false)");
-    $this->aktionen->setFunktion("onchange", 3, "ui.datumsanzeige.checkTag('{$this->id}')");
-    $this->aktionen->setFunktion("onkeyup",  3, "ui.datumsanzeige.checkTag('{$this->id}')");
+    $self = clone $this;
 
-    $code  = "<{$this->codeAuf(false, "id", "value", "class")} id=\"{$this->id}T\" value=\"{$datum[0]}\" class=\"dshUiEingabefeld dshUiDatumfeldT".join(" ", array_merge(array(""), $this->klassen))."\">{$this->codeZu()} ";
-    $code .= "<{$this->codeAuf(false, "id", "value", "class")} id=\"{$this->id}M\" value=\"{$datum[1]}\" class=\"dshUiEingabefeld dshUiDatumfeldM".join(" ", array_merge(array(""), $this->klassen))."\">{$this->codeZu()} ";
-    $code .= "<{$this->codeAuf(false, "id", "value", "class")} id=\"{$this->id}J\" value=\"{$datum[2]}\" class=\"dshUiEingabefeld dshUiDatumfeldJ".join(" ", array_merge(array(""), $this->klassen))."\">{$this->codeZu()} ";
-    $code .= "<div class=\"dshUiDatumwahl\" id=\"{$this->id}Datumwahl\"></div>";
+    $self->aktionen->addFunktionPrioritaet("onfocus",  3, "ui.datumsanzeige.tageswahl.generieren('{$self->id}', true)");
+    $self->aktionen->addFunktionPrioritaet("onblur",   3, "ui.datumsanzeige.tageswahl.generieren('{$self->id}', false)");
+    $self->aktionen->addFunktionPrioritaet("onchange", 3, "ui.datumsanzeige.checkTag('{$self->id}')");
+    $self->aktionen->addFunktionPrioritaet("onkeyup",  3, "ui.datumsanzeige.checkTag('{$self->id}')");
+
+    $code  = "<{$self->codeAuf(false, "id", "value", "class")} id=\"{$self->id}T\" value=\"{$datum[0]}\" class=\"dshUiEingabefeld dshUiDatumfeldT".join(" ", array_merge(array(""), $self->klassen))."\">{$self->codeZu()} ";
+    $code .= "<{$self->codeAuf(false, "id", "value", "class")} id=\"{$self->id}M\" value=\"{$datum[1]}\" class=\"dshUiEingabefeld dshUiDatumfeldM".join(" ", array_merge(array(""), $self->klassen))."\">{$self->codeZu()} ";
+    $code .= "<{$self->codeAuf(false, "id", "value", "class")} id=\"{$self->id}J\" value=\"{$datum[2]}\" class=\"dshUiEingabefeld dshUiDatumfeldJ".join(" ", array_merge(array(""), $self->klassen))."\">{$self->codeZu()} ";
+    $code .= "<div class=\"dshUiDatumwahl\" id=\"{$self->id}Datumwahl\"></div>";
 
     return $code;
   }
@@ -188,13 +192,13 @@ class Schieber extends Eingabe {
   public function __toString() : string {
     $wert = "0";
     $self = clone $this;
-    if($this->wert === 1) {
+    if($self->wert === 1) {
       $wert = "1";
     }
 
-    $self->aktionen->addFunktionPrioritaet("onclick", 3, "ui.schieber.aktion('{$this->id}')");
+    $self->aktionen->addFunktionPrioritaet("onclick", 3, "ui.schieber.aktion('{$self->id}')");
 
-    $code  = "<{$self->codeAuf("id", "value", "class")} id=\"{$self->id}Schieber\" class=\"dshUiSchieberAussen dshUiSchieber$wert".join(" ", array_merge(array(""), $self->klassen))."\"><span class=\"dshUiSchieber\"></span>{$self->codeZu()}";
+    $code  = "<{$self->codeAuf(false, "id", "value", "class")} id=\"{$self->id}Schieber\" class=\"dshUiSchieberAussen dshUiSchieber$wert".join(" ", array_merge(array(""), $self->klassen))."\"><span class=\"dshUiSchieber\"></span>{$self->codeZu()}";
     $code .= "<input type=\"hidden\" id=\"{$self->id}\" value=\"$wert\">";
 
     return $code;
@@ -429,11 +433,12 @@ class Passwortfeld extends Textfeld {
   }
 
   public function __toString() : string {
-    if($this->bezug !== null) {
-      $this->aktionen->setFunktion("onchange", 3, "ui.passwort.aktion('{$this->bezug->id}', \"{$this->id}')");
+    $self = clone $this;
+    if($self->bezug !== null) {
+      $self->aktionen->addFunktionPrioritaet("onchange", 3, "ui.passwort.aktion('{$self->bezug->id}', \"{$self->id}')");
     }
 
-    return parent::__toString();
+    return "{$self->codeAuf()}{$self->codeZu()}";
   }
 }
 
@@ -441,8 +446,10 @@ class Mailfeld extends Textfeld {
   protected $typ = "text";
 
   public function __toString() : string {
-    $this->aktionen->setFunktion("onchange", 3,  "ui.mail.aktion('{$this->id}')");
-    return parent::__toString()."</td><td><span id=\"{$this->id}Pruefen\" class=\"dshUiPruefen0\"></span>";
+    $self = clone $this;
+    $self->aktionen->addFunktionPrioritaet("onchange", 3,  "ui.mail.aktion('{$self->id}')");
+
+    return "{$self->codeAuf()}{$self->codeZu()}";
   }
 }
 
