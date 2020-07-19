@@ -161,6 +161,91 @@ class Uhrzeitfeld extends Eingabe {
 class Datumfeld extends Eingabe {
   protected $typ = "text";
 
+  /**
+   * Gibt den Code für die Tageswahl zurück
+   * @return string
+   */
+  public function tageswahlGenerieren() : string {
+    $datum = explode(".", $this->wert);
+    if (count($datum) != 3) {
+      $datum[0] = date("d");
+      $datum[1] = date("m");
+      $datum[2] = date("Y");
+    }
+
+    $tag   = $datum[0];
+    $monat = $datum[1];
+    $jahr  = $datum[2];
+
+    $r = "<table>";
+    $monatz = new MiniIconKnopf(new \UI\Icon("fas fa-angle-double-left"), "Vorheriger Monat", null, "OR");
+    $monatz->getAktionen()->addFunktion("onclick", "ui.datumsanzeige.monataendern('{$this->id}', $tag, ".($monat-1).", $jahr)");
+    $monatv = new MiniIconKnopf(new \UI\Icon("fas fa-angle-double-right"), "Nächster Monat", null, "OL");
+    $monatv->getAktionen()->addFunktion("onclick", "ui.datumsanzeige.monataendern('{$this->id}', $tag, ".($monat+1).", $jahr)");
+
+    $r .= "<tr><th>$monatz</th><th colspan=\"5\" class=\"dshUiTageswahlMonatname\">".\UI\Generieren::monatnameLang($monat)." $jahr</th><th>$monatv</th></tr>";
+
+    $r .= "<tr>";
+    for ($i = 1; $i <= 7; $i++) {
+      $r .= "<td class=\"dshUiTageswahlTagname\">".\UI\Generieren::tagnameKurz($i)."</td>";
+    }
+    $r .= "</tr>";
+
+    $erster = mktime(0, 0, 0, $monat, 1, $jahr);
+    $wochentag = date("N", $erster);
+    $letzter = mktime(0, 0, 0, $monat+1, 1, $jahr)-1;
+    $letzter = date("d", $letzter);
+    if ($tag > $letzter) {$tag = $letzter;}
+
+    $nr = 1;
+    $klassenzusatz = "";
+
+    $r .= "<tr>";
+    // leer auffüllen, falls nicht mit Montag begonnen wird
+    for ($i=1; $i<$wochentag; $i++) {
+      $r .= "<td></td>";
+    }
+
+    for ($i=$wochentag; $i<=7; $i++) {
+      $tagknopf = new Knopf($nr);
+      if ($nr == $tag) {
+        $tagknopf->addKlasse("dshUiTagGewaehlt");
+      }
+      $tagknopf->getAktionen()->addFunktion("onclick", "ui.datumsanzeige.tageswahl.aktion('{$this->id}', $nr, $monat, $jahr)");
+      $r .= "<td>$tagknopf</td>";
+      $nr ++;
+    }
+    $r .= "</tr>";
+
+    $wochentag = 1;
+    while ($nr <= $letzter) {
+      if ($wochentag == 8) {
+        $r .= "</tr>";
+        $wochentag = 1;
+      }
+      if ($wochentag == 1) {$r .= "<tr>";}
+      $tagknopf = new Knopf($nr);
+      if ($nr == $tag) {
+        $tagknopf->addKlasse("dshUiTagGewaehlt");
+      }
+      $tagknopf->getAktionen()->addFunktion("onclick", "ui.datumsanzeige.tageswahl.aktion('{$this->id}', $nr, $monat, $jahr)");
+      $r .= "<td>$tagknopf</td>";
+      $nr ++;
+      $wochentag ++;
+    }
+
+    // leer auffüllen, falls nicht am Sonntag geendet
+    for ($i = $wochentag; $i<=7; $i++) {
+      $r .= "<td></td>";
+      $nr ++;
+    }
+    $r .= "</tr>";
+
+    $r .= "</table>";
+    return $r;
+
+  }
+
   public function __toString() : string {
     // Werte richtig setzen
     $datum = explode(".", $this->wert);

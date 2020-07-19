@@ -12,6 +12,6 @@ class Konstanten {
 	const SCHUTZ = "fas fa-shield-alt";
 	const LADEN = "fas fa-spinner";
 	const DEFAULT = "fas fa-box";
-
+  
 }
 ?>
