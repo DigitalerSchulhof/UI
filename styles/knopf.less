@@ -1,22 +1,36 @@
 // LAYOUT;
 
-.dshUiKnopf, .dshUiKnopfMini, .dshUiKnopfIcon, .dshUiKnopfGross, .dshUiToggle {
+.dshUiKnopf, .dshUiKnopfMini, .dshUiKnopfIcon, .dshUiKnopfGross,
+.dshUiToggle, .dshUiToggleIcon, .dshUiToggleGross {
   display: inline-block;
   border-radius: @radius2;
   cursor: pointer;
   transition: 250ms ease-in-out;
 }
 
-.dshUiKnopf, .dshUiKnopfIcon, .dshUiKnopfGross, .dshUiToggle {padding: 3px 6px;}
+.dshUiKnopf, .dshUiKnopfIcon, .dshUiKnopfGross,
+.dshUiToggle, .dshUiToggleIcon, .dshUiToggleGross {padding: 3px 6px;}
 .dshUiKnopfMini {padding: 3px 5px;}
 
 .dshUiKnopfPassiv, .dshUiKnopfGesperrt, .dshUiKnopfEingeschraenkt {
   cursor: not-allowed !important;
 }
 
+.dshUiKnopfGross i, .dshUiToggleGross i {
+  display: block;
+  text-align: center;
+  font-size: 150%;
+}
+
+.dshUiKnopfGross .dshUiKnopfGrossText, .dshUiToggleGross .dshUiToggleGrossText {
+  display: block;
+  text-align: center;
+}
+
 // FARBEN;
 
-.dshUiKnopf, .dshUiKnopfMini, .dshUiKnopfIcon, .dshUiKnopfGross, .dshUiToggle {
+.dshUiKnopf, .dshUiKnopfMini, .dshUiKnopfIcon, .dshUiKnopfGross,
+.dshUiToggle, .dshUiToggleIcon, .dshUiToggleGross {
   position: relative;
   background-color: @abstufung2;
   border: 1px solid @abstufung3;
@@ -47,12 +61,18 @@
   background-color: @seitenhintergrund !important;
 }
 
-.dshUiKnopf:hover, .dshUiKnopfMini:hover, .dshUiKnopfIcon:hover, .dshUiKnopfGross:hover, .dshUiToggle:hover {
+.dshUiKnopf:hover, .dshUiKnopfMini:hover, .dshUiKnopfIcon:hover, .dshUiKnopfGross:hover,
+.dshUiToggle:hover, .dshUiToggleIcon:hover, .dshUiToggleGross:hover {
   color: @schriftfarbeNegativ;
   background-color: @abstufung3;
 }
 
-.dshUiKnopfErfolg:hover, .dshUiToggle:hover  {
+.dshUiToggled:hover {
+  color: @schriftfarbeNegativ !important;
+  background-color: @abstufung3 !important;
+}
+
+.dshUiKnopfErfolg:hover, .dshUiToggle:hover, .dshUiToggleIcon:hover, .dshUiToggleGross:hover  {
   background-color: @erfolgAkzent;
 }
 

@@ -288,6 +288,18 @@ var ui = {
       $("#"+id+"Schieber").classList.remove("dshUiSchieberInnen"+wert);
     }
   },
+  toggle: {
+    aktion: (id) => {
+      var wert = $("#"+id).value;
+      var neuerwert = 0;
+      if (wert == 0) {
+        neuerwert = 1;
+      }
+      $("#"+id).value = neuerwert;
+      $("#"+id+"Toggle").classList.add("dshUiToggled");
+      $("#"+id+"Toggle").classList.remove("dshUiToggled");
+    }
+  },
   mail: {
     aktion: (id) => {
       var mail = $("#"+id).value;
