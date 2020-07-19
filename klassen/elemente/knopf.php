@@ -31,17 +31,17 @@ class Knopf extends UI\Elemente\InhaltElement {
     $self = clone $this;
 
     if ($this->aktionen->count() === 0) {
-      $self->dazuKlasse("dshUiKnopfPassiv");
+      $self->addKlasse("dshUiKnopfPassiv");
     }
-    $self->dazuKlasse("dshUiKnopf$art");
+    $self->addKlasse("dshUiKnopf$art");
 
     return "<$tag class=\"dshUiKnopf$zusatzklasse\"$eventattribute>{$this->text}</$tag>";
 
     switch($typ) {
       case "m":
-        $self->dazuKlasse("dshUiIconMini");
+        $self->addKlasse("dshUiIconMini");
         $hinweis = new UI\Hinweis($this->text);
-        return "<{$self->codeAuf()}>$hinweis{$this->icon}"
+        return "<{$self->codeAuf()}>$hinweis{$this->icon}";
 
     }
     if ($typ == "m") {
@@ -88,22 +88,22 @@ abstract class IconKnopf extends Knopf {
     $self = clone $this;
 
     if ($this->aktionen->count() === 0) {
-      $self->dazuKlasse("dshUiKnopfPassiv");
+      $self->addKlasse("dshUiKnopfPassiv");
     }
-    $self->dazuKlasse("dshUiKnopf$art");
+    $self->addKlasse("dshUiKnopf$art");
 
     return "<$tag class=\"dshUiKnopf$zusatzklasse\"$eventattribute>{$this->text}</$tag>";
 
     switch($typ) {
       case "Standard":
-        $self->dazuKlasse("dshUiKnopfIcon");
+        $self->addKlasse("dshUiKnopfIcon");
         return "{$self->codeAuf()}{$this->icon} {$this->text}{$self->codeZu()}";
       case "Mini":
-        $self->dazuKlasse("dshUiIconMini");
+        $self->addKlasse("dshUiIconMini");
         $hinweis = new UI\Hinweis($this->text);
         return "{$self->codeAuf()}$hinweis{$this->icon}{$self->codeZu()}";
       case "Gross":
-        $self->dazuKlasse("dshUiKnopfGross");
+        $self->addKlasse("dshUiKnopfGross");
         $knopfinhalt = new InhaltElement($this->text);
         $knopfinhalt->setTag("span");
         $knopfinhalt->addKlasse("dshUiKnopfGrossText");

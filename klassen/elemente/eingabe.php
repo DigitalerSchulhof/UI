@@ -2,8 +2,6 @@
 namespace UI\Elemente;
 
 /**
- * @author DSH
- *
  * Abstrakte Klasse für alle Eingabeelemente
  */
 abstract class Eingabe extends Element {
@@ -16,7 +14,6 @@ abstract class Eingabe extends Element {
 
   /**
    * Erstellt eine neue Eingabe
-   *
    * @param   string $id ID des Eingabeelements
    */
   public function __construct($id) {
@@ -58,9 +55,6 @@ abstract class Eingabe extends Element {
   }
 }
 
-/**
- * @author DSH
- */
 abstract class PlatzhalterEingabe extends Eingabe {
   /** @var string Platzhalter des Eingabefelds */
   protected $platzhalter = null;
@@ -108,9 +102,6 @@ abstract class PlatzhalterEingabe extends Eingabe {
   }
 }
 
-/**
- * @author DSH
- */
 class Uhrzeitfeld extends Eingabe {
   protected $typ = "text";
   /** @var boolean Ob bei der Ausgabe Sekunden angezeigt werden sollen */
@@ -147,9 +138,6 @@ class Uhrzeitfeld extends Eingabe {
   }
 }
 
-/**
- * @author DSH
- */
 class Datumfeld extends Eingabe {
   protected $typ = "text";
 
@@ -176,29 +164,138 @@ class Datumfeld extends Eingabe {
   }
 }
 
-/**
- * @author DSH
- */
 class Schieber extends Eingabe {
   protected $tag = "span";
 
   public function __toString() : string {
     $wert = "0";
-    if($this->wert === 1)
+    $self = clone $this;
+    if($this->wert === 1) {
       $wert = "1";
+    }
 
-    $this->aktionen->setFunktion("onclick",  3, "ui.schieber.aktion('{$this->id}')");
+    $self->aktionen->addFunktionPrioritaet("onclick", 3, "ui.schieber.aktion('{$this->id}')");
 
-    $code  = "<{$this->codeAuf("id", "value", "class")} id=\"{$this->id}Schieber\" class=\"dshUiSchieberAussen dshUiSchieber$wert".join(" ", array_merge(array(""), $this->klassen))."\"><span class=\"dshUiSchieber\"></span>{$this->codeZu()}";
-    $code .= "<input type=\"hidden\" id=\"{$this->id}\" value=\"$wert\">";
+    $code  = "<{$self->codeAuf("id", "value", "class")} id=\"{$self->id}Schieber\" class=\"dshUiSchieberAussen dshUiSchieber$wert".join(" ", array_merge(array(""), $self->klassen))."\"><span class=\"dshUiSchieber\"></span>{$self->codeZu()}";
+    $code .= "<input type=\"hidden\" id=\"{$self->id}\" value=\"$wert\">";
 
     return $code;
   }
 }
 
-/**
- * @author DSH
- */
+class Toggle extends Schieber {
+  /** @var string $text :) */
+  protected $text;
+
+  /**
+   * Erstellt einen neuen Toggle-Knopf
+   * @param string $id   :)
+   * @param string $text :)
+   */
+  public function __construct($id, $text) {
+    parent::__construct();
+    $this->id = $id;
+    $this->text = $text;
+  }
+
+  /**
+   * Gibt den HTML-Code eines Toggle-Knopfes aus
+   * @return string [description]
+   */
+  public function __toString() : string {
+    $self = clone $this;
+    $self->addKlasse("dshUiToggle");
+    $wert = "0";
+    if($self->wert === 1) {
+      $wert = "1";
+      $self->addKlasse("dshUiToggled");
+    }
+
+    $self->aktionen->addFunktionPrioritaet("onclick", 3, "ui.toggle.aktion('{$this->id}')");
+
+    $code  = "<{$self->codeAuf(false, "id", "value")} id=\"{$self->id}Toggle\">$self->text{$this->codeZu()}";
+
+    $code .= "<input type=\"hidden\" id=\"{$self->id}\" value=\"$wert\">";
+
+    return $code;
+  }
+}
+
+class IconToggle extends Toggle {
+  /** @var Icon $icon :) */
+  protected $icon;
+
+  /**
+   * Erstellt einen neuen Toggle-Knopf
+   * @param string $id   :)
+   * @param string $text :)
+   * @param Icon $icon :)
+   */
+  public function __construct($id, $text, $icon) {
+    parent::__construct($id, $text);
+    $this->icon = $icon;
+  }
+
+  /**
+   * Gibt den HTML-Code eines Toggle-Knopfes aus
+   * @return string [description]
+   */
+  public function __toString() : string {
+    $self = clone $this;
+    $self->addKlasse("dshUiToggleIcon");
+    $wert = "0";
+    if($self->wert === 1) {
+      $wert = "1";
+      $self->addKlasse("dshUiToggled");
+    }
+
+    $self->aktionen->addFunktionPrioritaet("onclick", 3, "ui.toggle.aktion('{$this->id}')");
+
+    $code  = "<{$self->codeAuf(false, "id", "value")} id=\"{$self->id}Toggle\">$self->icon $self->text{$this->codeZu()}";
+
+    $code .= "<input type=\"hidden\" id=\"{$self->id}\" value=\"$wert\">";
+
+    return $code;
+  }
+}
+
+class IconToggleGross extends IconToggle {
+
+  /**
+   * Erstellt einen neuen Toggle-Knopf
+   * @param string $id   :)
+   * @param string $text :)
+   * @param Icon $icon :)
+   */
+  public function __construct($id, $text, $icon) {
+    parent::__construct($id, $text, $icon);
+  }
+
+  /**
+   * Gibt den HTML-Code eines Toggle-Knopfes aus
+   * @return string [description]
+   */
+  public function __toString() : string {
+    $self = clone $this;
+    $self->addKlasse("dshUiToggleGross");
+    $wert = "0";
+    if($self->wert === 1) {
+      $wert = "1";
+      $self->addKlasse("dshUiToggled");
+    }
+
+    $self->aktionen->addFunktionPrioritaet("onclick", 3, "ui.toggle.aktion('{$this->id}')");
+
+    $toggleinhalt = new InhaltElement($this->text);
+    $toggleinhalt->setTag("span");
+    $toggleinhalt->addKlasse("dshUiToggleGrossText");
+    $code  = "<{$self->codeAuf(false, "id", "value")} id=\"{$self->id}Toggle\">$self->icon $toggleinhalt{$this->codeZu()}";
+    $code .= "<input type=\"hidden\" id=\"{$self->id}\" value=\"$wert\">";
+
+    return $code;
+  }
+}
+
 class Textfeld extends PlatzhalterEingabe {
   protected $typ = "text";
 
@@ -212,9 +309,6 @@ class Textfeld extends PlatzhalterEingabe {
   }
 }
 
-/**
- * @author DSH
- */
 class Zahlenfeld extends PlatzhalterEingabe {
   protected $typ = "number";
 
@@ -259,9 +353,6 @@ class Zahlenfeld extends PlatzhalterEingabe {
   }
 }
 
-/**
- * @author DSH
- */
 class Farbfeld extends Textfeld {
   protected $typ = "color";
 
@@ -276,9 +367,6 @@ class Farbfeld extends Textfeld {
   }
 }
 
-/**
- * @author DSH
- */
 class Passwortfeld extends Textfeld {
   protected $typ = "password";
   /** @var Textfeld $bezug Textfeld, mit dem das Passwort verglichen werden soll */
@@ -322,9 +410,6 @@ class Passwortfeld extends Textfeld {
   }
 }
 
-/**
- * @author DSH
- */
 class Mailfeld extends Textfeld {
   protected $typ = "text";
 
@@ -334,9 +419,6 @@ class Mailfeld extends Textfeld {
   }
 }
 
-/**
- * @author DSH
- */
 class Textarea extends Textfeld {
   protected $tag = "textarea";
 
@@ -354,7 +436,6 @@ class Textarea extends Textfeld {
     return "<{$this->codeAuf("value")}>{$this->wert}{$this->codeZu()}";
   }
 }
-
 
 
 
