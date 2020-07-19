@@ -183,9 +183,9 @@ class Datumfeld extends Eingabe {
     $monatv = new MiniIconKnopf(new \UI\Icon(\UI\Konstanten::VOR), "Nächster Monat", null, "OL");
     $monatv->getAktionen()->addFunktion("onclick", "ui.datumsanzeige.monataendern('{$this->id}', $tag, ".($monat+1).", $jahr)");
 
-    $r .= "<tr><th>$monatz</th><th colspan=\"5\" class=\"dshUiTageswahlMonatname\">".\UI\Generieren::monatnameLang($monat)." $jahr</th><th>$monatv</th></tr>";
+    $r .= "<tr><th>$monatz</th><th colspan=\"6\" class=\"dshUiTageswahlMonatname\">".\UI\Generieren::monatnameLang($monat)." $jahr</th><th>$monatv</th></tr>";
 
-    $r .= "<tr>";
+    $r .= "<tr><td></td>";
     for ($i = 1; $i <= 7; $i++) {
       $r .= "<td class=\"dshUiTageswahlTagname\">".\UI\Generieren::tagnameKurz($i)."</td>";
     }
@@ -201,13 +201,14 @@ class Datumfeld extends Eingabe {
     $klassenzusatz = "";
 
     $r .= "<tr>";
+    $r .= "<td class=\"dshNotiz\">".date("W", mktime(0, 0, 0, $monat, $nr, $jahr))."</td>";
     // leer auffüllen, falls nicht mit Montag begonnen wird
-    for ($i=1; $i<$wochentag; $i++) {
+    for ($i = 1; $i < $wochentag; $i++) {
       $r .= "<td></td>";
     }
 
-    for ($i=$wochentag; $i<=7; $i++) {
-      $tagknopf = new Knopf($nr);
+    for ($i = $wochentag; $i <= 7; $i++) {
+      $tagknopf = new Knopf(\fuehrendeNull($nr));
       if ($nr == $tag) {
         $tagknopf->addKlasse("dshUiTagGewaehlt");
       }
@@ -223,8 +224,8 @@ class Datumfeld extends Eingabe {
         $r .= "</tr>";
         $wochentag = 1;
       }
-      if ($wochentag == 1) {$r .= "<tr>";}
-      $tagknopf = new Knopf($nr);
+      if ($wochentag == 1) {$r .= "<tr><td class=\"dshNotiz\">".date("W", mktime(0, 0, 0, $monat, $nr, $jahr))."</td>";}
+      $tagknopf = new Knopf(\fuehrendeNull($nr));
       if ($nr == $tag) {
         $tagknopf->addKlasse("dshUiTagGewaehlt");
       }
@@ -235,9 +236,9 @@ class Datumfeld extends Eingabe {
     }
 
     // leer auffüllen, falls nicht am Sonntag geendet
-    for ($i = $wochentag; $i<=7; $i++) {
+    for ($i = $wochentag; $i <= 7; $i++) {
       $r .= "<td></td>";
-      $nr ++;
+      $nr++;
     }
     $r .= "</tr>";
 
