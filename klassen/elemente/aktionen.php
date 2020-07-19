@@ -40,6 +40,15 @@ class Aktionen {
 		return $this;
 	}
 
+  /**
+   * Prüft ob der Auslöser vorhanden ist
+   * @param  string  $ausloeser :)
+   * @return boolean            :)
+   */
+  public function hatAusloeser($ausloeser) : bool {
+    return isset($this->aktionen[$ausloeser]);
+  }
+
 	/**
 	 * Fügt die Funktionen mit Priorität <code>-1</code> an den Auslöser an.
 	 * @param 	string $ausloeser Auslöser der Funktionen

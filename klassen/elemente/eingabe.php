@@ -172,15 +172,17 @@ class Datumfeld extends Eingabe {
 
     $self = clone $this;
 
-    $self->aktionen->addFunktionPrioritaet("onfocus",  3, "ui.datumsanzeige.tageswahl.generieren('{$self->id}', true)");
-    $self->aktionen->addFunktionPrioritaet("onblur",   3, "ui.datumsanzeige.tageswahl.generieren('{$self->id}', false)");
+    $self->aktionen->addFunktionPrioritaet("onfocus",  3, "ui.datumsanzeige.aktion('{$self->id}', true)");
+    $self->aktionen->addFunktionPrioritaet("onblur",   3, "ui.datumsanzeige.aktion('{$self->id}', false)");
     $self->aktionen->addFunktionPrioritaet("onchange", 3, "ui.datumsanzeige.checkTag('{$self->id}')");
     $self->aktionen->addFunktionPrioritaet("onkeyup",  3, "ui.datumsanzeige.checkTag('{$self->id}')");
 
-    $code  = "<{$self->codeAuf(false, "id", "value", "class")} id=\"{$self->id}T\" value=\"{$datum[0]}\" class=\"dshUiEingabefeld dshUiDatumfeldT".join(" ", array_merge(array(""), $self->klassen))."\">{$self->codeZu()} ";
+    $code  = "<span class=\"dshUiDatumwahlFeld\">";
+    $code .= "<{$self->codeAuf(false, "id", "value", "class")} id=\"{$self->id}T\" value=\"{$datum[0]}\" class=\"dshUiEingabefeld dshUiDatumfeldT".join(" ", array_merge(array(""), $self->klassen))."\">{$self->codeZu()} ";
     $code .= "<{$self->codeAuf(false, "id", "value", "class")} id=\"{$self->id}M\" value=\"{$datum[1]}\" class=\"dshUiEingabefeld dshUiDatumfeldM".join(" ", array_merge(array(""), $self->klassen))."\">{$self->codeZu()} ";
     $code .= "<{$self->codeAuf(false, "id", "value", "class")} id=\"{$self->id}J\" value=\"{$datum[2]}\" class=\"dshUiEingabefeld dshUiDatumfeldJ".join(" ", array_merge(array(""), $self->klassen))."\">{$self->codeZu()} ";
     $code .= "<div class=\"dshUiDatumwahl\" id=\"{$self->id}Datumwahl\"></div>";
+    $code .= "</span>";
 
     return $code;
   }
@@ -524,7 +526,7 @@ class Option extends Eingabe {
   }
 }
 
-class ToggleOption extends Option {
+class Toggleoption extends Option {
   protected $tag = "span";
 
   public function __construct($id) {
@@ -538,15 +540,20 @@ class ToggleOption extends Option {
    */
   public function __toString() : string {
     $self = clone $this;
-    if ($this->gesetzt) {
+    if ($self->gesetzt) {
       $self->addKlasse("dshUiToggled");
+    }
+    if ($self->getAktionen()->hatAusloeser("href")) {
+      $self->setTag("a");
     }
     return "{$self->codeAuf()}{$self->text}{$self->codeZu()}";
   }
 }
 
 class Togglegruppe extends Eingabe {
-  /** @var ToggleOption[] Optionen der Togglebuttons */
+  protected $tag = "span";
+
+  /** @var Toggleoption[] Optionen der Togglebuttons */
   private $optionen;
 
   /**
@@ -563,7 +570,7 @@ class Togglegruppe extends Eingabe {
 
   /**
    * Fügt der Togglegruppe-Box eine Option hinzu
-   * @param ToggleOption $option :)
+   * @param Toggleoption $option :)
    */
   public function addOption($option) {
     $option->setTag("span");
@@ -576,7 +583,7 @@ class Togglegruppe extends Eingabe {
    * @return string Code der Togglebuttons
    */
   public function __toString() : string {
-    $code   = "<span class=\"dshUiTogglegruppe\">";
+    $code   = "<{$this->codeAuf(false, "value", "id")} id=\"{$this->getID()}Feld\">";
     $knopfId = 0;
     $anzahl = count($this->optionen);
     $self = clone $this;
@@ -590,8 +597,8 @@ class Togglegruppe extends Eingabe {
       else {
         $self->setGesetzt(false);
       }
-      $self->setID("{$self->id}Knopf$i");
-      $self->getAktionen()->addFunktionPrioritaet("onclick", 3, "ui.toggle.aktion('$self->id', '$i', '$anzahl', '{$self->getWert()}')");
+      $self->setID("{$this->id}Knopf$i");
+      $self->getAktionen()->addFunktionPrioritaet("onclick", 3, "ui.togglegruppe.aktion('$this->id', '$i', '$anzahl', '{$self->getWert()}')");
 
       $code .= $self." ";
     }
@@ -600,7 +607,7 @@ class Togglegruppe extends Eingabe {
 
     $code .= "<input type=\"hidden\" id=\"$this->id\" name=\"$this->id\" value=\"{$this->optionen[$knopfId]->getWert()}\">";
     $code .= "<input type=\"hidden\" id=\"{$this->id}KnopfId\" name=\"{$this->id}KnopfId\" value=\"$knopfId\">";
-    $code .= "</span>";
+    $code .= $this->codeZu();
     return $code;
   }
 }

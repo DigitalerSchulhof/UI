@@ -159,7 +159,7 @@ var ui = {
     mail: (x) => x.toString().match(/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]{2,}$/),
   },
   datumsanzeige: {
-    aktion: () => {
+    aktion: (id, an) => {
       var feld = $("#"+id+"Datumwahl");
       if (!an) {
         feld.style.display = "none";
@@ -208,9 +208,9 @@ var ui = {
     tageswahl: {
       generieren: (id, tag, monat, jahr) => {
         var code = "<table>";
-        code += "<tr><th onclick=\"dshUiTageswahlGenerieren('"+id+"', '"+tag+"', '"+(monat-1)+"', '"+jahr+"')\"><i class=\"fas fa-angle-double-left\"></i></th>";
+        code += "<tr><th onclick=\"ui.datumsanzeige.tageswahl.generieren('"+id+"', '"+tag+"', '"+(monat-1)+"', '"+jahr+"')\"><i class=\"fas fa-angle-double-left\"></i></th>";
         code += "<th>"+ui.generieren.monatsname.lang(monat)+" "+jahr+"</th>";
-        code += "<th colspan=\"5\" onclick=\"dshUiTageswahlGenerieren('"+id+"', '"+tag+"', '"+(monat+1)+"', '"+jahr+"')\"><i class=\"fas fa-angle-double-right\"></i></th>";
+        code += "<th colspan=\"5\" onclick=\"ui.datumsanzeige.tageswahl.generieren('"+id+"', '"+tag+"', '"+(monat+1)+"', '"+jahr+"')\"><i class=\"fas fa-angle-double-right\"></i></th>";
         code += "<tr>";
         code += "</tr>";
         for (var i=1; i<=7; i++) {
@@ -253,7 +253,7 @@ var ui = {
           } else {
             klassenzusatz = "";
           }
-          code += "<td class=\"dshUiTageswahlButton"+klassenzusatz+"\" onclick=\"dshUiTageswahl('"+id+"', '"+nr+"', '"+monat+"', '"+jahr+"')\">"+nr+"</td>";
+          code += "<td class=\"dshUiTageswahlButton"+klassenzusatz+"\" onclick=\"ui.datumsanzeige.tageswahl.aktion('"+id+"', '"+nr+"', '"+monat+"', '"+jahr+"')\">"+nr+"</td>";
           nr ++;
           wochentag ++;
         }
@@ -330,9 +330,9 @@ var ui = {
       $("#"+id).value = wert;
       $("#"+id+"KnopfId").value = nr;
       for (var i=0; i<anzahl; i++) {
-        $("#"+id+"Knopf"+i).classList.remove("dshKnopfToggled");
+        $("#"+id+"Knopf"+i).classList.remove("dshUiToggled");
       }
-      $("#"+id+"Knopf"+nr).classList.add("dshKnopfToggled");
+      $("#"+id+"Knopf"+nr).classList.add("dshUiToggled");
     }
   },
   laden: {
