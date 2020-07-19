@@ -188,7 +188,7 @@ var ui = {
       var jahr = $("#"+id+"J").value;
       if (!ui.check.natZahl(jahr)) {jahr = jetzt.getFullYear();}
 
-      jetzt = new Date(jahr, monat, tag);
+      jetzt = new Date(jahr, monat-1, tag);
 
       $("#"+id+"T").value = ui.generieren.fuehrendeNull(jetzt.getDate());
       $("#"+id+"M").value = ui.generieren.fuehrendeNull(jetzt.getMonth()+1);

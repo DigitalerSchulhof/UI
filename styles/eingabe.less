@@ -81,13 +81,21 @@
     display: none;
   }
 
+  .dshUiDatumwahl table {
+    border-collapse: collapse;
+  }
+
+  .dshUiDatumwahl table td {
+    padding: 1px;
+  }
+
   .dshUiTageswahlMonatname, .dshUiTageswahlTagname {
     font-weight: bold;
   }
 
   .dshUiTageswahlTagname {
     min-width: 30px;
-    padding: 5px 5px 5px 5px;
+    padding: 15px 5px 10px 5px !important;
   }
 
   .dshUiDatumwahl .dshUiKnopf {
@@ -133,6 +141,10 @@
 
 .dshUiSchieber1 {
   background: @erfolgHintergrund;
+}
+
+.dshUiTageswahlMonatname, .dshUiTageswahlTagname {
+  color: @schriftfarbePositiv;
 }
 
 .dshUiDatumwahl {
