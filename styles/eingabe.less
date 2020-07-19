@@ -47,6 +47,7 @@
   border: 1px solid;
   border-radius: calc(@radius5 + 2px);
   line-height: 0;
+  transition: 250ms ease-in-out;
 }
 
 .dshUiSchieber {
@@ -54,14 +55,15 @@
   height: 20px;
   width: 20px;
   border-radius: @radius5;
+  transition: 250ms ease-in-out;
 }
 
-.dshUiSchieber0 {
-  text-align: left;
+.dshUiSchieber0 .dshUiSchieber {
+  margin-left: 0px;
 }
 
-.dshUiSchieber1 {
-  text-align: right;
+.dshUiSchieber1 .dshUiSchieber {
+  margin-left: 18px;
 }
 
 .dshUiDatumwahlFeld {

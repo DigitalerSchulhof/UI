@@ -292,8 +292,8 @@ var ui = {
         neuerwert = 1;
       }
       $("#"+id).value = neuerwert;
-      $("#"+id+"Schieber").classList.add("dshUiSchieberInnen"+neuerwert);
-      $("#"+id+"Schieber").classList.remove("dshUiSchieberInnen"+wert);
+      $("#"+id+"Schieber").classList.add("dshUiSchieber"+neuerwert);
+      $("#"+id+"Schieber").classList.remove("dshUiSchieber"+wert);
     }
   },
   toggle: {
