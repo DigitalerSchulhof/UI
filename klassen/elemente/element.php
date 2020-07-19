@@ -2,8 +2,6 @@
 namespace UI\Elemente;
 
 /**
- * @author DSH
- *
  * Das Element ist die Grundklasse jeder UI-Komponente. Es enthält für jedes Element notwendige Attribute wie ID, Klassen, Tag, ... und wesentliche Funktionen um diese zu manipulieren, und das Element schließlich auszugeben.
  */
 abstract class Element {
@@ -175,8 +173,6 @@ abstract class Element {
 }
 
 /**
- * @author DSH
- *
  * Generisches Element mit Inhalt ohne festen Verwendungszweck
  */
 class InhaltElement extends Element {

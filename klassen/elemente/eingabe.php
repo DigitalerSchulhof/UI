@@ -473,53 +473,80 @@ class Textarea extends Textfeld {
 
 
 
-class Option {
-  /** @var string Beschreibung der Option */
-  private $text;
-  /** @var string Wert der Option */
-  private $wert;
+class Option extends Eingabe {
+  protected $tag = "option";
+
+  /** @var string $text Beschreibung der Option */
+  protected $text;
+  /** @var string $gesetzt :) */
+  protected $gesetzt;
 
   /**
    * @param string $text Text der Option
    * @param string $wert Wert der Option
    */
-  public function __construct($text, $wert) {
+  public function __construct($id) {
+    parent::__construct($id);
+    $this->gesetzt = false;
+  }
+
+  /**
+   * Setzt den Text der Option
+   * @param  string $text :)
+   * @return self         :)
+   */
+  public function setText($text) : self {
     $this->text = $text;
-    $this->wert = $wert;
+    return $this;
   }
 
   /**
-   * Gibt den Wert der Option zurück
-   * @return string Wert der Option
+   * Gibt an, ob das Objekt aktiv ist
+   * @param  boolean $gesetzt :)
+   * @return self             :)
    */
-  public function getWert() : string {
-    return $this->wert;
+  public function setGesetzt($gesetzt) : self {
+    $this->gesetzt = $gesetzt;
+    return $this;
   }
 
+
   /**
-   * Gibt den Text der Option zurück
-   * @return string Text der Option
+   * Gibt den Code der Option zurück
+   * @return string       Code der Option
    */
-  public function getText() : string {
-    return $this->text;
+  public function __toString() : string {
+    if ($this->gesetzt) {
+      $wahl = " selected";
+    }
+    else {$wahl = "";}
+    return "<{$this->codeAuf(false)}$wahl>{$this->$text}{$this->codeZu()}";
+  }
+}
+
+class ToggleOption extends Option {
+  protected $tag = "span";
+
+  public function __construct($id) {
+    parent::__construct($id);
+    $this->addKlasse("dshUiToggle");
   }
 
   /**
    * Gibt den Code der Option zurück
-   * @param string $wert Wert, der gewählt wurde
    * @return string       Code der Option
    */
-  public function ausgabe($wert = "") : string {
-    if ($this->wert == $wert) {
-      $wahl = " selected";
+  public function __toString() : string {
+    $self = clone $this;
+    if ($this->gesetzt) {
+      $self->addKlasse("dshUiToggled");
     }
-    else {$wahl = "";}
-    return "<option value=\"{$this->wert}\"$wahl>{$this->text}</option>";
+    return "{$self->codeAuf()}{$self->text}{$self->codeZu()}";
   }
 }
 
 class Togglegruppe extends Eingabe {
-  /** @var Option[] Optionen der Togglebuttons */
+  /** @var ToggleOption[] Optionen der Togglebuttons */
   private $optionen;
 
   /**
@@ -530,19 +557,18 @@ class Togglegruppe extends Eingabe {
    * @param string $klasse   CSS-Klasse der Togglebuttons
    * @param Aktion $aktion   Aktion der Togglebuttons
    */
-  public function __construct($id, $text, $textwert, $wert = "", $klasse = "", $aktion = null) {
-    parent::__construct($id, $wert, $klasse, $aktion);
-    $this->optionen = array();
-    $this->optionen[] = new Option ($text, $textwert);
+  public function __construct($id) {
+    parent::__construct($id);
   }
 
   /**
-   * Fügt der Select-Box eine Option hinzu
-   * @param string $text Text der Option
-   * @param string $wert Wert der Option
+   * Fügt der Togglegruppe-Box eine Option hinzu
+   * @param ToggleOption $option :)
    */
-  public function add($text, $wert) {
-    $this->optionen[] = new Option ($text, $wert);
+  public function addOption($option) {
+    $option->setTag("span");
+    $option->addKlasse("dshUiToggle");
+    $this->optionen[] = $option;
   }
 
   /**
@@ -550,23 +576,31 @@ class Togglegruppe extends Eingabe {
    * @return string Code der Togglebuttons
    */
   public function __toString() : string {
-    $code   = "";
+    $code   = "<span class=\"dshUiTogglegruppe\">";
     $knopfId = 0;
     $anzahl = count($this->optionen);
+    $self = clone $this;
 
     for ($i=0; $i<$anzahl; $i++) {
-      if ($this->optionen[$i]->getWert() == $this->wert) {
+      $self = clone $this->optionen[$i];
+      if ($self->getWert() == $this->getWert()) {
+        $self->setGesetzt(true);
         $knopfId = $i;
-        $toggled = " dshUiToggled";
       }
-      else {$toggled = "";}
-      $aktionen = $this->aktion->klonen();
-      $aktionen->add("onclick", "ui.toggle.aktion('$this->id', '$i', '$anzahl', '{$this->optionen[$i]->getWert()}')", true);
-      $code .= "<span id='{$this->id}Knopf$i' class='dshUiToggle $toggled $this->klasse'{$aktionen->ausgabe()}>{$this->optionen[$i]->getText()}</span> ";
+      else {
+        $self->setGesetzt(false);
+      }
+      $self->setID("{$self->id}Knopf$i");
+      $self->getAktionen()->addFunktionPrioritaet("onclick", 3, "ui.toggle.aktion('$self->id', '$i', '$anzahl', '{$self->getWert()}')");
+
+      $code .= $self." ";
     }
 
-    $code .= "<input type='hidden' id='$this->id' name='$this->id' value='{$this->optionen[$knopfId]->getWert()}'>";
-    $code .= "<input type='hidden' id='{$this->id}KnopfId' name='{$this->id}KnopfId' value='$knopfId'>";
+    if ($anzahl > 0) {$code = substr($code, 0, strlen($code)-1);}
+
+    $code .= "<input type=\"hidden\" id=\"$this->id\" name=\"$this->id\" value=\"{$this->optionen[$knopfId]->getWert()}\">";
+    $code .= "<input type=\"hidden\" id=\"{$this->id}KnopfId\" name=\"{$this->id}KnopfId\" value=\"$knopfId\">";
+    $code .= "</span>";
     return $code;
   }
 }
