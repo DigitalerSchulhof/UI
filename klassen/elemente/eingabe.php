@@ -173,8 +173,8 @@ class Datumfeld extends Eingabe {
     $self = clone $this;
 
     $self->aktionen->addFunktionPrioritaet("onfocus",  3, "ui.datumsanzeige.aktion('{$self->id}', true)");
+    $self->aktionen->addFunktionPrioritaet("onkeydown",  3, "ui.datumsanzeige.aktion('{$self->id}', false)");
     $self->aktionen->addFunktionPrioritaet("onchange", 3, "ui.datumsanzeige.checkTag('{$self->id}')");
-    $self->aktionen->addFunktionPrioritaet("onkeyup",  3, "ui.datumsanzeige.checkTag('{$self->id}')");
 
     $code  = "<span class=\"dshUiDatumwahlFeld\">";
     $code .= "<{$self->codeAuf(false, "id", "value", "class")} id=\"{$self->id}T\" value=\"{$datum[0]}\" class=\"dshUiEingabefeld dshUiDatumfeldT".join(" ", array_merge(array(""), $self->klassen))."\">{$self->codeZu()} ";
