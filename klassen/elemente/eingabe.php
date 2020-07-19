@@ -178,9 +178,9 @@ class Datumfeld extends Eingabe {
     $jahr  = $datum[2];
 
     $r = "<table>";
-    $monatz = new MiniIconKnopf(new \UI\Icon("fas fa-angle-double-left"), "Vorheriger Monat", null, "OR");
+    $monatz = new MiniIconKnopf(new \UI\Icon(\UI\Konstanten::ZURUECK), "Vorheriger Monat", null, "OR");
     $monatz->getAktionen()->addFunktion("onclick", "ui.datumsanzeige.monataendern('{$this->id}', $tag, ".($monat-1).", $jahr)");
-    $monatv = new MiniIconKnopf(new \UI\Icon("fas fa-angle-double-right"), "Nächster Monat", null, "OL");
+    $monatv = new MiniIconKnopf(new \UI\Icon(\UI\Konstanten::VOR), "Nächster Monat", null, "OL");
     $monatv->getAktionen()->addFunktion("onclick", "ui.datumsanzeige.monataendern('{$this->id}', $tag, ".($monat+1).", $jahr)");
 
     $r .= "<tr><th>$monatz</th><th colspan=\"5\" class=\"dshUiTageswahlMonatname\">".\UI\Generieren::monatnameLang($monat)." $jahr</th><th>$monatv</th></tr>";

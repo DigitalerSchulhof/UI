@@ -7,4 +7,6 @@
   include_once("$KLASSEN/hinweis.php");
   include_once("$KLASSEN/elemente/knopf.php");
 	include_once("$KLASSEN/struktur/spalte.php");
+  include_once("$KLASSEN/laden.php");
+	include_once("$KLASSEN/elemente/meldung.php");
 ?>

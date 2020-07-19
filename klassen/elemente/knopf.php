@@ -11,6 +11,9 @@ class Knopf extends UI\Elemente\InhaltElement {
   /** @var string Zulässige Knopfarten */
   const ARTEN = ["Standard", "Erfolg", "Fehler", "Warnung", "Information", "Passiv", "Eingeschraenkt", "Gesperrt"];
 
+  /** @var string Knopfart */
+  protected $art;
+
 	/**
 	* @param string $text :)
 	* @param string $art :)
@@ -20,7 +23,7 @@ class Knopf extends UI\Elemente\InhaltElement {
     if(!in_array($art, self::ARTEN)) {
       $art = self::ARTEN[0];
     }
-    $this->art  = $art;
+    $this->art = $art;
   }
 
   /**
