@@ -173,7 +173,6 @@ class Datumfeld extends Eingabe {
     $self = clone $this;
 
     $self->aktionen->addFunktionPrioritaet("onfocus",  3, "ui.datumsanzeige.aktion('{$self->id}', true)");
-    $self->aktionen->addFunktionPrioritaet("onblur",   3, "ui.datumsanzeige.aktion('{$self->id}', false)");
     $self->aktionen->addFunktionPrioritaet("onchange", 3, "ui.datumsanzeige.checkTag('{$self->id}')");
     $self->aktionen->addFunktionPrioritaet("onkeyup",  3, "ui.datumsanzeige.checkTag('{$self->id}')");
 

@@ -2,6 +2,7 @@ var ui = {
   generieren: {
     monatsname: {
       lang: (monat) => {
+        monat = parseInt(monat);
         switch (monat) {
           case 1: return "Januar";
           case 2: return "Februar";
@@ -19,6 +20,7 @@ var ui = {
         }
       },
       kurz: (monat) => {
+        monat = parseInt(monat);
         switch (monat) {
           case 1: return "JAN";
           case 2: return "FEB";
@@ -66,7 +68,7 @@ var ui = {
     },
     fuehrendeNull: (x) => {
       if (ui.check.natZahl(x)) {
-        if (x.length < 2) {
+        if ((x.toString()).length < 2) {
           return "0"+x;
         } else {
           return ""+x;
@@ -172,6 +174,11 @@ var ui = {
         feld.style.display = "block";
       }
     },
+    monataendern: (id, tag, monat, jahr) => {
+      var feld = $("#"+id+"Datumwahl");
+      var datum = new Date (jahr, monat-1, tag);
+      feld.innerHTML = ui.datumsanzeige.tageswahl.generieren(id, datum.getDate(), datum.getMonth()+1, datum.getFullYear());
+    },
     checkTag: (id) => {
       var jetzt = new Date();
       var tag = $("#"+id+"T").value;
@@ -208,13 +215,13 @@ var ui = {
     tageswahl: {
       generieren: (id, tag, monat, jahr) => {
         var code = "<table>";
-        code += "<tr><th onclick=\"ui.datumsanzeige.tageswahl.generieren('"+id+"', '"+tag+"', '"+(monat-1)+"', '"+jahr+"')\"><i class=\"fas fa-angle-double-left\"></i></th>";
-        code += "<th>"+ui.generieren.monatsname.lang(monat)+" "+jahr+"</th>";
-        code += "<th colspan=\"5\" onclick=\"ui.datumsanzeige.tageswahl.generieren('"+id+"', '"+tag+"', '"+(monat+1)+"', '"+jahr+"')\"><i class=\"fas fa-angle-double-right\"></i></th>";
+        code += "<tr><th><span class=\"dshUiKnopf dshUiKnopfMini\" onclick=\"ui.datumsanzeige.monataendern('"+id+"', "+tag+", "+(parseInt(monat)-1)+", "+jahr+")\"><i class=\"fas fa-angle-double-left\"></i></span></th>";
+        code += "<th colspan=\"5\" class=\"dshUiTageswahlMonatname\">"+ui.generieren.monatsname.lang(monat)+" "+jahr+"</th>";
+        code += "<th><span class=\"dshUiKnopf dshUiKnopfMini\" onclick=\"ui.datumsanzeige.monataendern('"+id+"', "+tag+", "+(parseInt(monat)+1)+", "+jahr+")\"><i class=\"fas fa-angle-double-right\"></i></span></th>";
         code += "<tr>";
         code += "</tr>";
         for (var i=1; i<=7; i++) {
-          code += "<td>"+ui.generieren.tagesname.kurz(i)+"</td>";
+          code += "<td class=\"dshUiTageswahlTagname\">"+ui.generieren.tagesname.kurz(i)+"</td>";
         }
         code += "</tr>";
 
@@ -228,7 +235,7 @@ var ui = {
         code += "<tr>";
         // leer auffüllen, falls nicht mit Montag begonnen wird
         for (var i=1; i<wochentag; i++) {
-          code += "<td class=\"dshUiTageswahlButtonBlind\"></td>";
+          code += "<td></td>";
         }
         for (var i=wochentag; i<=7; i++) {
           if (nr == tag) {
@@ -236,7 +243,7 @@ var ui = {
           } else {
             klassenzusatz = "";
           }
-          code += "<td class=\"dshUiTageswahlButton"+klassenzusatz+"\" onclick=\"dshUiTageswahl('"+id+"', '"+nr+"', '"+monat+"', '"+jahr+"')\">"+nr+"</td>";
+          code += "<td><span class=\"dshUiKnopf dshUiKnopfMini"+klassenzusatz+"\" onclick=\"ui.datumsanzeige.tageswahl.aktion('"+id+"', "+nr+", "+monat+", "+jahr+")\">"+nr+"</span></td>";
           nr ++;
         }
         code += "</tr>";
@@ -253,14 +260,14 @@ var ui = {
           } else {
             klassenzusatz = "";
           }
-          code += "<td class=\"dshUiTageswahlButton"+klassenzusatz+"\" onclick=\"ui.datumsanzeige.tageswahl.aktion('"+id+"', '"+nr+"', '"+monat+"', '"+jahr+"')\">"+nr+"</td>";
+          code += "<td><span class=\"dshUiKnopf dshUiKnopfMini"+klassenzusatz+"\" onclick=\"ui.datumsanzeige.tageswahl.aktion('"+id+"', "+nr+", "+monat+", "+jahr+")\">"+nr+"</span></td>";
           nr ++;
           wochentag ++;
         }
 
         // leer auffüllen, falls nicht am Sonntag geendet
         for (var i=wochentag; i<=7; i++) {
-          code += "<td class=\"dshUiTageswahlButtonBlind\"></td>";
+          code += "<td></td>";
           nr ++;
         }
         code += "</tr>";
@@ -268,11 +275,12 @@ var ui = {
         code += "</table>";
         return code;
       },
-      aktion: (id) => {
-        var tag = $("#"+id+"T").value   = ui.generieren.fuehrendeNull(tag);
-        var monat = $("#"+id+"M").value = ui.generieren.fuehrendeNull(monat);
-        var jahr = $("#"+id+"J").value  = ui.generieren.fuehrendeNull(jahr);
-        $("#"+id+"Datumwahl").display = none;
+      aktion: (id, tag, monat, jahr) => {
+        var datum = new Date (jahr, monat-1, tag);
+        var tag = $("#"+id+"T").value   = ui.generieren.fuehrendeNull(datum.getDate());
+        var monat = $("#"+id+"M").value = ui.generieren.fuehrendeNull(datum.getMonth()+1);
+        var jahr = $("#"+id+"J").value  = ui.generieren.fuehrendeNull(datum.getFullYear());
+        $("#"+id+"Datumwahl").style.display = 'none';
       }
     }
   },

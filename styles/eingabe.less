@@ -64,6 +64,37 @@
   text-align: right;
 }
 
+.dshUiDatumwahlFeld {
+  display: inline-block;
+  position: relative;
+}
+
+  .dshUiDatumwahl {
+    position: absolute;
+    left: 0px;
+    top: 25px;
+    border: 1px solid;
+    border-bottom-left-radius: @radius2;
+    border-bottom-right-radius: @radius2;
+    z-index: 2;
+    padding: 5px;
+    display: none;
+  }
+
+  .dshUiTageswahlMonatname, .dshUiTageswahlTagname {
+    font-weight: bold;
+  }
+
+  .dshUiTageswahlTagname {
+    min-width: 30px;
+    padding: 5px 5px 5px 5px;
+  }
+
+  .dshUiDatumwahl .dshUiKnopf {
+    width: 100%;
+    text-align: center;
+  }
+
 // FARBEN;
 
 .dshUiEingabefeld {
@@ -102,4 +133,14 @@
 
 .dshUiSchieber1 {
   background: @erfolgHintergrund;
+}
+
+.dshUiDatumwahl {
+  background: @abstufung1;
+  border-color: @abstufung4;
+}
+
+.dshUiDatumwahl .dshUiTagGewaehlt {
+  color: @schriftfarbeNegativ;
+  background-color: @abstufung3;
 }
