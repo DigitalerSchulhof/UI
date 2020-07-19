@@ -20,11 +20,7 @@ class Icon {
     $this->icon = $icon;
   }
 
-  /**
-	* Gibt Icon als HTML-Code aus
-	* @return string HTML-Code des Icons
-	*/
-  public function ausgabe () : string {
+  public function __toString() : string {
     return "<i class=\"{$this->icon}\"></i>";
   }
 }

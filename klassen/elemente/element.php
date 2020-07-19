@@ -114,13 +114,23 @@ abstract class Element {
     return $this;
   }
 
-	/**
+  public function toStringVorbereitung() : self {
+
+  }
+
+  /**
 	 * Gibt den Code des öffnenden Tags zurück (Ohne < >)
+	 * @param   boolean $klammer True => mit < >; False => Ohne < >
 	 * @param 	string ...$nicht Attribute, die ignoriert werden sollen
 	 * @return 	string Der Code des öffnenden Tags
 	 */
-	public function codeAuf(...$nicht) : string {
-		$rueck = $this->tag;
+	public function codeAuf($klammer = true, ...$nicht) : string {
+    $rueck = "";
+    if($klammer) {
+      $rueck = "<";
+    }
+
+	  $rueck .= $this->tag;
 		if($this->tag === null)
 			$rueck = "";
 
@@ -132,6 +142,10 @@ abstract class Element {
 
 		if($this->aktionen !== null && $this->aktionen->count() > 0 && !in_array("aktionen", $nicht))
 			$rueck .= " {$this->aktionen}";
+
+    if($klammer) {
+      $rueck .= ">";
+    }
 
 		return $rueck;
 	}
@@ -156,7 +170,7 @@ abstract class Element {
    * @return 	string HTML-Code
    */
 	 public function __toString() : string {
-     return "<{$this->codeAuf()}>{$this->codeZu()}";
+     return "{$this->codeAuf()}{$this->codeZu()}";
    }
 }
 
@@ -179,7 +193,7 @@ class InhaltElement extends Element {
 	}
 
 	public function __toString() : string {
-		return "<{$this->codeAuf()}>{$this->inhalt}{$this->codeZu()}";
+		return "{$this->codeAuf()}{$this->inhalt}{$this->codeZu()}";
 	}
 }
 

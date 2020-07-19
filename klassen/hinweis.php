@@ -1,32 +1,33 @@
 <?php
-namespace UI;
+namespace UI\Elemente;
+use UI;
 
 /**
-* Schaltflächen erstellen
+* Ein Hinweis ist das Feld, das oberhalb von einem Knopf angezeigt wird.
 */
-class Hinweis {
-  /** @var string Inhalt des Hinweises */
-  private $inhalt;
+class Hinweis extends UI\Elemente\InhaltElement{
+  protected $tag = "span";
+  /** @var string Mögliche Positionen */
+  const POSITIONEN = ["OR", "OL", "UR", "UL"];
+
+  /** @var string Position des Hinweises */
+  protected $position;
 
 	/**
 	* @param string $inhalt Inhalt des Hinweises
 	*/
-  public function __construct($inhalt) {
-    $this->inhalt = $inhalt;
+  public function __construct($inhalt, $position = null) {
+    parent::__construct($inhalt);
+    if(!in_array($position, self::POSITIONEN)) {
+      $position = self::POSITIONEN[0];
+    }
+    $this->position = $position;
+    $this->addKlasse("dshUiHinweis");
+    $this->addKlasse("dshUiHinweis$position");
   }
 
-
-  /**
-   * Gibt den Hinweis aus
-   * @param string $position des Hinweises
-   * @return string      HTML-Code des Hinweises
-   */
-  public function ausgabe ($position = "OR") : string {
-    $moeglich = ["OR", "OL", "UR", "UL"];
-    if (!in_array($position, $moeglich)) {
-      $position = "OR";
-    }
-    return "<span class=\"dshUiHinweis dshUiHinweis{$position}\">{$this->inhalt}</span>";
+  public function __toString() : string {
+    return "<span class=\"dshUiHinweis dshUiHinweis{$this->position}\">{$this->inhalt}</span>";
   }
 }
 ?>

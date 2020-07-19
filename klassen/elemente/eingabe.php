@@ -26,16 +26,25 @@ abstract class Eingabe extends Element {
 
   /**
 	 * Gibt den Code des öffnenden Tags zurück (Ohne < >)
-	 * @param    string ...$nicht Attribute, die ignoriert werden sollen
-	 * @return   string Der Code des öffnenden Tags
+	 * @param   boolean $klammer True => mit < >; False => Ohne < >
+	 * @param 	string ...$nicht Attribute, die ignoriert werden sollen
+	 * @return 	string Der Code des öffnenden Tags
 	 */
-	public function codeAuf(...$nicht) : string {
-    $rueck = parent::codeAuf(...$nicht);
+	public function codeAuf($klammer = true, ...$nicht) : string {
+    $rueck = "";
+    if($klammer) {
+      $rueck = "<";
+    }
+    $rueck .= parent::codeAuf(false, ...$nicht);
+
     if($this->wert !== null && !in_array("value", $nicht))
       $rueck .= " value=\"{$this->wert}\"";
     if($this->typ !== null && !in_array("type", $nicht))
       $rueck .= " type=\"{$this->typ}\"";
 
+    if($klammer) {
+      $rueck .= ">";
+    }
     return $rueck;
   }
 
@@ -77,15 +86,24 @@ abstract class PlatzhalterEingabe extends Eingabe {
 
 
   /**
-   * Gibt den Code des öffnenden Tags zurück (Ohne < >)
-   * @param   string ...$nicht Attribute, die ignoriert werden sollen
-   * @return  string Der Code des öffnenden Tags
-   */
-  public function codeAuf(...$nicht) : string {
-    $rueck = parent::codeAuf(...$nicht);
+	 * Gibt den Code des öffnenden Tags zurück (Ohne < >)
+	 * @param   boolean $klammer True => mit < >; False => Ohne < >
+	 * @param 	string ...$nicht Attribute, die ignoriert werden sollen
+	 * @return 	string Der Code des öffnenden Tags
+	 */
+	public function codeAuf($klammer = true, ...$nicht) : string {
+    $rueck = "";
+    if($klammer) {
+      $rueck = "<";
+    }
+    $rueck .= parent::codeAuf(false, ...$nicht);
+
     if($this->platzhalter !== null && !in_array("placeholder", $nicht))
       $rueck .= " placeholder=\"{$this->platzhalter}\"";
 
+    if($klammer) {
+      $rueck .= ">";
+    }
     return $rueck;
   }
 
@@ -134,13 +152,13 @@ class Uhrzeitfeld extends Eingabe {
     $this->aktionen->setFunktion("onchange", 3, "ui.datumsanzeige.checkUhrzeit('{$this->id}', $sekunden)");
     $this->aktionen->setFunktion("onkeyup",  3, "ui.datumsanzeige.checkUhrzeit('{$this->id}', $sekunden)");
 
-    $code    = "<{$this->codeAuf("id", "value", "class")} id=\"{$this->id}Std\" value=\"{$uhrzeit[0]}\" class=\"dshUiEingabefeld dshUiUhrzeitfeldStd".join(" ", array_merge(array(""), $this->klassen))."\">{$this->codeZu()}";
+    $code    = "<{$this->codeAuf(false, "id", "value", "class")} id=\"{$this->id}Std\" value=\"{$uhrzeit[0]}\" class=\"dshUiEingabefeld dshUiUhrzeitfeldStd".join(" ", array_merge(array(""), $this->klassen))."\">{$this->codeZu()}";
     $code   .= " : ";
-    $code   .= "<{$this->codeAuf("id", "value", "class")} id=\"{$this->id}Min\" value=\"{$uhrzeit[1]}\" class=\"dshUiEingabefeld dshUiUhrzeitfeldMin".join(" ", array_merge(array(""), $this->klassen))."\">{$this->codeZu()}";
+    $code   .= "<{$this->codeAuf(false, "id", "value", "class")} id=\"{$this->id}Min\" value=\"{$uhrzeit[1]}\" class=\"dshUiEingabefeld dshUiUhrzeitfeldMin".join(" ", array_merge(array(""), $this->klassen))."\">{$this->codeZu()}";
 
     if ($this->zeigeSekunden) {
       $code .= " : ";
-      $code .= "<{$this->codeAuf("id", "value", "class")} id=\"{$this->id}Sek\" value=\"$uhrzeit[2]\" class=\"dshUiEingabefeld dshUiUhrzeitfeldSek".join(" ", array_merge(array(""), $this->klassen))."\">{$this->codeZu()}";
+      $code .= "<{$this->codeAuf(false, "id", "value", "class")} id=\"{$this->id}Sek\" value=\"$uhrzeit[2]\" class=\"dshUiEingabefeld dshUiUhrzeitfeldSek".join(" ", array_merge(array(""), $this->klassen))."\">{$this->codeZu()}";
     }
 
     return $code;
@@ -167,9 +185,9 @@ class Datumfeld extends Eingabe {
     $this->aktionen->setFunktion("onchange", 3, "ui.datumsanzeige.checkTag('{$this->id}')");
     $this->aktionen->setFunktion("onkeyup",  3, "ui.datumsanzeige.checkTag('{$this->id}')");
 
-    $code  = "<{$this->codeAuf("id", "value", "class")} id=\"{$this->id}T\" value=\"{$datum[0]}\" class=\"dshUiEingabefeld dshUiDatumfeldT".join(" ", array_merge(array(""), $this->klassen))."\">{$this->codeZu()} ";
-    $code .= "<{$this->codeAuf("id", "value", "class")} id=\"{$this->id}M\" value=\"{$datum[1]}\" class=\"dshUiEingabefeld dshUiDatumfeldM".join(" ", array_merge(array(""), $this->klassen))."\">{$this->codeZu()} ";
-    $code .= "<{$this->codeAuf("id", "value", "class")} id=\"{$this->id}J\" value=\"{$datum[2]}\" class=\"dshUiEingabefeld dshUiDatumfeldJ".join(" ", array_merge(array(""), $this->klassen))."\">{$this->codeZu()} ";
+    $code  = "<{$this->codeAuf(false, "id", "value", "class")} id=\"{$this->id}T\" value=\"{$datum[0]}\" class=\"dshUiEingabefeld dshUiDatumfeldT".join(" ", array_merge(array(""), $this->klassen))."\">{$this->codeZu()} ";
+    $code .= "<{$this->codeAuf(false, "id", "value", "class")} id=\"{$this->id}M\" value=\"{$datum[1]}\" class=\"dshUiEingabefeld dshUiDatumfeldM".join(" ", array_merge(array(""), $this->klassen))."\">{$this->codeZu()} ";
+    $code .= "<{$this->codeAuf(false, "id", "value", "class")} id=\"{$this->id}J\" value=\"{$datum[2]}\" class=\"dshUiEingabefeld dshUiDatumfeldJ".join(" ", array_merge(array(""), $this->klassen))."\">{$this->codeZu()} ";
     $code .= "<div class=\"dshUiDatumwahl\" id=\"{$this->id}Datumwahl\"></div>";
 
     return $code;
@@ -189,7 +207,7 @@ class Schieber extends Eingabe {
 
     $this->aktionen->setFunktion("onclick",  3, "ui.schieber.aktion('{$this->id}')");
 
-    $code  = "<{$this->codeAuf("id", "value", "class")} id=\"{$this->id}Schieber\" class=\"dshUiSchieberAussen dshUiSchieber$wert".join(" ", array_merge(array(""), $this->klassen))."\"><span class=\"dshUiSchieber\"></span>{$this->codeZu()}";
+    $code  = "<{$this->codeAuf(false, "id", "value", "class")} id=\"{$this->id}Schieber\" class=\"dshUiSchieberAussen dshUiSchieber$wert".join(" ", array_merge(array(""), $this->klassen))."\"><span class=\"dshUiSchieber\"></span>{$this->codeZu()}";
     $code .= "<input type=\"hidden\" id=\"{$this->id}\" value=\"$wert\">";
 
     return $code;
@@ -242,12 +260,18 @@ class Zahlenfeld extends PlatzhalterEingabe {
   }
 
   /**
-   * Gibt den Code des öffnenden Tags zurück (Ohne < >)
-   * @param   string ...$nicht Attribute, die ignoriert werden sollen
-   * @return  string Der Code des öffnenden Tags
-   */
-  public function codeAuf(...$nicht) : string {
-    $rueck = parent::codeAuf(...$nicht);
+	 * Gibt den Code des öffnenden Tags zurück (Ohne < >)
+	 * @param   boolean $klammer True => mit < >; False => Ohne < >
+	 * @param 	string ...$nicht Attribute, die ignoriert werden sollen
+	 * @return 	string Der Code des öffnenden Tags
+	 */
+	public function codeAuf($klammer = true, ...$nicht) : string {
+    $rueck = "";
+    if($klammer) {
+      $rueck = "<";
+    }
+    $rueck .= parent::codeAuf(false, ...$nicht);
+
     if($this->min !== null && !in_array("min", $nicht))
       $rueck .= " min=\"{$this->min}\"";
     if($this->max !== null && !in_array("max", $nicht))
@@ -255,6 +279,9 @@ class Zahlenfeld extends PlatzhalterEingabe {
     if($this->schritt !== null && !in_array("step", $nicht))
       $rueck .= " step=\"{$this->schritt}\"";
 
+    if($klammer) {
+      $rueck .= ">";
+    }
     return $rueck;
   }
 }
@@ -351,7 +378,7 @@ class Textarea extends Textfeld {
   }
 
   public function __toString() : string {
-    return "<{$this->codeAuf("value")}>{$this->wert}{$this->codeZu()}";
+    return "<{$this->codeAuf(false, "value")}>{$this->wert}{$this->codeZu()}";
   }
 }
 

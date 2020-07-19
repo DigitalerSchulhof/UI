@@ -6,8 +6,10 @@ use UI;
 *Schaltflächen erstellen
 */
 class Knopf extends UI\Elemente\InhaltElement {
+  protected $tag = "span";
+
   /** @var string Zulässige Knopfarten */
-  static const ARTEN = ["Standard", "Erfolg", "Fehler", "Warnung", "Information", "Passiv", "Eingeschraenkt", "Gesperrt"];
+  const ARTEN = ["Standard", "Erfolg", "Fehler", "Warnung", "Information", "Passiv", "Eingeschraenkt", "Gesperrt"];
 
 	/**
 	* @param string $text :)
@@ -19,99 +21,109 @@ class Knopf extends UI\Elemente\InhaltElement {
       $art = self::ARTEN[0];
     }
     $this->art  = $art;
-    $this->icon = $icon;
   }
 
+  /**
+   * Gibt einen Klon mit passenden Klassen zurück
+   * @return self
+   */
+  public function toStringVorbereitung() : self {
+    $self = clone $this;
+    if ($self->aktionen->count() === 0) {
+      $self->addKlasse("dshUiKnopfPassiv");
+    }
+    $self->addKlasse("dshUiKnopf{$self->art}");
 
+    return $self;
+  }
 
   public function __toString() : string {
-    $zusatzklasse = "";
-    $eventattribut = "";
+    $self = $this->toStringVorbereitung();
 
-    $self = clone $this;
-
-    if ($this->aktionen->count() === 0) {
-      $self->dazuKlasse("dshUiKnopfPassiv");
-    }
-    $self->dazuKlasse("dshUiKnopf$art");
-
-    return "<$tag class=\"dshUiKnopf$zusatzklasse\"$eventattribute>{$this->text}</$tag>";
-
-    switch($typ) {
-      case "m":
-        $self->dazuKlasse("dshUiIconMini");
-        $hinweis = new UI\Hinweis($this->text);
-        return "<{$self->codeAuf()}>$hinweis{$this->icon}"
-
-    }
-    if ($typ == "m") {
-      return "<{$self->codeAuf("id")} id=\"{$this->id}T\" value=\"{$datum[0]}\" class=\"dshUiEingabefeld dshUiDatumfeldT".join(" ", array_merge(array(""), $this->klassen))."\">{$this->codeZu()} ";
-      return "<$tag class=\"dshUiKnopfMini$zusatzklasse\"$eventattribute>".(new Hinweis($this->text))->ausgabe($positionHinweis)."{$this->icon->ausgabe()}</$tag>";
-    }
-    else if ($typ == "i") {
-      return "<$tag class=\"dshUiKnopfIcon$zusatzklasse\"$eventattribute>{$this->icon->ausgabe()} {$this->text}</$tag>";
-    }
-    else if ($typ == "g") {
-      return "<$tag class=\"dshUiKnopfGross$zusatzklasse\"$eventattribute>{$this->icon->ausgabe()}<span>{$this->text}</span></$tag>";
-    }
-
+    return "{$self->codeAuf()}{$self->inhalt}{$self->codeZu()}";
   }
 }
 
-abstract class IconKnopf extends Knopf {
-  /** @var string Zulässige IconKnopfTypen */
-  static const TYPEN = ["Standard", "Gross", "Mini"];
-
+class IconKnopf extends Knopf {
   /** @var Icon Icon der Schaltlfäche */
   protected $icon;
-  /** @var string Typ des Knopfes*/
 
   /**
-  * @param string $text :)
-  * @param string $typ :)
-  * @param string $art :)
   * @param Icon   $icon :)
+  * @param string $text :)
+  * @param string $art :)
   */
-  public function __construct($text, $typ=null, $art = null, $icon = null) {
-    parent::__construct($text);
-    if(!in_array($typ, self::TYPEN)) {
-      $art = self::TYPEN[0];
-    }
+  public function __construct($icon, $text, $art = null) {
+    parent::__construct($text, $art);
     $this->icon = $icon;
   }
 
-
   public function __toString() : string {
-    $zusatzklasse = "";
-    $eventattribut = "";
+    $self = $this->toStringVorbereitung();
+    $self->addKlasse("dshUiKnopfIcon");
+    return "{$self->codeAuf()}{$self->icon} {$self->text}{$self->codeZu()}";
+  }
+}
 
-    $self = clone $this;
+class GrossIconKnopf extends IconKnopf {
+  /** @var $position Position des Hinweises */
+  protected $position;
 
-    if ($this->aktionen->count() === 0) {
-      $self->dazuKlasse("dshUiKnopfPassiv");
-    }
-    $self->dazuKlasse("dshUiKnopf$art");
-
-    return "<$tag class=\"dshUiKnopf$zusatzklasse\"$eventattribute>{$this->text}</$tag>";
-
-    switch($typ) {
-      case "Standard":
-        $self->dazuKlasse("dshUiKnopfIcon");
-        return "{$self->codeAuf()}{$this->icon} {$this->text}{$self->codeZu()}";
-      case "Mini":
-        $self->dazuKlasse("dshUiIconMini");
-        $hinweis = new UI\Hinweis($this->text);
-        return "{$self->codeAuf()}$hinweis{$this->icon}{$self->codeZu()}";
-      case "Gross":
-        $self->dazuKlasse("dshUiKnopfGross");
-        $knopfinhalt = new InhaltElement($this->text);
-        $knopfinhalt->setTag("span");
-        $knopfinhalt->addKlasse("dshUiKnopfGrossText");
-        return "{$self->codeAuf()}{$this->icon}$knopfinhalt{$self->codeZu()}";
-    }
-
+  /**
+  * @param Icon   $icon :)
+  * @param string $text :)
+  * @param string $art :)
+  * @param string $typ :)
+  * @param string $position Position des Hinweises - ["OR"; "OL"; "UR"; "UL"]
+  */
+  public function __construct($icon, $text, $art = null, $position = "OL") {
+    parent::__construct($icon, $text, $art);
+    $this->position = $position;
   }
 
+  public function __toString() : string {
+    $self = $this->toStringVorbereitung();
+
+    $self->addKlasse("dshUiKnopfGross");
+    $knopfinhalt = new InhaltElement($this->text);
+    $knopfinhalt->setTag("span");
+    $knopfinhalt->addKlasse("dshUiKnopfGrossText");
+    return "{$self->codeAuf()}{$this->icon}$knopfinhalt{$self->codeZu()}";
+  }
+}
+
+class MiniIconKnopf extends IconKnopf {
+  /** @var $position Position des Hinweises */
+  protected $position;
+
+  /**
+  * @param Icon   $icon :)
+  * @param string $text :)
+  * @param string $art :)
+  * @param string $typ :)
+  * @param string $position Position des Hinweises - ["OR"; "OL"; "UR"; "UL"]
+  */
+  public function __construct($icon, $text, $art = null, $position = "OL") {
+    parent::__construct($icon, $text, $art);
+    $this->position = $position;
+  }
+
+  /**
+   * Setzt die Position des Hinweises
+   * @param  string $position :)
+   * @return self
+   */
+  public function setPosition($position) : self {
+    $this->position = $position;
+  }
+
+  public function __toString() : string {
+    $self = $this->toStringVorbereitung();
+
+    $self->addKlasse("dshUiIconMini");
+    $hinweis = new Hinweis($self->inhalt, $this->position);
+    return "{$self->codeAuf()}$hinweis{$self->icon}{$self->codeZu()}";
+  }
 }
 
 ?>
