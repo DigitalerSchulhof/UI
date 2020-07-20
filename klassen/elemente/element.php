@@ -1,5 +1,5 @@
 <?php
-namespace UI\Elemente;
+namespace UI;
 
 /**
  * Das Element ist die Grundklasse jeder UI-Komponente. Es enthält für jedes Element notwendige Attribute wie ID, Klassen, Tag, ... und wesentliche Funktionen um diese zu manipulieren, und das Element schließlich auszugeben.
@@ -117,7 +117,7 @@ abstract class Element {
   }
 
   /**
-	 * Gibt den Code des öffnenden Tags zurück (Ohne < >)
+	 * Gibt den Code des öffnenden Tags zurück
 	 * @param   boolean $klammer True => mit < >; False => Ohne < >
 	 * @param 	string ...$nicht Attribute, die ignoriert werden sollen
 	 * @return 	string Der Code des öffnenden Tags

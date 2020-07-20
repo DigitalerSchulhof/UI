@@ -12,7 +12,7 @@ class Konstanten {
   const FEHLER = "fas fa-exclamation-triangle";
   const WARNUNG = "fas fa-question-circle";
   const INFORMATION = "fas fa-info-circle";
-  const LADEN = "fas fa-spinner fa-spin";
+  const LADEN = "fas fa-spinner";
   const SCHUTZ = "fas fa-shield-alt";
   const GESPERRT = "fas fa-door-closed";
 

@@ -1,5 +1,5 @@
 <?php
-namespace UI\Elemente;
+namespace UI;
 
 /**
  * Abstrakte Klasse für alle Eingabeelemente

@@ -1,11 +1,11 @@
 <?php
-namespace UI\Elemente;
+namespace UI;
 use UI;
 
 /**
 * Ein Hinweis ist das Feld, das oberhalb von einem Knopf angezeigt wird.
 */
-class Hinweis extends UI\Elemente\InhaltElement{
+class Hinweis extends UI\InhaltElement{
   protected $tag = "span";
   /** @var string Mögliche Positionen */
   const POSITIONEN = ["OR", "OL", "UR", "UL"];
@@ -24,10 +24,6 @@ class Hinweis extends UI\Elemente\InhaltElement{
     $this->position = $position;
     $this->addKlasse("dshUiHinweis");
     $this->addKlasse("dshUiHinweis$position");
-  }
-
-  public function __toString() : string {
-    return "<span class=\"dshUiHinweis dshUiHinweis{$this->position}\">{$this->inhalt}</span>";
   }
 }
 ?>

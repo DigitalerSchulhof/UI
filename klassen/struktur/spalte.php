@@ -1,11 +1,11 @@
 <?php
-namespace UI\Struktur;
+namespace UI;
 use UI;
 
-class Spalte extends UI\Elemente\Element {
+class Spalte extends UI\Element {
   /** @var string Typ der Spalte */
   private $typ;
-  /** @var string[] Elemente der Spalte */
+  /** @var Element[] Elemente der Spalte */
   private $elemente;
 
   /**
@@ -31,7 +31,7 @@ class Spalte extends UI\Elemente\Element {
    * Gibt den HTML-Code zurück
    * @return string Der HTML-Code
    */
-  public function ausgabe() : string {
+  public function __toString() : string {
     $code  = "<div class=\"dshSpalte{$this->typ}{$this->klasse}\">";
     foreach ($this->elemente as $e) {
       $code .= $e;
@@ -42,7 +42,7 @@ class Spalte extends UI\Elemente\Element {
 
   /**
    * Fügt ein Element der Spalte hinzu
-   * @param  string $element Hinzuzufügendes Element
+   * @param  Element $element Hinzuzufügendes Element
    */
   public function add($element) {
     $this->elemente[] = $element;
@@ -72,10 +72,10 @@ class Zeile {
    * Gibt den HTML-Code zurück
    * @return string Der HTML-Code
    */
-  public function ausgabe() : string {
+  public function __toString() : string {
     $code  = "<div class=\"dshZeile{$this->klasse}\">";
     foreach ($this->spalten as $s) {
-      $code .= $s->ausgabe();
+      $code .= $s;
     }
     $code .= "<div class=\"dshClear\"></div>";
     return $code;

@@ -1,7 +1,8 @@
 <?php
-namespace UI\Elemente;
+namespace UI;
 use UI\Konstanten;
 use UI\Icon;
+use UI\Ladesymbol;
 
 
 class Meldung extends Element {
@@ -31,10 +32,13 @@ class Meldung extends Element {
     }
     $this->art = $art;
     $this->titel = $titel;
+    if(substr($inhalt, 0, 1) !== "<") {
+      $inhalt = "<p>$inhalt</p>";
+    }
     $this->inhalt = $inhalt;
 
     if($this->art === "Laden") {
-      $this->inhalt  = "<div class=\"dshUiLaden\">".(new \UI\Ladesymbol())->ausgabe();
+      $this->inhalt  = "<div class=\"dshUiLaden\">".new Ladesymbol();
       $this->inhalt .= "<p class=\"dshNotiz\">Dieser Inhalt wird geladen...</p></div>";
     }
 

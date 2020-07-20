@@ -6,7 +6,7 @@
     Anfrage::fehler(1);
   }
 
-  $r = new UI\Elemente\Datumfeld($id);
+  $r = new UI\Datumfeld($id);
   $r->setWert("$tag.$monat.$jahr");
   echo $r->tageswahlGenerieren();
 ?>

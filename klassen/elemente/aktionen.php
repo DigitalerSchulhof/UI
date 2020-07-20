@@ -1,5 +1,5 @@
 <?php
-namespace UI\Elemente;
+namespace UI;
 
 /**
  * @author DSH
@@ -24,7 +24,7 @@ class Aktionen {
 	}
 
 	/**
-	 * Überschreibt die Funktionen mit der angegebenen Priorität. <b>Zuvor übergebene Funktionen dieser Priorität dieses Auslösers gehen verloren!</b><br>Funktionen können über {@see UI\Elemente\Aktionen::addAktion} angehängt werden.
+	 * Überschreibt die Funktionen mit der angegebenen Priorität. <b>Zuvor übergebene Funktionen dieser Priorität dieses Auslösers gehen verloren!</b><br>Funktionen können über {@see UI\Aktionen::addAktion} angehängt werden.
 	 * @param 	string $ausloeser Auslöser der Funktionen
 	 * @param 	int $prioritaet Priorität der Funktionen
 	 * @param 	string ...$funktionen Was passiert, wenn der Auslöser auftritt - <code>null</code> zum Leeren

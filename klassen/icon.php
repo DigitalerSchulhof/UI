@@ -2,11 +2,12 @@
 namespace UI;
 
 class Icon {
-  /** @var string Art der Meldung */
+  /** @var string Fontawesome Klassen des Icons */
   private $icon;
 
 	/**
-   * @param string $icon Art des Icons
+   * @param string $icon Fontawesome Klassen des Icons
+   * Bsp: <code>"fas fa-user"</code> bzw. <code>\UI\Konstanten::PERSON</code>
    */
   public function __construct($icon) {
     $this->icon = $icon;
@@ -15,8 +16,9 @@ class Icon {
   /**
    * Setzt das Icon auf den gegebenen Wert
    * @param string $icon Wert des Icons
+   * @return self
    */
-  public function setIcon($icon) {
+  public function setIcon($icon) : self {
     $this->icon = $icon;
   }
 

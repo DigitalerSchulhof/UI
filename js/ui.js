@@ -214,7 +214,7 @@ ui.datumsanzeige = {
     $("#"+id+"Min").value = ui.generieren.fuehrendeNull(jetzt.getMinutes());
   },
   tageswahl: {
-    generieren: (id, tag, monat, jahr) => core.ajax("UI", 0, "Die Tageswahl wird geladen...", {id: id, tag: tag, monat: monat, jahr: jahr}),
+    generieren: (id, tag, monat, jahr) => core.ajax("UI", 0, null, {id: id, tag: tag, monat: monat, jahr: jahr}),
     aktion: (id, tag, monat, jahr) => {
       var datum = new Date (jahr, monat-1, tag);
       var tag = $("#"+id+"T").value   = ui.generieren.fuehrendeNull(datum.getDate());
