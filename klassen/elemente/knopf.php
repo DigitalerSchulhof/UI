@@ -15,11 +15,11 @@ class Knopf extends UI\InhaltElement {
   protected $art;
 
 	/**
-	* @param string $text :)
+	* @param string $inhalt :)
 	* @param string $art :)
 	*/
-  public function __construct($text, $art = null) {
-    parent::__construct($text);
+  public function __construct($inhalt, $art = null) {
+    parent::__construct($inhalt);
     if(!in_array($art, self::ARTEN)) {
       $art = self::ARTEN[0];
     }
@@ -54,11 +54,11 @@ class IconKnopf extends Knopf {
 
   /**
   * @param Icon   $icon :)
-  * @param string $text :)
+  * @param string $inhalt :)
   * @param string $art :)
   */
-  public function __construct($icon, $text, $art = null) {
-    parent::__construct($text, $art);
+  public function __construct($icon, $inhalt, $art = null) {
+    parent::__construct($inhalt, $art);
     $this->icon = $icon;
   }
 
@@ -75,13 +75,13 @@ class GrossIconKnopf extends IconKnopf {
 
   /**
   * @param Icon   $icon :)
-  * @param string $text :)
+  * @param string $inhalt :)
   * @param string $art :)
   * @param string $typ :)
   * @param string $position Position des Hinweises - ["OR"; "OL"; "UR"; "UL"]
   */
-  public function __construct($icon, $text, $art = null, $position = "OL") {
-    parent::__construct($icon, $text, $art);
+  public function __construct($icon, $inhalt, $art = null, $position = "OL") {
+    parent::__construct($icon, $inhalt, $art);
     $this->position = $position;
   }
 
@@ -102,13 +102,13 @@ class MiniIconKnopf extends IconKnopf {
 
   /**
   * @param Icon   $icon :)
-  * @param string $text :)
+  * @param string $inhalt :)
   * @param string $art :)
   * @param string $typ :)
   * @param string $position Position des Hinweises - ["OR"; "OL"; "UR"; "UL"]
   */
-  public function __construct($icon, $text, $art = null, $position = "OL") {
-    parent::__construct($icon, $text, $art);
+  public function __construct($icon, $inhalt, $art = null, $position = "OL") {
+    parent::__construct($icon, $inhalt, $art);
     $this->position = $position;
   }
 
