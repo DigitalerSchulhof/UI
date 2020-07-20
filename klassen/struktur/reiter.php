@@ -119,6 +119,22 @@ class Reitersegment {
     return $this->reiter;
   }
 
+  /**
+   * Gibt den Reiterkopf zurück
+   * @return Reiterkopf :)
+   */
+  public function getKopf() : Reiterkopf {
+    return $this->reiterkopf;
+  }
+
+  /**
+   * Gibt den Reiterkörper zurück
+   * @return Reiterkoerper :)
+   */
+  public function getKoerper() : Reiterkoerper {
+    return $this->reiterkoerper;
+  }
+
 }
 
 class Reiter extends UI\Element {
@@ -148,8 +164,23 @@ class Reiter extends UI\Element {
 
   public function __toString() : string {
     $code = $this->codeAuf();
-    $code .= "<div class=\"dshUiReiterKoepfe\"></div>";
-    $code .= "<div></div>";
+    $koepfe = "";
+    $koerper = "";
+    for ($i=0; $i<count($this->reitersegmente); $i++) {
+      $oben = clone $this->reitersegmente[$i]->getKopf();
+      $unten = clone $this->reitersegmente[$i]->getKoerper();
+      if ($i == $gewaehlt) {
+        $oben->addKlasse("dshUiReiterKopfGewaehlt");
+        $unten->addKlasse("dshUiReiterKoerperGewaehlt");
+      } else {
+        $oben->addKlasse("dshUiReiterKopfInaktiv");
+        $unten->addKlasse("dshUiReiterKoerperInaktiv");
+      }
+      $kopefe .= $oben;
+      $koerper .= $unten;
+    }
+    $code .= "<div class=\"dshUiReiterKoepfe\">$koepfe</div>";
+    $code .= "<div class=\"dshUiReiterKoerper\">$koerper</div>";
     return $code.$this->codeZu();
   }
 }
