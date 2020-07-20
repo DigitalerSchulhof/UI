@@ -188,6 +188,16 @@ class InhaltElement extends Element {
 		 $this->inhalt 	= $inhalt;
 	}
 
+  /**
+   * Setzt den Inhalt
+   * @param string $inhalt :)
+   * @return self
+   */
+  public function setInhalt($inhalt) : self {
+    $this->inhalt = $inhalt;
+    return $this;
+  }
+
 	public function __toString() : string {
 		return "{$this->codeAuf()}{$this->inhalt}{$this->codeZu()}";
 	}

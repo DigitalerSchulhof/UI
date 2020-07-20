@@ -302,8 +302,7 @@ class Toggle extends Schieber {
    * @param string $text :)
    */
   public function __construct($id, $text) {
-    parent::__construct();
-    $this->id = $id;
+    parent::__construct($id);
     $this->text = $text;
   }
 
@@ -522,7 +521,7 @@ class Passwortfeld extends Textfeld {
   public function __toString() : string {
     $self = clone $this;
     if($self->bezug !== null) {
-      $self->aktionen->addFunktionPrioritaet("onchange", 3, "ui.passwort.aktion('{$self->bezug->id}', \"{$self->id}')");
+      $self->aktionen->addFunktionPrioritaet("onchange", 3, "ui.passwort.aktion('{$self->bezug->getID()}', '{$self->id}')");
     }
 
     return "{$self->codeAuf()}{$self->codeZu()}";
@@ -557,7 +556,6 @@ class Textarea extends Textfeld {
     return "<{$this->codeAuf(false, "value")}>{$this->wert}{$this->codeZu()}";
   }
 }
-
 
 
 class Option extends Eingabe {

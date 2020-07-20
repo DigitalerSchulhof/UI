@@ -64,7 +64,7 @@ class IconKnopf extends Knopf {
   public function __toString() : string {
     $self = $this->toStringVorbereitung();
     $self->addKlasse("dshUiKnopfIcon");
-    return "{$self->codeAuf()}{$self->icon} {$self->text}{$self->codeZu()}";
+    return "{$self->codeAuf()}{$self->icon} {$self->inhalt}{$self->codeZu()}";
   }
 }
 
@@ -88,7 +88,7 @@ class GrossIconKnopf extends IconKnopf {
     $self = $this->toStringVorbereitung();
 
     $self->addKlasse("dshUiKnopfGross");
-    $knopfinhalt = new InhaltElement($this->text);
+    $knopfinhalt = new InhaltElement($this->inhalt);
     $knopfinhalt->setTag("span");
     $knopfinhalt->addKlasse("dshUiKnopfGrossText");
     return "{$self->codeAuf()}{$this->icon}$knopfinhalt{$self->codeZu()}";

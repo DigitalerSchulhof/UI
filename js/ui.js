@@ -246,8 +246,11 @@ ui.toggle = {
       neuerwert = 1;
     }
     $("#"+id).value = neuerwert;
-    $("#"+id+"Toggle").classList.add("dshUiToggled");
-    $("#"+id+"Toggle").classList.remove("dshUiToggled");
+    if(neuerwert == 1) {
+      $("#"+id+"Toggle").classList.add("dshUiToggled");
+    } else {
+      $("#"+id+"Toggle").classList.remove("dshUiToggled");
+    }
   }
 }
 
