@@ -1,8 +1,7 @@
 <?php
 namespace UI;
-use UI;
 
-class Spalte extends UI\Element {
+class Spalte extends Element {
   /** @var string Typ der Spalte */
   private $typ;
   /** @var Element[] Elemente der Spalte */
@@ -14,6 +13,7 @@ class Spalte extends UI\Element {
    * @param string $klasse  Klasse der Spalte
    */
   public function __construct($element = null, $typ = "A1", $klasse = "") {
+    parent::__construct();
     $moeglich = ["A1", "A2", "A3", "A4", "A5", "B23", "B34", "P10", "P20", "P30", "P40", "P50", "P60", "P70", "P80", "P90"];
     if (!in_array($typ, $moeglich)) {
       $klasse = "A1";

@@ -5,8 +5,9 @@ use UI;
 
 class Ladesymbol extends UI\Element {
   protected $tag = "div";
-  
+
   public function __construct() {
+    parent::__construct();
     $this->addKlasse("dshUiLadesymbol");
   }
 

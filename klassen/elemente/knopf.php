@@ -1,11 +1,10 @@
 <?php
 namespace UI;
-use UI;
 
 /**
 *Schaltflächen erstellen
 */
-class Knopf extends UI\InhaltElement {
+class Knopf extends InhaltElement {
   protected $tag = "span";
 
   /** @var string Zulässige Knopfarten */

@@ -5,7 +5,8 @@ class Konstanten {
   // Knöpfe
   const ZURUECK = "fas fa-angle-double-left";
   const VOR     = "fas fa-angle-double-right";
-
+  const DRUCKEN = "fas fa-print";
+  
   // Meldungen
   const STANDARD = "fas fa-caret-right";
   const ERFOLG = "fas fa-check-circle";

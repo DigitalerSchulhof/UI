@@ -138,7 +138,7 @@ abstract class Element {
 		if(count($this->klassen) > 0 && !in_array("class", $nicht))
 			$rueck .= " class='".join(" ", $this->klassen)."'";
 
-		if($this->aktionen !== null && $this->aktionen->count() > 0 && !in_array("aktionen", $nicht))
+		if($this->aktionen->count() > 0 && !in_array("aktionen", $nicht))
 			$rueck .= " {$this->aktionen}";
 
     if($klammer) {

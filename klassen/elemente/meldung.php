@@ -27,6 +27,7 @@ class Meldung extends Element {
    * @param string $inhalt Inhalt der Meldung
    */
   public function __construct($titel, $inhalt, $art = "", $icon = null) {
+    parent::__construct();
     if(!in_array($art, self::ARTEN)) {
       $art = self::ARTEN[0];
     }
