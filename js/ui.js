@@ -289,6 +289,21 @@ ui.togglegruppe = {
   }
 }
 
+ui.reiter = {
+  aktion: (id, nr, anzahl) => {
+    for (var i=0; i<anzahl; i++) {
+      $("#"+id+"Koerper"+i).classList.remove("dshUiReiterKoerperAktiv");
+      $("#"+id+"Koerper"+i).classList.add("dshUiReiterKoerperInaktiv");
+      $("#"+id+"Kopf"+i).classList.remove("dshUiReiterKopfAktiv");
+      $("#"+id+"Kopf"+i).classList.add("dshUiReiterKopfInaktiv");
+    }
+    $("#"+id+"Koerper"+nr).classList.remove("dshUiReiterKoerperInaktiv");
+    $("#"+id+"Koerper"+nr).classList.add("dshUiReiterKoerperAktiv");
+    $("#"+id+"Kopf"+nr).classList.remove("dshUiReiterKopfInaktiv");
+    $("#"+id+"Kopf"+nr).classList.add("dshUiReiterKopfAktiv");
+  }
+}
+
 ui.laden = {
   balken: {
     prozent: (id, x) => {

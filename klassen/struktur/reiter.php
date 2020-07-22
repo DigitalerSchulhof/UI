@@ -1,7 +1,44 @@
 <?php
 namespace UI;
 
-class Reiterkopf extends UI\InhaltElement {
+class Reiterkoerper extends Zeile {
+  private $typ = "A1";
+
+  /** @var Reitersegment Übergeordnetes Reitersegment */
+  private $reitersegment;
+  /** @var int Nummer innerhalb des Reiters */
+  private $nr;
+
+  /**
+   * Erstellt einen neuen Reiterkörper
+   * @param Element $element Element, das dem Reiterkörper hinzugefügt werden soll
+   * @param string $klasse   CSS-Klasse des Reiterkörpers
+   */
+  public function __construct($element = null, $klasse = "") {
+    parent::__construct($element, "A1", $klasse);
+    $this->reitersegment = null;
+  }
+
+  /**
+   * Setzt die Nr für den Reiterkörper neu
+   * @param int $nr :)
+   */
+  public function setNr($nr) {
+    $this->nr = $nr;
+  }
+
+  /**
+   * Setzt das zugehörige Reitersegment
+   * @param  Reitersegment $reitersegment :)
+   * @return self                         :)
+   */
+  public function setReitersegment($reitersegment) : self {
+    $this->reitersegment = $reitersegment;
+    return $this;
+  }
+}
+
+class Reiterkopf extends InhaltElement {
   protected $tag = "span";
 
   /** @var Reitersegment Übergeordnetes Reitersegment */
@@ -10,14 +47,12 @@ class Reiterkopf extends UI\InhaltElement {
   private $nr;
 
   /**
-   * @param Reitersegment $reitersegment :)
-   * @param int           $nr :)
    * @param string        $inhalt :)
    */
-  public function __construct($reitersegment, $nr, $inhalt) {
+  public function __construct($inhalt) {
     parent::__construct($inhalt);
-    $this->nr = $nr;
-    $this->reitersegment = $reitersegment;
+    $this->nr = null;
+    $this->reitersegment = null;
   }
 
   /**
@@ -25,7 +60,17 @@ class Reiterkopf extends UI\InhaltElement {
    * @param int $nr :)
    */
   public function setNr($nr) {
-    $this->reiterid = $nr;
+    $this->nr = $nr;
+  }
+
+  /**
+   * Setzt das zugehörige Reitersegment
+   * @param  Reitersegment $reitersegment :)
+   * @return self                         :)
+   */
+  public function setReitersegment($reitersegment) : self {
+    $this->reitersegment = $reitersegment;
+    return $this;
   }
 
   /**
@@ -34,7 +79,7 @@ class Reiterkopf extends UI\InhaltElement {
    */
   public function toStringVorbereitung() : self {
     $self = clone $this;
-    $self->getAktionen()->addFunktionPrioritaet("onclick", 3, "ui.reiter.aktion('{$self->reitersegment->getReiter()->getID()}', '$self->nr', '$self->reitersegment->getReiter()->getAnzahl()')");
+    $self->getAktionen()->addFunktionPrioritaet("onclick", 3, "ui.reiter.aktion('{$self->reitersegment->getReiter()->getID()}', '$self->nr', '{$self->reitersegment->getReiter()->getAnzahl()}')");
 
     return $self;
   }
@@ -45,7 +90,6 @@ class Reiterkopf extends UI\InhaltElement {
    */
   public function __toString() : string {
     $self = $this->toStringVorbereitung();
-
     return "{$self->codeAuf()}{$self->inhalt}{$self->codeZu()}";
   }
 }
@@ -55,12 +99,11 @@ class Reitericonkopf extends Reiterkopf {
   private $icon;
 
   /**
-   * @param int    $nr :)
    * @param string $inhalt :)
    * @param Icon   $icon   :)
    */
-  public function __construct($reitersegment, $nr, $inhalt, $icon) {
-    parent::_construct($reitersegment, $nr, $inhalt);
+  public function __construct($inhalt, $icon) {
+    parent::_construct($inhalt);
     $this->icon = $icon;
   }
 
@@ -70,7 +113,6 @@ class Reitericonkopf extends Reiterkopf {
    */
   public function __toString() : string {
     $self = $this->toStringVorbereitung();
-
     return "{$self->codeAuf()}{$self->icon} {$self->inhalt}{$self->codeZu()}";
   }
 
@@ -88,17 +130,36 @@ class Reitersegment {
 
   /**
    * Erstellt ein Reitersegment
-   * @param int           $anzahl        :)
-   * @param int           $nr            :)
-   * @param string        $reiterid      :)
-   * @param Reiterkopf    $kopf          :)
-   * @param Reiterkoerper $reiterkoerper :)
+   * @param Reiterkopf    $kopf    Kopf des Reitersegments
+   * @param Reiterkoerper $koerper Körper des Reitersegments
    */
-  public function __construct($reiter, $nr, $kopf, $reiterkoerper) {
-    $this->nr = $nr;
-    $this->reiterid = $reiterid;
+  public function __construct($kopf, $koerper) {
+    $this->reiter = null;
+    $this->nr = null;
+    $kopf->setReitersegment($this);
     $this->reiterkopf = $kopf;
+    $koerper->setReitersegment($this);
     $this->reiterkoerper = $koerper;
+  }
+
+  /**
+   * Reiterkopf hinzufügen
+   * @param  Reiterkopf $kopf :)
+   * @return self             :)
+   */
+  public function setKopf($kopf) : self {
+    $this->reiterkopf = $kopf;
+    return $this;
+  }
+
+  /**
+   * Reiterkörper hinzufügen
+   * @param  Reiterkoerper $koerper :)
+   * @return self                   :)
+   */
+  public function setKoerper($koerper) : self {
+    $this->reiterkoerper = $koerper;
+    return $this;
   }
 
   /**
@@ -106,9 +167,19 @@ class Reitersegment {
    * @param int $nr :)
    */
   public function setNr($nr) {
-    $this->reiterid = $nr;
+    $this->nr = $nr;
     $this->reiterkopf->setNr($nr);
     $this->reiterkoerper->setNr($nr);
+  }
+
+  /**
+   * Setzt den zugehörigen Reiter
+   * @param  Reiter $reiter :)
+   * @return self                         :)
+   */
+  public function setReiter($reiter) : self {
+    $this->reiter = $reiter;
+    return $this;
   }
 
   /**
@@ -137,7 +208,7 @@ class Reitersegment {
 
 }
 
-class Reiter extends UI\Element {
+class Reiter extends Element {
   protected $tag = "div";
 
   /** @var Reitersegment[] Enthält alle Reitersegmente */
@@ -150,8 +221,11 @@ class Reiter extends UI\Element {
    * @param string $id ID des Reiters
    */
   public function __construct($id) {
+    parent::__construct();
     $this->id = $id;
     $this->addKlasse("dshUiReiter");
+    $this->reitersegmente = array();
+    $this->gewaehlt = -1;
   }
 
   /**
@@ -162,6 +236,29 @@ class Reiter extends UI\Element {
     return count($this->reitersegmente);
   }
 
+  /**
+   * Neues Reitersegment anlegen und eingliedern
+   * @param  Reitersegment $reitersegment :)
+   * @return self
+   */
+  public function addReitersegment($reitersegment) : self {
+    $reitersegment->setReiter($this);
+    $nr = count($this->reitersegmente);
+    $reitersegment->getKoerper()->setID($this->id."Koerper".$nr);
+    $reitersegment->getKopf()->setID($this->id."Kopf".$nr);
+    $reitersegment->setNr($nr);
+    $this->reitersegmente[] = $reitersegment;
+    if ($this->gewaehlt == -1) {
+      $this->gewaehlt = 0;
+    }
+    return $this;
+  }
+
+
+  /**
+   * Gibt den Code eines Reiters zurück
+   * @return string :)
+   */
   public function __toString() : string {
     $code = $this->codeAuf();
     $koepfe = "";
@@ -169,14 +266,14 @@ class Reiter extends UI\Element {
     for ($i=0; $i<count($this->reitersegmente); $i++) {
       $oben = clone $this->reitersegmente[$i]->getKopf();
       $unten = clone $this->reitersegmente[$i]->getKoerper();
-      if ($i == $gewaehlt) {
-        $oben->addKlasse("dshUiReiterKopfGewaehlt");
-        $unten->addKlasse("dshUiReiterKoerperGewaehlt");
+      if ($i == $this->gewaehlt) {
+        $oben->addKlasse("dshUiReiterKopfAktiv");
+        $unten->addKlasse("dshUiReiterKoerperAktiv");
       } else {
         $oben->addKlasse("dshUiReiterKopfInaktiv");
         $unten->addKlasse("dshUiReiterKoerperInaktiv");
       }
-      $kopefe .= $oben;
+      $koepfe .= $oben;
       $koerper .= $unten;
     }
     $code .= "<div class=\"dshUiReiterKoepfe\">$koepfe</div>";

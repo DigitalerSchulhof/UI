@@ -2,8 +2,7 @@
 namespace UI;
 
 class Spalte extends Element {
-  /** @var string Typ der Spalte */
-  private $typ;
+  protected $tag = "div";
   /** @var Element[] Elemente der Spalte */
   private $elemente;
 
@@ -12,15 +11,13 @@ class Spalte extends Element {
    * @param string $typ     Typ der Spalte
    * @param string $klasse  Klasse der Spalte
    */
-  public function __construct($element = null, $typ = "A1", $klasse = "") {
+  public function __construct($element = null, $typ = "A1") {
     parent::__construct();
     $moeglich = ["A1", "A2", "A3", "A4", "A5", "B23", "B34", "P10", "P20", "P30", "P40", "P50", "P60", "P70", "P80", "P90"];
     if (!in_array($typ, $moeglich)) {
-      $klasse = "A1";
+      $typ = "A1";
     }
-    $this->typ     = $typ;
-    if (strlen($klasse) > 0) {$klasse = " ".$klasse;}
-    $this->klasse = $klasse;
+    $this->addKlasse("dshSpalte".$typ);
     $this->elemente = array();
     if ($element !== null) {
       $this->elemente[] = $element;
@@ -32,11 +29,11 @@ class Spalte extends Element {
    * @return string Der HTML-Code
    */
   public function __toString() : string {
-    $code  = "<div class=\"dshSpalte{$this->typ}{$this->klasse}\">";
+    $code  = $this->codeAuf();
     foreach ($this->elemente as $e) {
       $code .= $e;
     }
-    $code .= "</div>";
+    $code .= $this->codeZu();
     return $code;
   }
 
@@ -49,22 +46,21 @@ class Spalte extends Element {
   }
 }
 
-class Zeile {
+class Zeile extends Element {
+  protected $tag = "div";
   /** @var Spalte[] Spalten dieser Zeile */
   private $spalten;
-  /** @var string CSS-Zusatzklassen dieser Zeile */
-  private $klasse;
 
   /**
    * Erstellt eine neue Zeile
    * @param Spalte $spalte  Erste Spalte dieser Zeile
    * @param string $klasse  Klasse der Zeile
    */
-  public function __construct($spalte, $klasse = "") {
+  public function __construct($spalte) {
+    parent::__construct();
+    $this->addKlasse("dshUiZeile");
     $this->spalten = array();
     $this->spalten[] = $spalte;
-    if (strlen($klasse) > 0) {$klasse = " ".$klasse;}
-    $this->klasse = $klasse;
   }
 
 
@@ -73,12 +69,12 @@ class Zeile {
    * @return string Der HTML-Code
    */
   public function __toString() : string {
-    $code  = "<div class=\"dshZeile{$this->klasse}\">";
+    $code  = $this->codeAuf();
     foreach ($this->spalten as $s) {
       $code .= $s;
     }
     $code .= "<div class=\"dshClear\"></div>";
-    return $code;
+    return $code.$this->codeZu();
   }
 
   /**
