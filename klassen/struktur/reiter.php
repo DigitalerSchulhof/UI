@@ -11,11 +11,10 @@ class Reiterkoerper extends Zeile {
 
   /**
    * Erstellt einen neuen Reiterkörper
-   * @param Element $element Element, das dem Reiterkörper hinzugefügt werden soll
-   * @param string $klasse   CSS-Klasse des Reiterkörpers
+   * @param Spalte $element Element, das dem Reiterkörper hinzugefügt werden solls
    */
-  public function __construct($element = null, $klasse = "") {
-    parent::__construct($element, "A1", $klasse);
+  public function __construct(...$spalte) {
+    parent::__construct(...$spalte);
     $this->reitersegment = null;
   }
 

@@ -60,4 +60,21 @@
 
   $zeile = new UI\Zeile($spalte);
   $CODE .= $zeile;
+
+
+
+  $reiter = new UI\Reiter("DemoReiter");
+  $rkopf = new UI\Reiterkopf("Test");
+  $r1p = (new UI\InhaltElement("Ich bin doof"))->setTag("p");
+  $rkoerper = new UI\Reiterkoerper(new UI\Spalte("A1", $r1p));
+  $rs = new UI\Reitersegment($rkopf, $rkoerper);
+  $reiter->addReitersegment($rs);
+
+  $rkopf = new UI\Reiterkopf("Noch N Test");
+  $r1p = (new UI\InhaltElement("Ich bin noch doofer"))->setTag("p");
+  $rkoerper = new UI\Reiterkoerper(new UI\Spalte("A1", $r1p));
+  $rs = new UI\Reitersegment($rkopf, $rkoerper);
+  $reiter->addReitersegment($rs);
+
+  $CODE .= $reiter;
 ?>
