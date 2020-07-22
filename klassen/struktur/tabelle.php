@@ -71,56 +71,6 @@ class Tabelle extends Element {
   }
 
   /**
-   * Sortiert die Tabelle nach der angegebenen Spalte
-   * @param  string $spalte   Assoziativer Name der Spalte
-   * @param  string $richtung ASC oder DESC
-   * @return bool             true bei Erfolg, sonst false
-   */
-  public function sortieren($spalte, $richtung) : bool {
-    if (!in_array($spalte, $this->titel)) {
-      return false;
-    }
-    if (!in_array($richtung, array("ASC", "DESC"))) {
-      return false;
-    }
-    $this->sortierung = $spalte;
-    $this->zellen = uasort($this->zellen, "vergleiche$richtung");
-    return true;
-  }
-
-  /**
-   * Vergleicht die Werte in der vorab festgelegten Spalte, sortiert aufsteigend
-   * @param  string[] $a Zeile der Tabelle
-   * @param  string[] $b Zeile der Tabelle
-   * @return int      Vergleichsergebnis
-   */
-  private function vergleicheASC ($a, $b) : int {
-    if ($a[$this->sortierung] == $b[$this->sortierung]) {
-      return 0;
-    } else if ($a[$this->sortierung] < $b[$this->sortierung]) {
-      return -1;
-    } else {
-      return 1;
-    }
-  }
-
-  /**
-   * Vergleicht die Werte in der vorab festgelegten Spalte, sortiert absteigend
-   * @param  string[] $a Zeile der Tabelle
-   * @param  string[] $b Zeile der Tabelle
-   * @return int      Vergleichsergebnis
-   */
-  private function vergleicheDESC ($a, $b) {
-    if ($a[$this->sortierung] == $b[$this->sortierung]) {
-      return 0;
-    } else if ($a[$this->sortierung] > $b[$this->sortierung]) {
-      return -1;
-    } else {
-      return 1;
-    }
-  }
-
-  /**
    * Gibt die Tabelle in HTML-Code zurück
    * @return string [description]
    */
@@ -128,19 +78,22 @@ class Tabelle extends Element {
     $self = clone $this;
     $self->addKlasse("dshUiTabelle{$this->darstellung}");
     $code  = $self->codeAuf();
-    $code .= "<tr>";
+    $zeilenr = 0;
+    $code .= "<tr id=\"{$this->id}$zeilenr\">";
     foreach ($self->titel as $t) {
       $aufsteigend = new Sortierknopf("ASC", $self->id, $t);
       $absteigend = new Sortierknopf("DESC", $self->id, $t);
       $code .= "<th>$t{$aufsteigend}{$absteigend}</th>";
     }
     $code .= "</tr>";
+    $zeilenr ++;
     foreach($self->zellen as $z) {
-      $code .= "<tr>";
+      $code .= "<tr id=\"{$this->id}$zeilenr\">";
       foreach ($self->titel as $t) {
         $code .= "<td>{$z[$t]}</th>";
       }
       $code .= "</tr>";
+      $zeilenr ++;
     }
     $code .= $self->codeZu();
     return $code;
