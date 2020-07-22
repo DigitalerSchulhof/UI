@@ -1,7 +1,7 @@
 // LAYOUT;
 
 .dshUiKnopf, .dshUiKnopfMini, .dshUiKnopfIcon, .dshUiKnopfGross,
-.dshUiToggle, .dshUiToggleIcon, .dshUiToggleGross {
+.dshUiToggle, .dshUiToggleIcon, .dshUiToggleGross, .dshUiSortierknopf {
   display: inline-block;
   border-radius: @radius2;
   cursor: pointer;
@@ -10,7 +10,7 @@
 
 .dshUiKnopf, .dshUiKnopfIcon, .dshUiKnopfGross,
 .dshUiToggle, .dshUiToggleIcon, .dshUiToggleGross {padding: 3px 6px;}
-.dshUiKnopfMini {padding: 3px 5px;}
+.dshUiKnopfMini, .dshUiSortierknopf {padding: 3px 5px;}
 
 .dshUiKnopfPassiv, .dshUiKnopfGesperrt, .dshUiKnopfEingeschraenkt {
   cursor: not-allowed !important;
@@ -27,9 +27,15 @@
   text-align: center;
 }
 
+.dshUiTabelle th .dshUiSortierknopf {
+  position: absolute;
+  transition: 250ms ease-in-out;
+  padding: 0px 2px;
+}
+
 // FARBEN;
 
-.dshUiKnopf, .dshUiKnopfMini, .dshUiKnopfIcon, .dshUiKnopfGross,
+.dshUiKnopf, .dshUiKnopfMini, .dshUiKnopfIcon, .dshUiKnopfGross, .dshUiSortierknopf,
 .dshUiToggle, .dshUiToggleIcon, .dshUiToggleGross {
   position: relative;
   background-color: @abstufung2;
@@ -65,7 +71,8 @@
   border-color: @schriftfarbePositiv !important;
 }
 
-.dshUiKnopf:hover, .dshUiKnopfMini:hover, .dshUiKnopfIcon:hover, .dshUiKnopfGross:hover,
+.dshUiKnopf:hover, .dshUiKnopfMini:hover, .dshUiKnopfIcon:hover,
+.dshUiKnopfGross:hover, .dshUiSortierknopf:hover,
 .dshUiToggle:hover, .dshUiToggleIcon:hover, .dshUiToggleGross:hover {
   color: @schriftfarbeNegativ;
   background-color: @abstufung3;

@@ -3,10 +3,13 @@ namespace UI;
 
 class Konstanten {
   // Knöpfe
-  const ZURUECK = "fas fa-angle-double-left";
-  const VOR     = "fas fa-angle-double-right";
-  const DRUCKEN = "fas fa-print";
-  
+  const ZURUECK  = "fas fa-angle-double-left";
+  const VOR      = "fas fa-angle-double-right";
+  const DRUCKEN  = "fas fa-print";
+  const LOESCHEN = "fas fa-minus-circle";
+  const ASC      = "fas fa-sort-up";
+  const DESC     = "fas fa-sort-down";
+
   // Meldungen
   const STANDARD = "fas fa-caret-right";
   const ERFOLG = "fas fa-check-circle";
@@ -18,6 +21,13 @@ class Konstanten {
   const GESPERRT = "fas fa-door-closed";
 
 	const SCHLIESSEN = "fas fa-times";
-	const PERSON = "fa fa-user";
+
+  // Personen
+	const PERSON     = "fa fa-user";
+	const LEHRER     = "fas fa-chalkboard-teacher";
+	const SCHUELER   = "fas fa-user-graduate";
+	const VERWALTUNG = "fas fa-user-cog";
+	const EXTERN     = "fas fa-user-astronaut";
+	const ELTERN     = "fas fa-user-friends";
 }
 ?>

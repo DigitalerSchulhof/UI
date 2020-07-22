@@ -129,4 +129,66 @@ class MiniIconKnopf extends IconKnopf {
   }
 }
 
+
+class Sortierknopf extends MiniIconKnopf {
+  /** @var string $richtung Richtung der Sortierung */
+  protected $richtung;
+  /** @var string $tabelleID ID der Tabelle auf die sich das Sortieren bezieht */
+  protected $tabelleID;
+  /** @var string $spaltenname Spalte, auf die sich das das Sortieren bezieht */
+  protected $spaltenname;
+
+  /** @var string Zulässige Richtungen */
+  const RICHTUNGEN = ["ASC", "DESC"];
+
+  /**
+  * @param string $richtung (ASC oder DESC)
+  * @param string $tabelle  TabellenID
+  * @param string $spalte   Name der zu sortierenden Spalte
+  */
+  public function __construct($richtung, $tabelleId, $spaltenname) {
+    if (!in_array($richtung, self::RICHTUNGEN)) {
+      $richtung = "ASC";
+    }
+    $this->richtung = $richtung;
+    if ($richtung == "DESC") {
+      $inhalt = "absteigend: Z-A 9-0";
+      $icon = new Icon(Konstanten::DESC);
+      $this->addKlasse("dshUiSortierenDESC");
+    } else {
+      $inhalt = "aufsteigend: A-Z 0-9";
+      $icon = new Icon(Konstanten::ASC);
+      $this->addKlasse("dshUiSortierenASC");
+    }
+    parent::__construct($icon, $inhalt, null, "OL");
+    $this->tabelleId = $tabelleId;
+    $this->spaltenname = $spaltenname;
+  }
+
+  /**
+   * Setzt die Position des Hinweises
+   * @param  string $position :)
+   * @return self
+   */
+  public function setPosition($position) : self {
+    $this->position = $position;
+  }
+
+  /**
+   * Gibt einen Klon mit passenden Klassen zurück
+   * @return self
+   */
+  public function toStringVorbereitung() : self {
+    $self = clone $this;
+    $self->aktionen->addFunktion("onclick", "ui.tabellen.sortieren('{$this->richtung}', '{$this->tabelleId}', '{$this->spaltenname}')");
+    $self->addKlasse("dshUiSortierknopf");
+    return $self;
+  }
+
+  public function __toString() : string {
+    $self = $this->toStringVorbereitung();
+    $hinweis = new Hinweis($self->inhalt, $this->position);
+    return "{$self->codeAuf()}$hinweis{$self->icon}{$self->codeZu()}";
+  }
+}
 ?>

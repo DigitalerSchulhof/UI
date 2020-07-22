@@ -8,6 +8,7 @@
   include_once("$KLASSEN/elemente/knopf.php");
 	include_once("$KLASSEN/struktur/seitenstruktur.php");
 	include_once("$KLASSEN/struktur/reiter.php");
+	include_once("$KLASSEN/struktur/tabelle.php");
   include_once("$KLASSEN/laden.php");
 	include_once("$KLASSEN/elemente/meldung.php");
 ?>
