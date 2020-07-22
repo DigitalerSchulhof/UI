@@ -132,14 +132,17 @@ abstract class Element {
 		if($this->tag === null)
 			$rueck = "";
 
-		if($this->id !== null && !in_array("id", $nicht))
+		if($this->id !== null && !in_array("id", $nicht)) {
 			$rueck .= " id='{$this->id}'";
+    }
 
-		if(count($this->klassen) > 0 && !in_array("class", $nicht))
+		if(count($this->klassen) > 0 && !in_array("class", $nicht)) {
 			$rueck .= " class='".join(" ", $this->klassen)."'";
+    }
 
-		if($this->aktionen->count() > 0 && !in_array("aktionen", $nicht))
+		if($this->aktionen->count() > 0 && !in_array("aktionen", $nicht)) {
 			$rueck .= " {$this->aktionen}";
+    }
 
     if($klammer) {
       $rueck .= ">";
