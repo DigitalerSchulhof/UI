@@ -4,36 +4,12 @@ namespace UI;
 class Reiterkoerper extends Zeile {
   private $typ = "A1";
 
-  /** @var Reitersegment Übergeordnetes Reitersegment */
-  private $reitersegment;
-  /** @var int Nummer innerhalb des Reiters */
-  private $nr;
-
   /**
    * Erstellt einen neuen Reiterkörper
    * @param Spalte $element Element, das dem Reiterkörper hinzugefügt werden solls
    */
   public function __construct(...$spalte) {
     parent::__construct(...$spalte);
-    $this->reitersegment = null;
-  }
-
-  /**
-   * Setzt die Nr für den Reiterkörper neu
-   * @param int $nr :)
-   */
-  public function setNr($nr) {
-    $this->nr = $nr;
-  }
-
-  /**
-   * Setzt das zugehörige Reitersegment
-   * @param  Reitersegment $reitersegment :)
-   * @return self                         :)
-   */
-  public function setReitersegment($reitersegment) : self {
-    $this->reitersegment = $reitersegment;
-    return $this;
   }
 }
 
@@ -137,7 +113,6 @@ class Reitersegment {
     $this->nr = null;
     $kopf->setReitersegment($this);
     $this->reiterkopf = $kopf;
-    $koerper->setReitersegment($this);
     $this->reiterkoerper = $koerper;
   }
 
@@ -168,7 +143,6 @@ class Reitersegment {
   public function setNr($nr) {
     $this->nr = $nr;
     $this->reiterkopf->setNr($nr);
-    $this->reiterkoerper->setNr($nr);
   }
 
   /**
@@ -249,6 +223,22 @@ class Reiter extends Element {
     $this->reitersegmente[] = $reitersegment;
     if ($this->gewaehlt == -1) {
       $this->gewaehlt = 0;
+    }
+    return $this;
+  }
+
+  /**
+   * Setzt den gewählten Tab auf aktiv
+   * @param  int  $nr Nr des aktiven Tabs
+   * @return self     :)
+   */
+  public function setGewaehlt($nr) : self {
+    if ($nr < count($this->reitersegmente) && $nr >= 0) {
+      $this->gewaehlt = $nr;
+    } else if (count($this->reitersegmente) > 0) {
+      $this->gewaehlt = 0;
+    } else {
+      $this->gewaehlt = -1;
     }
     return $this;
   }

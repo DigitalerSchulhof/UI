@@ -61,12 +61,14 @@
   $zeile = new UI\Zeile($spalte);
   $CODE .= $zeile;
 
-
+  $titel = array("", "Vorname", "Nachname", "Aktionen");
+  $person1 = array("" => new UI\Icon(UI\Konstanten::LEHRER), "Vorname" => "Sascha", "Nachname" => "Mäderhaußer", "Aktionen" => new UI\MiniIconKnopf(new UI\Icon(UI\Konstanten::LOESCHEN), "Person löschen", "Warnung"));
+  $person2 = array("" => new UI\Icon(UI\Konstanten::SCHUELER), "Vorname" => "Fritzi", "Nachname" => "Freigeist", "Aktionen" => new UI\MiniIconKnopf(new UI\Icon(UI\Konstanten::LOESCHEN), "Person löschen", "Warnung"));
+  $tabelle = new UI\Tabelle("DemoTabelle", $titel, $person1, $person2);
 
   $reiter = new UI\Reiter("DemoReiter");
   $rkopf = new UI\Reiterkopf("Test");
-  $r1p = (new UI\InhaltElement("Ich bin doof"))->setTag("p");
-  $rkoerper = new UI\Reiterkoerper(new UI\Spalte("A1", $r1p));
+  $rkoerper = new UI\Reiterkoerper(new UI\Spalte("A1", $tabelle));
   $rs = new UI\Reitersegment($rkopf, $rkoerper);
   $reiter->addReitersegment($rs);
 
@@ -76,5 +78,8 @@
   $rs = new UI\Reitersegment($rkopf, $rkoerper);
   $reiter->addReitersegment($rs);
 
-  $CODE .= $reiter;
+  $spalte = new UI\Spalte("A1", $reiter);
+  $zeile = new UI\Zeile($spalte);
+
+  $CODE .= $zeile;
 ?>
