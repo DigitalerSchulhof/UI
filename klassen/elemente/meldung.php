@@ -9,7 +9,7 @@ class Meldung extends Element {
   protected $tag = "div";
 
   /** @var string Zulässige Meldungsarten */
-  const ARTEN = ["Standard", "Erfolg", "Fehler", "Warnung", "Information", "Laden", "Eingeschraenkt", "Gesperrt"];
+  const ARTEN = ["Standard", "Erfolg", "Warnung", "Fehler", "Information", "Laden", "Eingeschraenkt", "Gesperrt"];
 
   /** @var string Art der Meldung */
   private $art;

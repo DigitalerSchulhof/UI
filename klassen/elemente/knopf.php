@@ -8,7 +8,7 @@ class Knopf extends InhaltElement {
   protected $tag = "span";
 
   /** @var string Zulässige Knopfarten */
-const ARTEN = ["Standard", "Erfolg", "Fehler", "Warnung", "Information"/*, "Passiv", "Eingeschraenkt", "Gesperrt"*/];
+const ARTEN = ["Standard", "Erfolg", "Warnung", "Fehler", "Information"/*, "Passiv", "Eingeschraenkt", "Gesperrt"*/];
 
   /** @var string Knopfart */
   protected $art;
@@ -24,6 +24,7 @@ const ARTEN = ["Standard", "Erfolg", "Fehler", "Warnung", "Information"/*, "Pass
     }
     $this->art = $art;
     $this->addKlasse("dshUiKnopf");
+    $this->setAttribut("role", "button");
   }
 
   /**
@@ -34,6 +35,9 @@ const ARTEN = ["Standard", "Erfolg", "Fehler", "Warnung", "Information"/*, "Pass
     $self = clone $this;
     if ($self->aktionen->count() === 0) {
       $self->addKlasse("dshUiKnopfLeer");
+      $self->setAttribut("aria-disabled", "true");
+    } else {
+      $self->setAttribut("tabindex", "0");
     }
     $self->addKlasse("dshUiKnopf{$self->art}");
     $self->setInhalt((new InhaltElement($self->inhalt))->setTag("span"));
@@ -69,19 +73,14 @@ class IconKnopf extends Knopf {
 }
 
 class GrossIconKnopf extends IconKnopf {
-  /** @var $position Position des Hinweises */
-  protected $position;
-
   /**
   * @param Icon   $icon :)
   * @param string $inhalt :)
   * @param string $art :)
   * @param string $typ :)
-  * @param string $position Position des Hinweises - ["OR"; "OL"; "UR"; "UL"]
   */
-  public function __construct($icon, $inhalt, $art = null, $position = "OL") {
+  public function __construct($icon, $inhalt, $art = null) {
     parent::__construct($icon, $inhalt, $art);
-    $this->position = $position;
     $this->addKlasse("dshUiKnopfGross");
   }
 
@@ -93,36 +92,23 @@ class GrossIconKnopf extends IconKnopf {
 }
 
 class MiniIconKnopf extends IconKnopf {
-  /** @var $position Position des Hinweises */
-  protected $position;
-
   /**
   * @param Icon   $icon :)
   * @param string $inhalt :)
   * @param string $art :)
   * @param string $typ :)
-  * @param string $position Position des Hinweises - ["OR"; "OL"; "UR"; "UL"]
+  * @param string $position Position des Hinweises - ["OR", "OL", "UR", "UL"]
   */
   public function __construct($icon, $inhalt, $art = null, $position = "OL") {
     parent::__construct($icon, $inhalt, $art);
-    $this->position = $position;
+    $this->hinweis = new Hinweis($inhalt, $position);
     $this->addKlasse("dshUiKnopfIconMini");
-  }
-
-  /**
-   * Setzt die Position des Hinweises
-   * @param  string $position :)
-   * @return self
-   */
-  public function setPosition($position) : self {
-    $this->position = $position;
   }
 
   public function __toString() : string {
     $self = $this->toStringVorbereitung();
 
-    $hinweis = new Hinweis($self->inhalt, $this->position);
-    return "{$self->codeAuf()}$hinweis{$self->icon}{$self->codeZu()}";
+    return "{$self->codeAuf()}{$self->icon}{$self->codeZu()}";
   }
 }
 
@@ -145,7 +131,7 @@ class Sortierknopf extends MiniIconKnopf {
   */
   public function __construct($richtung, $tabelleId, $spaltenname) {
     if (!in_array($richtung, self::RICHTUNGEN)) {
-      $richtung = "ASC";
+      $richtung = self::RICHTUNGEN[0];
     }
     $this->richtung = $richtung;
     if ($richtung == "DESC") {
@@ -163,15 +149,6 @@ class Sortierknopf extends MiniIconKnopf {
   }
 
   /**
-   * Setzt die Position des Hinweises
-   * @param  string $position :)
-   * @return self
-   */
-  public function setPosition($position) : self {
-    $this->position = $position;
-  }
-
-  /**
    * Gibt einen Klon mit passenden Klassen zurück
    * @return self
    */
@@ -180,12 +157,6 @@ class Sortierknopf extends MiniIconKnopf {
     $self->aktionen->addFunktion("onclick", "ui.tabellen.sortieren('{$this->richtung}', '{$this->tabelleId}', '{$this->spaltenname}')");
     $self->addKlasse("dshUiSortierknopf");
     return $self;
-  }
-
-  public function __toString() : string {
-    $self = $this->toStringVorbereitung();
-    $hinweis = new Hinweis($self->inhalt, $this->position);
-    return "{$self->codeAuf()}$hinweis{$self->icon}{$self->codeZu()}";
   }
 }
 ?>

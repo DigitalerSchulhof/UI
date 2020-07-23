@@ -4,63 +4,59 @@
   display: inline-block;
   border-radius: 2px;
   cursor: pointer;
-//  transition: background-color 250ms ease-in-out, border-color 250ms ease-in-out, color 250ms ease-in-out;
-  transition: all 250ms ease-in-out;
+  transition: border-color 250ms ease-in-out;
   border-bottom: 2px solid;
-  margin: 1px;
   position: relative;
+  box-shadow: 2px 2px 4px 1px rgba(33, 33, 33, 0.1);
+}
+
+.dshUiKnopf:not(.dshUiKnopfLeer):hover {
+  outline: rgba(33, 33, 33, 1) auto 1px;
 }
 
 .dshUiKnopf {
   padding: 3px 6px;
 }
 
-.dshUiKnopf>span {
+.dshUiKnopf:not(.dshUiKnopfLeer):hover,
+.dshUiKnopf:not(.dshUiKnopfLeer):focus {
+  border-bottom-width: 0px !important;
+  outline-width: 1px !important;
+  border-radius: 1px;
+}
+
+.dshUiKnopf:not(.dshUiKnopfLeer) i.icon {
+  transition: color 250ms ease-in-out;
+}
+
+.dshUiKnopf:not(.dshUiKnopfLeer),
+.dshUiKnopf:not(.dshUiKnopfLeer) i.icon {
   position: inherit;
   z-index: 2;
 }
 
-.dshUiKnopf::before,
-.dshUiKnopf::after {
-  transition: height 250ms ease-in-out, background-color 250ms ease-in-out;
-  z-index: 1;
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  border-top-left-radius: 2px;
-  border-top-right-radius: 2px;
-  content: " ";
-  width: 100%;
+.dshUiKnopf:not(.dshUiKnopfLeer):hover,
+.dshUiKnopf:not(.dshUiKnopfLeer):focus {
+  box-shadow: 0px 0px 5px -7px rgba(0,0,0,0.75);
 }
 
-.dshUiKnopf::before {
-  height: 100%;
-}
-
-.dshUiKnopf::after {
-  height: 0%;
-}
-
-.dshUiKnopf:hover::after {
-  height: 100%;
-}
 
 .dshUiKnopfIcon:not(.dshUiKnopfGross) {
   border-left: 23px solid;
   position: relative;
 }
 
-.dshUiKnopfIcon:not(.dshUiKnopfGross) i.icon {
+.dshUiKnopfIcon:not(.dshUiKnopfGross):not(.dshUiKnopfIconMini) i.icon {
   position: absolute;
   top: 5px;
   left: -18px;
 }
 
-.dshUiKnopfIcon:not(.dshUiKnopfGross) i.fas.fa-caret-right {
+.dshUiKnopfIcon:not(.dshUiKnopfGross):not(.dshUiKnopfIconMini) i.fas.fa-caret-right {
   left: -14px;
 }
 
-.dshUiKnopfIcon:not(.dshUiKnopfGross) i.fas.fa-exclamation-triangle {
+.dshUiKnopfIcon:not(.dshUiKnopfGross):not(.dshUiKnopfIconMini) i.fas.fa-exclamation-triangle {
   left: -19px;
 }
 
@@ -92,6 +88,11 @@
   text-align: center;
 }
 
+.dshUiKnopfIconMini {
+  border-left-width: 0px !important;
+}
+
+
 // FARBEN;
 
 <?php
@@ -109,31 +110,17 @@ $arten = array(
 
 foreach($arten as $var => $css) {
   echo ".dshUiKnopf$css{".
-    "background-color:transparent;".
+    "background-color:@{$var}Hintergrund;".
     "border-color:@{$var}Akzent !important;".
-    "color:@{$var}Schrift".
-  "}";
+    "color:@{$var}Schrift;".
+    "outline-color:@{$var}Akzent !important;".
+  "}.dshUiKnopf.dshUiKnopfLeer.dshUiKnopf$css {background-color: @{$var}Hintergrund;}";
 
-  echo ".dshUiKnopf$css::before{".
-    "background-color:@{$var}Hintergrund;".
-  "}";
-
-  echo ".dshUiKnopf$css::after{".
-    "background-color:@{$var}Akzent;".
-  "}";
-
-
-  echo ".dshUiKnopf$css:hover::before{".
-    "background-color:@{$var}Akzent;".
-  "}";
-
-  echo ".dshUiKnopf$css:hover::after{".
-    "background-color:@{$var}Hintergrund;".
-  "}";
+  echo ".dshUiKnopf$css.dshUiKnopfIconMini {background-color: @{$var}Hintergrund;}";
 
 
   echo ".dshUiKnopf$css.dshUiKnopfIcon i.icon{color:@{$var}Akzent}";
-  echo ".dshUiKnopf$css.dshUiKnopfIcon:not(.dshUiKnopfGross) i.icon{color:@{$var}Hintergrund}";
+  echo ".dshUiKnopf$css.dshUiKnopfIcon:not(.dshUiKnopfGross):not(.dshUiKnopfIconMini) i.icon{color:@{$var}Hintergrund}";
 }
 
 ?>

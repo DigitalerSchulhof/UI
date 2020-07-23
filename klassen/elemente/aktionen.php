@@ -41,6 +41,15 @@ class Aktionen {
 	}
 
   /**
+   * Gibt das Array [Priorität][Funktionen] zurück
+   * @param  string $ausloeser :)
+   * @return string [Priorität][Funktionen]
+   */
+  public function getFunktionen($ausloeser) {
+    return $this->aktionen[$ausloeser] ?? array();
+  }
+
+  /**
    * Prüft ob der Auslöser vorhanden ist
    * @param  string  $ausloeser :)
    * @return boolean            :)

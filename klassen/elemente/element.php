@@ -13,12 +13,20 @@ abstract class Element {
 	protected $id = null;
 	/** @var Aktionen Aktionen des Elements */
 	protected $aktionen = null;
+  /** @var String Attribute des Elements
+   * [Attribut] => Wert
+   */
+  protected $attribute;
+  /** @var Hinweis Hinweis des Elements */
+  protected $hinweis;
 
 	/**
 	 * Erzeugt ein neues UI-Element
 	 */
 	public function __construct() {
-		$this->aktionen = new Aktionen();
+		$this->aktionen  = new Aktionen();
+    $this->attribute = array();
+    $this->hinweis   = null;
 	}
 
 	/**
@@ -49,6 +57,31 @@ abstract class Element {
 	public function hatKlasse($klasse) : boolean {
 		return in_array($klasse, $this->klassen);
 	}
+
+
+	/**
+	 * Setzt ein Attribut
+	 * @param 	string $attribut :)
+	 * @param 	string $wert :)
+	 * @return 	self
+	 */
+	public function setAttribut($attribut, $wert = "true") : self {
+    if($wert === null) {
+      unset($this->attribute[$attribut]);
+    } else {
+      $this->attribute[$attribut] = $wert;
+    }
+		return $this;
+	}
+
+  /**
+   * Gibt den Wert eines Attributes zurück. <code>null</code> wenn es nicht gesetzt ist.
+   * @param  string $attribut :)
+   * @return mixed
+   */
+  public function getAttribut($attribut) {
+    return $this->attribute[$attribut] ?? null;
+  }
 
 	/**
 	 * Setzt die ID
@@ -84,6 +117,16 @@ abstract class Element {
 	 */
 	public function getTag() : string {
 		return $this->tag;
+	}
+
+	/**
+	 * Überschreibt den Hinweis
+	 * @param  Hinweis $hinweis :)
+	 * @return self
+	 */
+	public function setHinweis($hinweis) : self {
+		$this->hinweis = $hinweis;
+		return $this;
 	}
 
 	/**
@@ -128,24 +171,39 @@ abstract class Element {
       $rueck = "<";
     }
 
-	  $rueck .= $this->tag;
-		if($this->tag === null)
+    $self = clone $this;
+
+    if($self->hinweis !== null && !in_array("hinweis", $nicht)) {
+      $self->addKlasse("dshUiHinweisTraeger");
+    }
+
+	  $rueck .= $self->tag;
+		if($self->tag === null)
 			$rueck = "";
 
-		if($this->id !== null && !in_array("id", $nicht)) {
-			$rueck .= " id='{$this->id}'";
+		if($self->id !== null && !in_array("id", $nicht)) {
+			$rueck .= " id='{$self->id}'";
     }
 
-		if(count($this->klassen) > 0 && !in_array("class", $nicht)) {
-			$rueck .= " class='".join(" ", $this->klassen)."'";
+		if(count($self->klassen) > 0 && !in_array("class", $nicht)) {
+			$rueck .= " class='".join(" ", $self->klassen)."'";
     }
 
-		if($this->aktionen->count() > 0 && !in_array("aktionen", $nicht)) {
-			$rueck .= " {$this->aktionen}";
+		if($self->aktionen->count() > 0 && !in_array("aktionen", $nicht)) {
+			$rueck .= " {$self->aktionen}";
     }
 
+    if(!in_array("attribute", $nicht)) {
+      foreach($self->attribute as $attribut => $wert) {
+        $rueck .= " $attribut=\"$wert\"";
+      }
+    }
     if($klammer) {
       $rueck .= ">";
+    }
+
+    if($self->hinweis !== null && !in_array("hinweis", $nicht)) {
+      $rueck .= $self->hinweis;
     }
 
 		return $rueck;
