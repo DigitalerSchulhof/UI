@@ -69,7 +69,9 @@ class Meldung extends Element {
     $self->addKlasse("dshUiMeldung");
     $self->addKlasse("dshUiMeldung{$this->art}");
     $code = "{$self->codeAuf()}";
-      $code .= "<div class=\"dshUiMeldungTitel\"><h4>{$this->icon} {$this->titel}</h4></div>";
+      if($this->art !== "Laden") {
+        $code .= "<div class=\"dshUiMeldungTitel\"><h4>{$this->icon} {$this->titel}</h4></div>";
+      }
       $code .= "<div class=\"dshUiMeldungInhalt\">{$this->inhalt}</div>";
     $code .= "{$self->codeZu()}";
     return $code;

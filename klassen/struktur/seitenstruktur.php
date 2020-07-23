@@ -104,10 +104,11 @@ class Zeile extends Element {
     }));
 
     foreach($this->spalten as $spalte) {
-      if($spalte->getTyp() === null) {
-        $spalte->setTyp("A$nullspaltenanz");
+      $klon = clone $spalte;
+      if($klon->getTyp() === null) {
+        $klon->setTyp("A$nullspaltenanz");
       }
-      $r .= $spalte;
+      $r .= $klon;
     }
     $r .= "<div class=\"dshClear\"></div>";
     $r .= $this->codeZu();

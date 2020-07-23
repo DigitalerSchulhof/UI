@@ -1,7 +1,8 @@
 <?php
 namespace UI;
 
-class Icon {
+class Icon extends Element {
+  protected $tag = "i";
   /** @var string Fontawesome Klassen des Icons */
   private $icon;
 
@@ -10,7 +11,9 @@ class Icon {
    * Bsp: <code>"fas fa-user"</code> bzw. <code>\UI\Konstanten::PERSON</code>
    */
   public function __construct($icon) {
+    parent::__construct();
     $this->icon = $icon;
+    $this->addKlasse("icon");
   }
 
   /**
@@ -23,7 +26,9 @@ class Icon {
   }
 
   public function __toString() : string {
-    return "<i class=\"{$this->icon}\"></i>";
+    $self = clone $this;
+    $self->addKlasse($self->icon);
+    return "{$self->codeAuf()}{$self->codeZu()}";
   }
 }
 ?>

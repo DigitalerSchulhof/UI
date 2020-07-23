@@ -1,25 +1,90 @@
 // LAYOUT;
 
-.dshUiKnopf, .dshUiKnopfMini, .dshUiKnopfIcon, .dshUiKnopfGross,
-.dshUiToggle, .dshUiToggleIcon, .dshUiToggleGross {
+.dshUiKnopf {
   display: inline-block;
-  border-radius: @radius2;
+  border-radius: 2px;
   cursor: pointer;
-  transition: 250ms ease-in-out;
+//  transition: background-color 250ms ease-in-out, border-color 250ms ease-in-out, color 250ms ease-in-out;
+  transition: all 250ms ease-in-out;
+  border-bottom: 2px solid;
+  margin: 1px;
+  position: relative;
 }
 
-.dshUiKnopf, .dshUiKnopfIcon, .dshUiKnopfGross,
-.dshUiToggle, .dshUiToggleIcon, .dshUiToggleGross {padding: 3px 6px;}
-.dshUiKnopfMini {padding: 3px 5px;}
+.dshUiKnopf {
+  padding: 3px 6px;
+}
 
-.dshUiKnopfPassiv, .dshUiKnopfGesperrt, .dshUiKnopfEingeschraenkt {
+.dshUiKnopf>span {
+  position: inherit;
+  z-index: 2;
+}
+
+.dshUiKnopf::before,
+.dshUiKnopf::after {
+  transition: height 250ms ease-in-out, background-color 250ms ease-in-out;
+  z-index: 1;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  border-top-left-radius: 2px;
+  border-top-right-radius: 2px;
+  content: " ";
+  width: 100%;
+}
+
+.dshUiKnopf::before {
+  height: 100%;
+}
+
+.dshUiKnopf::after {
+  height: 0%;
+}
+
+.dshUiKnopf:hover::after {
+  height: 100%;
+}
+
+.dshUiKnopfIcon:not(.dshUiKnopfGross) {
+  border-left: 23px solid;
+  position: relative;
+}
+
+.dshUiKnopfIcon:not(.dshUiKnopfGross) i.icon {
+  position: absolute;
+  top: 5px;
+  left: -18px;
+}
+
+.dshUiKnopfIcon:not(.dshUiKnopfGross) i.fas.fa-caret-right {
+  left: -14px;
+}
+
+.dshUiKnopfIcon:not(.dshUiKnopfGross) i.fas.fa-exclamation-triangle {
+  left: -19px;
+}
+
+.dshUiKnopfIconMini {
+  padding: 3px 5px;
+  min-width: 25px;
+  text-align: center;
+}
+
+.dshUiKnopfVerboten {
   cursor: not-allowed !important;
 }
 
-.dshUiKnopfGross i, .dshUiToggleGross i {
+.dshUiKnopfLeer {
+  opacity: 0.75;
+  cursor: default;
+}
+
+.dshUiKnopfGross i,
+.dshUiToggleGross i {
   display: block;
   text-align: center;
   font-size: 150%;
+  margin-bottom: 3px;
 }
 
 .dshUiKnopfGross .dshUiKnopfGrossText, .dshUiToggleGross .dshUiToggleGrossText {
@@ -29,70 +94,46 @@
 
 // FARBEN;
 
-.dshUiKnopf, .dshUiKnopfMini, .dshUiKnopfIcon, .dshUiKnopfGross,
-.dshUiToggle, .dshUiToggleIcon, .dshUiToggleGross {
-  position: relative;
-  background-color: @abstufung2;
-  border: 1px solid @abstufung3;
-  color: @schriftfarbePositiv;
+<?php
+
+// [Var] => [CSS]
+$arten = array(
+  "standard"        => "",
+  "erfolg"          => "Erfolg",
+  "fehler"          => "Fehler",
+  "warnung"         => "Warnung",
+  "info"            => "Information",
+  // "eingeschraenkt"  => "Eingeschraenkt",
+  // "gesperrt"        => "Gesperrt",
+);
+
+foreach($arten as $var => $css) {
+  echo ".dshUiKnopf$css{".
+    "background-color:transparent;".
+    "border-color:@{$var}Akzent !important;".
+    "color:@{$var}Schrift".
+  "}";
+
+  echo ".dshUiKnopf$css::before{".
+    "background-color:@{$var}Hintergrund;".
+  "}";
+
+  echo ".dshUiKnopf$css::after{".
+    "background-color:@{$var}Akzent;".
+  "}";
+
+
+  echo ".dshUiKnopf$css:hover::before{".
+    "background-color:@{$var}Akzent;".
+  "}";
+
+  echo ".dshUiKnopf$css:hover::after{".
+    "background-color:@{$var}Hintergrund;".
+  "}";
+
+
+  echo ".dshUiKnopf$css.dshUiKnopfIcon i.icon{color:@{$var}Akzent}";
+  echo ".dshUiKnopf$css.dshUiKnopfIcon:not(.dshUiKnopfGross) i.icon{color:@{$var}Hintergrund}";
 }
 
-.dshUiKnopfErfolg, .dshUiToggled  {
-  background-color: @erfolgHintergrund;
-  border-color: @erfolgAkzent;
-}
-.dshUiKnopfInformation    {
-  background-color: @infoHintergrund;
-  border-color: @infoAkzent;
-}
-.dshUiKnopfWarnung {
-  background-color: @warnungHintergrund;
-  border-color: @warnungAkzent;
-}
-.dshUiKnopfFehler {
-  background-color: @fehlerHintergrund;
-  border-color: @fehlerAkzent;
-}
-.dshUiKnopfEingeschraenkt {
-  border-color: @fehlerAkzent;
-}
-
-.dshUiKnopfPassiv, .dshUiKnopfGesperrt, .dshUiKnopfEingeschraenkt {
-  background-color: @seitenhintergrund !important;
-}
-
-.dshUiKnopfGesperrt {
-  border-color: @schriftfarbePositiv !important;
-}
-
-.dshUiKnopf:hover, .dshUiKnopfMini:hover, .dshUiKnopfIcon:hover, .dshUiKnopfGross:hover,
-.dshUiToggle:hover, .dshUiToggleIcon:hover, .dshUiToggleGross:hover {
-  color: @schriftfarbeNegativ;
-  background-color: @abstufung3;
-}
-
-.dshUiToggled:hover {
-  color: @schriftfarbeNegativ !important;
-  background-color: @abstufung3 !important;
-}
-
-.dshUiKnopfErfolg:hover, .dshUiToggle:hover, .dshUiToggleIcon:hover, .dshUiToggleGross:hover  {
-  background-color: @erfolgAkzent;
-}
-
-.dshUiKnopfInformation:hover    {
-  background-color: @infoAkzent;
-}
-
-.dshUiKnopfWarnung:hover {
-  background-color: @warnungAkzent;
-}
-
-.dshUiKnopfFehler:hover  {
-  background-color: @fehlerAkzent;
-}
-
-.dshUiKnopfPassiv:hover, .dshUiKnopfGesperrt:hover, .dshUiKnopfEingeschraenkt:hover {
-  background-color: @seitenhintergrund !important;
-  color: @schriftfarbePositiv;
-}
+?>
