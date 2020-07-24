@@ -62,15 +62,21 @@ class Meldung extends Element {
       }
     }
     $this->icon = $icon;
+    $this->aktionen->addFunktion("onclick", "ui.meldung.brclick(event)");
   }
 
   public function __toString() : string {
     $self = clone $this;
     $self->addKlasse("dshUiMeldung");
     $self->addKlasse("dshUiMeldung{$this->art}");
+    $i1 = clone $this->icon;
+    $i1->addKlasse("i1");
+    $i2 = clone $this->icon;
+    $i2->addKlasse("i2");
+    
     $code = "{$self->codeAuf()}";
       if($this->art !== "Laden") {
-        $code .= "<div class=\"dshUiMeldungTitel\"><h4>{$this->icon} {$this->titel}</h4></div>";
+        $code .= "<div class=\"dshUiMeldungTitel\"><h4>$i1{$this->titel}$i2</h4></div>";
       }
       $code .= "<div class=\"dshUiMeldungInhalt\">{$this->inhalt}</div>";
     $code .= "{$self->codeZu()}";

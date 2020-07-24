@@ -9,6 +9,8 @@
   border-radius: 2px;
   box-shadow: 2px 2px 4px 1px rgba(33, 33, 33, 0.1);
   width: 100%;
+  transition: border-left-width 250ms ease-in-out, border-right-width 250ms ease-in-out;
+  z-index: 1;
 }
 
   .dshUiMeldungTitel {
@@ -23,8 +25,16 @@
 
     .dshUiMeldungTitel i.icon {
       position: absolute;
-      left: -18px;
       top: 15px;
+      z-index: -1;
+    }
+    .dshUiMeldungTitel i.i1.icon {
+      left: -18px;
+      transition: left 250ms ease-in-out;
+    }
+    .dshUiMeldungTitel i.i2.icon {
+      right: 18px;
+      transition: right 250ms ease-in-out;
     }
 
   .dshUiMeldungInhalt {
@@ -38,18 +48,28 @@
   border-bottom: 2px solid;
 }
 
-// fa-caret-right ist 8px schmaler
-.dshUiMeldung .dshUiMeldungTitel i.icon.fas.fa-caret-right {
+.dshUiMeldung .dshUiMeldungTitel i.i1.icon.fas.fa-caret-right {
   left: -14px;
 }
 
-.dshUiMeldung .dshUiMeldungTitel i.icon.fas.fa-exclamation-triangle {
+.dshUiMeldung .dshUiMeldungTitel i.i2.icon.fas.fa-caret-right {
+  right: 14px;
+}
+
+.dshUiMeldung .dshUiMeldungTitel i.i1.icon.fas.fa-exclamation-triangle {
   left: -19px;
 }
 
-// fa-lock ist 2px schmaler
-.dshUiMeldung .dshUiMeldungTitel i.icon.fas.fa-lock {
+.dshUiMeldung .dshUiMeldungTitel i.i2.icon.fas.fa-exclamation-triangle {
+  right: 19px;
+}
+
+.dshUiMeldung .dshUiMeldungTitel i.i1.icon.fas.fa-lock {
   left: -17px;
+}
+
+.dshUiMeldung .dshUiMeldungTitel i.i2.icon.fas.fa-lock {
+  right: 17px;
 }
 
 // FARBEN;

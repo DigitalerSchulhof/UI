@@ -8,7 +8,7 @@ class Knopf extends InhaltElement {
   protected $tag = "button";
 
   /** @var string Zulässige Knopfarten */
-const ARTEN = ["Standard", "Erfolg", "Warnung", "Fehler", "Information"/*, "Passiv", "Eingeschraenkt", "Gesperrt"*/];
+const ARTEN = ["Standard", "Erfolg", "Warnung", "Fehler", "Information", "Passiv", "Eingeschraenkt", "Gesperrt"];
 
   /** @var string Knopfart */
   protected $art;
