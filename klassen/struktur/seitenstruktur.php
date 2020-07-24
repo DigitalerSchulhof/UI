@@ -114,5 +114,14 @@ class Zeile extends Element {
     $r .= $this->codeZu();
     return $r;
   }
+
+  /**
+   * Gibt eine Zeile mit einer Spalte, zu welcher die übergebenen Elemente hinzugefügt werden, zurück.
+   * @param  Element|string $element :)
+   * @return Zeile
+   */
+  public static function standard(...$element) : Zeile {
+    return new Zeile(new Spalte(null, ...$element));
+  }
 }
 ?>

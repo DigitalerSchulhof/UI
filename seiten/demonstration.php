@@ -2,14 +2,12 @@
   $DSH_TITEL = "UI-Demonstration";
   $CODE .= new Kern\Aktionszeile(true, false);
 
-  $CODE .= "<h2>Meldungen</h2>";
+  $CODE .= "<h1>Meldungen</h1>";
 
   foreach(UI\Meldung::ARTEN as $art)
     $CODE .= new UI\Meldung("Meldung $art", "<code>.dshUiMeldung{$art}</code><br>Der Inhalt ist mehrzeilig.", $art);
 
-  $CODE .= "<br><br><br>";
-  $CODE .= "<br><br><br>";
-
+  $CODE .= "<h1>Knöpfe</h1>";
   $CODE .= "<h2>Knöpfe (Aktiv)</h2>";
 
   foreach(UI\Knopf::ARTEN as $art) {
@@ -35,8 +33,6 @@
     $knopf->getAktionen()->addFunktion("onclick", "alert('$art')");
     $CODE .= $knopf." ";
   }
-  $CODE .= "<br><br><br>";
-  $CODE .= "<br><br><br>";
   $CODE .= "<h2>Knöpfe (Inaktiv)</h2>";
   foreach(UI\Knopf::ARTEN as $art) {
     $knopf = new UI\Knopf($art, $art);

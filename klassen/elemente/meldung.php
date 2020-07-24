@@ -68,17 +68,19 @@ class Meldung extends Element {
   public function __toString() : string {
     $self = clone $this;
     $self->addKlasse("dshUiMeldung");
-    $self->addKlasse("dshUiMeldung{$this->art}");
-    $i1 = clone $this->icon;
+    $self->addKlasse("dshUiMeldung{$self->art}");
+    $i1 = clone $self->icon;
     $i1->addKlasse("i1");
     $i2 = new Icon("fas fa-smile");
     $i2->addKlasse("i2");
 
     $code = "{$self->codeAuf()}";
-      if($this->art !== "Laden") {
-        $code .= "<div class=\"dshUiMeldungTitel\"><h4>$i1{$this->titel}$i2</h4></div>";
+      if($self->art !== "Laden") {
+        $code .= "<div class=\"dshUiMeldungTitel\"><h4>$i1{$self->titel}$i2</h4></div>";
       }
-      $code .= "<div class=\"dshUiMeldungInhalt\">{$this->inhalt}</div>";
+      if($self->inhalt !== null) {
+        $code .= "<div class=\"dshUiMeldungInhalt\">{$self->inhalt}</div>";
+      }
     $code .= "{$self->codeZu()}";
     return $code;
   }
