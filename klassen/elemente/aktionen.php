@@ -60,7 +60,7 @@ class Aktionen {
 
 	/**
 	 * Fügt die Funktionen mit Priorität <code>-1</code> an den Auslöser an.
-	 * @param 	string $ausloeser Auslöser der Funktionen
+	 * @param 	string|string[] $ausloeser Auslöser der Funktionen<br>Wenn array, dann für jeden Auslöser hinzugefügt
 	 * @param 	string ...$funktionen Was passiert, wenn der Auslöser auftritt
 	 * @return 	self
 	 */
@@ -70,15 +70,20 @@ class Aktionen {
 
 	/**
 	 * Fügt die Funktionen mit der Priorität an den Auslöser an.
-	 * @param 	string $ausloeser Auslöser der Funktionen
+	 * @param 	string|string[] $ausloeser Auslöser der Funktionen<br>Wenn array, dann für jeden Auslöser hinzugefügt
 	 * @param 	int $prioritaet Priorität der Funktionen
 	 * @param 	string ...$funktionen Was passiert, wenn der Auslöser auftritt
 	 * @return 	self
 	 */
 	public function addFunktionPrioritaet($ausloeser, $prioritaet, ...$funktionen) : self {
-		$ak 	= $this->aktionen[$ausloeser] ?? array();
-		$akp 	= $ak[$prioritaet] ?? array();
-		$this->aktionen[$ausloeser][$prioritaet] = array_merge($akp, $funktionen);
+    if(!is_array($ausloeser)) {
+      $ausloeser = array($ausloeser);
+    }
+    foreach($ausloeser as $asl) {
+  		$ak 	= $this->aktionen[$asl] ?? array();
+  		$akp 	= $ak[$prioritaet] ?? array();
+  		$this->aktionen[$asl][$prioritaet] = array_merge($akp, $funktionen);
+    }
 		return $this;
 	}
 

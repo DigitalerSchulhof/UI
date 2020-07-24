@@ -8,7 +8,7 @@ class Knopf extends InhaltElement {
   protected $tag = "button";
 
   /** @var string Zulässige Knopfarten */
-const ARTEN = ["Standard", "Erfolg", "Warnung", "Fehler", "Information", "Passiv", "Eingeschraenkt", "Gesperrt"];
+  const ARTEN = ["Standard", "Erfolg", "Warnung", "Fehler", "Information", "Laden", "Passiv", "Eingeschraenkt", "Gesperrt"];
 
   /** @var string Knopfart */
   protected $art;
@@ -36,7 +36,9 @@ const ARTEN = ["Standard", "Erfolg", "Warnung", "Fehler", "Information", "Passiv
     if ($self->aktionen->count() === 0) {
       $self->addKlasse("dshUiKnopfLeer");
       $self->setAttribut("aria-disabled", "true");
+      $self->setAttribut("tabindex", "-1");
     } else {
+      $self->setAttribut("aria-disabled", "false");
       $self->setAttribut("tabindex", "0");
     }
     $self->addKlasse("dshUiKnopf{$self->art}");
@@ -62,6 +64,9 @@ class IconKnopf extends Knopf {
   */
   public function __construct($icon, $inhalt, $art = null) {
     parent::__construct($inhalt, $art);
+    if($art === "Laden") {
+      $icon = new Icon(Konstanten::LADEN." fa-spin");
+    }
     $this->icon = $icon;
     $this->addKlasse("dshUiKnopfIcon");
   }

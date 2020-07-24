@@ -16,7 +16,7 @@
   .dshUiMeldungTitel {
     margin-top: 0px !important;
     font-weight: bold;
-    padding: 5px 10px 5px 0;
+    padding: 5px 0 5px 0;
   }
 
     .dshUiMeldungTitel * {
@@ -39,7 +39,7 @@
 
   .dshUiMeldungInhalt {
     margin-bottom: 0px !important;
-    padding: 5px 10px 5px 0;
+    padding: 5px 0 5px 0;
   }
 
 .dshUiMeldungLaden {
@@ -72,17 +72,25 @@
   right: 17px;
 }
 
+.dshUiMeldungEingeschraenkt {
+  border-top: 2px solid;
+  border-bottom: 2px solid;
+}
+
 // FARBEN;
 
 <?php
 
 // [Var] => [CSS]
 $arten = array(
-  "standard"    => "",
-  "erfolg"      => "Erfolg",
-  "fehler"      => "Fehler",
-  "warnung"     => "Warnung",
-  "info"        => "Information",
+  "standard"        => "",
+  "erfolg"          => "Erfolg",
+  "fehler"          => "Fehler",
+  "warnung"         => "Warnung",
+  "info"            => "Information",
+  "laden"           => "Laden",
+  "eingeschraenkt"  => "Eingeschraenkt",
+  "gesperrt"        => "Gesperrt"
 );
 
 foreach($arten as $var => $css) {
@@ -98,8 +106,8 @@ foreach($arten as $var => $css) {
 ?>
 
 .dshUiMeldungLaden .dshUiMeldungInhalt .dshUiLaden .dshUiLadesymbol>div {
-  background-color: @standardSchrift;
+  background-color: @ladenAkzent;
 }
 .dshUiMeldungLaden .dshUiMeldungInhalt .dshUiLaden .dshNotiz {
-  color: @standardSchrift;
+  color: @ladenSchrift;
 }

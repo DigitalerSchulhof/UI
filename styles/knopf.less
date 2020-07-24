@@ -12,9 +12,11 @@
   box-shadow: 2px 2px 4px 1px rgba(33, 33, 33, 0.1);
   padding: 3px 6px;
   user-select: none;
+  outline: none !important;
 }
 
-.dshUiKnopf:not(.dshUiKnopfLeer):hover {
+.dshUiKnopf:not(.dshUiKnopfLeer):focus {
+  border-width: 1px;
   border-bottom-width: 2px;
 }
 
@@ -30,10 +32,29 @@
   box-shadow: 0px 0px 5px -7px rgba(0,0,0,0.75);
 }
 
+.dshUiKnopfLeer {
+  opacity: 0.75;
+  outline: none !important;
+  cursor: default;
+}
+
 // Icon Knopf
-.dshUiKnopfIcon:not(.dshUiKnopfGross) {
-  border-left: 23px solid;
+.dshUiKnopfIcon:not(.dshUiKnopfGross):not(.dshUiKnopfIconMini) {
+  margin-left: 23px;
   position: relative;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.dshUiKnopfIcon:not(.dshUiKnopfGross):not(.dshUiKnopfIconMini)::before {
+  content: "";
+  width: 23px;
+  height: calc(100% + 3px);
+  border-top-left-radius: 2px;
+  border-bottom-left-radius: 2px;
+  position: absolute;
+  top: -1px;
+  left: -23px;
 }
 
 .dshUiKnopfIcon:not(.dshUiKnopfGross):not(.dshUiKnopfIconMini) i.icon {
@@ -55,15 +76,6 @@
   padding: 3px 5px;
   min-width: 25px;
   text-align: center;
-}
-
-.dshUiKnopfLeer {
-  opacity: 0.75;
-  cursor: default;
-}
-
-.dshUiKnopfIconMini {
-  border-left: 1px solid transparent !important;
 }
 
 // Großer Knopf
@@ -90,8 +102,10 @@ $arten = array(
   "fehler"          => "Fehler",
   "warnung"         => "Warnung",
   "info"            => "Information",
-  // "eingeschraenkt"  => "Eingeschraenkt",
-  // "gesperrt"        => "Gesperrt",
+  "laden"           => "Laden",
+  "passiv"          => "Passiv",
+  "eingeschraenkt"  => "Eingeschraenkt",
+  "gesperrt"        => "Gesperrt",
 );
 
 foreach($arten as $var => $css) {
@@ -100,11 +114,14 @@ foreach($arten as $var => $css) {
         .   "background-color:@{$var}Hintergrund;"
         .   "border-bottom-color:@{$var}Akzent;"
         .   "color:@{$var}Schrift;"
-        .   "outline-color:@{$var}Akzent !important;"
         . "}"
 
-        . ".dshUiKnopf$css.dshUiKnopfIcon:not(.dshUiKnopfGross) {"
-        .   "border-left-color:@{$var}Akzent;"
+        . ".dshUiKnopf$css:focus {"
+        .   "border-color:@{$var}Akzent;"
+        . "}"
+
+        . ".dshUiKnopf$css.dshUiKnopfIcon:not(.dshUiKnopfGross)::before {"
+        .   "background-color:@{$var}Akzent;"
         . "}"
 
         . ".dshUiKnopf$css.dshUiKnopfIcon i.icon {"
@@ -119,8 +136,8 @@ foreach($arten as $var => $css) {
         .   "background-color: @{$var}Hintergrund;"
         . "}"
 
-        . ".dshUiKnopf$css:hover,"
-        . ".dshUiKnopf$css:hover {"
+        . ".dshUiKnopf$css:not(.dshUiKnopfLeer):hover,"
+        . ".dshUiKnopf$css:not(.dshUiKnopfLeer):hover {"
         .   "border-color:@{$var}Akzent !important;"
         . "}";
 

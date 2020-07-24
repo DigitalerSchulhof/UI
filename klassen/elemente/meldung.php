@@ -71,9 +71,9 @@ class Meldung extends Element {
     $self->addKlasse("dshUiMeldung{$this->art}");
     $i1 = clone $this->icon;
     $i1->addKlasse("i1");
-    $i2 = clone $this->icon;
+    $i2 = new Icon("fas fa-smile");
     $i2->addKlasse("i2");
-    
+
     $code = "{$self->codeAuf()}";
       if($this->art !== "Laden") {
         $code .= "<div class=\"dshUiMeldungTitel\"><h4>$i1{$this->titel}$i2</h4></div>";

@@ -328,27 +328,37 @@ ui.fenster = {
 ui.meldung = {
   brclick: function (ev) {
     let t  = ev.target;
+    if(!t.classList.contains("dshUiMeldung")) {
+      return;
+    }
     let ts = getComputedStyle(t);
     if(ev.offsetX < 0) {
       let i2 = t.querySelectorAll("i.i2.icon")[0];
       if(ts["border-right-width"] === "23px") {
         t.style["border-right-width"] = "";
-        i2.style.right   = "";
+        i2.style.right = "";
       } else {
         t.style["border-right-width"] = "23px";
-        let r  = getComputedStyle(i2).right;
-        i2.style.right = (Math.abs(r.substr(0, r.length - 2)) * -1) + "px";
+        let r = getComputedStyle(i2).right;
+        i2.style.right = (-Math.abs(r.substr(0, r.length - 2))) + "px";
       }
     }
     if(ev.offsetX > t.clientWidth) {
       let i1 = t.querySelectorAll("i.i1.icon")[0];
       if(ts["border-left-width"] === "23px") {
         t.style["border-left-width"] = "2px";
-        let l  = getComputedStyle(i1).left;
+        let l = getComputedStyle(i1).left;
         i1.style.left = Math.abs(l.substr(0, l.length - 2)) + "px";
       } else {
         t.style["border-left-width"] = "";
         i1.style.left = "";
+      }
+    }
+    if(t.classList.contains("dshUiMeldungLaden") && (ev.offsetY < 0 || ev.offsetY > t.clientHeight)) {
+      if(t.style.transform === "rotateY(180deg)") {
+        t.style.transform = "";
+      } else {
+        t.style.transform = "rotateY(180deg)";
       }
     }
   }
