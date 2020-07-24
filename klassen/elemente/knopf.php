@@ -5,7 +5,7 @@ namespace UI;
 *Schaltflächen erstellen
 */
 class Knopf extends InhaltElement {
-  protected $tag = "span";
+  protected $tag = "button";
 
   /** @var string Zulässige Knopfarten */
 const ARTEN = ["Standard", "Erfolg", "Warnung", "Fehler", "Information"/*, "Passiv", "Eingeschraenkt", "Gesperrt"*/];
