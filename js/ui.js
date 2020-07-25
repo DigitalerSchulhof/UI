@@ -150,6 +150,32 @@ ui.generieren = {
       return bytes+" KB";
     }
     return bytes+" B";
+  },
+  rgba2hex: (orig) => {
+    if(orig === undefined || orig === null) {
+      return false;
+    }
+    var a, isPercent,
+    rgb = orig.replace(/\s/g, '').match(/^rgba?\((\d+),(\d+),(\d+),?([^,\s)]+)?/i),
+    alpha = (rgb && rgb[4] || "").trim(),
+    hex = rgb ?
+    (rgb[1] | 1 << 8).toString(16).slice(1) +
+    (rgb[2] | 1 << 8).toString(16).slice(1) +
+    (rgb[3] | 1 << 8).toString(16).slice(1) : orig;
+
+    return "#"+hex;
+  },
+  hex2rgba: (hex) => {
+    var c;
+    if(/^#([A-Fa-f0-9]{3}){1,2}$/.test(hex)) {
+      c = hex.substring(1).split('');
+      if(c.length == 3){
+          c = [c[0], c[0], c[1], c[1], c[2], c[2]];
+      }
+      c = '0x'+c.join('');
+      return 'rgba('+[(c>>16)&255, (c>>8)&255, c&255].join(',')+',1)';
+    }
+    return false;
   }
 }
 
@@ -160,10 +186,12 @@ ui.check = {
 }
 
 ui.datumsanzeige = {
+  offen: false,
   aktion: (id, an) => {
     var feld = $("#"+id+"Datumwahl");
     if (!an) {
       feld.style.display = "none";
+      ui.datumsanzeige.offen = false;
     } else {
       var tag   = $("#"+id+"T").value;
       var monat = $("#"+id+"M").value;
@@ -172,6 +200,7 @@ ui.datumsanzeige = {
       ui.datumsanzeige.tageswahl.generieren(id, tag, monat, jahr).then((r) => {
         feld.innerHTML = r;
         feld.style.display = "block";
+        ui.datumsanzeige.offen = true;
       });
     }
   },
@@ -190,6 +219,9 @@ ui.datumsanzeige = {
     if (!ui.check.natZahl(jahr)) {jahr = jetzt.getFullYear();}
 
     jetzt = new Date(jahr, monat-1, tag);
+    if(isNaN(jetzt.getDate())) {
+      jetzt = new Date();
+    }
 
     $("#"+id+"T").value = ui.generieren.fuehrendeNull(jetzt.getDate());
     $("#"+id+"M").value = ui.generieren.fuehrendeNull(jetzt.getMonth()+1);
@@ -204,11 +236,10 @@ ui.datumsanzeige = {
     if (sekunden) {
       var sekunde = $("#"+id+"Sek").value;
       if (!ui.check.natZahl(sekunde)) {sekunde = jetzt.getSeconds();}
-      jetzt = jetzt = new Date(2020, 03, 19, stunde, minute, sekunde);
+      jetzt = new Date(2020, 07, 09, stunde, minute, sekunde);
       $("#"+id+"Sek").value = ui.generieren.fuehrendeNull(jetzt.getSeconds());
-    }
-    else {
-      jetzt = jetzt = new Date(2020, 03, 19, stunde, minute);
+    } else {
+      jetzt = new Date(2020, 03, 19, stunde, minute);
     }
     $("#"+id+"Std").value = ui.generieren.fuehrendeNull(jetzt.getHours());
     $("#"+id+"Min").value = ui.generieren.fuehrendeNull(jetzt.getMinutes());
@@ -224,6 +255,20 @@ ui.datumsanzeige = {
     }
   }
 }
+
+document.addEventListener("click", (e) => {
+  if(ui.datumsanzeige.offen) {
+    for(let p of e.path) {
+      if(p === document) {
+        document.querySelectorAll(".dshUiDatumwahl")[0].style.display = "none";
+        break;
+      }
+      if(p.classList.contains("dshUiDatumwahlFeld")) {
+        break;
+      }
+    }
+  }
+})
 
 ui.schieber = {
   aktion: (id) => {
@@ -360,6 +405,16 @@ ui.meldung = {
       } else {
         t.style.transform = "rotateY(180deg)";
       }
+    }
+  }
+}
+
+ui.farbbeispiel = {
+  aktion: (t) => {
+    let fb = t.closest(".dshUiFarbbeispiele");
+    fb.nextSibling.style["background-color"] = t.style["background-color"] || ui.generieren.hex2rgba(t.value);
+    if(t.tagName !== "INPUT") {
+      fb.querySelectorAll("input[type=color]")[0].value = ui.generieren.rgba2hex(t.style["background-color"]);
     }
   }
 }

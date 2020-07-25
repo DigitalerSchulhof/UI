@@ -19,6 +19,7 @@ abstract class Eingabe extends Element {
   public function __construct($id) {
     parent::__construct();
     $this->id = $id;
+    $this->addKlasse("dshUiFeld");
   }
 
   /**
@@ -262,10 +263,10 @@ class Datumfeld extends Eingabe {
     $self->aktionen->addFunktionPrioritaet("onkeydown",  3, "ui.datumsanzeige.aktion('{$self->id}', false)");
     $self->aktionen->addFunktionPrioritaet("onchange", 3, "ui.datumsanzeige.checkTag('{$self->id}')");
 
-    $code  = "<span class=\"dshUiDatumwahlFeld\">";
-    $code .= "<{$self->codeAuf(false, "id", "value", "class")} id=\"{$self->id}T\" value=\"{$datum[0]}\" class=\"dshUiEingabefeld dshUiDatumfeldT".join(" ", array_merge(array(""), $self->klassen))."\">{$self->codeZu()} ";
-    $code .= "<{$self->codeAuf(false, "id", "value", "class")} id=\"{$self->id}M\" value=\"{$datum[1]}\" class=\"dshUiEingabefeld dshUiDatumfeldM".join(" ", array_merge(array(""), $self->klassen))."\">{$self->codeZu()} ";
-    $code .= "<{$self->codeAuf(false, "id", "value", "class")} id=\"{$self->id}J\" value=\"{$datum[2]}\" class=\"dshUiEingabefeld dshUiDatumfeldJ".join(" ", array_merge(array(""), $self->klassen))."\">{$self->codeZu()} ";
+    $code  = "<span class=\"dshUiDatumwahlFeld dshUiFeld\">";
+    $code .= "<{$self->codeAuf(false, "id", "value", "class")} id=\"{$self->id}T\" value=\"{$datum[0]}\" class=\"dshUiEingabefeld dshUiDatumfeld dshUiDatumfeldT".join(" ", array_merge(array(""), $self->klassen))."\">{$self->codeZu()} ";
+    $code .= "<{$self->codeAuf(false, "id", "value", "class")} id=\"{$self->id}M\" value=\"{$datum[1]}\" class=\"dshUiEingabefeld dshUiDatumfeld dshUiDatumfeldM".join(" ", array_merge(array(""), $self->klassen))."\">{$self->codeZu()} ";
+    $code .= "<{$self->codeAuf(false, "id", "value", "class")} id=\"{$self->id}J\" value=\"{$datum[2]}\" class=\"dshUiEingabefeld dshUiDatumfeld dshUiDatumfeldJ".join(" ", array_merge(array(""), $self->klassen))."\">{$self->codeZu()} ";
     $code .= "<div class=\"dshUiDatumwahl\" id=\"{$self->id}Datumwahl\"></div>";
     $code .= "</span>";
 
@@ -471,7 +472,7 @@ class Zahlenfeld extends PlatzhalterEingabe {
 }
 
 class Farbfeld extends Textfeld {
-  protected $typ = "color";
+  protected $tag = "span";
 
   /**
    * Erstellt eine neue Eingabe
@@ -481,6 +482,34 @@ class Farbfeld extends Textfeld {
   public function __construct($id) {
     parent::__construct($id);
     $this->addKlasse("dshUiFarbfeld");
+  }
+
+  public function __toString() : string {
+    $fbl = [
+      ["rgba(239,154,154,1)", "rgba(244,143,177,1)", "rgba(206,147,216,1)", "rgba(179,157,219,1)",  "rgba(159,168,218,1)",  "rgba(144,202,249,1)",  "rgba(129,212,250,1)",  "rgba(128,222,234,1)",  "rgba(128,203,196,1)",  "rgba(165,214,167,1)",  "rgba(197,225,165,1)",  "rgba(230,238,156,1)",  "rgba(255,245,157,1)",  "rgba(255,224,130,1)",  "rgba(255,204,128,1)",  "rgba(255,171,145,1)",  "rgba(188,170,164,1)",  "rgba(238,238,238,1)"],
+      ["rgba(229,115,115,1)", "rgba(240,98,146,1)",  "rgba(186,104,200,1)", "rgba(149,117,205,1)",  "rgba(121,134,203,1)",  "rgba(100,181,246,1)",  "rgba(79,195,247,1)",   "rgba(77,208,225,1)",   "rgba(77,182,172,1)",   "rgba(129,199,132,1)",  "rgba(174,213,129,1)",  "rgba(220,231,117,1)",  "rgba(255,241,118,1)",  "rgba(255,213,79,1)",   "rgba(255,183,77,1)",   "rgba(255,138,101,1)",  "rgba(161,136,127,1)",  "rgba(224,224,224,1)"],
+      ["rgba(239,83,80,1)",   "rgba(236,64,122,1)",  "rgba(171,71,188,1)",  "rgba(126,87,194,1)",   "rgba(92,107,192,1)",   "rgba(66,165,245,1)",   "rgba(41,182,246,1)",   "rgba(38,198,218,1)",   "rgba(38,166,154,1)",   "rgba(102,187,106,1)",  "rgba(156,204,101,1)",  "rgba(212,225,87,1)",   "rgba(255,238,88,1)",   "rgba(255,202,40,1)",   "rgba(255,167,38,1)",   "rgba(255,112,67,1)",   "rgba(141,110,99,1)",   "rgba(189,189,189,1)"],
+      ["rgba(244,67,54,1)",   "rgba(233,30,99,1)",   "rgba(156,39,176,1)",  "rgba(103,58,183,1)",   "rgba(63,81,181,1)",    "rgba(33,150,243,1)",   "rgba(3,169,244,1)",    "rgba(0,188,212,1)",    "rgba(0,150,136,1)",    "rgba(76,175,80,1)",    "rgba(139,195,74,1)",   "rgba(205,220,57,1)",   "rgba(255,235,59,1)",   "rgba(255,193,7,1)",    "rgba(255,152,0,1)",    "rgba(255,87,34,1)",    "rgba(121,85,72,1)",    "rgba(158,158,158,1)"],
+      ["rgba(229,57,53,1)",   "rgba(216,27,96,1)",   "rgba(142,36,170,1)",  "rgba(94,53,177,1)",    "rgba(57,73,171,1)",    "rgba(30,136,229,1)",   "rgba(3,155,229,1)",    "rgba(0,172,193,1)",    "rgba(0,137,123,1)",    "rgba(67,160,71,1)",    "rgba(124,179,66,1)",   "rgba(192,202,51,1)",   "rgba(253,216,53,1)",   "rgba(255,179,0,1)",    "rgba(251,140,0,1)",    "rgba(244,81,30,1)",    "rgba(109,76,65,1)",    "rgba(117,117,117,1)"],
+      ["rgba(211,47,47,1)",   "rgba(194,24,91,1)",   "rgba(123,31,162,1)",  "rgba(81,45,168,1)",    "rgba(48,63,159,1)",    "rgba(25,118,210,1)",   "rgba(2,136,209,1)",    "rgba(0,151,167,1)",    "rgba(0,121,107,1)",    "rgba(56,142,60,1)",    "rgba(104,159,56,1)",   "rgba(175,180,43,1)",   "rgba(251,192,45,1)",   "rgba(255,160,0,1)",    "rgba(245,124,0,1)",    "rgba(230,74,25,1)",    "rgba(93,64,55,1)",     "rgba(97,97,97,1)"],
+      ["rgba(211,47,47,1)",   "rgba(194,24,91,1)",   "rgba(123,31,162,1)",  "rgba(81,45,168,1)",    "rgba(48,63,159,1)",    "rgba(25,118,210,1)",   "rgba(2,136,209,1)",    "rgba(0,151,167,1)",    "rgba(0,121,107,1)",    "rgba(56,142,60,1)",    "rgba(104,159,56,1)",   "rgba(175,180,43,1)",   "rgba(251,192,45,1)",   "rgba(255,160,0,1)",    "rgba(245,124,0,1)",    "rgba(230,74,25,1)",    "rgba(93,64,55,1)",     "rgba(97,97,97,1)"],
+      ["rgba(183,28,28,1)",   "rgba(136,14,79,1)",   "rgba(74,20,140,1)",   "rgba(49,27,146,1)",    "rgba(26,35,126,1)",    "rgba(13,71,161,1)",    "rgba(1,87,155,1)",     "rgba(0,96,100,1)",     "rgba(0,77,64,1)",      "rgba(27,94,32,1)",     "rgba(51,105,30,1)",    "rgba(130,119,23,1)",   "rgba(245,127,23,1)",   "rgba(255,111,0,1)",    "rgba(230,81,0,1)",     "rgba(191,54,12,1)",    "rgba(62,39,35,1)",     "rgba(33,33,33,1)"]
+    ];
+    $r  = "{$this->codeAuf("id", "type")}";
+      $r .= "<div class=\"dshUiFarbbeispiele\">";
+        for($x = 0; $x < 18; $x++) {
+          $r .= "<div class=\"dshUiFarbbeispieleSchattierung\">";
+          for($y = 0; $y < 8; $y++) {
+            $r .= "<span class=\"dshUiFarbbeispiel\" style=\"background-color:{$fbl[$y][$x]}\" onclick=\"ui.farbbeispiel.aktion(this)\"></span>";
+          }
+          $r .= "</div>";
+        }
+        $r .= "<input id=\"{$this->id}\" class=\"dshUiFeld\" type=\"color\" oninput=\"ui.farbbeispiel.aktion(this)\">";
+      $r .= "</div>";
+      $r .= "<div class=\"dshUiFarbvorschau\"></div>";
+    $r .= "{$this->codeZu()}";
+
+    return $r;
   }
 }
 
@@ -522,6 +551,7 @@ class Passwortfeld extends Textfeld {
     $self = clone $this;
     if($self->bezug !== null) {
       $self->aktionen->addFunktionPrioritaet("onchange", 3, "ui.passwort.aktion('{$self->bezug->getID()}', '{$self->id}')");
+      $self->aktionen->addFunktionPrioritaet("oninput", 3, "ui.passwort.aktion('{$self->bezug->getID()}', '{$self->id}')");
     }
 
     return "{$self->codeAuf()}{$self->codeZu()}";
@@ -534,6 +564,7 @@ class Mailfeld extends Textfeld {
   public function __toString() : string {
     $self = clone $this;
     $self->aktionen->addFunktionPrioritaet("onchange", 3,  "ui.mail.aktion('{$self->id}')");
+    $self->aktionen->addFunktionPrioritaet("oninput", 3,  "ui.mail.aktion('{$self->id}')");
 
     return "{$self->codeAuf()}{$self->codeZu()}";
   }

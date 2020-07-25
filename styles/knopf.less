@@ -1,7 +1,8 @@
 // LAYOUT;
 
 // Normaler Knopf
-.dshUiKnopf {
+.dshUiKnopf,
+.dshUiToggle {
   display: inline-block;
   border-radius: 2px;
   cursor: pointer;
@@ -15,20 +16,25 @@
   outline: none !important;
 }
 
-.dshUiKnopf:not(.dshUiKnopfLeer):focus {
+.dshUiKnopf:not(.dshUiKnopfLeer):focus,
+.dshUiToggle:focus {
   border-width: 1px;
   border-bottom-width: 2px;
 }
 
 .dshUiKnopf:not(.dshUiKnopfLeer),
-.dshUiKnopf:not(.dshUiKnopfLeer) i.icon {
+.dshUiKnopf:not(.dshUiKnopfLeer) i.icon,
+.dshUiToggle,
+.dshUiToggle i.icon {
   transition: color 250ms ease-in-out;
   position: inherit;
   z-index: 2;
 }
 
 .dshUiKnopf:not(.dshUiKnopfLeer):hover,
-.dshUiKnopf:not(.dshUiKnopfLeer):focus {
+.dshUiKnopf:not(.dshUiKnopfLeer):focus,
+.dshUiToggle:hover,
+.dshUiToggle:focus {
   box-shadow: 0px 0px 5px -7px rgba(0,0,0,0.75);
 }
 
@@ -120,6 +126,10 @@ foreach($arten as $var => $css) {
         .   "border-color:@{$var}Akzent;"
         . "}"
 
+        . ".dshUiKnopf$css:not(.dshUiKnopfLeer):hover {"
+        .   "border-color:@{$var}Akzent !important;"
+        . "}"
+
         . ".dshUiKnopf$css.dshUiKnopfIcon:not(.dshUiKnopfGross)::before {"
         .   "background-color:@{$var}Akzent;"
         . "}"
@@ -134,13 +144,7 @@ foreach($arten as $var => $css) {
 
         . ".dshUiKnopf$css.dshUiKnopfIconMini {"
         .   "background-color: @{$var}Hintergrund;"
-        . "}"
-
-        . ".dshUiKnopf$css:not(.dshUiKnopfLeer):hover,"
-        . ".dshUiKnopf$css:not(.dshUiKnopfLeer):hover {"
-        .   "border-color:@{$var}Akzent !important;"
         . "}";
-
 }
 
 ?>
