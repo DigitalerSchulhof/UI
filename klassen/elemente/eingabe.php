@@ -736,8 +736,8 @@ class Togglegruppe extends Eingabe {
 
     if ($anzahl > 0) {$code = substr($code, 0, strlen($code)-1);}
 
-    $code .= $code .= new VerstecktesFeld($this->id, $this->optionen[$knopfId]->getWert());
-    $code .= $code .= new VerstecktesFeld("{$this->id}KnopfId", $knopfId);
+    $code .= new VerstecktesFeld($this->id, $this->optionen[$knopfId]->getWert());
+    $code .= new VerstecktesFeld("{$this->id}KnopfId", $knopfId);
     $code .= $this->codeZu();
     return $code;
   }
