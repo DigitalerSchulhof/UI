@@ -9,19 +9,20 @@ class Konstanten {
   const LOESCHEN = "fas fa-minus-circle";
   const ASC      = "fas fa-sort-alpha-down";
   const DESC     = "fas fa-sort-alpha-down-alt";
+  const LINKEXT  = "fas fa-external-link-alt";
 
   // Meldungen
-  const STANDARD = "fas fa-caret-right";
-  const ERFOLG = "fas fa-check-circle";
-  const FEHLER = "fas fa-exclamation-triangle";
-  const WARNUNG = "fas fa-question-circle";
+  const STANDARD    = "fas fa-caret-right";
+  const ERFOLG      = "fas fa-check-circle";
+  const FEHLER      = "fas fa-exclamation-triangle";
+  const WARNUNG     = "fas fa-question-circle";
   const INFORMATION = "fas fa-info-circle";
-  const LADEN = "fas fa-spinner";
-  const SCHUTZ = "fas fa-shield-alt";
-  const GESPERRT = "fas fa-lock";
-  const AUSFUELLEN = "fas fa-pen";
+  const LADEN       = "fas fa-spinner";
+  const SCHUTZ      = "fas fa-shield-alt";
+  const GESPERRT    = "fas fa-lock";
+  const AUSFUELLEN  = "fas fa-pen";
 
-	const SCHLIESSEN = "fas fa-times";
+	const SCHLIESSEN  = "fas fa-times";
 
   // Personen
 	const PERSON     = "fa fa-user";
