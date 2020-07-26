@@ -186,7 +186,7 @@ class Datumfeld extends Eingabe {
 
     $r .= "<tr><th>$monatz</th><th colspan=\"6\" class=\"dshUiTageswahlMonatname\">".\UI\Generieren::monatnameLang($monat)." $jahr</th><th>$monatv</th></tr>";
 
-    $r .= "<tr><td></td>";
+    $r .= "<tr><td class=\"dshUiTageswahlTagname\"></td>";
     for ($i = 1; $i <= 7; $i++) {
       $r .= "<td class=\"dshUiTageswahlTagname\">".\UI\Generieren::tagnameKurz($i)."</td>";
     }
@@ -202,7 +202,7 @@ class Datumfeld extends Eingabe {
     $klassenzusatz = "";
 
     $r .= "<tr>";
-    $r .= "<td class=\"dshNotiz\">".date("W", mktime(0, 0, 0, $monat, $nr, $jahr))."</td>";
+    $r .= "<td class=\"dshUiTageswahlKaledenderwoche\">".date("W", mktime(0, 0, 0, $monat, $nr, $jahr))."</td>";
     // leer auffüllen, falls nicht mit Montag begonnen wird
     for ($i = 1; $i < $wochentag; $i++) {
       $r .= "<td></td>";
@@ -225,7 +225,7 @@ class Datumfeld extends Eingabe {
         $r .= "</tr>";
         $wochentag = 1;
       }
-      if ($wochentag == 1) {$r .= "<tr><td class=\"dshNotiz\">".date("W", mktime(0, 0, 0, $monat, $nr, $jahr))."</td>";}
+      if ($wochentag == 1) {$r .= "<tr><td class=\"dshUiTageswahlKaledenderwoche\">".date("W", mktime(0, 0, 0, $monat, $nr, $jahr))."</td>";}
       $tagknopf = new Knopf(\fuehrendeNull($nr));
       if ($nr == $tag) {
         $tagknopf->addKlasse("dshUiTagGewaehlt");
@@ -264,8 +264,8 @@ class Datumfeld extends Eingabe {
     $self->aktionen->addFunktionPrioritaet("onchange", 3, "ui.datumsanzeige.checkTag('{$self->id}')");
 
     $code  = "<span class=\"dshUiDatumwahlFeld dshUiFeld\">";
-    $code .= "<{$self->codeAuf(false, "id", "value", "class")} id=\"{$self->id}T\" value=\"{$datum[0]}\" class=\"dshUiEingabefeld dshUiDatumfeld dshUiDatumfeldT".join(" ", array_merge(array(""), $self->klassen))."\">{$self->codeZu()} ";
-    $code .= "<{$self->codeAuf(false, "id", "value", "class")} id=\"{$self->id}M\" value=\"{$datum[1]}\" class=\"dshUiEingabefeld dshUiDatumfeld dshUiDatumfeldM".join(" ", array_merge(array(""), $self->klassen))."\">{$self->codeZu()} ";
+    $code .= "<{$self->codeAuf(false, "id", "value", "class")} id=\"{$self->id}T\" value=\"{$datum[0]}\" class=\"dshUiEingabefeld dshUiDatumfeld dshUiDatumfeldT".join(" ", array_merge(array(""), $self->klassen))."\">{$self->codeZu()} . ";
+    $code .= "<{$self->codeAuf(false, "id", "value", "class")} id=\"{$self->id}M\" value=\"{$datum[1]}\" class=\"dshUiEingabefeld dshUiDatumfeld dshUiDatumfeldM".join(" ", array_merge(array(""), $self->klassen))."\">{$self->codeZu()} . ";
     $code .= "<{$self->codeAuf(false, "id", "value", "class")} id=\"{$self->id}J\" value=\"{$datum[2]}\" class=\"dshUiEingabefeld dshUiDatumfeld dshUiDatumfeldJ".join(" ", array_merge(array(""), $self->klassen))."\">{$self->codeZu()} ";
     $code .= "<div class=\"dshUiDatumwahl\" id=\"{$self->id}Datumwahl\"></div>";
     $code .= "</span>";
