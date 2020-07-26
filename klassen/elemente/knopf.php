@@ -140,15 +140,16 @@ class Sortierknopf extends MiniIconKnopf {
     }
     $this->richtung = $richtung;
     if ($richtung == "DESC") {
-      $inhalt = "absteigend: Z-A 9-0";
+      $inhalt = "";
       $icon = new Icon(Konstanten::DESC);
       $this->addKlasse("dshUiSortierenDESC");
     } else {
-      $inhalt = "aufsteigend: A-Z 0-9";
+      $inhalt = "";
       $icon = new Icon(Konstanten::ASC);
       $this->addKlasse("dshUiSortierenASC");
     }
     parent::__construct($icon, $inhalt, null, "OL");
+    $this->hinweis = null;
     $this->tabelleId = $tabelleId;
     $this->spaltenname = $spaltenname;
   }
