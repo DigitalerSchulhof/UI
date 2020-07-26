@@ -65,6 +65,23 @@ abstract class Eingabe extends Element {
   }
 }
 
+/**
+ * Erstellt ein Verstecktes hidden-Feld
+ */
+class VerstecktesFeld extends Eingabe {
+  protected $typ = "hidden";
+
+  /**
+   * Feld für die Eingabe von Versteckten Informationen
+   * @param string $id   ID des Feldes
+   * @param string $wert Wert des Feldes
+   */
+  public function __construct($id, $wert) {
+    parent::__construct($id);
+    $this->wert = $wert;
+  }
+}
+
 abstract class PlatzhalterEingabe extends Eingabe {
   /** @var string Platzhalter des Eingabefelds */
   protected $platzhalter = null;
@@ -287,7 +304,7 @@ class Schieber extends Eingabe {
     $self->aktionen->addFunktionPrioritaet("onclick", 3, "ui.schieber.aktion('{$self->id}')");
 
     $code  = "<{$self->codeAuf(false, "id", "value", "class")} id=\"{$self->id}Schieber\" class=\"dshUiSchieberAussen dshUiSchieber$wert".join(" ", array_merge(array(""), $self->klassen))."\"><span class=\"dshUiSchieber\"></span>{$self->codeZu()}";
-    $code .= "<input type=\"hidden\" id=\"{$self->id}\" value=\"$wert\">";
+    $code .= new VerstecktesFeld($self->id, $wert);
 
     return $code;
   }
@@ -324,7 +341,7 @@ class Toggle extends Schieber {
 
     $code  = "<{$self->codeAuf(false, "id", "value")} id=\"{$self->id}Toggle\">$self->text{$this->codeZu()}";
 
-    $code .= "<input type=\"hidden\" id=\"{$self->id}\" value=\"$wert\">";
+    $code .= new VerstecktesFeld($self->id, $wert);
 
     return $code;
   }
@@ -362,7 +379,7 @@ class IconToggle extends Toggle {
 
     $code  = "<{$self->codeAuf(false, "id", "value")} id=\"{$self->id}Toggle\">$self->icon $self->text{$this->codeZu()}";
 
-    $code .= "<input type=\"hidden\" id=\"{$self->id}\" value=\"$wert\">";
+    $code .= new VerstecktesFeld($self->id, $wert);
 
     return $code;
   }
@@ -399,7 +416,7 @@ class IconToggleGross extends IconToggle {
     $toggleinhalt->setTag("span");
     $toggleinhalt->addKlasse("dshUiToggleGrossText");
     $code  = "<{$self->codeAuf(false, "id", "value")} id=\"{$self->id}Toggle\">$self->icon $toggleinhalt{$this->codeZu()}";
-    $code .= "<input type=\"hidden\" id=\"{$self->id}\" value=\"$wert\">";
+    $code .= new VerstecktesFeld($self->id, $wert);
 
     return $code;
   }
@@ -719,8 +736,8 @@ class Togglegruppe extends Eingabe {
 
     if ($anzahl > 0) {$code = substr($code, 0, strlen($code)-1);}
 
-    $code .= "<input type=\"hidden\" id=\"$this->id\" name=\"$this->id\" value=\"{$this->optionen[$knopfId]->getWert()}\">";
-    $code .= "<input type=\"hidden\" id=\"{$this->id}KnopfId\" name=\"{$this->id}KnopfId\" value=\"$knopfId\">";
+    $code .= $code .= new VerstecktesFeld($this->id, $this->optionen[$knopfId]->getWert());
+    $code .= $code .= new VerstecktesFeld("{$this->id}KnopfId", $knopfId);
     $code .= $this->codeZu();
     return $code;
   }

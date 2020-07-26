@@ -7,8 +7,8 @@ class Konstanten {
   const VOR      = "fas fa-angle-double-right";
   const DRUCKEN  = "fas fa-print";
   const LOESCHEN = "fas fa-minus-circle";
-  const ASC      = "fas fa-sort-up";
-  const DESC     = "fas fa-sort-down";
+  const ASC      = "fas fa-sort-alpha-down";
+  const DESC     = "fas fa-sort-alpha-down-alt";
 
   // Meldungen
   const STANDARD = "fas fa-caret-right";

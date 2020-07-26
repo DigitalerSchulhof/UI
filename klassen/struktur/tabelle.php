@@ -78,24 +78,29 @@ class Tabelle extends Element {
     $self = clone $this;
     $self->addKlasse("dshUiTabelle{$this->darstellung}");
     $code  = $self->codeAuf();
-    $zeilenr = 0;
-    $code .= "<tr id=\"{$this->id}$zeilenr\">";
+    $spaltennr = 0;
+    $code .= "<thead id=\"{$this->id}Kopf\"><tr>";
     foreach ($self->titel as $t) {
-      $aufsteigend = new Sortierknopf("ASC", $self->id, $t);
-      $absteigend = new Sortierknopf("DESC", $self->id, $t);
+      $aufsteigend = new Sortierknopf("ASC", $self->id, $spaltennr);
+      $absteigend = new Sortierknopf("DESC", $self->id, $spaltennr);
       $code .= "<th>$t{$aufsteigend}{$absteigend}</th>";
+      $spaltennr++;
     }
-    $code .= "</tr>";
-    $zeilenr ++;
+    $code .= "</tr></thead><tbody id=\"{$this->id}Koerper\">";
+    $zeilenr = 0;
     foreach($self->zellen as $z) {
-      $code .= "<tr id=\"{$this->id}$zeilenr\">";
+      $code .= "<tr>";
+      $spaltennr = 0;
       foreach ($self->titel as $t) {
-        $code .= "<td>{$z[$t]}</th>";
+        $code .= "<td id=\"{$this->id}Z{$zeilenr}S$spaltennr\">{$z[$t]}</td>";
+        $spaltennr++;
       }
       $code .= "</tr>";
       $zeilenr ++;
     }
-    $code .= $self->codeZu();
+    $code .= "</tbody>{$self->codeZu()}";
+    $code .= new VerstecktesFeld("{$self->id}ZAnzahl", $zeilenr);
+    $code .= new VerstecktesFeld("{$self->id}SAnzahl", $spaltennr);
     return $code;
   }
 

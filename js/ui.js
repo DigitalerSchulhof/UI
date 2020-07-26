@@ -418,3 +418,57 @@ ui.farbbeispiel = {
     }
   }
 }
+
+ui.tabelle = {
+  sortieren: (richtung, id, spalte) => {
+    if (richtung != "ASC" && richtung != "DESC") {return;}
+
+    // Zeilen einlesen
+    var zAnzahl = $("#"+id+"ZAnzahl").value;
+    var sAnzahl = $("#"+id+"SAnzahl").value;
+    var umsortieren = new Array(zAnzahl);
+    // initialisieren
+    for (var z=0; z<zAnzahl; z++) {
+      umsortieren[z] = new Array(2);
+      umsortieren[z][0] = z;
+      umsortieren[z][1] = $("#"+id+"Z"+z+"S"+spalte).innerHTML;
+    }
+
+    if (richtung == "ASC") {
+      umsortieren.sort(ui.tabelle.aufsteigend);
+    } else {
+      umsortieren.sort(ui.tabelle.absteigend);
+    }
+
+    // Tabelle neu zusammenbauen
+    var code = "";
+    for (var z=0; z<zAnzahl; z++) {
+      code += "<tr>";
+      var spaltennr = 0;
+      for (var s=0; s<sAnzahl; s++) {
+        code += "<td id=\""+id+"Z"+z+"S"+s+"\">"+($("#"+id+"Z"+umsortieren[z][0]+"S"+s).innerHTML)+"</td>";
+        spaltennr++;
+      }
+      code += "</tr>";
+    }
+    $("#"+id+"Koerper").innerHTML = code;
+  },
+  aufsteigend: (a, b) => {
+    if (a[1] < b[1]) {
+    return -1;
+    }
+    if (a[1] > b[1]) {
+      return 1;
+    }
+    return 0;
+  },
+  absteigend: (a, b) => {
+    if (a[1] > b[1]) {
+    return -1;
+    }
+    if (a[1] < b[1]) {
+      return 1;
+    }
+    return 0;
+  }
+}

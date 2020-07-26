@@ -159,7 +159,7 @@ class Sortierknopf extends MiniIconKnopf {
    */
   public function toStringVorbereitung() : self {
     $self = clone $this;
-    $self->aktionen->addFunktion("onclick", "ui.tabellen.sortieren('{$this->richtung}', '{$this->tabelleId}', '{$this->spaltenname}')");
+    $self->aktionen->addFunktion("onclick", "ui.tabelle.sortieren('{$this->richtung}', '{$this->tabelleId}', '{$this->spaltenname}')");
     $self->addKlasse("dshUiSortierknopf");
     return $self;
   }
