@@ -19,6 +19,7 @@ class Konstanten {
   const LADEN = "fas fa-spinner";
   const SCHUTZ = "fas fa-shield-alt";
   const GESPERRT = "fas fa-lock";
+  const AUSFUELLEN = "fas fa-pen";
 
 	const SCHLIESSEN = "fas fa-times";
 

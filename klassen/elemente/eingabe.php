@@ -184,6 +184,7 @@ class Datumfeld extends Eingabe {
    * @return string
    */
   public function tageswahlGenerieren() : string {
+    $check = new \Check();
     $datum = explode(".", $this->wert);
     if (count($datum) != 3) {
       $datum[0] = date("d");
@@ -226,7 +227,7 @@ class Datumfeld extends Eingabe {
     }
 
     for ($i = $wochentag; $i <= 7; $i++) {
-      $tagknopf = new Knopf(\fuehrendeNull($nr));
+      $tagknopf = new Knopf($check->fuehrendeNull($nr));
       if ($nr == $tag) {
         $tagknopf->addKlasse("dshUiTagGewaehlt");
       }
@@ -243,7 +244,7 @@ class Datumfeld extends Eingabe {
         $wochentag = 1;
       }
       if ($wochentag == 1) {$r .= "<tr><td class=\"dshUiTageswahlKaledenderwoche\">".date("W", mktime(0, 0, 0, $monat, $nr, $jahr))."</td>";}
-      $tagknopf = new Knopf(\fuehrendeNull($nr));
+      $tagknopf = new Knopf($check->fuehrendeNull($nr));
       if ($nr == $tag) {
         $tagknopf->addKlasse("dshUiTagGewaehlt");
       }
