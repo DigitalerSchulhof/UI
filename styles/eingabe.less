@@ -2,11 +2,11 @@
 
 .dshUiEingabefeld {
   border: 1px solid;
-  border-bottom: 2px solid;
   border-top-right-radius: @radius2;
   border-top-left-radius: @radius2;
   padding: 3px 5px;
   width: 100%;
+  height: 30px;
 }
 
 .dshUiZahlfeld {
@@ -19,6 +19,7 @@
   resize: vertical;
 }
 
+// Datumfeld
 .dshUiDatumfeldM,
 .dshUiDatumfeldT,
 .dshUiUhrzeitfeldStd,
@@ -38,6 +39,7 @@
   border-style: solid;
 }
 
+// Schieber
 .dshUiSchieberAussen {
   display: inline-block;
   width: 40px;
@@ -69,7 +71,8 @@
   position: relative;
 }
 
-  .dshUiDatumwahl {
+// Datumwahl
+.dshUiDatumwahl {
     position: absolute;
     left: 0px;
     top: 25px;
@@ -126,13 +129,19 @@
 
   .dshUiFarbbeispiele input[type=color] {
     width: 100%;
-    margin-top: 10px;
+    height: 22px;
+    border-radius: 4px;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    border: 1px solid;
+    cursor: pointer;
   }
 
   .dshUiFarbbeispiele .dshUiFarbbeispieleSchattierung {
+    height: 0px;
+    overflow: hidden;
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
     flex-grow: 1;
     align-items: center;
   }
@@ -144,10 +153,9 @@
 .dshUiFarbvorschau {
   float: right;
   width: 15%;
-  height: 386px;
-  border-radius: 8px;
-  border: 2px solid;
-  margin: 2px auto;
+  height: 22px;
+  border-radius: 4px;
+  border: 1px solid;
 }
 
 .dshUiFarbbeispiel {
@@ -237,8 +245,13 @@
 }
 
 .dshUiFarbbeispiel,
+.dshUiFarbbeispiele input[type=color],
 .dshUiFarbvorschau {
+<<<<<<< HEAD
+  border-color: @abstufung4;
+=======
   border-color: @schriftfarbePositiv;
+>>>>>>> origin/master
 }
 
 .dshUiTageswahlKaledenderwoche {

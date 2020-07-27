@@ -55,7 +55,7 @@
     $knopf = new UI\MiniIconKnopf(new UI\Icon(UI\Konstanten::STANDARD), $art, $art);
     $spalte->addElement($knopf." ");
   }
-  // $spalte = new UI\Spalte();
+  $spalte = new UI\Spalte();
   $spalte->addElement("<h1>Eingabefelder</h1>");
   $spalte->addElement("<h3>Datum und Uhrzeit</h3>");
   $spalte->addElement(new UI\Datumfeld("dshUiDemoUhrzeitfeld")." ".new UI\Uhrzeitfeld("dshUiDemoUhrzeitfeld")."<br>");
