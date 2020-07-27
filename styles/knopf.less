@@ -4,7 +4,7 @@
 .dshUiKnopf,
 .dshUiToggle {
   display: inline-block;
-  border-radius: 2px;
+  border-radius: @radius2;
   cursor: pointer;
   transition: border-color 250ms ease-in-out;
   border: 1px solid transparent;
@@ -14,6 +14,12 @@
   padding: 3px 6px;
   user-select: none;
   outline: none !important;
+  margin-bottom: 10px;
+}
+
+.dshSeiteH .dshUiKnopf {
+  width: 100%;
+  text-align: center;
 }
 
 .dshUiKnopf:not(.dshUiKnopfLeer):focus,
@@ -41,7 +47,7 @@
 .dshUiKnopfLeer {
   opacity: 0.75;
   outline: none !important;
-  cursor: not-allowed;
+  cursor: default;
 }
 
 // Icon Knopf

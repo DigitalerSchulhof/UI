@@ -10,10 +10,6 @@ class Tabelle extends Element {
   /** @var string[][] $zellen Zellen der Tabelle als assoziatives Array */
   protected $zellen;
 
-  protected $darstellung;
-
-  const DARSTELLUNGEN = ["Liste", "Formular"];
-
   /** @var string $sortierung Spalte nach der sortiert werden soll */
   protected $sortierung;
 
@@ -27,16 +23,7 @@ class Tabelle extends Element {
         $this->zellen[] = $z;
       }
     }
-    $this->darstellung = "Liste";
     $this->addKlasse("dshUiTabelle");
-  }
-
-  public function setDarstellung($darstellung) : self {
-    if (!in_array($darstellung, self::DARSTELLUNGEN)) {
-      $darstellung = self::DARSTELLUNGEN[0];
-    }
-    $this->darstellung = $darstellung;
-    return $this;
   }
 
   /**
@@ -72,11 +59,11 @@ class Tabelle extends Element {
 
   /**
    * Gibt die Tabelle in HTML-Code zurück
-   * @return string [description]
+   * @return string :)
    */
   public function __toString() : string {
     $self = clone $this;
-    $self->addKlasse("dshUiTabelle{$this->darstellung}");
+    $self->addKlasse("dshUiTabelleListe");
     $code  = $self->codeAuf();
     $spaltennr = 0;
     $code .= "<thead id=\"{$this->id}Kopf\"><tr>";
@@ -103,6 +90,109 @@ class Tabelle extends Element {
     $code .= new VerstecktesFeld("{$self->id}SAnzahl", $spaltennr);
     return $code;
   }
-
 }
+
+
+class FormularFeld {
+  /** @var InhaltElement Bezeichnung des Eingabefeldes */
+  private $label;
+  /** @var Eingabefeld */
+  private $eingabe;
+
+  /**
+   * Erstellt ein neues FormularFeld
+   * @param InhaltElement $label   :)
+   * @param Eingabefeld   $eingabe :)
+   */
+  public function __construct($label, $eingabe) {
+    $this->label = $label;
+    $this->label->setTag("label");
+    $this->eingabe = $eingabe;
+    if ($eingabe->getID() === null) {
+      throw new \Exception("Keine ID übergeben");
+    }
+  }
+
+  /**
+   * Gibt das FormularFeld als HTML-Code zurück
+   * @return string :)
+   */
+  public function __toString() : string {
+    $self = clone $this;
+    if ($self->eingabe->getID() === null) {
+      throw new \Exception("Keine ID übergeben");
+    }
+    $self->label->setAttribut("for", $self->eingabe->getID());
+    return "<tr><th>{$self->label}</th><td>{$self->eingabe}</td></tr>";
+  }
+}
+
+
+class FormularTabelle extends Element {
+  protected $tag = "div";
+
+  /** @var FormularFeld[] $zeilen :) */
+  protected $zeilen;
+
+  /** @var Knopf[] $knoepfe :) */
+  protected $knoepfe;
+
+
+  public function __construct($knopf, ...$zeilen) {
+    parent::__construct();
+    $this->zeilen = array();
+    foreach ($zeilen as $z) {
+      $this->zeilen[] = $z;
+    }
+    $this->knoepfe = [$knopf];
+  }
+
+  /**
+   * Fügt dem Formular neue Knöpfe hinzu
+   * @param  Knopf[] $knopf [description]
+   * @return self          [description]
+   */
+  public function addKnopf(...$knopf) : self {
+    foreach ($knopf as $k) {
+      $this->knoepfe[] = $k;
+    }
+    return $this;
+  }
+
+  /**
+   * Fügt Zeilen in die Tabelle hinzu
+   * @param  string[] $zellen Zeilen der Tabelle
+   * @return self             :)
+   */
+  public function addZeile(...$zeilen) : self {
+    foreach ($zeilen as $z) {
+      $this->zeilen[] = $z;
+    }
+    return $this;
+  }
+
+  /**
+   * Gibt die Tabelle in HTML-Code zurück
+   * @return string :)
+   */
+  public function __toString() : string {
+    $self = clone $this;
+    $self->addKlasse("dshUiFormular");
+    $code  = $self->codeAuf();
+    $code .= "<table class=\"dshUiTabelle dshUiTabelleFormular\"><tbody>";
+    foreach($self->zeilen as $z) {
+      $code .= $z;
+    }
+    $code .= "<tr><td colspan=\"2\">";
+    foreach ($this->knoepfe as $k) {
+      $code .= $k." ";
+    }
+    $code .= "</td></tr>";
+    $code .= "</tbody></table>";
+    $code .= (new Icon(Konstanten::AUSFUELLEN))->addKlasse("dshUiFormularAusfuellen");
+    $code .= $self->codeZu();
+    return $code;
+  }
+}
+
 ?>

@@ -11,4 +11,5 @@
 	include_once("$KLASSEN/struktur/tabelle.php");
   include_once("$KLASSEN/laden.php");
 	include_once("$KLASSEN/elemente/meldung.php");
+	include_once("$KLASSEN/elemente/text.php");
 ?>

@@ -38,6 +38,15 @@ class Spalte extends Element {
   }
 
   /**
+   * Alias für addElement
+   * @param Element|string ...$elemente :)
+   * @return self
+   */
+  public function add(...$elemente) : self {
+    return $this->addElement(...$elemente);
+  }
+
+  /**
    * Setzt den Spaltentyp
    * @param string $typ :)
    * @return self

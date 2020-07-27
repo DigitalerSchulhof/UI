@@ -41,6 +41,11 @@ class Knopf extends InhaltElement {
       $self->setAttribut("aria-disabled", "false");
       $self->setAttribut("tabindex", "0");
     }
+
+    if ($self->getAktionen()->hatAusloeser("href")) {
+      $self->setTag("a");
+    }
+
     $self->addKlasse("dshUiKnopf{$self->art}");
     $self->setInhalt((new InhaltElement($self->inhalt))->setTag("span"));
 
@@ -50,6 +55,17 @@ class Knopf extends InhaltElement {
   public function __toString() : string {
     $self = $this->toStringVorbereitung();
     return "{$self->codeAuf()}{$self->inhalt}{$self->codeZu()}";
+  }
+
+  /**
+   * Shortcut zu Aktionen addFunktion
+   * @param 	string|string[] $ausloeser Auslöser der Funktionen<br>Wenn array, dann für jeden Auslöser hinzugefügt
+	 * @param 	string ...$funktionen Was passiert, wenn der Auslöser auftritt
+	 * @return 	self
+	 */
+  public function addFunktion($ausloeser, ...$funktionen) : self {
+    $this->aktionen->addFunktion($ausloeser, ...$funktionen);
+    return $this;
   }
 }
 
