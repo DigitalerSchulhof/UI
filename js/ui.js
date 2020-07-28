@@ -177,13 +177,13 @@ ui.generieren = {
     }
     return false;
   }
-}
+};
 
 ui.check = {
   zahl: (x) => x.toString().match(/^-?[0-9]+$/),
   natZahl: (x) => x.toString().match(/^[0-9]+$/),
   mail: (x) => x.toString().match(/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]{2,}$/),
-}
+};
 
 ui.datumsanzeige = {
   offen: false,
@@ -254,7 +254,7 @@ ui.datumsanzeige = {
       $("#"+id+"Datumwahl").style.display = 'none';
     }
   }
-}
+};
 
 document.addEventListener("click", (e) => {
   if(ui.datumsanzeige.offen) {
@@ -268,7 +268,7 @@ document.addEventListener("click", (e) => {
       }
     }
   }
-})
+});
 
 ui.schieber = {
   aktion: (id) => {
@@ -281,7 +281,7 @@ ui.schieber = {
     $("#"+id+"Schieber").classList.add("dshUiSchieber"+neuerwert);
     $("#"+id+"Schieber").classList.remove("dshUiSchieber"+wert);
   }
-}
+};
 
 ui.toggle = {
   aktion: (id) => {
@@ -297,7 +297,7 @@ ui.toggle = {
       $("#"+id+"Toggle").classList.remove("dshUiToggled");
     }
   }
-}
+};
 
 ui.mail = {
   aktion: (id) => {
@@ -310,7 +310,7 @@ ui.mail = {
       $("#"+id).classList.remove("dshUiPruefen1");
     }
   }
-}
+};
 
 ui.passwort = {
   aktion: (idvergleich, idpruefen) => {
@@ -324,7 +324,7 @@ ui.passwort = {
       $("#"+idpruefen).classList.remove("dshUiPruefen1");
     }
   }
-}
+};
 
 ui.togglegruppe = {
   aktion: (id, nr, anzahl, wert) => {
@@ -335,7 +335,7 @@ ui.togglegruppe = {
     }
     $("#"+id+"Knopf"+nr).classList.add("dshUiToggled");
   }
-}
+};
 
 ui.reiter = {
   aktion: (id, nr, anzahl) => {
@@ -350,7 +350,7 @@ ui.reiter = {
     $("#"+id+"Kopf"+nr).classList.remove("dshUiReiterKopfInaktiv");
     $("#"+id+"Kopf"+nr).classList.add("dshUiReiterKopfAktiv");
   }
-}
+};
 
 ui.laden = {
   balken: {
@@ -359,7 +359,7 @@ ui.laden = {
     }
   },
   an: (titel, beschreibung) => console.log(titel, beschreibung)
-}
+};
 
 ui.fenster = {
   schliessen: () => {
@@ -368,7 +368,7 @@ ui.fenster = {
   anzeigen: () => {
     $("#dshUiBlende").style.display = "block";
   }
-}
+};
 
 ui.meldung = {
   brclick: function (ev) {
@@ -407,7 +407,7 @@ ui.meldung = {
       }
     }
   }
-}
+};
 
 ui.farbbeispiel = {
   aktion: (t) => {
@@ -417,7 +417,7 @@ ui.farbbeispiel = {
       fb.querySelectorAll("input[type=color]")[0].value = ui.generieren.rgba2hex(t.style["background-color"]);
     }
   }
-}
+};
 
 ui.tabelle = {
   sortieren: (richtung, id, spalte) => {
@@ -471,4 +471,4 @@ ui.tabelle = {
     }
     return 0;
   }
-}
+};

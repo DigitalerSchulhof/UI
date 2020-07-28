@@ -8,7 +8,7 @@ abstract class Element {
 	/** @var string Tag des Elements */
 	protected $tag = null;
 	/** @var string[] CSS-Klassen des Elements */
-	protected $klassen = array();
+	protected $klassen = [];
 	/** @var string ID des Elements - Weggelassen wenn <code>null</code> */
 	protected $id = null;
 	/** @var Aktionen Aktionen des Elements */
@@ -17,6 +17,10 @@ abstract class Element {
    * [Attribut] => Wert
    */
   protected $attribute;
+  /** @var String Extra Styles des Elements
+   * [Property] => Wert
+   */
+  protected $styles;
   /** @var Hinweis Hinweis des Elements */
   protected $hinweis;
 
@@ -25,7 +29,8 @@ abstract class Element {
 	 */
 	public function __construct() {
 		$this->aktionen  = new Aktionen();
-    $this->attribute = array();
+    $this->attribute = [];
+    $this->styles    = [];
     $this->hinweis   = null;
 	}
 
@@ -81,6 +86,31 @@ abstract class Element {
    */
   public function getAttribut($attribut) {
     return $this->attribute[$attribut] ?? null;
+  }
+
+
+	/**
+	 * Setzt einen extra Style
+	 * @param 	string $property CSS-Property
+	 * @param 	string $wert :)
+	 * @return 	self
+	 */
+	public function setStyle($property, $wert = "true") : self {
+    if($wert === null) {
+      unset($this->styles[$property]);
+    } else {
+      $this->styles[$property] = $wert;
+    }
+		return $this;
+	}
+
+  /**
+   * Gibt den Wert einer CSS-Property zurück. <code>null</code> wenn diese nicht gesetzt ist.
+   * @param  string $property :)
+   * @return mixed
+   */
+  public function getStyle($property) {
+    return $this->styles[$property] ?? null;
   }
 
 	/**
@@ -182,11 +212,11 @@ abstract class Element {
 			$rueck = "";
 
 		if($self->id !== null && !in_array("id", $nicht)) {
-			$rueck .= " id='{$self->id}'";
+			$rueck .= " id=\"{$self->id}\"";
     }
 
 		if(count($self->klassen) > 0 && !in_array("class", $nicht)) {
-			$rueck .= " class='".join(" ", $self->klassen)."'";
+			$rueck .= " class=\"".join(" ", $self->klassen)."\"";
     }
 
 		if($self->aktionen->count() > 0 && !in_array("aktionen", $nicht)) {
@@ -198,6 +228,15 @@ abstract class Element {
         $rueck .= " $attribut=\"$wert\"";
       }
     }
+
+    if(!in_array("style", $nicht) && count($this->styles) > 0) {
+      $rueck .= " style=\"";
+      foreach($this->styles as $p => $w) {
+        $rueck .= "$p:$w;";
+      }
+      $rueck .= "\"";
+    }
+
     if($klammer) {
       $rueck .= ">";
     }

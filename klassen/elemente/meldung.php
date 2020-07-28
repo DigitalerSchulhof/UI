@@ -9,7 +9,7 @@ class Meldung extends Element {
   protected $tag = "div";
 
   /** @var string Zulässige Meldungsarten */
-  const ARTEN = ["Standard", "Erfolg", "Warnung", "Fehler", "Information", "Laden", "Eingeschraenkt", "Gesperrt"];
+  const ARTEN = ["Standard", "Erfolg", "Warnung", "Fehler", "Information", "Laden", "Eingeschraenkt", "Gesperrt", "Arbeit"];
 
   /** @var string Art der Meldung */
   private $art;
@@ -51,7 +51,8 @@ class Meldung extends Element {
       "Information"     => Konstanten::INFORMATION,
       "Laden"           => Konstanten::LADEN,
       "Eingeschraenkt"  => Konstanten::SCHUTZ,
-      "Gesperrt"        => Konstanten::GESPERRT
+      "Gesperrt"        => Konstanten::GESPERRT,
+      "Arbeit"          => Konstanten::LADEN,
     );
 
     if($icon === null) {

@@ -20,7 +20,7 @@ class Aktionen {
 	protected $aktionen = null;
 
 	public function __construct() {
-		$this->aktionen = array();
+		$this->aktionen = [];
 	}
 
 	/**
@@ -34,7 +34,7 @@ class Aktionen {
 			unset($this->aktionen[$ausloeser][$prioritaet]);
 			return $this;
 		}
-		$ak = $this->aktionen[$ausloeser] ?? array();
+		$ak = $this->aktionen[$ausloeser] ?? [];
 		$ak[$prioritaet] = $funktionen;
 		$this->aktionen[$ausloeser] = $ak;
 		return $this;
@@ -46,7 +46,7 @@ class Aktionen {
    * @return string [Priorität][Funktionen]
    */
   public function getFunktionen($ausloeser) {
-    return $this->aktionen[$ausloeser] ?? array();
+    return $this->aktionen[$ausloeser] ?? [];
   }
 
   /**
@@ -80,8 +80,8 @@ class Aktionen {
       $ausloeser = array($ausloeser);
     }
     foreach($ausloeser as $asl) {
-  		$ak 	= $this->aktionen[$asl] ?? array();
-  		$akp 	= $ak[$prioritaet] ?? array();
+  		$ak 	= $this->aktionen[$asl] ?? [];
+  		$akp 	= $ak[$prioritaet] ?? [];
   		$this->aktionen[$asl][$prioritaet] = array_merge($akp, $funktionen);
     }
 		return $this;

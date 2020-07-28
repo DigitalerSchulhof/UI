@@ -197,7 +197,7 @@ class Reiter extends Element {
     parent::__construct();
     $this->id = $id;
     $this->addKlasse("dshUiReiter");
-    $this->reitersegmente = array();
+    $this->reitersegmente = [];
     $this->gewaehlt = -1;
   }
 

@@ -86,7 +86,7 @@ class IconKnopf extends Knopf {
     $this->icon = $icon;
     $this->addKlasse("dshUiKnopfIcon");
   }
-
+  
   public function __toString() : string {
     $self = $this->toStringVorbereitung();
     return "{$self->codeAuf()}{$self->icon}{$self->inhalt}{$self->codeZu()}";

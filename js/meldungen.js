@@ -8,4 +8,4 @@ ui.meldung = {
   gesperrt:         (t, b) => ui.meldung.meldung("Gesperrt", t, b),
 
   meldung: (art, titel, inhalt, icon) => core.ajax("UI", 1, null, {art: art, titel: titel, inhalt: inhalt, icon: icon})
-}
+};

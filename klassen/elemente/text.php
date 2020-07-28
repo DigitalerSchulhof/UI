@@ -12,8 +12,7 @@ class Ueberschrift extends InhaltElement {
   protected $tag = "h2";
 
   public function __construct($groesse, $inhalt) {
-    $check = new \Check();
-    if (!$check->istZahl($groesse, 1, 6)) {
+    if (!\Check::istZahl($groesse, 1, 6)) {
       throw new \Exception("Falscher Zahlbereich für Überschriften");
     }
     parent::__construct($inhalt);
@@ -37,7 +36,7 @@ class Liste extends Element {
       $typ = self::TYPEN[0];
     }
     $this->tag = $typ;
-    $this->punkte = array();
+    $this->punkte = [];
     foreach ($punkte as $p) {
       $this->punkte[] = $p;
     }

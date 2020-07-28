@@ -17,7 +17,7 @@ class Tabelle extends Element {
     parent::__construct();
     $this->id = $id;
     $this->titel = $titel;
-    $this->zellen = array();
+    $this->zellen = [];
     foreach ($zellen as $z) {
       if ($this->pruefeZeile($z)) {
         $this->zellen[] = $z;
@@ -137,14 +137,12 @@ class FormularTabelle extends Element {
   /** @var Knopf[] $knoepfe :) */
   protected $knoepfe;
 
-
-  public function __construct($knopf, ...$zeilen) {
+  public function __construct(...$zeilen) {
     parent::__construct();
-    $this->zeilen = array();
+    $this->zeilen = [];
     foreach ($zeilen as $z) {
       $this->zeilen[] = $z;
     }
-    $this->knoepfe = [$knopf];
   }
 
   /**

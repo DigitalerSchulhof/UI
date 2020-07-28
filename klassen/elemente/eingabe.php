@@ -760,7 +760,7 @@ class Auswahl extends Eingabe {
    */
   public function __construct($id, $text, $textwert, $wert = "", $klasse = "", $aktion = null) {
     parent::__construct($id, $wert, $klasse, $aktion);
-    $this->optionen = array();
+    $this->optionen = [];
     $this->optionen[] = new Option ($text, $textwert);
   }
 
