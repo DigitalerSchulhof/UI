@@ -525,7 +525,6 @@ class Farbfeld extends Textfeld {
         $r .= "<input id=\"{$this->id}\" class=\"dshUiFeld\" type=\"color\" oninput=\"ui.farbbeispiel.aktion(this)\">";
       $r .= "</div>";
       $r .= "<div class=\"dshUiFarbvorschau\">";
-      $r .= new MiniIconKnopf(new Icon("fas fa-palette"), "Farbpalette anzeigen", "Standard");
       $r .= "</div>";
     $r .= "{$this->codeZu()}";
 

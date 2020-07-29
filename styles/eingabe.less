@@ -119,6 +119,10 @@
   }
 
 // Farbvorschau
+.dshUiFarbfeld {
+  height: auto;
+}
+
 .dshUiFarbbeispiele {
   width: 80%;
   float: left;
@@ -130,19 +134,13 @@
 
   .dshUiFarbbeispiele input[type=color] {
     width: 100%;
-    height: 22px;
-    border-radius: 4px;
-    border-bottom-left-radius: 0;
-    border-bottom-right-radius: 0;
-    border: 1px solid;
-    cursor: pointer;
+    margin-top: 10px;
   }
 
   .dshUiFarbbeispiele .dshUiFarbbeispieleSchattierung {
-    height: 0px;
-    overflow: hidden;
     display: flex;
     flex-direction: column;
+    justify-content: space-around;
     flex-grow: 1;
     align-items: center;
   }
@@ -154,9 +152,10 @@
 .dshUiFarbvorschau {
   float: right;
   width: 15%;
-  height: 22px;
-  border-radius: 4px;
-  border: 1px solid;
+  height: 376px;
+  border-radius: 8px;
+  border: 2px solid;
+  margin: 2px auto;
 }
 
 .dshUiFarbbeispiel {
@@ -176,18 +175,21 @@
   display: block;
 }
 
-// MOBIL;
-.dshUiFarbbeispiele {
+.dshSeiteH .dshUiFarbbeispiele,
+.dshSeiteT .dshUiFarbbeispiele {
   width: 100%;
   flex-direction: row;
   justify-content: space-around;
 }
-  .dshUiFarbbeispiele .dshUiFarbbeispieleSchattierung {
+  .dshSeiteH .dshUiFarbbeispiele .dshUiFarbbeispieleSchattierung,
+  .dshSeiteT .dshUiFarbbeispiele .dshUiFarbbeispieleSchattierung {
     flex-direction: column;
     justify-content: inherit;
   }
 
-.dshUiFarbvorschau {
+.dshSeiteH .dshUiFarbvorschau,
+.dshSeiteT .dshUiFarbvorschau {
+  margin-top: 10px;
   width: 100%;
   height: 50px;
 }
@@ -202,7 +204,7 @@
 
 .dshUiEingabefeld:focus,
 .dshUiEingabefeld:hover {
-  border-color: @schriftfarbePositiv;
+  border-color: @abstufung4;
 }
 
 .dshUiPruefen0 {
@@ -246,15 +248,7 @@
 }
 
 .dshUiFarbbeispiel,
-.dshUiFarbbeispiele input[type=color],
+input[type=color],
 .dshUiFarbvorschau {
-<<<<<<< HEAD
-  border-color: @abstufung4;
-=======
   border-color: @schriftfarbePositiv;
->>>>>>> origin/master
-}
-
-.dshUiTageswahlKaledenderwoche {
-  color: @abstufung4;
 }
