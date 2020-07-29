@@ -419,6 +419,31 @@ ui.farbbeispiel = {
   }
 };
 
+window.addEventListener("resize", (e) => {
+  if(document.body.clientWidth < 203) {
+    for(let b of document.querySelectorAll(".dshUiFarbbeispiele")) {
+      let w = (100 / b.querySelectorAll(".dshUiFarbbeispieleSchattierung").length * 3) + "%";
+      for(let s of b.querySelectorAll(".dshUiFarbbeispieleSchattierung")) {
+        s.style["flex-basis"] = w;
+        s.classList.add("jsmod");
+      }
+    }
+  } else if(document.body.clientWidth < 374) {
+    for(let b of document.querySelectorAll(".dshUiFarbbeispiele")) {
+      let w = (100 / b.querySelectorAll(".dshUiFarbbeispieleSchattierung").length * 2) + "%";
+      for(let s of b.querySelectorAll(".dshUiFarbbeispieleSchattierung")) {
+        s.style["flex-basis"] = w;
+        s.classList.add("jsmod");
+      }
+    }
+  } else {
+    for(let s of document.querySelectorAll(".dshUiFarbbeispieleSchattierung.jsmod")) {
+      s.style["flex-basis"] = "";
+      s.classList.remove("jsmod");
+    }
+  }
+});
+
 ui.tabelle = {
   sortieren: (richtung, id, spalte) => {
     if (richtung != "ASC" && richtung != "DESC") {return;}
