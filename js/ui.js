@@ -180,9 +180,9 @@ ui.generieren = {
 };
 
 ui.check = {
-  zahl: (x) => x.toString().match(/^-?[0-9]+$/),
-  natZahl: (x) => x.toString().match(/^[0-9]+$/),
-  mail: (x) => x.toString().match(/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]{2,}$/),
+  zahl: (x)     => x.toString().match(/^-?[0-9]+$/),
+  natZahl: (x)  => x.toString().match(/^[0-9]+$/),
+  mail: (x)     => x.toString().match(/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]{2,}$/),
 };
 
 ui.datumsanzeige = {
@@ -190,16 +190,15 @@ ui.datumsanzeige = {
   aktion: (id, an) => {
     var feld = $("#"+id+"Datumwahl");
     if (!an) {
-      feld.style.display = "none";
+      feld.weg();
       ui.datumsanzeige.offen = false;
     } else {
-      var tag   = $("#"+id+"T").value;
-      var monat = $("#"+id+"M").value;
-      var jahr  = $("#"+id+"J").value;
+      var tag   = $("#"+id+"T").wert();
+      var monat = $("#"+id+"M").wert();
+      var jahr  = $("#"+id+"J").wert();
 
       ui.datumsanzeige.tageswahl.generieren(id, tag, monat, jahr).then((r) => {
-        feld.innerHTML = r;
-        feld.style.display = "block";
+        feld.html(r).her();
         ui.datumsanzeige.offen = true;
       });
     }
@@ -207,15 +206,15 @@ ui.datumsanzeige = {
   monataendern: (id, tag, monat, jahr) => {
     var feld = $("#"+id+"Datumwahl");
     var datum = new Date (jahr, monat-1, tag);
-    ui.datumsanzeige.tageswahl.generieren(id, datum.getDate(), datum.getMonth()+1, datum.getFullYear()).then((r) => feld.innerHTML = r);
+    ui.datumsanzeige.tageswahl.generieren(id, datum.getDate(), datum.getMonth()+1, datum.getFullYear()).then((r) => feld.html(r));
   },
   checkTag: (id) => {
     var jetzt = new Date();
-    var tag = $("#"+id+"T").value;
+    var tag = $("#"+id+"T").wert();
     if (!ui.check.natZahl(tag)) {tag = jetzt.getDate();}
-    var monat = $("#"+id+"M").value;
+    var monat = $("#"+id+"M").wert();
     if (!ui.check.natZahl(monat)) {monat = jetzt.getMonth()+1;}
-    var jahr = $("#"+id+"J").value;
+    var jahr = $("#"+id+"J").wert();
     if (!ui.check.natZahl(jahr)) {jahr = jetzt.getFullYear();}
 
     jetzt = new Date(jahr, monat-1, tag);
@@ -223,35 +222,35 @@ ui.datumsanzeige = {
       jetzt = new Date();
     }
 
-    $("#"+id+"T").value = ui.generieren.fuehrendeNull(jetzt.getDate());
-    $("#"+id+"M").value = ui.generieren.fuehrendeNull(jetzt.getMonth()+1);
-    $("#"+id+"J").value = ui.generieren.fuehrendeNull(jetzt.getFullYear());
+    $("#"+id+"T").wert(ui.generieren.fuehrendeNull(jetzt.getDate()));
+    $("#"+id+"M").wert(ui.generieren.fuehrendeNull(jetzt.getMonth()+1));
+    $("#"+id+"J").wert(ui.generieren.fuehrendeNull(jetzt.getFullYear()));
   },
   checkUhrzeit: (id, sekunden) => {
     var jetzt = new Date();
-    var stunde = $("#"+id+"Std").value;
+    var stunde = $("#"+id+"Std").wert();
     if (!ui.check.natZahl(stunde)) {stunde = jetzt.getHours();}
-    var minute = $("#"+id+"Min").value;
+    var minute = $("#"+id+"Min").wert();
     if (!ui.check.natZahl(minute)) {minute = jetzt.getMinutes();}
     if (sekunden) {
-      var sekunde = $("#"+id+"Sek").value;
+      var sekunde = $("#"+id+"Sek").wert();
       if (!ui.check.natZahl(sekunde)) {sekunde = jetzt.getSeconds();}
       jetzt = new Date(2020, 07, 09, stunde, minute, sekunde);
-      $("#"+id+"Sek").value = ui.generieren.fuehrendeNull(jetzt.getSeconds());
+      $("#"+id+"Sek").wert(ui.generieren.fuehrendeNull(jetzt.getSeconds()));
     } else {
       jetzt = new Date(2020, 03, 19, stunde, minute);
     }
-    $("#"+id+"Std").value = ui.generieren.fuehrendeNull(jetzt.getHours());
-    $("#"+id+"Min").value = ui.generieren.fuehrendeNull(jetzt.getMinutes());
+    $("#"+id+"Std").wert(ui.generieren.fuehrendeNull(jetzt.getHours()));
+    $("#"+id+"Min").wert(ui.generieren.fuehrendeNull(jetzt.getMinutes()));
   },
   tageswahl: {
     generieren: (id, tag, monat, jahr) => core.ajax("UI", 0, null, {id: id, tag: tag, monat: monat, jahr: jahr}),
     aktion: (id, tag, monat, jahr) => {
       var datum = new Date (jahr, monat-1, tag);
-      var tag = $("#"+id+"T").value   = ui.generieren.fuehrendeNull(datum.getDate());
-      var monat = $("#"+id+"M").value = ui.generieren.fuehrendeNull(datum.getMonth()+1);
-      var jahr = $("#"+id+"J").value  = ui.generieren.fuehrendeNull(datum.getFullYear());
-      $("#"+id+"Datumwahl").style.display = 'none';
+      var tag   = $("#"+id+"T").wert(ui.generieren.fuehrendeNull(datum.getDate()));
+      var monat = $("#"+id+"M").wert(ui.generieren.fuehrendeNull(datum.getMonth()+1));
+      var jahr  = $("#"+id+"J").wert(ui.generieren.fuehrendeNull(datum.getFullYear()));
+      $("#"+id+"Datumwahl").weg();
     }
   }
 };
@@ -272,90 +271,75 @@ document.addEventListener("click", (e) => {
 
 ui.schieber = {
   aktion: (id) => {
-    var wert = $("#"+id).value;
+    var wert = $("#"+id).wert();
     var neuerwert = 0;
     if (wert == 0) {
       neuerwert = 1;
     }
-    $("#"+id).value = neuerwert;
-    $("#"+id+"Schieber").classList.add("dshUiSchieber"+neuerwert);
-    $("#"+id+"Schieber").classList.remove("dshUiSchieber"+wert);
+    $("#"+id).wert(neuerwert);
+    $("#"+id+"Schieber").addKlasse("dshUiSchieber"+neuerwert);
+    $("#"+id+"Schieber").removeKlasse("dshUiSchieber"+wert);
   }
 };
 
 ui.toggle = {
   aktion: (id) => {
-    var wert = $("#"+id).value;
+    var wert = $("#"+id).wert();
     var neuerwert = 0;
     if (wert == 0) {
       neuerwert = 1;
     }
-    $("#"+id).value = neuerwert;
+    $("#"+id).wert(neuerwert);
     if(neuerwert == 1) {
-      $("#"+id+"Toggle").classList.add("dshUiToggled");
+      $("#"+id+"Toggle").addKlasse("dshUiToggled");
     } else {
-      $("#"+id+"Toggle").classList.remove("dshUiToggled");
+      $("#"+id+"Toggle").removeKlasse("dshUiToggled");
     }
   }
 };
 
 ui.mail = {
   aktion: (id) => {
-    var mail = $("#"+id).value;
-    if (ui.check.mail(mail)) {
-      $("#"+id).classList.add("dshUiPruefen1");
-      $("#"+id).classList.remove("dshUiPruefen0");
-    } else {
-      $("#"+id).classList.add("dshUiPruefen0");
-      $("#"+id).classList.remove("dshUiPruefen1");
-    }
+    var mail  = $("#"+id).wert();
+    var ok    = ui.check.mail(mail);
+    $("#"+id).setKlasse(ok,  "dshUiPruefen1");
+    $("#"+id).setKlasse(!ok, "dshUiPruefen0");
   }
 };
 
 ui.passwort = {
   aktion: (idvergleich, idpruefen) => {
-    var vergleich = $("#"+idvergleich).value;
+    var vergleich = $("#"+idvergleich).wert();
     var pruefen = $("#"+idpruefen).value;
-    if (vergleich == pruefen) {
-      $("#"+idpruefen).classList.add("dshUiPruefen1");
-      $("#"+idpruefen).classList.remove("dshUiPruefen0");
-    } else {
-      $("#"+idpruefen).classList.add("dshUiPruefen0");
-      $("#"+idpruefen).classList.remove("dshUiPruefen1");
-    }
+    $("#"+idpruefen).setKlasse(vergleich == pruefen, "dshUiPruefen1");
+    $("#"+idpruefen).setKlasse(vergleich != pruefen, "dshUiPruefen0");
   }
 };
 
 ui.togglegruppe = {
   aktion: (id, nr, anzahl, wert) => {
-    $("#"+id).value = wert;
-    $("#"+id+"KnopfId").value = nr;
-    for (var i=0; i<anzahl; i++) {
-      $("#"+id+"Knopf"+i).classList.remove("dshUiToggled");
+    $("#"+id).wert(wert);
+    $("#"+id+"KnopfId").wert(nr);
+    for (var i = 0; i < anzahl; i++) {
+      $("#"+id+"Knopf"+i).removeKlasse("dshUiToggled");
     }
-    $("#"+id+"Knopf"+nr).classList.add("dshUiToggled");
+    $("#"+id+"Knopf"+nr).addKlasse("dshUiToggled");
   }
 };
 
 ui.reiter = {
   aktion: (id, nr, anzahl) => {
-    for (var i=0; i<anzahl; i++) {
-      $("#"+id+"Koerper"+i).classList.remove("dshUiReiterKoerperAktiv");
-      $("#"+id+"Koerper"+i).classList.add("dshUiReiterKoerperInaktiv");
-      $("#"+id+"Kopf"+i).classList.remove("dshUiReiterKopfAktiv");
-      $("#"+id+"Kopf"+i).classList.add("dshUiReiterKopfInaktiv");
+    for (var i = 0; i < anzahl; i++) {
+      $("#"+id+"Koerper"+i, "#"+id+"Kopf"+i).removeKlasse("dshUiReiterKoerperAktiv").addKlasse("dshUiReiterKoerperInaktiv");
     }
-    $("#"+id+"Koerper"+nr).classList.remove("dshUiReiterKoerperInaktiv");
-    $("#"+id+"Koerper"+nr).classList.add("dshUiReiterKoerperAktiv");
-    $("#"+id+"Kopf"+nr).classList.remove("dshUiReiterKopfInaktiv");
-    $("#"+id+"Kopf"+nr).classList.add("dshUiReiterKopfAktiv");
+    $("#"+id+"Koerper"+nr, "#"+id+"Kopf"+nr).removeKlasse("dshUiReiterKoerperInaktiv").addKlasse("dshUiReiterKoerperAktiv");
   }
 };
 
 ui.laden = {
   balken: {
     prozent: (id, x) => {
-      $("#"+id+"Innen").style.width = x+"%";
+      $("#"+id+"Innen").css("width", x+"%");
     }
   },
   an: (titel, beschreibung) => console.log(titel, beschreibung)
@@ -363,10 +347,10 @@ ui.laden = {
 
 ui.fenster = {
   schliessen: () => {
-    $("#dshUiBlende").style.display = "none";
+    $("#dshUiBlende").weg();
   },
   anzeigen: () => {
-    $("#dshUiBlende").style.display = "block";
+    $("#dshUiBlende").her();
   }
 };
 
@@ -449,14 +433,14 @@ ui.tabelle = {
     if (richtung != "ASC" && richtung != "DESC") {return;}
 
     // Zeilen einlesen
-    var zAnzahl = $("#"+id+"ZAnzahl").value;
-    var sAnzahl = $("#"+id+"SAnzahl").value;
+    var zAnzahl = $("#"+id+"ZAnzahl").wert();
+    var sAnzahl = $("#"+id+"SAnzahl").wert();
     var umsortieren = new Array(zAnzahl);
     // initialisieren
     for (var z=0; z<zAnzahl; z++) {
       umsortieren[z] = new Array(2);
       umsortieren[z][0] = z;
-      umsortieren[z][1] = $("#"+id+"Z"+z+"S"+spalte).innerHTML;
+      umsortieren[z][1] = $("#"+id+"Z"+z+"S"+spalte).html();
     }
 
     if (richtung == "ASC") {
@@ -471,12 +455,12 @@ ui.tabelle = {
       code += "<tr>";
       var spaltennr = 0;
       for (var s=0; s<sAnzahl; s++) {
-        code += "<td id=\""+id+"Z"+z+"S"+s+"\">"+($("#"+id+"Z"+umsortieren[z][0]+"S"+s).innerHTML)+"</td>";
+        code += "<td id=\""+id+"Z"+z+"S"+s+"\">"+($("#"+id+"Z"+umsortieren[z][0]+"S"+s).html())+"</td>";
         spaltennr++;
       }
       code += "</tr>";
     }
-    $("#"+id+"Koerper").innerHTML = code;
+    $("#"+id+"Koerper").html(code);
   },
   aufsteigend: (a, b) => {
     if (a[1] < b[1]) {
