@@ -10,6 +10,7 @@ class Konstanten {
   const ASC      = "fas fa-sort-alpha-down";
   const DESC     = "fas fa-sort-alpha-down-alt";
   const LINKEXT  = "fas fa-external-link-alt";
+  const LINK     = "fas fa-link";
 
   // Meldungen
   const STANDARD    = "fas fa-caret-right";

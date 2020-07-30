@@ -29,16 +29,16 @@
       font-weight: bold;
     }
 
-    .dshUiMeldungTitel i.icon {
+    .dshUiMeldungTitel i.dshUiIcon {
       position: absolute;
       top: 15px;
       z-index: -1;
     }
-    .dshUiMeldungTitel i.i1.icon {
+    .dshUiMeldungTitel i.i1.dshUiIcon {
       left: -18px;
       transition: left 250ms ease-in-out;
     }
-    .dshUiMeldungTitel i.i2.icon {
+    .dshUiMeldungTitel i.i2.dshUiIcon {
       right: 18px;
       transition: right 250ms ease-in-out;
     }
@@ -62,27 +62,27 @@
   margin-bottom: 0;
 }
 
-.dshUiMeldung .dshUiMeldungTitel i.i1.icon.fas.fa-caret-right {
+.dshUiMeldung .dshUiMeldungTitel i.i1.dshUiIcon.fas.fa-caret-right {
   left: -14px;
 }
 
-.dshUiMeldung .dshUiMeldungTitel i.i2.icon.fas.fa-caret-right {
+.dshUiMeldung .dshUiMeldungTitel i.i2.dshUiIcon.fas.fa-caret-right {
   right: 14px;
 }
 
-.dshUiMeldung .dshUiMeldungTitel i.i1.icon.fas.fa-exclamation-triangle {
+.dshUiMeldung .dshUiMeldungTitel i.i1.dshUiIcon.fas.fa-exclamation-triangle {
   left: -19px;
 }
 
-.dshUiMeldung .dshUiMeldungTitel i.i2.icon.fas.fa-exclamation-triangle {
+.dshUiMeldung .dshUiMeldungTitel i.i2.dshUiIcon.fas.fa-exclamation-triangle {
   right: 19px;
 }
 
-.dshUiMeldung .dshUiMeldungTitel i.i1.icon.fas.fa-lock {
+.dshUiMeldung .dshUiMeldungTitel i.i1.dshUiIcon.fas.fa-lock {
   left: -17px;
 }
 
-.dshUiMeldung .dshUiMeldungTitel i.i2.icon.fas.fa-lock {
+.dshUiMeldung .dshUiMeldungTitel i.i2.dshUiIcon.fas.fa-lock {
   right: 17px;
 }
 
@@ -114,7 +114,7 @@ foreach($arten as $var => $css) {
     "color:@{$var}Schrift"
   ."}";
 
-  echo ".dshUiMeldung$css .dshUiMeldungTitel i.icon{color:@{$var}Hintergrund}";
+  echo ".dshUiMeldung$css .dshUiMeldungTitel i.dshUiIcon{color:@{$var}Hintergrund}";
 }
 
 ?>

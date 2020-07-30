@@ -13,7 +13,7 @@ class Icon extends Element {
   public function __construct($icon) {
     parent::__construct();
     $this->icon = $icon;
-    $this->addKlasse("icon");
+    $this->addKlasse("dshUiIcon");
   }
 
   /**

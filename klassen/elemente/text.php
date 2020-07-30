@@ -20,6 +20,37 @@ class Ueberschrift extends InhaltElement {
   }
 }
 
+class Link extends InhaltElement {
+  protected $tag = "a";
+
+  protected $extern;
+
+  public function __construct($inhalt, $ziel, $extern = false) {
+    parent::__construct($inhalt);
+    $this->ziel = $ziel;
+    $this->setAttribut("href", $ziel);
+    if ($extern) {
+      $this->addKlasse("dshExtern");
+    }
+    $this->extern = $extern;
+  }
+
+  public function setZiel($ziel) : self {
+    $this->setAttribut("href", $ziel);
+    return $this;
+  }
+
+  public function __toString() : string {
+    $self = clone $this;
+    $self->addKlasse("dshUiLink");
+    if ($self->extern) {
+      return "{$self->codeAuf()}{$self->inhalt} ".(new Icon(Konstanten::LINKEXT))."{$self->codeZu()}";
+    } else {
+      return "{$self->codeAuf()}{$self->inhalt}{$self->codeZu()}";
+    }
+  }
+}
+
 class Liste extends Element {
   /** @var InhaltElement[] $punkte */
   private $punkte;
