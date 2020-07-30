@@ -8,9 +8,9 @@ abstract class Eingabe extends Element {
   protected $tag = "input";
 
   /** @var string Wert des Eingabefelds */
-  protected $wert;
+  protected $wert = null;
   /** @var string Typ des Eingabefelds */
-  protected $typ;
+  protected $typ = null;
   /** @var string Autocomplete-Wert des Eingabefelds */
   protected $autocomplete;
 
@@ -21,8 +21,6 @@ abstract class Eingabe extends Element {
   public function __construct($id) {
     parent::__construct();
     $this->id   = $id;
-    $this->wert = null;
-    $this->typ  = null;
     $this->autocomplete = null;
     $this->addKlasse("dshUiFeld");
   }
