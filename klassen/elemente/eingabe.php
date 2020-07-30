@@ -8,9 +8,11 @@ abstract class Eingabe extends Element {
   protected $tag = "input";
 
   /** @var string Wert des Eingabefelds */
-  protected $wert = null;
+  protected $wert;
   /** @var string Typ des Eingabefelds */
-  protected $typ = null;
+  protected $typ;
+  /** @var string Autocomplete-Wert des Eingabefelds */
+  protected $autocomplete;
 
   /**
    * Erstellt eine neue Eingabe
@@ -18,7 +20,10 @@ abstract class Eingabe extends Element {
    */
   public function __construct($id) {
     parent::__construct();
-    $this->id = $id;
+    $this->id   = $id;
+    $this->wert = null;
+    $this->typ  = null;
+    $this->autocomplete = null;
     $this->addKlasse("dshUiFeld");
   }
 
@@ -39,6 +44,8 @@ abstract class Eingabe extends Element {
       $rueck .= " value=\"{$this->wert}\"";
     if($this->typ !== null && !in_array("type", $nicht))
       $rueck .= " type=\"{$this->typ}\"";
+    if($this->autocomplete !== null && !in_array("autocomplete", $nicht))
+      $rueck .= " autocomplete=\"{$this->autocomplete}\"";
 
     if($klammer) {
       $rueck .= ">";
@@ -46,15 +53,15 @@ abstract class Eingabe extends Element {
     return $rueck;
   }
 
-  /**
-   * Setzt den Wert des Eingabefelds
-   * @param   string $wert :)
-   * @return  self
-   */
-  public function setWert($wert) : self {
-    $this->wert = $wert;
-    return $this;
-  }
+    /**
+     * Setzt den Wert des Eingabefelds
+     * @param   string $wert :)
+     * @return  self
+     */
+    public function setWert($wert) : self {
+      $this->wert = $wert;
+      return $this;
+    }
 
   /**
    * Gibt den Wert des Eingabefelds zurück
@@ -62,6 +69,17 @@ abstract class Eingabe extends Element {
    */
   public function getWert() : string {
     return $this->wert;
+  }
+
+
+  /**
+   * Setzt den Wert des Autocomplete-Attributs
+   * @param   string $autocomplete :)
+   * @return  self
+   */
+  public function setAutocomplete($autocomplete) : self {
+    $this->autocomplete = $autocomplete;
+    return $this;
   }
 }
 

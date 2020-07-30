@@ -92,7 +92,6 @@ class Tabelle extends Element {
   }
 }
 
-
 class FormularFeld {
   /** @var InhaltElement Bezeichnung des Eingabefeldes */
   private $label;
@@ -127,9 +126,8 @@ class FormularFeld {
   }
 }
 
-
 class FormularTabelle extends Element {
-  protected $tag = "div";
+  protected $tag = "form";
 
   /** @var FormularFeld[] $zeilen :) */
   protected $zeilen;
@@ -139,10 +137,7 @@ class FormularTabelle extends Element {
 
   public function __construct(...$zeilen) {
     parent::__construct();
-    $this->zeilen = [];
-    foreach ($zeilen as $z) {
-      $this->zeilen[] = $z;
-    }
+    $this->zeilen = $zeilen;
   }
 
   /**
@@ -176,6 +171,7 @@ class FormularTabelle extends Element {
   public function __toString() : string {
     $self = clone $this;
     $self->addKlasse("dshUiFormular");
+    $self->getAktionen()->addFunktionPrioritaet("onsubmit", -1, "return false");
     $code  = $self->codeAuf();
     $code .= "<table class=\"dshUiTabelle dshUiTabelleFormular\"><tbody>";
     foreach($self->zeilen as $z) {

@@ -13,6 +13,9 @@ class Knopf extends InhaltElement {
   /** @var string Knopfart */
   protected $art;
 
+  /** @var bool Ist Submit-Knopf */
+  protected $submit;
+
 	/**
 	* @param string $inhalt :)
 	* @param string $art :)
@@ -23,8 +26,27 @@ class Knopf extends InhaltElement {
       $art = self::ARTEN[0];
     }
     $this->art = $art;
+    $this->submit = false;
     $this->addKlasse("dshUiKnopf");
     $this->setAttribut("role", "button");
+  }
+
+  /**
+   * Setzt, ob der Knopf ein Submit-Knopf ist
+   * @param  bool $submit :)
+   * @return self
+   */
+  public function setSubmit($submit) : self {
+    $this->submit = $submit;
+    return $this;
+  }
+
+  /**
+   * Gibt zurück, ob der Knopf ein Submit-Knopf ist
+   * @return bool
+   */
+  public function istSubmit() : bool {
+    return $this->submit;
   }
 
   /**
@@ -33,7 +55,7 @@ class Knopf extends InhaltElement {
    */
   public function toStringVorbereitung() : self {
     $self = clone $this;
-    if ($self->aktionen->count() === 0) {
+    if ($self->aktionen->count() === 0 && !$self->istSubmit()) {
       $self->addKlasse("dshUiKnopfLeer");
       $self->setAttribut("aria-disabled", "true");
       $self->setAttribut("tabindex", "-1");
@@ -45,7 +67,10 @@ class Knopf extends InhaltElement {
     if ($self->getAktionen()->hatAusloeser("href")) {
       $self->setTag("a");
     }
-
+    if($self->istSubmit()) {
+      $self->setAttribut("type", "submit");
+    }
+    
     $self->addKlasse("dshUiKnopf{$self->art}");
     $self->setInhalt((new InhaltElement($self->inhalt))->setTag("span"));
 
@@ -86,7 +111,7 @@ class IconKnopf extends Knopf {
     $this->icon = $icon;
     $this->addKlasse("dshUiKnopfIcon");
   }
-  
+
   public function __toString() : string {
     $self = $this->toStringVorbereitung();
     return "{$self->codeAuf()}{$self->icon}{$self->inhalt}{$self->codeZu()}";
