@@ -1,12 +1,11 @@
 // LAYOUT;
 
 // Normaler Knopf
-.dshUiKnopf,
-.dshUiToggle {
+.dshUiKnopf {
   display: inline-block;
   border-radius: @radius2;
   cursor: pointer;
-  transition: border-color 250ms ease-in-out;
+  transition: all 250ms ease-in-out;
   border: 1px solid transparent;
   border-bottom: 2px solid;
   position: relative;
@@ -22,25 +21,20 @@
   text-align: center;
 }
 
-.dshUiKnopf:not(.dshUiKnopfLeer):focus,
-.dshUiToggle:focus {
+.dshUiKnopf:not(.dshUiKnopfLeer):focus {
   border-width: 1px;
   border-bottom-width: 2px;
 }
 
 .dshUiKnopf:not(.dshUiKnopfLeer),
-.dshUiKnopf:not(.dshUiKnopfLeer) i.dshUiIcon,
-.dshUiToggle,
-.dshUiToggle i.dshUiIcon {
-  transition: color 250ms ease-in-out;
+.dshUiKnopf:not(.dshUiKnopfLeer) i.dshUiIcon {
+  transition: all 250ms ease-in-out;
   position: static;
   z-index: 2;
 }
 
 .dshUiKnopf:not(.dshUiKnopfLeer):hover,
-.dshUiKnopf:not(.dshUiKnopfLeer):focus,
-.dshUiToggle:hover,
-.dshUiToggle:focus {
+.dshUiKnopf:not(.dshUiKnopfLeer):focus {
   box-shadow: 0px 0px 5px -7px rgba(0,0,0,0.75);
 }
 
@@ -52,35 +46,28 @@
 
 // Icon Knopf
 .dshUiKnopfIcon:not(.dshUiKnopfGross):not(.dshUiKnopfIconMini) {
-  margin-left: 23px;
+  padding-left: 29px;
   position: relative;
-  border-top-left-radius: 0;
-  border-bottom-left-radius: 0;
 }
 
 .dshUiKnopfIcon:not(.dshUiKnopfGross):not(.dshUiKnopfIconMini)::before {
   content: "";
   width: 23px;
   height: calc(100% + 3px);
-  border-top-left-radius: 2px;
-  border-bottom-left-radius: 2px;
+  border-top-left-radius: @radius2;
+  border-bottom-left-radius: @radius2;
   position: absolute;
   top: -1px;
-  left: -23px;
+  left: -1px;
+  transition: all 250ms ease-in-out;
 }
 
 .dshUiKnopfIcon:not(.dshUiKnopfGross):not(.dshUiKnopfIconMini) i.dshUiIcon {
   position: absolute;
   top: 5px;
-  left: -18px;
-}
-
-.dshUiKnopfIcon:not(.dshUiKnopfGross):not(.dshUiKnopfIconMini) i.fas.fa-caret-right {
-  left: -14px;
-}
-
-.dshUiKnopfIcon:not(.dshUiKnopfGross):not(.dshUiKnopfIconMini) i.fas.fa-exclamation-triangle {
-  left: -19px;
+  left: -1px;
+  width: 23px;
+  text-align: center;
 }
 
 // Mini Icon Knopf
@@ -110,48 +97,101 @@
 
 // [Var] => [CSS]
 $arten = array(
-  "standard"        => "",
-  "erfolg"          => "Erfolg",
-  "fehler"          => "Fehler",
-  "warnung"         => "Warnung",
-  "info"            => "Information",
-  "laden"           => "Laden",
-  "passiv"          => "Passiv",
-  "eingeschraenkt"  => "Eingeschraenkt",
-  "gesperrt"        => "Gesperrt",
+  "standard"        => "Knopf",
+  "erfolg"          => "KnopfErfolg",
+  "fehler"          => "KnopfFehler",
+  "warnung"         => "KnopfWarnung",
+  "info"            => "KnopfInformation",
+  "laden"           => "KnopfLaden",
+  "passiv"          => "KnopfPassiv",
+  "eingeschraenkt"  => "KnopfEingeschraenkt",
+  "gesperrt"        => "KnopfGesperrt",
 );
 
 foreach($arten as $var => $css) {
   echo ""
-        . ".dshUiKnopf$css {"
+        . ".dshUi$css {"
         .   "background-color:@{$var}Hintergrund;"
         .   "border-bottom-color:@{$var}Akzent;"
         .   "color:@{$var}Schrift;"
         . "}"
 
-        . ".dshUiKnopf$css:focus {"
+        . ".dshUi$css:focus {"
         .   "border-color:@{$var}Akzent;"
         . "}"
 
-        . ".dshUiKnopf$css:not(.dshUiKnopfLeer):hover {"
+        . ".dshUi$css:not(.dshUiKnopfLeer):hover {"
         .   "border-color:@{$var}Akzent !important;"
         . "}"
 
-        . ".dshUiKnopf$css.dshUiKnopfIcon:not(.dshUiKnopfGross)::before {"
+        . ".dshUi$css.dshUiKnopfIcon:not(.dshUiKnopfGross)::before {"
         .   "background-color:@{$var}Akzent;"
         . "}"
 
-        . ".dshUiKnopf$css.dshUiKnopfIcon i.dshUiIcon {"
+        . ".dshUi$css.dshUiKnopfIcon i.dshUiIcon {"
         .   "color:@{$var}Akzent;"
         . "}"
 
-        . ".dshUiKnopf$css.dshUiKnopfIcon:not(.dshUiKnopfGross):not(.dshUiKnopfIconMini) i.dshUiIcon {"
+        . ".dshUi$css.dshUiKnopfIcon:not(.dshUiKnopfGross):not(.dshUiKnopfIconMini) i.dshUiIcon {"
         .   "color:@{$var}Hintergrund;"
         . "}"
 
-        . ".dshUiKnopf$css.dshUiKnopfIconMini {"
+        . ".dshUi$css.dshUiKnopfIconMini {"
         .   "background-color: @{$var}Hintergrund;"
         . "}";
 }
 
 ?>
+
+.dshUiKnopf.dshUiToggle:hover {
+  border-color: @erfolgAkzent !important;
+  background-color: @erfolgHintergrund;
+}
+
+.dshUiKnopf.dshUiKnopfIcon.dshUiToggle:hover::before {
+  background-color: @erfolgAkzent;
+}
+
+.dshUiKnopf.dshUiKnopfIcon.dshUiToggle:hover i.dshUiIcon {
+  color: @erfolgHintergrund;
+}
+
+.dshUiKnopf.dshUiKnopfIcon.dshUiKnopfGross.dshUiToggle:hover i.dshUiIcon {
+  color: @erfolgAkzent;
+}
+
+
+.dshUiKnopf.dshUiToggle.dshUiToggled {
+  border-color: @erfolgAkzent !important;
+  background-color: @erfolgHintergrund;
+}
+
+.dshUiKnopf.dshUiKnopfIcon.dshUiToggle.dshUiToggled::before {
+  background-color: @erfolgAkzent;
+}
+
+.dshUiKnopf.dshUiKnopfIcon.dshUiToggle.dshUiToggled i.dshUiIcon {
+  color: @erfolgHintergrund;
+}
+
+.dshUiKnopf.dshUiKnopfIcon.dshUiKnopfGross.dshUiToggle.dshUiToggled i.dshUiIcon {
+  color: @erfolgAkzent;
+}
+
+
+.dshUiKnopf.dshUiToggle.dshUiToggled:hover {
+  border-color: @standardAkzent !important;
+  background-color: @standardHintergrund;
+}
+
+.dshUiKnopf.dshUiKnopfIcon.dshUiToggle.dshUiToggled:hover::before {
+  background-color: @standardAkzent;
+}
+
+.dshUiKnopf.dshUiKnopfIcon.dshUiToggle.dshUiToggled:hover i.dshUiIcon {
+  color: @standardHintergrund;
+}
+
+.dshUiKnopf.dshUiKnopfIcon.dshUiKnopfGross.dshUiToggle.dshUiToggled:hover i.dshUiIcon {
+  color: @standardAkzent;
+}

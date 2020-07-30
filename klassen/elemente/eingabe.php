@@ -311,6 +311,11 @@ class Datumfeld extends Eingabe {
 class Schieber extends Eingabe {
   protected $tag = "span";
 
+  public function __construct($id) {
+    parent::__construct($id);
+    $this->setAttribut("tabindex", "0");
+  }
+
   public function __toString() : string {
     $wert = "0";
     $self = clone $this;
@@ -328,6 +333,8 @@ class Schieber extends Eingabe {
 }
 
 class Toggle extends Schieber {
+  protected $tag = "button";
+
   /** @var string $text :) */
   protected $text;
 
@@ -339,6 +346,22 @@ class Toggle extends Schieber {
   public function __construct($id, $text) {
     parent::__construct($id);
     $this->text = $text;
+    $this->addKlasse("dshUiKnopf");
+    $this->addKlasse("dshUiToggle");
+  }
+
+  /**
+   * Gibt einen Klon mit passenden Klassen zurück
+   * @return self
+   */
+  public function toStringVorbereitung() : self {
+    $self = clone $this;
+
+    if ($self->getAktionen()->hatAusloeser("href")) {
+      $self->setTag("a");
+    }
+
+    return $self;
   }
 
   /**
@@ -346,8 +369,7 @@ class Toggle extends Schieber {
    * @return string [description]
    */
   public function __toString() : string {
-    $self = clone $this;
-    $self->addKlasse("dshUiToggle");
+    $self = $this->toStringVorbereitung();
     $wert = "0";
     if($self->wert === 1) {
       $wert = "1";
@@ -356,10 +378,9 @@ class Toggle extends Schieber {
 
     $self->aktionen->addFunktionPrioritaet("onclick", 3, "ui.toggle.aktion('{$this->id}')");
 
-    $code  = "<{$self->codeAuf(false, "id", "value")} id=\"{$self->id}Toggle\">$self->text{$this->codeZu()}";
+    $code  = "<{$self->codeAuf(false, "id", "value")} id=\"{$self->id}Toggle\">{$self->text}{$this->codeZu()}";
 
     $code .= new VerstecktesFeld($self->id, $wert);
-
     return $code;
   }
 }
@@ -377,6 +398,7 @@ class IconToggle extends Toggle {
   public function __construct($id, $text, $icon) {
     parent::__construct($id, $text);
     $this->icon = $icon;
+    $this->addKlasse("dshUiKnopfIcon");
   }
 
   /**
@@ -385,7 +407,6 @@ class IconToggle extends Toggle {
    */
   public function __toString() : string {
     $self = clone $this;
-    $self->addKlasse("dshUiToggleIcon");
     $wert = "0";
     if($self->wert === 1) {
       $wert = "1";
@@ -412,6 +433,7 @@ class IconToggleGross extends IconToggle {
    */
   public function __construct($id, $text, $icon) {
     parent::__construct($id, $text, $icon);
+    $this->addKlasse("dshUiKnopfGross");
   }
 
   /**
@@ -420,7 +442,6 @@ class IconToggleGross extends IconToggle {
    */
   public function __toString() : string {
     $self = clone $this;
-    $self->addKlasse("dshUiToggleGross");
     $wert = "0";
     if($self->wert === 1) {
       $wert = "1";
@@ -534,7 +555,7 @@ class Farbfeld extends Textfeld {
         for($x = 0; $x < 18; $x++) {
           $r .= "<div class=\"dshUiFarbbeispieleSchattierung\">";
           for($y = 0; $y < 8; $y++) {
-            $r .= "<span class=\"dshUiFarbbeispiel\" style=\"background-color:{$fbl[$y][$x]}\" onclick=\"ui.farbbeispiel.aktion(this)\"></span>";
+            $r .= "<span class=\"dshUiFarbbeispiel\" style=\"background-color:{$fbl[$y][$x]}\" tabindex=\"0\" onclick=\"ui.farbbeispiel.aktion(this)\"></span>";
           }
           $r .= "</div>";
         }

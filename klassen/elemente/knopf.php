@@ -70,7 +70,7 @@ class Knopf extends InhaltElement {
     if($self->istSubmit()) {
       $self->setAttribut("type", "submit");
     }
-    
+
     $self->addKlasse("dshUiKnopf{$self->art}");
     $self->setInhalt((new InhaltElement($self->inhalt))->setTag("span"));
 
