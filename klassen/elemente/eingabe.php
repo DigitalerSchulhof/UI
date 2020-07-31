@@ -701,6 +701,7 @@ class Toggleoption extends Option {
 
   public function __construct($id) {
     parent::__construct($id);
+    $this->addKlasse("dshUiKnopf");
     $this->addKlasse("dshUiToggle");
   }
 

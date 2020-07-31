@@ -20,6 +20,10 @@ class Ueberschrift extends InhaltElement {
   }
 }
 
+class Absatz extends InhaltElement {
+  protected $tag = "p";
+}
+
 class Link extends InhaltElement {
   protected $tag = "a";
 

@@ -25,6 +25,11 @@ class Konstanten {
 
 	const SCHLIESSEN  = "fas fa-times";
 
+  const APPLE     = "fab fa-apple";
+  const ANDROID   = "fab fa-android";
+  const WINDOWS   = "fab fa-windows";
+  const LINUX     = "fab fa-linux";
+
   // Personen
 	const PERSON     = "fa fa-user";
 	const LEHRER     = "fas fa-chalkboard-teacher";
