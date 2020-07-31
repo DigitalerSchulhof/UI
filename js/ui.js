@@ -190,15 +190,15 @@ ui.datumsanzeige = {
   aktion: (id, an) => {
     var feld = $("#"+id+"Datumwahl");
     if (!an) {
-      feld.weg();
+      feld.ausblenden();
       ui.datumsanzeige.offen = false;
     } else {
-      var tag   = $("#"+id+"T").wert();
-      var monat = $("#"+id+"M").wert();
-      var jahr  = $("#"+id+"J").wert();
+      var tag   = $("#"+id+"T").getWert();
+      var monat = $("#"+id+"M").getWert();
+      var jahr  = $("#"+id+"J").getWert();
 
       ui.datumsanzeige.tageswahl.generieren(id, tag, monat, jahr).then((r) => {
-        feld.html(r).her();
+        feld.setHTML(r).einblenden();
         ui.datumsanzeige.offen = true;
       });
     }
@@ -206,15 +206,15 @@ ui.datumsanzeige = {
   monataendern: (id, tag, monat, jahr) => {
     var feld = $("#"+id+"Datumwahl");
     var datum = new Date (jahr, monat-1, tag);
-    ui.datumsanzeige.tageswahl.generieren(id, datum.getDate(), datum.getMonth()+1, datum.getFullYear()).then((r) => feld.html(r));
+    ui.datumsanzeige.tageswahl.generieren(id, datum.getDate(), datum.getMonth()+1, datum.getFullYear()).then((r) => feld.setHTML(r));
   },
   checkTag: (id) => {
     var jetzt = new Date();
-    var tag = $("#"+id+"T").wert();
+    var tag = $("#"+id+"T").getWert();
     if (!ui.check.natZahl(tag)) {tag = jetzt.getDate();}
-    var monat = $("#"+id+"M").wert();
+    var monat = $("#"+id+"M").getWert();
     if (!ui.check.natZahl(monat)) {monat = jetzt.getMonth()+1;}
-    var jahr = $("#"+id+"J").wert();
+    var jahr = $("#"+id+"J").getWert();
     if (!ui.check.natZahl(jahr)) {jahr = jetzt.getFullYear();}
 
     jetzt = new Date(jahr, monat-1, tag);
@@ -222,35 +222,35 @@ ui.datumsanzeige = {
       jetzt = new Date();
     }
 
-    $("#"+id+"T").wert(ui.generieren.fuehrendeNull(jetzt.getDate()));
-    $("#"+id+"M").wert(ui.generieren.fuehrendeNull(jetzt.getMonth()+1));
-    $("#"+id+"J").wert(ui.generieren.fuehrendeNull(jetzt.getFullYear()));
+    $("#"+id+"T").setWert(ui.generieren.fuehrendeNull(jetzt.getDate()));
+    $("#"+id+"M").setWert(ui.generieren.fuehrendeNull(jetzt.getMonth()+1));
+    $("#"+id+"J").setWert(ui.generieren.fuehrendeNull(jetzt.getFullYear()));
   },
   checkUhrzeit: (id, sekunden) => {
     var jetzt = new Date();
-    var stunde = $("#"+id+"Std").wert();
+    var stunde = $("#"+id+"Std").getWert();
     if (!ui.check.natZahl(stunde)) {stunde = jetzt.getHours();}
-    var minute = $("#"+id+"Min").wert();
+    var minute = $("#"+id+"Min").getWert();
     if (!ui.check.natZahl(minute)) {minute = jetzt.getMinutes();}
     if (sekunden) {
-      var sekunde = $("#"+id+"Sek").wert();
+      var sekunde = $("#"+id+"Sek").getWert();
       if (!ui.check.natZahl(sekunde)) {sekunde = jetzt.getSeconds();}
       jetzt = new Date(2020, 07, 09, stunde, minute, sekunde);
-      $("#"+id+"Sek").wert(ui.generieren.fuehrendeNull(jetzt.getSeconds()));
+      $("#"+id+"Sek").setWert(ui.generieren.fuehrendeNull(jetzt.getSeconds()));
     } else {
       jetzt = new Date(2020, 03, 19, stunde, minute);
     }
-    $("#"+id+"Std").wert(ui.generieren.fuehrendeNull(jetzt.getHours()));
-    $("#"+id+"Min").wert(ui.generieren.fuehrendeNull(jetzt.getMinutes()));
+    $("#"+id+"Std").setWert(ui.generieren.fuehrendeNull(jetzt.getHours()));
+    $("#"+id+"Min").setWert(ui.generieren.fuehrendeNull(jetzt.getMinutes()));
   },
   tageswahl: {
     generieren: (id, tag, monat, jahr) => core.ajax("UI", 0, null, {id: id, tag: tag, monat: monat, jahr: jahr}),
     aktion: (id, tag, monat, jahr) => {
       var datum = new Date (jahr, monat-1, tag);
-      var tag   = $("#"+id+"T").wert(ui.generieren.fuehrendeNull(datum.getDate()));
-      var monat = $("#"+id+"M").wert(ui.generieren.fuehrendeNull(datum.getMonth()+1));
-      var jahr  = $("#"+id+"J").wert(ui.generieren.fuehrendeNull(datum.getFullYear()));
-      $("#"+id+"Datumwahl").weg();
+      var tag   = $("#"+id+"T").setWert(ui.generieren.fuehrendeNull(datum.getDate()));
+      var monat = $("#"+id+"M").setWert(ui.generieren.fuehrendeNull(datum.getMonth()+1));
+      var jahr  = $("#"+id+"J").setWert(ui.generieren.fuehrendeNull(datum.getFullYear()));
+      $("#"+id+"Datumwahl").ausblenden();
     }
   }
 };
@@ -259,10 +259,10 @@ document.addEventListener("click", (e) => {
   if(ui.datumsanzeige.offen) {
     for(let p of e.path) {
       if(p === document) {
-        document.querySelectorAll(".dshUiDatumwahl")[0].style.display = "none";
+        $(".dshUiDatumwahl").ausblenden();
         break;
       }
-      if(p.classList.contains("dshUiDatumwahlFeld")) {
+      if($(p).ist(".dshUiDatumwahlFeld")) {
         break;
       }
     }
@@ -271,12 +271,12 @@ document.addEventListener("click", (e) => {
 
 ui.schieber = {
   aktion: (id) => {
-    var wert = $("#"+id).wert();
+    var wert = $("#"+id).getWert();
     var neuerwert = 0;
     if (wert == 0) {
       neuerwert = 1;
     }
-    $("#"+id).wert(neuerwert);
+    $("#"+id).setWert(neuerwert);
     $("#"+id+"Schieber").addKlasse("dshUiSchieber"+neuerwert);
     $("#"+id+"Schieber").removeKlasse("dshUiSchieber"+wert);
   }
@@ -284,12 +284,12 @@ ui.schieber = {
 
 ui.toggle = {
   aktion: (id) => {
-    var wert = $("#"+id).wert();
+    var wert = $("#"+id).getWert();
     var neuerwert = 0;
     if (wert == 0) {
       neuerwert = 1;
     }
-    $("#"+id).wert(neuerwert);
+    $("#"+id).setWert(neuerwert);
     if(neuerwert == 1) {
       $("#"+id+"Toggle").addKlasse("dshUiToggled");
     } else {
@@ -300,7 +300,7 @@ ui.toggle = {
 
 ui.mail = {
   aktion: (id) => {
-    var mail  = $("#"+id).wert();
+    var mail  = $("#"+id).getWert();
     var ok    = ui.check.mail(mail);
     $("#"+id).setKlasse(ok,  "dshUiPruefen1");
     $("#"+id).setKlasse(!ok, "dshUiPruefen0");
@@ -309,7 +309,7 @@ ui.mail = {
 
 ui.passwort = {
   aktion: (idvergleich, idpruefen) => {
-    var vergleich = $("#"+idvergleich).wert();
+    var vergleich = $("#"+idvergleich).getWert();
     var pruefen = $("#"+idpruefen).value;
     $("#"+idpruefen).setKlasse(vergleich == pruefen, "dshUiPruefen1");
     $("#"+idpruefen).setKlasse(vergleich != pruefen, "dshUiPruefen0");
@@ -318,8 +318,8 @@ ui.passwort = {
 
 ui.togglegruppe = {
   aktion: (id, nr, anzahl, wert) => {
-    $("#"+id).wert(wert);
-    $("#"+id+"KnopfId").wert(nr);
+    $("#"+id).setWert(wert);
+    $("#"+id+"KnopfId").setWert(nr);
     for (var i = 0; i < anzahl; i++) {
       $("#"+id+"Knopf"+i).removeKlasse("dshUiToggled");
     }
@@ -339,7 +339,7 @@ ui.reiter = {
 ui.laden = {
   balken: {
     prozent: (id, x) => {
-      $("#"+id+"Innen").css("width", x+"%");
+      $("#"+id+"Innen").setCss("width", x+"%");
     }
   },
   an: (titel, beschreibung) => console.log(titel, beschreibung)
@@ -347,10 +347,10 @@ ui.laden = {
 
 ui.fenster = {
   schliessen: () => {
-    $("#dshUiBlende").weg();
+    $("#dshUiBlende").ausblenden();
   },
   anzeigen: () => {
-    $("#dshUiBlende").her();
+    $("#dshUiBlende").einblenden();
   }
 };
 
@@ -433,14 +433,14 @@ ui.tabelle = {
     if (richtung != "ASC" && richtung != "DESC") {return;}
 
     // Zeilen einlesen
-    var zAnzahl = $("#"+id+"ZAnzahl").wert();
-    var sAnzahl = $("#"+id+"SAnzahl").wert();
+    var zAnzahl = $("#"+id+"ZAnzahl").getWert();
+    var sAnzahl = $("#"+id+"SAnzahl").getWert();
     var umsortieren = new Array(zAnzahl);
     // initialisieren
     for (var z=0; z<zAnzahl; z++) {
       umsortieren[z] = new Array(2);
       umsortieren[z][0] = z;
-      umsortieren[z][1] = $("#"+id+"Z"+z+"S"+spalte).html();
+      umsortieren[z][1] = $("#"+id+"Z"+z+"S"+spalte).getHTML();
     }
 
     if (richtung == "ASC") {
@@ -455,12 +455,12 @@ ui.tabelle = {
       code += "<tr>";
       var spaltennr = 0;
       for (var s=0; s<sAnzahl; s++) {
-        code += "<td id=\""+id+"Z"+z+"S"+s+"\">"+($("#"+id+"Z"+umsortieren[z][0]+"S"+s).html())+"</td>";
+        code += "<td id=\""+id+"Z"+z+"S"+s+"\">"+($("#"+id+"Z"+umsortieren[z][0]+"S"+s).getHTML())+"</td>";
         spaltennr++;
       }
       code += "</tr>";
     }
-    $("#"+id+"Koerper").html(code);
+    $("#"+id+"Koerper").setHTML(code);
   },
   aufsteigend: (a, b) => {
     if (a[1] < b[1]) {
