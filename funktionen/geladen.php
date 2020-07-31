@@ -12,4 +12,5 @@
   include_once("$KLASSEN/laden.php");
 	include_once("$KLASSEN/elemente/meldung.php");
 	include_once("$KLASSEN/elemente/text.php");
+  include_once("$KLASSEN/fenster.php");
 ?>

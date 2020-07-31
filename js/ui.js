@@ -342,7 +342,9 @@ ui.laden = {
       $("#"+id+"Innen").setCss("width", x+"%");
     }
   },
-  an: (titel, beschreibung) => console.log(titel, beschreibung)
+  an: (titel, beschreibung) => {
+    console.log(titel, beschreibung)
+  }
 };
 
 ui.fenster = {
