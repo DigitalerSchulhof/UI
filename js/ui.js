@@ -387,14 +387,17 @@ ui.meldung = {
     }
     let ts = getComputedStyle(t[0]);
     if(ev.offsetX < 0) {
-      let i2 = t.finde("i.i2.dshUiIcon");
+      let i2          = t.finde("i.i2.dshUiIcon");
+      let fehlercodes = t.finde(".dshFehlercode");
       if(ts["border-right-width"] === "23px") {
         t.setCss("border-right-width", "");
         i2.setCss("right", "");
+        fehlercodes.setCss("right", "");
       } else {
         t.setCss("border-right-width", "23px");
         let r = getComputedStyle(i2[0]).right;
         i2.setCss("right", (-Math.abs(r.substr(0, r.length - 2))) + "px");
+        fehlercodes.setCss("right", "-23px");
       }
     }
     if(ev.offsetX > t[0].clientWidth) {

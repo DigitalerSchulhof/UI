@@ -91,28 +91,16 @@
   border-bottom: 2px solid;
 }
 
-
-.dshUiFehlermeldung {
-  display: inline-block;
-  opacity: 0;
-  transition: all 250ms ease-in-out;
+.dshUiMeldung .dshFehlercode {
+  font-size: 70%;
+  width: 23px;
+  right: 23px;
+  transition: right 250ms ease-in-out;
+  position: absolute;
+  margin-top: 2px;
+  text-align: center;
+  font-weight: bold;
 }
-
-  .dshUiModul {
-    border-top-left-radius: @radius2;
-    border-bottom-left-radius: @radius2;
-  }
-
-  .dshUiFehlercode {
-    border-top-right-radius: @radius2;
-    border-bottom-right-radius: @radius2;
-  }
-
-  .dshUiFehlercode,
-  .dshUiModul {
-    font-size: 70%;
-    padding: 0px 2px;
-  }
 
 // FARBEN;
 
@@ -154,7 +142,6 @@ foreach($arten as $var => $css) {
   color: @schriftfarbeNegativ;
 }
 
-.dshUiFehlercode {
-  background-color: @abstufung3;
-  color: @schriftfarbeNegativ;
+.dshUiMeldungFehler .dshFehlercode {
+  color: @fehlerHintergrund;
 }
