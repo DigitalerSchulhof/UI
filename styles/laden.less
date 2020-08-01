@@ -2,10 +2,15 @@
 
 .dshUiLaden {
 	padding: 10px 0px;
-	text-align: center;
+  text-align: center;
 }
 
-.dshUiLadesymbol {
+.dshUiLaden .dshUiLadenStatus {
+  text-align: center;
+  display: block;
+}
+
+.dshUiLadenIcon {
 	display: inline-block;
 	position: relative;
 	width: 50px;
@@ -13,7 +18,7 @@
 	margin-bottom: 10px;
 }
 
-.dshUiLadesymbol div {
+.dshUiLadenIcon div {
 	position: absolute;
 	width: 11px;
 	height: 11px;
@@ -21,47 +26,47 @@
 	animation-timing-function: cubic-bezier(0, 1, 1, 0);
 }
 
-.dshUiLadesymbol div:nth-child(1) {
+.dshUiLadenIcon div:nth-child(1) {
 	left: 0px;
-	animation: dshUiLadesymbol1 0.6s infinite;
+	animation: dshUiLadenIcon1 0.6s infinite;
 }
 
-.dshUiLadesymbol div:nth-child(2) {
+.dshUiLadenIcon div:nth-child(2) {
 	left: 0px;
-	animation: dshUiLadesymbol2 0.6s infinite;
+	animation: dshUiLadenIcon2 0.6s infinite;
 }
 
-.dshUiLadesymbol div:nth-child(3) {
+.dshUiLadenIcon div:nth-child(3) {
 	left: 20px;
-	animation: dshUiLadesymbol2 0.6s infinite;
+	animation: dshUiLadenIcon2 0.6s infinite;
 }
 
-.dshUiLadesymbol div:nth-child(4) {
+.dshUiLadenIcon div:nth-child(4) {
 	left: 39px;
-	animation: dshUiLadesymbol3 0.6s infinite;
+	animation: dshUiLadenIcon3 0.6s infinite;
 }
 
-@keyframes dshUiLadesymbol1 {
+@keyframes dshUiLadenIcon1 {
 	0% {transform: scale(0);}
 	100% {transform: scale(1);}
 }
 
-@keyframes dshUiLadesymbol2 {
+@keyframes dshUiLadenIcon2 {
   0% {transform: translate(0, 0);}
   100% {transform: translate(19px, 0);}
 }
 
-@keyframes dshUiLadesymbol3 {
+@keyframes dshUiLadenIcon3 {
 	0% {transform: scale(1);}
 	100% {transform: scale(0);}
 }
 
 
 // FARBEN;
-.dshUiLaden p {
+.dshUiLaden .dshUiLadenStatus {
 	color: @abstufung3;
 }
 
-.dshUiLadesymbol div {
+.dshUiLadenIcon div {
 	background-color: @abstufung3;
 }

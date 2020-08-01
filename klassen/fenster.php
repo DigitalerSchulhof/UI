@@ -4,6 +4,8 @@ use UI\Konstanten;
 
 
 class Fenster extends InhaltElement{
+  protected $tag = "div";
+
   /** @var bool Schließen-Button im Fenster anzeigen */
   private $schliessen;
   /** @var string Titel des Fensters */
@@ -13,17 +15,18 @@ class Fenster extends InhaltElement{
 
 
 	/**
-	* @param string $titel :)
-	* @param string $inhalt Inhalt des Fensters
-	*/
-  public function __construct($titel, $inhalt) {
-    $this->schlissen = false;
+	 * @param string $id  :)
+	 * @param string $titel :)
+	 * @param string $inhalt Inhalt des Fensters
+	 */
+  public function __construct($id, $titel, $inhalt) {
+    $this->schliessen = true;
     $this->titel = $titel;
     $this->fensteraktionen = [];
     parent::__construct($inhalt);
     $this->addKlasse("dshUiFenster");
+    $this->setID($id);
   }
-
 
   /**
    * Setzt den Wert des Schließen-Symbols
@@ -40,33 +43,31 @@ class Fenster extends InhaltElement{
 	* @return string HTML-Code für das Fenster
 	*/
   public function __toString () : string {
-    $code = codeAuf();
+    $code = $this->codeAuf();
       // Fensteritel
       $code .= "<div class=\"dshUiFensterTitelzeile\">";
-        $code .= "<span class=\"dshUiFensterTitel\">$this->titel</span>";
+        $code .= "<span id=\"{$this->id}FensterTitel\" class=\"dshUiFensterTitel\">$this->titel</span>";
         if ($this->schliessen) {
           $schliessen = new MiniIconKnopf(new Icon(Konstanten::SCHLIESSEN), "Schließen", "Fehler", "UL");
-          $schliessen->addFunktion("onclick", "ui.fenster.schliessen()");
+          $schliessen->addFunktion("onclick", "ui.fenster.schliessen('{$this->id}')");
           $schliessen->addKlasse("dshUiFensterSchliessen");
           $code .= $schliessen;
         }
-      $code .= "</div>";
+        $code .= "</div>";
 
-      // Fensterinhalt
-      $code .= "<div>";
-        $code .= $this->inhalt;
-      $code .= "</div>";
+        // Fensterinhalt
+        $code .= "<div id=\"{$this->id}FensterInhalt\" class=\"dshSpalte dshSpalteA1\">";
+          $code .= $this->inhalt;
+        $code .= "</div>";
 
-      // Fensteraktionen ausgeben
-      if (count($fensteraktionen) > 0) {
-        $code .= "<div class=\"dshUiFensterAktionen\">";
-          foreach ($fensteraktionen as $f) {
+        // Fensteraktionen ausgeben
+        $code .= "<div  id=\"{$this->id}FensterAktionen\" class=\"dshUiFensterAktionen\">";
+          foreach ($this->fensteraktionen as $f) {
             $code .= $f;
           }
         $code .= "</div>";
-      }
       $code .= "</div>";
-    $code = codeZu();
+    $code .= $this->codeZu();
     return $code;
   }
 }

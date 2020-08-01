@@ -198,7 +198,8 @@ ui.datumsanzeige = {
       var jahr  = $("#"+id+"J").getWert();
 
       ui.datumsanzeige.tageswahl.generieren(id, tag, monat, jahr).then((r) => {
-        feld.setHTML(r).einblenden();
+        werte = JSON.parse(r);
+        feld.setHTML(werte.inhalt).einblenden();
         ui.datumsanzeige.offen = true;
       });
     }
@@ -342,17 +343,40 @@ ui.laden = {
       $("#"+id+"Innen").setCss("width", x+"%");
     }
   },
-  an: (titel, beschreibung) => {
-    console.log(titel, beschreibung)
+  an: (titel, inhalt) => {
+    $("#dshLadenFensterTitel").setHTML(titel);
+    var code = "<div class=\"dshUiLaden\">";
+    code += ui.generieren.laden.icon();
+    code += "<span class=\"dshUiLadenStatus\">"+inhalt+"...</span>";
+    code += "</div>";
+    $("#dshLadenFensterInhalt").setHTML(code);
+    $("#dshLadenFensterAktionen").setHTML("");
+    $("#dshBlende").einblenden();
+  },
+  aendern: (titel, inhalt, aktionen) => {
+    var inhalt = inhalt || "";
+    var aktionen = aktionen || "";
+    if (titel !== null) {
+      $("#dshLadenFensterTitel").setHTML(titel);
+    }
+    $("#dshLadenFensterInhalt").setHTML(inhalt);
+    $("#dshLadenFensterAktionen").setHTML(aktionen);
+    $("#dshBlende").einblenden();
+  },
+  aus: () => {
+    $("#dshLadenFensterTitel").setHTML("");
+    $("#dshLadenFensterInhalt").setHTML("");
+    $("#dshLadenFensterAktionen").setHTML("");
+    $("#dshBlende").ausblenden();
   }
 };
 
 ui.fenster = {
   schliessen: () => {
-    $("#dshUiBlende").ausblenden();
+    $("#dshBlende").ausblenden();
   },
   anzeigen: () => {
-    $("#dshUiBlende").einblenden();
+    $("#dshBlende").einblenden();
   }
 };
 
@@ -392,6 +416,8 @@ ui.meldung = {
         t.style.transform = "rotateY(180deg)";
       }
     }
+    $(".dshUiFehlermeldung").einblenden("inline-block");
+    $(".dshUiFehlermeldung").setCss("opacity", "1");
   }
 };
 

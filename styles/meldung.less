@@ -91,6 +91,28 @@
   border-bottom: 2px solid;
 }
 
+.dshUiModul {
+  border-top-left-radius: @radius2;
+  border-bottom-left-radius: @radius2;
+}
+
+.dshUiFehlercode {
+  border-top-right-radius: @radius2;
+  border-bottom-right-radius: @radius2;
+}
+
+.dshUiFehlercode, .dshUiModul {
+  font-size: 70%;
+  padding: 0px 2px;
+}
+
+.dshUiFehlermeldung {
+  display: none;
+  opacity: 0;
+  transition: all 250ms ease-in-out;
+}
+
+
 // FARBEN;
 
 <?php
@@ -124,4 +146,14 @@ foreach($arten as $var => $css) {
 }
 .dshUiMeldungLaden .dshUiMeldungInhalt .dshUiLaden .dshNotiz {
   color: @ladenSchrift;
+}
+
+.dshUiModul {
+  background-color: @abstufung4;
+  color: @schriftfarbeNegativ;
+}
+
+.dshUiFehlercode {
+  background-color: @abstufung3;
+  color: @schriftfarbeNegativ;
 }

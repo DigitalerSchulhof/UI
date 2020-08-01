@@ -1,0 +1,58 @@
+// LAYOUT;
+
+.dshUiFenster {
+  border-radius: @radius5;
+  background-color: @seitenhintergrund;
+  width: 100%;
+  max-width: 600px;
+  margin: 0px auto;
+}
+
+  .dshUiFensterTitelzeile {
+    padding: 5px 10px;
+    border-top-right-radius: @radius5;
+    border-top-left-radius: @radius5;
+  }
+
+  .dshUiFensterTitelzeile {
+    padding: 10px 10px;
+    border-top-right-radius: @radius5;
+    border-top-left-radius: @radius5;
+    position: relative;
+  }
+
+  .dshUiFensterTitel {
+    font-weight: bold;
+  }
+
+  #dshBlendeI .dshUiFenster .dshUiFensterTitelzeile .dshUiFensterSchliessen {
+    position: absolute !important;
+    right: 10px;
+    top: 5px;
+    margin: 0px;
+  }
+
+  .dshUiFensterAktionen {
+    display: flex;
+    flex-wrap: nowrap;
+    align-content: stretch;
+    border-bottom-right-radius: @radius5;
+    border-bottom-left-radius: @radius5;
+    overflow: hidden;
+  }
+
+  .dshUiFensterAktionen .dshUiKnopf {
+    flex: auto;
+    margin-bottom: 0px;
+    text-align: center;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-radius: @radius1;
+  }
+
+
+// FARBEN;
+  .dshUiFensterTitelzeile {
+    background-color: @standardAkzent;
+    color: @schriftfarbeNegativ;
+  }
