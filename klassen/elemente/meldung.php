@@ -72,7 +72,7 @@ class Meldung extends Element {
     $self->addKlasse("dshUiMeldung{$self->art}");
     $i1 = clone $self->icon;
     $i1->addKlasse("i1");
-    $i2 = new Icon("fas fa-smile");
+    $i2 = new Icon("fas fa-bug");
     $i2->addKlasse("i2");
 
     $code = "{$self->codeAuf()}";
