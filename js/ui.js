@@ -258,15 +258,16 @@ ui.datumsanzeige = {
 
 document.addEventListener("click", (e) => {
   if(ui.datumsanzeige.offen) {
-    for(let p of e.path) {
-      if(p === document) {
+    let el = $(e.target);
+    do {
+      if(el.ist("html")) {
         $(".dshUiDatumwahl").ausblenden();
         break;
       }
-      if($(p).ist(".dshUiDatumwahlFeld")) {
+      if(el.ist(".dshUiDatumwahlFeld")) {
         break;
       }
-    }
+    } while((el = el.parent()));
   }
 });
 
