@@ -198,8 +198,7 @@ ui.datumsanzeige = {
       var jahr  = $("#"+id+"J").getWert();
 
       ui.datumsanzeige.tageswahl.generieren(id, tag, monat, jahr).then((r) => {
-        werte = JSON.parse(r);
-        feld.setHTML(werte.inhalt).einblenden();
+        feld.setHTML(r.Code).einblenden();
         ui.datumsanzeige.offen = true;
       });
     }
@@ -207,7 +206,7 @@ ui.datumsanzeige = {
   monataendern: (id, tag, monat, jahr) => {
     var feld = $("#"+id+"Datumwahl");
     var datum = new Date (jahr, monat-1, tag);
-    ui.datumsanzeige.tageswahl.generieren(id, datum.getDate(), datum.getMonth()+1, datum.getFullYear()).then((r) => feld.setHTML(r));
+    ui.datumsanzeige.tageswahl.generieren(id, datum.getDate(), datum.getMonth()+1, datum.getFullYear()).then((r) => feld.setHTML(r.Code));
   },
   checkTag: (id) => {
     var jetzt = new Date();
