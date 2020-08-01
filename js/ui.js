@@ -365,9 +365,7 @@ ui.laden = {
     $("#dshBlende").einblenden();
   },
   aus: () => {
-    $("#dshLadenFensterTitel").setHTML("");
-    $("#dshLadenFensterInhalt").setHTML("");
-    $("#dshLadenFensterAktionen").setHTML("");
+    $("#dshLadenFensterTitel", "#dshLadenFensterInhal", "#dshLadenFensterAktionen").setHTML("");
     $("#dshBlende").ausblenden();
   }
 };
@@ -383,42 +381,41 @@ ui.fenster = {
 
 ui.meldung = {
   brclick: function (ev) {
-    let t  = ev.target;
-    if(!t.classList.contains("dshUiMeldung")) {
+    let t  = $(ev.target);
+    if(!t.ist(".dshUiMeldung")) {
       return;
     }
-    let ts = getComputedStyle(t);
+    let ts = getComputedStyle(t[0]);
     if(ev.offsetX < 0) {
-      let i2 = t.querySelectorAll("i.i2.dshUiIcon")[0];
+      let i2 = t.finde("i.i2.dshUiIcon");
       if(ts["border-right-width"] === "23px") {
-        t.style["border-right-width"] = "";
-        i2.style.right = "";
+        t.setCss("border-right-width", "");
+        i2.setCss("right", "");
       } else {
-        t.style["border-right-width"] = "23px";
-        let r = getComputedStyle(i2).right;
-        i2.style.right = (-Math.abs(r.substr(0, r.length - 2))) + "px";
+        t.setCss("border-right-width", "23px");
+        let r = getComputedStyle(i2[0]).right;
+        i2.setCss("right", (-Math.abs(r.substr(0, r.length - 2))) + "px");
       }
     }
-    if(ev.offsetX > t.clientWidth) {
-      let i1 = t.querySelectorAll("i.i1.dshUiIcon")[0];
+    if(ev.offsetX > t[0].clientWidth) {
+      let i1 = t.finde("i.i1.dshUiIcon");
       if(ts["border-left-width"] === "23px") {
-        t.style["border-left-width"] = "2px";
-        let l = getComputedStyle(i1).left;
-        i1.style.left = Math.abs(l.substr(0, l.length - 2)) + "px";
+        t.setCss("border-left-width", "2px");
+        let l = getComputedStyle(i1[0]).left;
+        i1.setCss("left", Math.abs(l.substr(0, l.length - 2)) + "px");
       } else {
-        t.style["border-left-width"] = "";
-        i1.style.left = "";
+        t.setCss("border-left-width", "");
+        i1.setCss("left", "");
       }
     }
-    if(t.classList.contains("dshUiMeldungLaden") && (ev.offsetY < 0 || ev.offsetY > t.clientHeight)) {
-      if(t.style.transform === "rotateY(180deg)") {
-        t.style.transform = "";
+    if(t.ist(".dshUiMeldungLaden") && (ev.offsetY < 0 || ev.offsetY > t[0].clientHeight)) {
+      if(t.getCss("transform") === "rotateY(180deg)") {
+        t.setCss("transform", "");
       } else {
-        t.style.transform = "rotateY(180deg)";
+        t.setCss("transform", "rotateY(180deg)");
       }
     }
-    $(".dshUiFehlermeldung").einblenden("inline-block");
-    $(".dshUiFehlermeldung").setCss("opacity", "1");
+    t.finde(".dshUiFehlermeldung").toggleCss("opacity", "1");
   }
 };
 
@@ -434,26 +431,19 @@ ui.farbbeispiel = {
 
 window.addEventListener("resize", (e) => {
   if(document.body.clientWidth < 203) {
-    for(let b of document.querySelectorAll(".dshUiFarbbeispiele")) {
-      let w = (100 / b.querySelectorAll(".dshUiFarbbeispieleSchattierung").length * 3) + "%";
-      for(let s of b.querySelectorAll(".dshUiFarbbeispieleSchattierung")) {
-        s.style["flex-basis"] = w;
-        s.classList.add("jsmod");
-      }
-    }
+    $(".dshUiFarbbeispiele").each((b) => {
+      let s = b.finde(".dshUiFarbbeispieleSchattierung");
+      let w = (100 / s.length * 3) + "%";
+      s.setCss("flex-basis", w).addKlasse("jsmod");
+    });
   } else if(document.body.clientWidth < 374) {
-    for(let b of document.querySelectorAll(".dshUiFarbbeispiele")) {
-      let w = (100 / b.querySelectorAll(".dshUiFarbbeispieleSchattierung").length * 2) + "%";
-      for(let s of b.querySelectorAll(".dshUiFarbbeispieleSchattierung")) {
-        s.style["flex-basis"] = w;
-        s.classList.add("jsmod");
-      }
-    }
+    $(".dshUiFarbbeispiele").each((b) => {
+      let s = b.finde(".dshUiFarbbeispieleSchattierung");
+      let w = (100 / s.length * 2) + "%";
+      s.setCss("flex-basis", w).addKlasse("jsmod");
+    });
   } else {
-    for(let s of document.querySelectorAll(".dshUiFarbbeispieleSchattierung.jsmod")) {
-      s.style["flex-basis"] = "";
-      s.classList.remove("jsmod");
-    }
+    $(".dshUiFarbbeispieleSchattierung.jsmod").setCss("flex-basis", "").removeKlasse("jsmod");
   }
 });
 
