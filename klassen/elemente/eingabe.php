@@ -44,7 +44,8 @@ abstract class Eingabe extends Element {
       $rueck .= " type=\"{$this->typ}\"";
     if($this->autocomplete !== null && !in_array("autocomplete", $nicht))
       $rueck .= " autocomplete=\"{$this->autocomplete}\"";
-
+    if(!in_array("tabindex", $nicht) && $this->getAttribut("tabindex") === null)
+      $rueck .= " tabindex=\"0\"";
     if($klammer) {
       $rueck .= ">";
     }

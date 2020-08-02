@@ -338,6 +338,8 @@ ui.reiter = {
 };
 
 ui.laden = {
+  iseAn: false,
+  fokusVor: null,
   balken: {
     prozent: (id, x) => {
       $("#"+id+"Innen").setCss("width", x+"%");
@@ -352,6 +354,19 @@ ui.laden = {
     $("#dshLadenFensterInhalt").setHTML(code);
     $("#dshLadenFensterAktionen").setHTML("");
     $("#dshBlende").einblenden();
+    ui.laden.istAn    = true;
+
+    let knopefe = $("#dshBlende").finde(".dshUiKnopf");
+    if(knopefe.length !== 0) {
+      ui.laden.fokusVor = $(document.activeElement);
+      knopefe[0].focus();
+    }
+    $("[tabindex]").each(function () {
+      if(this.parentSelector("#dshBlende").length === 0) {
+        this.setAttr("tabindexAlt", this.getAttr("tabindex"));
+        this.setAttr("tabindex",    "-1");
+      }
+    });
   },
   aendern: (titel, inhalt, aktionen) => {
     var inhalt = inhalt || "";
@@ -362,10 +377,35 @@ ui.laden = {
     $("#dshLadenFensterInhalt").setHTML(inhalt);
     $("#dshLadenFensterAktionen").setHTML(aktionen);
     $("#dshBlende").einblenden();
+    ui.laden.istAn = true;
+
+    let dae = $(document.activeElement);
+    if(dae.parentSelector("#dshBlende").length === 0) {
+      ui.laden.fokusVor = dae;
+      let knopefe = $("#dshBlende").finde(".dshUiKnopf");
+      if(knopefe.length !== 0) {
+        ui.laden.fokusVor = $(document.activeElement);
+        knopefe[0].focus();
+      }
+    }
+    $("[tabindex]:not[tabindexAlt]").each(function () {
+      if(this.parentSelector("#dshBlende").length === 0) {
+        this.setAttr("tabindexAlt", this.getAttr("tabindex"));
+        this.setAttr("tabindex",    "-1");
+      }
+    });
   },
   aus: () => {
     $("#dshLadenFensterTitel", "#dshLadenFensterInhal", "#dshLadenFensterAktionen").setHTML("");
     $("#dshBlende").ausblenden();
+
+    ui.laden.istAn = false;
+    ui.laden.fokusVor[0].focus();
+    ui.laden.fokusVor = null;
+    $("[tabindexAlt]").each(function () {
+      this.setAttr("tabindex",    this.getAttr("tabindexAlt"));
+      this.setAttr("tabindexAlt", "");
+    })
   }
 };
 
@@ -379,7 +419,7 @@ ui.fenster = {
 };
 
 ui.meldung = {
-  brclick: function (ev) {
+  brclick: (ev) => {
     let t  = $(ev.target);
     if(!t.ist(".dshUiMeldung")) {
       return;

@@ -33,6 +33,7 @@ class Link extends InhaltElement {
     parent::__construct($inhalt);
     $this->ziel = $ziel;
     $this->setAttribut("href", $ziel);
+    $this->setAttribut("tabindex", "0");
     if ($extern) {
       $this->addKlasse("dshExtern");
     }
