@@ -23,6 +23,7 @@ abstract class Eingabe extends Element {
     $this->id   = $id;
     $this->autocomplete = null;
     $this->addKlasse("dshUiFeld");
+    $this->setAttribut("tabindex", "0");
   }
 
   /**
@@ -44,8 +45,6 @@ abstract class Eingabe extends Element {
       $rueck .= " type=\"{$this->typ}\"";
     if($this->autocomplete !== null && !in_array("autocomplete", $nicht))
       $rueck .= " autocomplete=\"{$this->autocomplete}\"";
-    if(!in_array("tabindex", $nicht) && $this->getAttribut("tabindex") === null)
-      $rueck .= " tabindex=\"0\"";
     if($klammer) {
       $rueck .= ">";
     }
@@ -738,6 +737,7 @@ class Togglegruppe extends Eingabe {
    */
   public function __construct($id) {
     parent::__construct($id);
+    $this->setAttribut("tabindex", null);
   }
 
   /**
