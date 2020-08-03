@@ -402,6 +402,9 @@ ui.laden = {
     ui.laden.istAn = false;
     if(ui.laden.fokusVor !== null) {
       ui.laden.fokusVor[0].focus();
+      if(ui.laden.fokusVor.ist("input")) {
+        ui.laden.fokusVor[0].select();
+      }
     }
     ui.laden.fokusVor = null;
     $("[tabindexAlt]").each(function () {
