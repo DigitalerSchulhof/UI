@@ -55,7 +55,7 @@
     $knopf = new UI\MiniIconKnopf(new UI\Icon(UI\Konstanten::STANDARD), $art, $art);
     $spalte->addElement($knopf." ");
   }
-  $spalte = new UI\Spalte();
+  // $spalte = new UI\Spalte();
   $spalte->addElement("<h1>Eingabefelder</h1>");
   $spalte->addElement("<h3>Datum und Uhrzeit</h3>");
   $spalte->addElement(new UI\Datumfeld("dshUiDemoUhrzeitfeld")." ".new UI\Uhrzeitfeld("dshUiDemoUhrzeitfeld")."<br>");
@@ -88,6 +88,8 @@
   $spalte->addElement("<br><br>");
   $spalte->addElement(new UI\IconToggleGross("dshUiDemoIconToggleGross", "Text", new UI\Icon(UI\Konstanten::PERSON))."<br>");
   $spalte->addElement("<br><br>");
+
+  // $spalte = new UI\Spalte();
 
   $titel = array("", "Vorname", "Nachname", "Aktionen");
   $person1 = array("" => new UI\Icon(UI\Konstanten::LEHRER), "Vorname" => "Sascha", "Nachname" => "Mäderhaußer", "Aktionen" => new UI\MiniIconKnopf(new UI\Icon(UI\Konstanten::LOESCHEN), "Person löschen", "Warnung"));

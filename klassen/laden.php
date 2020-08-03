@@ -8,7 +8,7 @@ class Ladesymbol extends UI\Element {
 
   public function __construct() {
     parent::__construct();
-    $this->addKlasse("dshUiLadesymbol");
+    $this->addKlasse("dshUiLadenIcon");
   }
 
   public function __toString() : string {
