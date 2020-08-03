@@ -62,6 +62,26 @@
 }
 
 
+.dshUiBalken {
+  margin-bottom: 10px;
+}
+
+.dshUiBalkenA {
+  border: 1px solid;
+  border-color: @abstufung3;
+  width:100%;
+  border-radius: @radius3;
+  overflow: hidden;
+  background-color: @abstufung1;
+  line-height: 0;
+  margin-bottom: 5px;
+}
+
+.dshUiBalkenI {
+  height: 10px;
+}
+
+
 // FARBEN;
 .dshUiLaden .dshUiLadenStatus {
 	color: @abstufung3;
@@ -69,4 +89,24 @@
 
 .dshUiLadenIcon div {
 	background-color: @abstufung3;
+}
+
+.dshUiBalkenZeit .dshUiBalkenA {
+  background-color: @fehlerHintergrund;
+}
+
+.dshUiBalkenZeit .dshUiBalkenI {
+  background-color: @erfolgHintergrund;
+}
+
+.dshUiBalkenSpeicher .dshUiBalkenA {
+  background-color: @erfolgHintergrund;
+}
+
+.dshUiBalkenSpeicher .dshUiBalkenI {
+  background-color: @fehlerHintergrund;
+}
+
+.dshUiBalkenSchritte .dshUiBalkenI, .dshUiBalkenProzent .dshUiBalkenI {
+  background-color: @infoHintergrund;
 }

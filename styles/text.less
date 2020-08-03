@@ -48,7 +48,6 @@ ul.dshUiListe ul.dshUiListe ul.dshUiListe li {
 a.dshUiLink {
   color: inherit;
   border-bottom: 1px solid;
-  border-color: @linkHintergrundVorher;
   transition: border-color 250ms ease-in-out;
 }
 
@@ -60,4 +59,27 @@ a.dshUiLink .dshUiIcon {
   font-size: 85%;
   position: relative;
   bottom: 1px;
+}
+
+.dshUiNotiz {
+  font-size: 80%;
+  margin-bottom: 5px;
+}
+
+.dshUiNotiz span {
+  font-size: inherit;
+}
+
+// FARBEN;
+
+a.dshUiLink {
+  border-color: @linkHintergrundVorher;
+}
+
+a.dshUiLink:hover {
+  border-color: @linkHintergrundNachher;
+}
+
+.dshUiNotiz {
+  color: @abstufung3;
 }
