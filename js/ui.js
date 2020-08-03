@@ -388,7 +388,7 @@ ui.laden = {
         knopefe[0].focus();
       }
     }
-    $("[tabindex]:not[tabindexAlt]").each(function () {
+    $("[tabindex]:not([tabindexAlt])").each(function () {
       if(this.parentSelector("#dshBlende").length === 0) {
         this.setAttr("tabindexAlt", this.getAttr("tabindex"));
         this.setAttr("tabindex",    "-1");
@@ -400,7 +400,9 @@ ui.laden = {
     $("#dshBlende").ausblenden();
 
     ui.laden.istAn = false;
-    ui.laden.fokusVor[0].focus();
+    if(ui.laden.fokusVor !== null) {
+      ui.laden.fokusVor[0].focus();
+    }
     ui.laden.fokusVor = null;
     $("[tabindexAlt]").each(function () {
       this.setAttr("tabindex",    this.getAttr("tabindexAlt"));
