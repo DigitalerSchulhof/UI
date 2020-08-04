@@ -668,7 +668,7 @@ class Spamschutz extends Textfeld {
   public function __toString() : string {
     global $ROOT;
     $code = "";
-    $breite = count($this->text)*30;
+    $breite = (count($this->text))*35+10;
     $hoehe = 50;
     $bild = imagecreatetruecolor($breite, $hoehe);
     $hintergrund = imagecolorallocate($bild, 255, 255, 255);
@@ -679,12 +679,12 @@ class Spamschutz extends Textfeld {
     if ($this->typ == "Linie") {
       $anzahl = ($breite*$hoehe)/60;
     } else {
-      $anzahl = ($breite*$hoehe)/12;
+      $anzahl = ($breite*$hoehe)/13;
     }
     for ($i=0; $i<$anzahl; $i++) {
-      $b = rand(0,200);
-      $g = max(0, $b+rand(-50,0));
-      $r = max(0, $b+rand(-50,0));
+      $g = rand(0,255);
+      $b = max(0, $g+rand(-50,0));
+      $r = max(0, $g+rand(-50,0));
       while (($r + $g + $b) > 400) {
         $r = max(0, $r-rand(5,20));
         $g = max(0, $g-rand(5,20));
@@ -710,7 +710,7 @@ class Spamschutz extends Textfeld {
 
     $schrift = "$ROOT/dateien/Kern/fonts/dshStandard-b.ttf";
     $schriftgroesse = 25;
-    $x = -10;
+    $x = -22;
     $y = 35;
     foreach ($this->text as $t) {
       $r = rand(1,255);
@@ -722,9 +722,9 @@ class Spamschutz extends Textfeld {
         $b = min(255, $b+rand(5,50));
       }
       $farbe = imagecolorallocate($bild, $r, $g, $b);
-      $x += count($this->text)*5;
-      $winkel = rand(-10,10);
-      $abstandx = $x + rand(-5,5);
+      $x += 35;
+      $winkel = rand(-20,20);
+      $abstandx = $x + rand(-5,3);
       $abstandy = $y + rand(-3,3);
       imagettftext($bild, $schriftgroesse, $winkel, $abstandx, $abstandy, $farbe, $schrift, $t);
     }
@@ -736,12 +736,13 @@ class Spamschutz extends Textfeld {
     imagedestroy($bild);
 
     $code .= "<div class=\"dshUiSpamschutzA\">";
-      $code .= "<img id=\"{$this->id}Spamschutz\" src=\"data:image/png;base64, {$b64}\" class=\"dshUiSpamschutzBild dshUiSpamschutz{$this->spamid}\" style=\"float: left; margin-right: 10px;\" data-uuid=\"{$this->spamid}\">";
+      $code .= "<img id=\"{$this->id}Spamschutz\" src=\"data:image/png;base64, {$b64}\" class=\"dshUiSpamschutzBild\" style=\"float: left; margin-right: 10px;\">";
       $code .= "<div class=\"dshUiSpamschutzEingabe\">";
         $code .= "<span class=\"dshUiSpamschutzHinweis\">Bitte die Zeichen aus dem Bild in das Eingabefeld übertragen.</span>";
         $self = clone $this;
         $self->addKlasse("dshUiSpamschutz");
         $code .= "{$self->codeAuf()}{$self->codeZu()}";
+        $code .= "<input type=\"hidden\" id=\"{$this->id}Spamid\" name=\"{$this->id}Spamid\" value=\"{$this->spamid}\">";
       $code .= "</div>";
     $code .= "</div>";
     return $code;
@@ -782,9 +783,11 @@ class Option extends Eingabe {
    * @param string $text Text der Option
    * @param string $wert Wert der Option
    */
-  public function __construct($id) {
+  public function __construct($id, $text = null, $wert = "") {
     parent::__construct($id);
     $this->gesetzt = false;
+    $this->text = $text;
+    $this->wert = $wert;
   }
 
   /**
@@ -817,7 +820,7 @@ class Option extends Eingabe {
       $wahl = " selected";
     }
     else {$wahl = "";}
-    return "<{$this->codeAuf(false)}$wahl>{$this->$text}{$this->codeZu()}";
+    return "<{$this->codeAuf(false)}$wahl>{$this->text}{$this->codeZu()}";
   }
 }
 
@@ -910,6 +913,7 @@ class Togglegruppe extends Eingabe {
 }
 
 class Auswahl extends Eingabe {
+  protected $tag = "select";
   /** @var Option[] Optionen der Selectbox */
   private $optionen;
 
@@ -921,10 +925,10 @@ class Auswahl extends Eingabe {
    * @param string $klasse   CSS-Klasse der Selectbox
    * @param Aktion $aktion   Aktion der Selectbox
    */
-  public function __construct($id, $text, $textwert, $wert = "", $klasse = "", $aktion = null) {
-    parent::__construct($id, $wert, $klasse, $aktion);
+  public function __construct($id, $text, $textwert) {
+    parent::__construct($id);
     $this->optionen = [];
-    $this->optionen[] = new Option ($text, $textwert);
+    $this->optionen[] = new Option (null, $text, $textwert);
   }
 
   /**
@@ -933,7 +937,7 @@ class Auswahl extends Eingabe {
    * @param string $wert Wert der Option
    */
   public function add($text, $wert) {
-    $this->optionen[] = new Option ($text, $wert);
+    $this->optionen[] = new Option (null, $text, $wert);
   }
 
   /**
@@ -941,11 +945,16 @@ class Auswahl extends Eingabe {
    * @return string Code der Selectbox
    */
   public function __toString() : string {
-    $code   = "<select id=\"$this->id\" name=\"$this->id\" class=\"dshUiEingabefeld dshUiSelectfeld $this->klasse\"{$this->aktion->ausgabe()}>";
-    foreach ($this->optionen as $opt) {
-      $code .= $opt->ausgabe($this->wert);
+    $self = clone $this;
+    $self->addKlasse("dshUiSelectfeld");
+    $code = $self->codeAuf();
+    foreach ($self->optionen as $opt) {
+      if ($opt->getWert() == $self->wert) {
+        $opt->setGesetzt(true);
+      }
+      $code .= $opt;
     }
-    $code .= "</select>";
+    $code .= $self->codeZu();
     return $code;
   }
 }
