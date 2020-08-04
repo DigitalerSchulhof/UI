@@ -682,16 +682,13 @@ class Spamschutz extends Textfeld {
       $anzahl = ($breite*$hoehe)/20;
     }
     for ($i=0; $i<$anzahl; $i++) {
-      $r = rand(1,255);
-      $g = max(0, $r+rand(-50,50));
-      $b = max(0, $r+rand(-50,50));
-      while (($r + $g + $b) > 450) {
-        $r -= 20;
-        $g -= 20;
-        $b -= 20;
-        if ($r < 0) {$r = 0;}
-        if ($g < 0) {$g = 0;}
-        if ($b < 0) {$b = 0;}
+      $r = rand(0,200);
+      $g = max(0, $r+rand(-30,30));
+      $b = max(0,$g+rand(-30,30));
+      while (($r + $g + $b) > 400) {
+        $r = max(0, $r-rand(5,20));
+        $g = max(0, $g-rand(5,20));
+        $b = max(0, $b-rand(5,20));
       }
       $farbe = imagecolorallocate($bild, $r, $g, $b);
       $x = rand(0,$breite);
@@ -720,12 +717,9 @@ class Spamschutz extends Textfeld {
       $g = rand(1,255);
       $b = rand(1,255);
       while (($r + $g + $b) < 550) {
-        $r += 50;
-        $g += 50;
-        $b += 50;
-        if ($r > 255) {$r = 255;}
-        if ($g > 255) {$g = 255;}
-        if ($b > 255) {$b = 255;}
+        $r = min(255, $r+rand(5,50));
+        $g = min(255, $g+rand(5,50));
+        $b = min(255, $b+rand(5,50));
       }
       $farbe = imagecolorallocate($bild, $r, $g, $b);
       $x += count($this->text)*5;
@@ -743,10 +737,12 @@ class Spamschutz extends Textfeld {
 
     $code .= "<div class=\"dshUiSpamschutzA\">";
       $code .= "<img id=\"{$this->id}Spamschutz\" src=\"data:image/png;base64, {$b64}\" class=\"dshUiSpamschutzBild dshUiSpamschutz{$this->spamid}\" style=\"float: left; margin-right: 10px;\" data-uuid=\"{$this->spamid}\">";
-      $code .= "<span class=\"dshUiSpamschutzHinweis\">Bitte die Zeichen aus dem Bild in das Eingabefeld übertragen.</span>";
-      $self = clone $this;
-      $self->addKlasse("dshUiSpamschutz");
-      $code .= "{$self->codeAuf()}{$self->codeZu()}";
+      $code .= "<div class=\"dshUiSpamschutzEingabe\">";
+        $code .= "<span class=\"dshUiSpamschutzHinweis\">Bitte die Zeichen aus dem Bild in das Eingabefeld übertragen.</span>";
+        $self = clone $this;
+        $self->addKlasse("dshUiSpamschutz");
+        $code .= "{$self->codeAuf()}{$self->codeZu()}";
+      $code .= "</div>";
     $code .= "</div>";
     return $code;
   }
