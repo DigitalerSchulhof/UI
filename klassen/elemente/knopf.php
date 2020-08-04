@@ -59,6 +59,7 @@ class Knopf extends InhaltElement {
       $self->addKlasse("dshUiKnopfLeer");
       $self->setAttribut("aria-disabled", "true");
       $self->setAttribut("tabindex", "-1");
+      $self->aktionen->addFunktion("onclick", "this.blur()");
     } else {
       $self->setAttribut("aria-disabled", "false");
       $self->setAttribut("tabindex", "0");

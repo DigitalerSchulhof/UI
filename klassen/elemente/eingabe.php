@@ -325,7 +325,7 @@ class Schieber extends Eingabe {
 
     $self->aktionen->addFunktionPrioritaet("onclick", 3, "ui.schieber.aktion('{$self->id}')");
 
-    $code  = "<{$self->codeAuf(false, "id", "value", "class")} id=\"{$self->id}Schieber\" class=\"dshUiSchieberAussen dshUiSchieber$wert".join(" ", $self->klassen)."\"><span class=\"dshUiSchieber\"></span>{$self->codeZu()}";
+    $code  = "<{$self->codeAuf(false, "id", "value", "class")} id=\"{$self->id}Schieber\" class=\"dshUiSchieberAussen dshUiSchieber$wert ".join(" ", $self->klassen)."\"><span class=\"dshUiSchieber\"></span>{$self->codeZu()}";
     $code .= new VerstecktesFeld($self->id, $wert);
 
     return $code;
