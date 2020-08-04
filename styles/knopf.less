@@ -102,6 +102,8 @@ $arten = array(
   "passiv"          => "KnopfPassiv",
   "eingeschraenkt"  => "KnopfEingeschraenkt",
   "gesperrt"        => "KnopfGesperrt",
+  "standard"        => "Toggle",
+  "erfolg"          => "Toggle.dshUiToggled"
 );
 
 foreach($arten as $var => $css) {
@@ -138,56 +140,3 @@ foreach($arten as $var => $css) {
 }
 
 ?>
-
-.dshUiKnopf.dshUiToggle:hover {
-  border-color: @erfolgAkzent !important;
-  background-color: @erfolgHintergrund;
-}
-
-.dshUiKnopf.dshUiKnopfIcon.dshUiToggle:hover::before {
-  background-color: @erfolgAkzent;
-}
-
-.dshUiKnopf.dshUiKnopfIcon.dshUiToggle:hover i.dshUiIcon {
-  color: @erfolgHintergrund;
-}
-
-.dshUiKnopf.dshUiKnopfIcon.dshUiKnopfGross.dshUiToggle:hover i.dshUiIcon {
-  color: @erfolgAkzent;
-}
-
-
-.dshUiKnopf.dshUiToggle.dshUiToggled {
-  border-color: @erfolgAkzent !important;
-  background-color: @erfolgHintergrund;
-}
-
-.dshUiKnopf.dshUiKnopfIcon.dshUiToggle.dshUiToggled::before {
-  background-color: @erfolgAkzent;
-}
-
-.dshUiKnopf.dshUiKnopfIcon.dshUiToggle.dshUiToggled i.dshUiIcon {
-  color: @erfolgHintergrund;
-}
-
-.dshUiKnopf.dshUiKnopfIcon.dshUiKnopfGross.dshUiToggle.dshUiToggled i.dshUiIcon {
-  color: @erfolgAkzent;
-}
-
-
-.dshUiKnopf.dshUiToggle.dshUiToggled:hover {
-  border-color: @standardAkzent !important;
-  background-color: @standardHintergrund;
-}
-
-.dshUiKnopf.dshUiKnopfIcon.dshUiToggle.dshUiToggled:hover::before {
-  background-color: @standardAkzent;
-}
-
-.dshUiKnopf.dshUiKnopfIcon.dshUiToggle.dshUiToggled:hover i.dshUiIcon {
-  color: @standardHintergrund;
-}
-
-.dshUiKnopf.dshUiKnopfIcon.dshUiKnopfGross.dshUiToggle.dshUiToggled:hover i.dshUiIcon {
-  color: @standardAkzent;
-}
