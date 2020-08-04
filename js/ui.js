@@ -311,7 +311,7 @@ ui.mail = {
 ui.passwort = {
   aktion: (idvergleich, idpruefen) => {
     var vergleich = $("#"+idvergleich).getWert();
-    var pruefen = $("#"+idpruefen).value;
+    var pruefen = $("#"+idpruefen).getWert();
     $("#"+idpruefen).setKlasse(vergleich == pruefen, "dshUiPruefen1");
     $("#"+idpruefen).setKlasse(vergleich != pruefen, "dshUiPruefen0");
   }
