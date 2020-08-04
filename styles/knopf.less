@@ -91,22 +91,22 @@
 
 <?php
 
-// [Var] => [CSS]
+// [CSS] => [VAR]
 $arten = array(
-  "standard"        => "Knopf",
-  "erfolg"          => "KnopfErfolg",
-  "fehler"          => "KnopfFehler",
-  "warnung"         => "KnopfWarnung",
-  "info"            => "KnopfInformation",
-  "laden"           => "KnopfLaden",
-  "passiv"          => "KnopfPassiv",
-  "eingeschraenkt"  => "KnopfEingeschraenkt",
-  "gesperrt"        => "KnopfGesperrt",
-  "standard"        => "Toggle",
-  "erfolg"          => "Toggle.dshUiToggled"
+  "Knopf"                 => "standard",
+  "KnopfErfolg"           => "erfolg",
+  "KnopfFehler"           => "fehler",
+  "KnopfWarnung"          => "warnung",
+  "KnopfInformation"      => "info",
+  "KnopfLaden"            => "laden",
+  "KnopfPassiv"           => "passiv",
+  "KnopfEingeschraenkt"   => "eingeschraenkt",
+  "KnopfGesperrt"         => "gesperrt",
+  "Toggle"                => "standard",
+  "Toggle.dshUiToggled"   => "erfolg"
 );
 
-foreach($arten as $var => $css) {
+foreach($arten as $css => $var) {
   echo ""
         . ".dshUi$css {"
         .   "background-color:@{$var}Hintergrund;"
