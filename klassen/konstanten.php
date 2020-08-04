@@ -25,6 +25,7 @@ class Konstanten {
 
 	const SCHLIESSEN  = "fas fa-times";
 
+  // OS
   const APPLE     = "fab fa-apple";
   const ANDROID   = "fab fa-android";
   const WINDOWS   = "fab fa-windows";
