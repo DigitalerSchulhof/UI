@@ -194,6 +194,32 @@
   height: 50px;
 }
 
+.dshUiSpamschutzA {
+  display: flex;
+  flex-wrap: nowrap;
+  align-content: stretch;
+  align-items : flex-end
+}
+
+  .dshUiSpamschutzBild {
+    flex: auto;
+    border-radius: @radius4;
+    border: 1px solid;
+    display: inline-block;
+    margin-right: 10px;
+    width: auto !important;
+  }
+
+  .dshUiSpamschutzHinweis {
+    flex: auto;
+    font-size: 80%;
+    padding: 0px 10px;
+  }
+
+  .dshUiSpamschutz {
+    flex: auto;
+  }
+
 // FARBEN;
 
 .dshUiEingabefeld {
@@ -255,4 +281,12 @@ input[type=color],
 
 .dshUiTageswahlKaledenderwoche {
   color: @abstufung3;
+}
+
+.dshUiSpamschutzBild {
+  border-color: @abstufung4;
+}
+
+.dshUiSpamschutzHinweis {
+  color: @abstufung3
 }

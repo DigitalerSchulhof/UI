@@ -637,7 +637,7 @@ class Spamschutz extends Textfeld {
   /** @var string Typ der erstellten Formen */
   private $bildtyp;
 
-  const BILDTYPEN = ["Kreise", "Rechtecke"];
+  const BILDTYPEN = ["Kreise", "Rechtecke", "Linie"];
 
   public function __construct($id, $stellen = 5) {
     parent::__construct($id);
@@ -658,7 +658,7 @@ class Spamschutz extends Textfeld {
     $_SESSION["SPAMSCHUTZ_{$this->spamid}"] = implode('', $text);
 
     // Bildtypen setzen
-    $this->bildtyp = self::BILDTYPEN[rand(0,count(self::BILDTYPEN)-1)];
+    $this->bildtyp = self::BILDTYPEN[rand(0,15) % 3];
   }
 
   /**
@@ -668,12 +668,54 @@ class Spamschutz extends Textfeld {
   public function __toString() : string {
     global $ROOT;
     $code = "";
-    $bild = imagecreate(count($this->text)*40, 50);
+    $breite = count($this->text)*30;
+    $hoehe = 50;
+    $bild = imagecreatetruecolor($breite, $hoehe);
+    $hintergrund = imagecolorallocate($bild, 255, 255, 255);
+    // Bildschrimhintergrund
+    imagefilledrectangle($bild, 0, 0,count($this->text)*40, 50,$hintergrund);
+
+    // Hintergrund füllen
+    if ($this->typ == "Linie") {
+      $anzahl = ($breite*$hoehe)/60;
+    } else {
+      $anzahl = ($breite*$hoehe)/20;
+    }
+    for ($i=0; $i<$anzahl; $i++) {
+      $r = rand(1,255);
+      $g = max(0, $r+rand(-50,50));
+      $b = max(0, $r+rand(-50,50));
+      while (($r + $g + $b) > 450) {
+        $r -= 20;
+        $g -= 20;
+        $b -= 20;
+        if ($r < 0) {$r = 0;}
+        if ($g < 0) {$g = 0;}
+        if ($b < 0) {$b = 0;}
+      }
+      $farbe = imagecolorallocate($bild, $r, $g, $b);
+      $x = rand(0,$breite);
+      $y = rand(0,$hoehe);
+      if ($this->bildtyp == "Rechtecke") {
+        $formbreite = rand(5,20);
+        $formhoehe = rand(5,20);
+        imagefilledrectangle($bild, $x, $y, $x+$formbreite, $y+$formhoehe, $farbe);
+      } else if ($this->bildtyp == "Kreise") {
+        $formbreite = rand(5,20);
+        $formhoehe = rand(5,20);
+        imagefilledellipse ($bild, $x, $y, $formbreite, $formhoehe, $farbe);
+      } else {
+        $formbreite = rand(-70,70);
+        $formhoehe = rand(-70,70);
+        imageline ($bild, $x, $y, $x+$formbreite, $y+$formhoehe, $farbe);
+      }
+    }
+
     $schrift = "$ROOT/dateien/Kern/fonts/dshStandard-b.ttf";
     $schriftgroesse = 25;
     $x = -10;
     $y = 35;
-    foreach ($text as $t) {
+    foreach ($this->text as $t) {
       $r = rand(1,255);
       $g = rand(1,255);
       $b = rand(1,255);
@@ -685,10 +727,10 @@ class Spamschutz extends Textfeld {
         if ($g > 255) {$g = 255;}
         if ($b > 255) {$b = 255;}
       }
-      $farbe = ImageColorAllocate($bild, $r, $g, $b);
-      $x += 30;
+      $farbe = imagecolorallocate($bild, $r, $g, $b);
+      $x += count($this->text)*5;
       $winkel = rand(-10,10);
-      $abstandx = $x + rand(-6,6);
+      $abstandx = $x + rand(-5,5);
       $abstandy = $y + rand(-3,3);
       imagettftext($bild, $schriftgroesse, $winkel, $abstandx, $abstandy, $farbe, $schrift, $t);
     }
@@ -699,9 +741,13 @@ class Spamschutz extends Textfeld {
     $b64 = base64_encode($b64);
     imagedestroy($bild);
 
-    $code .= "<img id=\"{$this->id}Spamschutz\" src=\"data:image/png;base64, {$b64}\" class=\"dshUiSpamschutz dshUiSpamschutz{$this->spamid}\" style=\"float: left; margin-right: 10px;\" data-uuid=\"{$this->spamid}\">";
-    $code .= "{$self->codeAuf()}{$self->codeZu()}";
-
+    $code .= "<div class=\"dshUiSpamschutzA\">";
+      $code .= "<img id=\"{$this->id}Spamschutz\" src=\"data:image/png;base64, {$b64}\" class=\"dshUiSpamschutzBild dshUiSpamschutz{$this->spamid}\" style=\"float: left; margin-right: 10px;\" data-uuid=\"{$this->spamid}\">";
+      $code .= "<span class=\"dshUiSpamschutzHinweis\">Bitte die Zeichen aus dem Bild in das Eingabefeld übertragen.</span>";
+      $self = clone $this;
+      $self->addKlasse("dshUiSpamschutz");
+      $code .= "{$self->codeAuf()}{$self->codeZu()}";
+    $code .= "</div>";
     return $code;
   }
 
