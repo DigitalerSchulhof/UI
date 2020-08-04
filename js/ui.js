@@ -415,6 +415,25 @@ ui.laden = {
   }
 };
 
+document.addEventListener("keydown", (e) => {
+  if(ui.laden.istAn && [37, 39].includes(e.keyCode)) {
+    let ae = $(document.activeElement);
+    if(ae.ist("#dshLaden #dshLadenFensterAktionen>.dshUiKnopf")) {
+      if(e.keyCode === 37) {
+        let vor = ae.siblingVor();
+        if(vor.length) {
+          vor[0].focus();
+        }
+      } else if(e.keyCode === 39) {
+        let nach = ae.siblingNach();
+        if(nach.length) {
+          nach[0].focus();
+        }
+      }
+    }
+  }
+});
+
 ui.fenster = {
   schliessen: () => {
     $("#dshBlende").ausblenden();
