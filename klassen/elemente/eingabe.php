@@ -325,7 +325,7 @@ class Schieber extends Eingabe {
 
     $self->aktionen->addFunktionPrioritaet("onclick", 3, "ui.schieber.aktion('{$self->id}')");
 
-    $code  = "<{$self->codeAuf(false, "id", "value", "class")} id=\"{$self->id}Schieber\" class=\"dshUiSchieberAussen dshUiSchieber$wert".join(" ", array_merge(array(""), $self->klassen))."\"><span class=\"dshUiSchieber\"></span>{$self->codeZu()}";
+    $code  = "<{$self->codeAuf(false, "id", "value", "class")} id=\"{$self->id}Schieber\" class=\"dshUiSchieberAussen dshUiSchieber$wert".join(" ", $self->klassen)."\"><span class=\"dshUiSchieber\"></span>{$self->codeZu()}";
     $code .= new VerstecktesFeld($self->id, $wert);
 
     return $code;
@@ -334,6 +334,7 @@ class Schieber extends Eingabe {
 
 class Toggle extends Schieber {
   protected $tag = "button";
+  protected $typ = "button";
 
   /** @var string $text :) */
   protected $text;
@@ -606,10 +607,8 @@ class Passwortfeld extends Textfeld {
   public function __toString() : string {
     $self = clone $this;
     if($self->bezug !== null) {
-      echo $this->bezug->getID();
-      $bezugid = $self->bezug->getID();
-      $self->aktionen->addFunktionPrioritaet("onchange", 3, "ui.passwort.aktion('{$bezugid}', '{$self->id}')");
-      $self->aktionen->addFunktionPrioritaet("oninput", 3, "ui.passwort.aktion('{$bezugid}', '{$self->id}')");
+      $self->aktionen->addFunktionPrioritaet("onchange", 3, "ui.passwort.aktion('{$self->bezug->getID()}', '{$self->id}')");
+      $self->aktionen->addFunktionPrioritaet("oninput", 3, "ui.passwort.aktion('{$self->bezug->getID()}', '{$self->id}')");
     }
 
     return "{$self->codeAuf()}{$self->codeZu()}";
