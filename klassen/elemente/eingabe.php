@@ -21,7 +21,7 @@ abstract class Eingabe extends Element {
   public function __construct($id) {
     parent::__construct();
     $this->id   = $id;
-    $this->autocomplete = null;
+    $this->autocomplete = "on";
     $this->addKlasse("dshUiFeld");
     $this->setAttribut("tabindex", "0");
   }

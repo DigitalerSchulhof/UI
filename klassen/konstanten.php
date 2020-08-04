@@ -22,6 +22,8 @@ class Konstanten {
   const SCHUTZ      = "fas fa-shield-alt";
   const GESPERRT    = "fas fa-lock";
   const AUSFUELLEN  = "fas fa-pen";
+  const ABMELDEN    = "fas fa-sign-out-alt";
+  const VERSCHICKEN = "fas fa-envelope-open-text";
 
 	const SCHLIESSEN  = "fas fa-times";
 

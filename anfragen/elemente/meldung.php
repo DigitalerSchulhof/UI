@@ -15,6 +15,7 @@ $knoepfe = [];
 if(isset($aktionen)) {
   $aktionen = json_decode($aktionen, true);
   foreach($aktionen as $a) {
+    if (!isset($a["ziel"]) && $a["inhalt"] == "Abbrechen") {$a["ziel"] = "ui.laden.aus()";}
     $knopf      = new UI\Knopf($a["inhalt"], $a["art"] ?? null);
     $knopf      ->addFunktion("onclick", $a["ziel"]);
     $knoepfe[]  = $knopf;
