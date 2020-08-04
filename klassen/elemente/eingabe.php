@@ -679,12 +679,12 @@ class Spamschutz extends Textfeld {
     if ($this->typ == "Linie") {
       $anzahl = ($breite*$hoehe)/60;
     } else {
-      $anzahl = ($breite*$hoehe)/20;
+      $anzahl = ($breite*$hoehe)/15;
     }
     for ($i=0; $i<$anzahl; $i++) {
-      $r = rand(0,200);
-      $g = max(0, $r+rand(-30,30));
-      $b = max(0,$g+rand(-30,30));
+      $b = rand(0,200);
+      $g = max(0, $b+rand(-20,20));
+      $r = max(0, $b+rand(-20,20));
       while (($r + $g + $b) > 400) {
         $r = max(0, $r-rand(5,20));
         $g = max(0, $g-rand(5,20));
