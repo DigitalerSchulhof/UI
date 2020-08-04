@@ -12,16 +12,13 @@ if($icon !== null) {
 
 $knoepfe = [];
 
-for ($i=0; $i<$aktionen; $i++) {
-  $knopfinhalt = "knopfinhalt$i";
-  $knopfziel = "knopfziel$i";
-  $knopfart = "knopfart$i";
-  Anfrage::post($knopfinhalt, $knopfziel);
-  Anfrage::post(false, $knopfart);
-  Anfrage::checkFehler();
-  $knopf = new UI\Knopf($$knopfinhalt, $$knopfart);
-  $knopf->addFunktion("onclick", $$knopfziel);
-  $knoepfe[] = $knopf;
+if(isset($aktionen)) {
+  $aktionen = json_decode($aktionen, true);
+  foreach($aktionen as $a) {
+    $knopf      = new UI\Knopf($a["inhalt"], $a["art"] ?? null);
+    $knopf      ->addFunktion("onclick", $a["ziel"]);
+    $knoepfe[]  = $knopf;
+  }
 }
 
 Anfrage::setTyp("Meldung");
