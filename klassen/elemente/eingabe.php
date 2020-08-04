@@ -627,6 +627,88 @@ class Mailfeld extends Textfeld {
   }
 }
 
+class Spamschutz extends Textfeld {
+  protected $typ = "text";
+
+  /** @var char[] Text auf dem Captcha */
+  private $text;
+  /** @var string Spamschutzid */
+  private $spamid;
+  /** @var string Typ der erstellten Formen */
+  private $bildtyp;
+
+  const BILDTYPEN = ["Kreise", "Rechtecke"];
+
+  public function __construct($id, $stellen = 5) {
+    parent::__construct($id);
+    // Zufallstext erstellen
+    $auswahlzeichen = "abdefhijkmnpqrtyABDEFGHJKLMNPRTY2345678";
+    $text = [];
+    while(count($text) < $stellen) {
+      $stelle = rand(1,strlen($auswahlzeichen));
+      $text[] = substr($auswahlzeichen,$stelle-1,1);
+    }
+    $this->text = $text;
+
+    // Spamschutzid erstellen
+    do {
+      $this->spamid = uniqid();
+    } while(isset($_SESSION["SPAMSCHUTZ_{$this->spamid}"]));
+    unset($_SESSION["SPAMSCHUTZ_{$this->spamid}"]);
+    $_SESSION["SPAMSCHUTZ_{$this->spamid}"] = implode('', $text);
+
+    // Bildtypen setzen
+    $this->bildtyp = self::BILDTYPEN[rand(0,count(self::BILDTYPEN)-1)];
+  }
+
+  /**
+   * Erstellt das Textfeld und das Captcha-Bild
+   * @return string :)
+   */
+  public function __toString() : string {
+    global $ROOT;
+    $code = "";
+    $bild = imagecreate(count($this->text)*40, 50);
+    $schrift = "$ROOT/dateien/Kern/fonts/dshStandard-b.ttf";
+    $schriftgroesse = 25;
+    $x = -10;
+    $y = 35;
+    foreach ($text as $t) {
+      $r = rand(1,255);
+      $g = rand(1,255);
+      $b = rand(1,255);
+      while (($r + $g + $b) < 550) {
+        $r += 50;
+        $g += 50;
+        $b += 50;
+        if ($r > 255) {$r = 255;}
+        if ($g > 255) {$g = 255;}
+        if ($b > 255) {$b = 255;}
+      }
+      $farbe = ImageColorAllocate($bild, $r, $g, $b);
+      $x += 30;
+      $winkel = rand(-10,10);
+      $abstandx = $x + rand(-6,6);
+      $abstandy = $y + rand(-3,3);
+      imagettftext($bild, $schriftgroesse, $winkel, $abstandx, $abstandy, $farbe, $schrift, $t);
+    }
+    ob_start();
+    imagepng($bild);
+    $b64 = ob_get_contents();
+    ob_end_clean();
+    $b64 = base64_encode($b64);
+    imagedestroy($bild);
+
+    $code .= "<img id=\"{$this->id}Spamschutz\" src=\"data:image/png;base64, {$b64}\" class=\"dshUiSpamschutz dshUiSpamschutz{$this->spamid}\" style=\"float: left; margin-right: 10px;\" data-uuid=\"{$this->spamid}\">";
+    $code .= "{$self->codeAuf()}{$self->codeZu()}";
+
+    return $code;
+  }
+
+
+
+}
+
 class Textarea extends Textfeld {
   protected $tag = "textarea";
 

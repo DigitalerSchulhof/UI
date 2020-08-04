@@ -183,6 +183,7 @@ ui.check = {
   zahl: (x)     => x.toString().match(/^-?[0-9]+$/),
   natZahl: (x)  => x.toString().match(/^[0-9]+$/),
   mail: (x)     => x.toString().match(/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]{2,}$/),
+  toggle: (x)   => x.match(/^(0|1)$/)
 };
 
 ui.datumsanzeige = {

@@ -95,13 +95,13 @@ class Tabelle extends Element {
 class FormularFeld {
   /** @var InhaltElement Bezeichnung des Eingabefeldes */
   private $label;
-  /** @var Eingabefeld */
+  /** @var Eingabe */
   private $eingabe;
 
   /**
    * Erstellt ein neues FormularFeld
    * @param InhaltElement $label   :)
-   * @param Eingabefeld   $eingabe :)
+   * @param Eingabe       $eingabe :)
    */
   public function __construct($label, $eingabe) {
     $this->label = $label;

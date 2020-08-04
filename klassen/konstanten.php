@@ -24,6 +24,7 @@ class Konstanten {
   const AUSFUELLEN  = "fas fa-pen";
   const ABMELDEN    = "fas fa-sign-out-alt";
   const VERSCHICKEN = "fas fa-envelope-open-text";
+  const COOKIE      = "fas fa-cookie";
 
 	const SCHLIESSEN  = "fas fa-times";
 	const HAKEN       = "fas fa-check-square";
