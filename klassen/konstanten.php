@@ -26,6 +26,7 @@ class Konstanten {
   const VERSCHICKEN = "fas fa-envelope-open-text";
 
 	const SCHLIESSEN  = "fas fa-times";
+	const HAKEN       = "fas fa-check-square";
 
   // OS
   const APPLE     = "fab fa-apple";

@@ -606,8 +606,10 @@ class Passwortfeld extends Textfeld {
   public function __toString() : string {
     $self = clone $this;
     if($self->bezug !== null) {
-      $self->aktionen->addFunktionPrioritaet("onchange", 3, "ui.passwort.aktion('{$self->bezug->getID()}', '{$self->id}')");
-      $self->aktionen->addFunktionPrioritaet("oninput", 3, "ui.passwort.aktion('{$self->bezug->getID()}', '{$self->id}')");
+      echo $this->bezug->getID();
+      $bezugid = $self->bezug->getID();
+      $self->aktionen->addFunktionPrioritaet("onchange", 3, "ui.passwort.aktion('{$bezugid}', '{$self->id}')");
+      $self->aktionen->addFunktionPrioritaet("oninput", 3, "ui.passwort.aktion('{$bezugid}', '{$self->id}')");
     }
 
     return "{$self->codeAuf()}{$self->codeZu()}";
