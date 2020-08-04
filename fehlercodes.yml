@@ -1,3 +1,6 @@
 1:
   ort: anfragen/elemente/datumfeld/laden.php
   beschreibung: Das <b>Datum</b> ist ungültig.
+2:
+  ort: anfragen/elemente/meldung.php
+  beschreibung: Der übergebene <b>Typ</b> eines Knopes ist ungültig.
