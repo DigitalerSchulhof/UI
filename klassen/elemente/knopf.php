@@ -96,11 +96,19 @@ class Knopf extends InhaltElement {
     return $this;
   }
 
-  public static function ok() {
+  /**
+   * Gibt den Standard-OK Knopf zurück
+   * @return Knopf
+   */
+  public static function ok() : Knopf {
     return new Knopf("OK", "Standard", "ui.laden.aus()");
   }
 
-  public static function abbrechen() {
+  /**
+   * Gibt den Standard-Abbrechen Knopf zurück
+   * @return Knopf
+   */
+  public static function abbrechen() : Knopf {
     return new Knopf("Abbrechen", "Standard", "ui.laden.aus()");
   }
 }
