@@ -96,6 +96,8 @@ class FormularFeld {
   private $label;
   /** @var Eingabe */
   private $eingabe;
+  /** @var bool true, wenn Feld Optional, false sonst*/
+  private $optional;
 
   /**
    * Erstellt ein neues FormularFeld
@@ -106,9 +108,20 @@ class FormularFeld {
     $this->label = $label;
     $this->label->setTag("label");
     $this->eingabe = $eingabe;
+    $this->optional = false;
     if ($eingabe->getID() === null) {
       throw new \Exception("Keine ID übergeben");
     }
+  }
+
+  /**
+   * Setzt den Optionalwert auf den übergebenen Wert
+   * @param  bool $optional true, wenn das Feld Optional ist, false sonst
+   * @return self           :)
+   */
+  public function setOptional($optional) : self {
+    $this->optional = $optional;
+    return $this;
   }
 
   /**
@@ -120,7 +133,13 @@ class FormularFeld {
       throw new \Exception("Keine ID übergeben");
     }
     $this->label->setAttribut("for", $this->eingabe->getID());
-    return "<tr><th>{$this->label}</th><td>{$this->eingabe}</td></tr>";
+    $code = "<tr><th>{$this->label}</th>";
+    $code .= "<td>{$this->eingabe}";
+    if ($this->optional) {
+      $code .= "<span class=\"dshUiFormularfeldOptional\">optional</span>";
+    }
+    $code .= "</td></tr>";
+    return $code;
   }
 }
 
@@ -138,6 +157,7 @@ class FormularTabelle extends Element implements \ArrayAccess{
     $this->zeilen = $zeilen;
     $this->addKlasse("dshUiFormular");
     $this->aktionen->setFunktion("onsubmit", -1, "return false");
+    $this->knoepfe = [];
   }
 
   /**
@@ -184,11 +204,13 @@ class FormularTabelle extends Element implements \ArrayAccess{
     foreach($this->zeilen as $z) {
       $code .= $z;
     }
-    $code .= "<tr><td colspan=\"2\">";
-    foreach ($this->knoepfe as $k) {
-      $code .= $k." ";
+    if (count($this->knoepfe) > 0) {
+      $code .= "<tr class=\"dshUiTabelleFormularKnoepfe\"><td colspan=\"2\">";
+      foreach ($this->knoepfe as $k) {
+        $code .= $k." ";
+      }
+      $code .= "</td></tr>";
     }
-    $code .= "</td></tr>";
     $code .= "</tbody></table>";
     $code .= (new Icon(Konstanten::AUSFUELLEN))->addKlasse("dshUiFormularAusfuellen");
     $code .= $this->codeZu();

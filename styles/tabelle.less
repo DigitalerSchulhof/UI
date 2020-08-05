@@ -63,9 +63,10 @@
 
 .dshUiTabelleFormular td {
   padding: 7px 9px;
+  position: relative;
 }
 
-.dshUiTabelleFormular tr:last-child td {
+.dshUiTabelleFormular tr.dshUiTabelleFormularKnoepfe td {
   text-align: left;
   padding-bottom: 0px;
 }
@@ -84,6 +85,17 @@
   top: 14px;
 }
 
+.dshUiFormularfeldOptional {
+  position: absolute;
+  right: 9px;
+  bottom: -5px;
+  font-size: 70%;
+  font-weight: bold;
+  padding: 1px 5px;
+  border-bottom-left-radius: @radius2;
+  border-bottom-right-radius: @radius2;
+}
+
 // FARBEN;
 .dshUiTabelleListe th {
   border-color: @abstufung2;
@@ -99,4 +111,9 @@
 
 .dshUiFormular .dshUiFormularAusfuellen {
   color: @seitenhintergrund;
+}
+
+.dshUiFormularfeldOptional {
+  background-color: @abstufung4;
+  color: @schriftfarbeNegativ;
 }
