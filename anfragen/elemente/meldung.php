@@ -1,26 +1,27 @@
 <?php
-Anfrage::post("modul", "id", "parameter");
+Anfrage::post("meldemodul", "meldeid", "meldeparameter");
 
-if (!Check::istZahl($id)) {
+if (!Check::istZahl($meldeid)) {
   Anfrage::addFehler(2);
 }
-if (!Check::istLatein($meldung)) {
+if (!Check::istLatein($meldemodul)) {
   Anfrage::addFehler(3);
 }
 Anfrage::checkFehler();
 
 $gefunden = false;
 $knoepfe = [];
+$parameter = json_decode($meldeparameter, true);
 
-if (!is_file("$ROOT/module/$modul/meldungen.php")) {
+if (!is_file(__DIR__."/../../../$meldemodul/meldungen.php")) {
   Anfrage::addFehler(4, true);
 } else {
-    include("$ROOT/module/$modul/meldungen.php");
+  include(__DIR__."/../../../$meldemodul/meldungen.php");
 }
 
 if (!$gefunden) {
   Anfrage::setTyp("Meldung");
   Anfrage::setRueck("Meldung", new UI\Meldung("Meldung nicht gefunden", "Das was hier stehen sollte, muss erst noch geschrieben werden ...", "Fehler"));
-  Anfrage::setRueck("Knöpfe", [new UI\Knopf::ok()]);
+  Anfrage::setRueck("Knöpfe", [UI\Knopf::ok()]);
 }
 ?>
