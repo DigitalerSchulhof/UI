@@ -170,7 +170,7 @@ class FormularTabelle extends Element implements \ArrayAccess{
    * @return self
    */
   public function addSubmit($submit) : self {
-    $this->aktionen->addFunktion("onsubmit", $submit);
+    $this->aktionen->addFunktionPrioritaet("onsubmit", 0, $submit);
     return $this;
   }
 
