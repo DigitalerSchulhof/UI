@@ -20,13 +20,16 @@ class Knopf extends InhaltElement {
 	* @param string $inhalt :)
 	* @param string $art :)
 	*/
-  public function __construct($inhalt, $art = null) {
+  public function __construct($inhalt, $art = null, $aktion = null) {
     parent::__construct($inhalt);
     if(!in_array($art, self::ARTEN)) {
       $art = self::ARTEN[0];
     }
     $this->art = $art;
     $this->submit = false;
+    if ($aktion != null) {
+      $this->addFunktion("onclick", $aktion);
+    }
     $this->addKlasse("dshUiKnopf");
     $this->setAttribut("role", "button");
   }
@@ -91,6 +94,14 @@ class Knopf extends InhaltElement {
   public function addFunktion($ausloeser, ...$funktionen) : self {
     $this->aktionen->addFunktion($ausloeser, ...$funktionen);
     return $this;
+  }
+
+  public static function ok() {
+    return new Knopf("OK", "Standard", "ui.laden.aus()");
+  }
+
+  public static function abbrechen() {
+    return new Knopf("Abbrechen", "Standard", "ui.laden.aus()");
   }
 }
 

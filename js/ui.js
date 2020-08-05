@@ -418,6 +418,14 @@ ui.laden = {
       this.setAttr("tabindex",    this.getAttr("tabindexAlt"));
       this.setAttr("tabindexAlt", "");
     })
+  },
+  meldung: (modul, id, laden, parameter) => {
+    var laden = laden || ["Laden", "Bitte warten"];
+    var parameter = parameter || null;
+    if (!Array.isArray(laden)) {
+      var laden = ["Laden", "Bitte warten"];
+    }
+    core.ajax("UI", 1, laden, {modul: modul, id: id, parameter:parameter);
   }
 };
 

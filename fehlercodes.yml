@@ -3,4 +3,10 @@
   beschreibung: Das <b>Datum</b> ist ungültig.
 2:
   ort: anfragen/elemente/meldung.php
-  beschreibung: Der übergebene <b>Typ</b> eines Knopes ist ungültig.
+  beschreibung: Die <b>Meldungs-ID</b> ist ungültig.
+3:
+  ort: anfragen/elemente/meldung.php
+  beschreibung: Das <b>Meldungs-Modul</b> ist ungültig.
+4:
+  ort: anfragen/elemente/meldung.php
+  beschreibung: Das <b>Meldungs-Datei</b> wurde nicht gefunden.
