@@ -1,7 +1,7 @@
 <?php
 namespace UI;
 
-class Spalte extends Element {
+class Spalte extends Element implements \ArrayAccess {
   protected $tag = "div";
 
   /** @var string Mögliche Spaltentypen */
@@ -77,6 +77,36 @@ class Spalte extends Element {
     }
     $r .= $self->codeZu();
     return $r;
+  }
+
+  /*
+   * ArrayAccess Methoden
+   */
+
+  public function offsetSet($o, $v) {
+    if(!is_string((string) $v)) {
+      throw new \TypeError("Der übergebene Wert ist kein String");
+    }
+    if(!is_int($o) && !is_null($o)) {
+      throw new \TypeError("Der übergebene Offset ist keine Ganzzahl und nicht null");
+    }
+    if(is_null($o)) {
+      $this->elemente[]   = (string) $v;
+    } else {
+      $this->elemente[$o] = $v;
+    }
+  }
+
+  public function offsetExists($o) {
+    throw new \Exception("Nicht implementiert! Spezifische Methoden nutzen.");
+  }
+
+  public function offsetUnset($o) {
+    throw new \Exception("Nicht implementiert! Spezifische Methoden nutzen.");
+  }
+
+  public function offsetGet($o) {
+    throw new \Exception("Nicht implementiert! Spezifische Methoden nutzen.");
   }
 }
 

@@ -126,7 +126,7 @@ class FormularFeld {
   }
 }
 
-class FormularTabelle extends Element {
+class FormularTabelle extends Element implements \ArrayAccess{
   protected $tag = "form";
 
   /** @var FormularFeld[] $zeilen :) */
@@ -165,6 +165,16 @@ class FormularTabelle extends Element {
   }
 
   /**
+   * Kurz für <code>$this->getAktionen()->addFunktion("submit", $submit);</code>
+   * @param  string $submit :)
+   * @return self
+   */
+  public function addSubmit($submit) : self {
+    $this->aktionen->addFunktion("onsubmit", $submit);
+    return $this;
+  }
+
+  /**
    * Gibt die Tabelle in HTML-Code zurück
    * @return string :)
    */
@@ -187,6 +197,43 @@ class FormularTabelle extends Element {
     $code .= $self->codeZu();
     return $code;
   }
-}
 
+  /*
+   * ArrayAccess Methoden
+   */
+
+  public function offsetSet($o, $v) {
+    if(!($v instanceof \UI\FormularFeld) && !($v instanceof \UI\Knopf)) {
+      throw new \TypeError("Der übergebene Wert ist kein FormularFeld und kein Knopf");
+    }
+    if(!is_int($o) && !is_null($o)) {
+      throw new \TypeError("Der übergebene Offset ist keine Ganzzahl und nicht null");
+    }
+    if($v instanceof \UI\FormularFeld) {
+      if(is_null($o)) {
+        $this->zeilen[]   = $v;
+      } else {
+        $this->zeilen[$o] = $v;
+      }
+    } else if($v instanceof \UI\Knopf) {
+      if(is_null($o)) {
+        $this->knoepfe[]   = $v;
+      } else {
+        $this->knoepfe[$o] = $v;
+      }
+    }
+  }
+
+  public function offsetExists($o) {
+    throw new \Exception("Nicht implementiert! Spezifische Methoden nutzen.");
+  }
+
+  public function offsetUnset($o) {
+    throw new \Exception("Nicht implementiert! Spezifische Methoden nutzen.");
+  }
+
+  public function offsetGet($o) {
+    throw new \Exception("Nicht implementiert! Spezifische Methoden nutzen.");
+  }
+}
 ?>

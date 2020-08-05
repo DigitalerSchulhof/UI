@@ -23,6 +23,7 @@ abstract class Eingabe extends Element {
     $this->id   = $id;
     $this->autocomplete = "on";
     $this->addKlasse("dshUiFeld");
+    $this->addKlasse("dshUiEingabefeld");
     $this->setAttribut("tabindex", "0");
   }
 
@@ -109,7 +110,6 @@ abstract class PlatzhalterEingabe extends Eingabe {
    */
   public function __construct($id) {
     parent::__construct($id);
-    $this->addKlasse("dshUiEingabefeld");
   }
 
 
@@ -313,7 +313,7 @@ class Schieber extends Eingabe {
 
   public function __construct($id) {
     parent::__construct($id);
-    $this->setAttribut("tabindex", "0");
+    $this->removeKlasse("dshUiEingabefeld");
   }
 
   public function __toString() : string {
@@ -742,7 +742,7 @@ class Spamschutz extends Textfeld {
         $self = clone $this;
         $self->addKlasse("dshUiSpamschutz");
         $code .= "{$self->codeAuf()}{$self->codeZu()}";
-        $code .= "<input type=\"hidden\" id=\"{$this->id}Spamid\" name=\"{$this->id}Spamid\" value=\"{$this->spamid}\">";
+        $code .= "<input type=\"hidden\" id=\"{$this->id}Spamid\" value=\"{$this->spamid}\">";
       $code .= "</div>";
     $code .= "</div>";
     return $code;
@@ -788,6 +788,7 @@ class Option extends Eingabe {
     $this->gesetzt = false;
     $this->text = $text;
     $this->wert = $wert;
+    $this->removeKlasse("dshUiEingabefeld");
   }
 
   /**
@@ -866,6 +867,7 @@ class Togglegruppe extends Eingabe {
   public function __construct($id) {
     parent::__construct($id);
     $this->setAttribut("tabindex", null);
+    $this->removeKlasse("dshUiEingabefeld");
   }
 
   /**
@@ -917,27 +919,24 @@ class Auswahl extends Eingabe {
   /** @var Option[] Optionen der Selectbox */
   private $optionen;
 
-  /**
-   * @param string $id       ID der Selectbox
-   * @param string $text Text der ersten Option
-   * @param string $textwert Wert der ersten Option
-   * @param string $wert     Wert der Selectbox
-   * @param string $klasse   CSS-Klasse der Selectbox
-   * @param Aktion $aktion   Aktion der Selectbox
-   */
-  public function __construct($id, $text, $textwert) {
+  public function __construct($id, $wert = null) {
     parent::__construct($id);
     $this->optionen = [];
-    $this->optionen[] = new Option (null, $text, $textwert);
+    $this->wert     = $wert;
+    $this->addKlasse("dshUiSelectfeld");
   }
 
   /**
    * Fügt der Select-Box eine Option hinzu
-   * @param string $text Text der Option
-   * @param string $wert Wert der Option
+   * @param string $text      Text der Option
+   * @param string $wert      Wert der Option
+   * @param bool   $selected  Ob die Option ausgewählt ist
    */
-  public function add($text, $wert) {
+  public function add($text, $wert, $selected = false) {
     $this->optionen[] = new Option (null, $text, $wert);
+    if($selected) {
+      $this->wert = $wert;
+    }
   }
 
   /**
@@ -945,9 +944,11 @@ class Auswahl extends Eingabe {
    * @return string Code der Selectbox
    */
   public function __toString() : string {
-    $self = clone $this;
-    $self->addKlasse("dshUiSelectfeld");
-    $code = $self->codeAuf();
+    $self   = clone $this;
+    $code   = $self->codeAuf();
+    if($self->wert === null) {
+      $code  .= "<option selected disabled value=\"\" style=\"display:none\">Auswählen</option>";
+    }
     foreach ($self->optionen as $opt) {
       if ($opt->getWert() == $self->wert) {
         $opt->setGesetzt(true);
