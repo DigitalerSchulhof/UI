@@ -84,9 +84,6 @@ class Spalte extends Element implements \ArrayAccess {
    */
 
   public function offsetSet($o, $v) {
-    if(!is_string((string) $v)) {
-      throw new \TypeError("Der übergebene Wert ist kein String");
-    }
     if(!is_int($o) && !is_null($o)) {
       throw new \TypeError("Der übergebene Offset ist keine Ganzzahl und nicht null");
     }

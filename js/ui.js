@@ -341,6 +341,7 @@ ui.reiter = {
 ui.laden = {
   iseAn: false,
   fokusVor: null,
+  autoschliessen: null,
   balken: {
     prozent: (id, x) => {
       $("#"+id+"Innen").setCss("width", x+"%");
@@ -399,6 +400,11 @@ ui.laden = {
   aus: () => {
     $("#dshLadenFensterTitel", "#dshLadenFensterInhal", "#dshLadenFensterAktionen").setHTML("");
     $("#dshBlende").ausblenden();
+
+    if(ui.autoschliessen !== null) {
+      clearTimeout(ui.autoschliessen);
+      ui.autoschliessen = null;
+    }
 
     ui.laden.istAn = false;
     if(ui.laden.fokusVor !== null) {
