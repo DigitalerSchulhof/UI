@@ -371,7 +371,7 @@ class Toggle extends Schieber {
    */
   public function __toString() : string {
     $this->toStringVorbereitung();
-    if($this->wert === 1) {
+    if($this->wert === "1") {
       $wert = "1";
       $this->addKlasse("dshUiToggled");
     } else {
@@ -406,7 +406,7 @@ class IconToggle extends Toggle {
    */
   public function __toString() : string {
     $this->toStringVorbereitung();
-    if($this->wert === 1) {
+    if($this->wert === "1") {
       $wert = "1";
       $this->addKlasse("dshUiToggled");
     } else {
@@ -438,7 +438,7 @@ class IconToggleGross extends IconToggle {
    */
   public function __toString() : string {
     $this->toStringVorbereitung();
-    if($this->wert === 1) {
+    if($this->wert === "1") {
       $wert = "1";
       $this->addKlasse("dshUiToggled");
     } else {
