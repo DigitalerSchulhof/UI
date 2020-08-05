@@ -40,6 +40,10 @@ class Aktionen {
 		return $this;
 	}
 
+  public function reset() {
+    $this->aktionen = [];
+  }
+
   /**
    * Gibt das Array [Priorität][Funktionen] zurück
    * @param  string $ausloeser :)

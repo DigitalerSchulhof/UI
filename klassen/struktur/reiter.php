@@ -53,10 +53,8 @@ class Reiterkopf extends InhaltElement {
    * @return self
    */
   public function toStringVorbereitung() : self {
-    $self = clone $this;
-    $self->getAktionen()->addFunktionPrioritaet("onclick", 3, "ui.reiter.aktion('{$self->reitersegment->getReiter()->getID()}', '$self->nr', '{$self->reitersegment->getReiter()->getAnzahl()}')");
-
-    return $self;
+    $this->getAktionen()->setFunktion("onclick", 3, "ui.reiter.aktion('{$this->reitersegment->getReiter()->getID()}', '$this->nr', '{$this->reitersegment->getReiter()->getAnzahl()}')");
+    return $this;
   }
 
   /**
@@ -64,8 +62,8 @@ class Reiterkopf extends InhaltElement {
    * @return string :)
    */
   public function __toString() : string {
-    $self = $this->toStringVorbereitung();
-    return "{$self->codeAuf()}{$self->inhalt}{$self->codeZu()}";
+    $this->toStringVorbereitung();
+    return "{$this->codeAuf()}{$this->inhalt}{$this->codeZu()}";
   }
 }
 
@@ -87,8 +85,8 @@ class Reitericonkopf extends Reiterkopf {
    * @return string :)
    */
   public function __toString() : string {
-    $self = $this->toStringVorbereitung();
-    return "{$self->codeAuf()}{$self->icon} {$self->inhalt}{$self->codeZu()}";
+    $this->toStringVorbereitung();
+    return "{$this->codeAuf()}{$this->icon} {$this->inhalt}{$this->codeZu()}";
   }
 
 }
@@ -253,14 +251,18 @@ class Reiter extends Element {
     $koepfe = "";
     $koerper = "";
     for ($i=0; $i<count($this->reitersegmente); $i++) {
-      $oben = clone $this->reitersegmente[$i]->getKopf();
-      $unten = clone $this->reitersegmente[$i]->getKoerper();
+      $oben = $this->reitersegmente[$i]->getKopf();
+      $unten = $this->reitersegmente[$i]->getKoerper();
       if ($i == $this->gewaehlt) {
         $oben->addKlasse("dshUiReiterKopfAktiv");
         $unten->addKlasse("dshUiReiterKoerperAktiv");
+        $oben->removeKlasse("dshUiReiterKopfInaktiv");
+        $unten->removeKlasse("dshUiReiterKoerperInaktiv");
       } else {
         $oben->addKlasse("dshUiReiterKopfInaktiv");
         $unten->addKlasse("dshUiReiterKoerperInaktiv");
+        $oben->removeKlasse("dshUiReiterKopfAktiv");
+        $unten->removeKlasse("dshUiReiterKoerperAktiv");
       }
       $koepfe .= $oben;
       $koerper .= $unten;

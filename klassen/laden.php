@@ -48,6 +48,7 @@ class Balken extends UI\Element {
     $this->belegt = $belegt;
     $this->ganz = $ganz;
     $this->limit = $limit;
+    $this->addKlasse("dshUiBalken", "dshUiBalken{$this->art}");
   }
 
   /**
@@ -55,9 +56,7 @@ class Balken extends UI\Element {
    * @return string :)
    */
   public function __toString() : string {
-    $self = clone $this;
-    $self->addKlasse("dshUiBalken", "dshUiBalken{$this->art}");
-    $code = $self->codeAuf();
+    $code = $this->codeAuf();
       $prozent = \Check::prozent($this->belegt, $this->ganz);
       $code .= "<div class=\"dshUiBalkenA\" id=\"{$this->id}A\">";
         $code .= "<div class=\"dshUiBalkenI\" id=\"{$this->id}I\" style=\"width: {$prozent["style"]}\"></div>";
@@ -112,7 +111,7 @@ class Balken extends UI\Element {
         $code .= "</p>";
       }
 
-    $code .= $self->codeZu();
+    $code .= $this->codeZu();
     return $code;
   }
 }

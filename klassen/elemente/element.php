@@ -40,7 +40,11 @@ abstract class Element {
 	 * @return 	self
 	 */
 	public function addKlasse(...$klassen) : self {
-		$this->klassen = array_merge($this->klassen, $klassen);
+    foreach ($klassen as $k) {
+      if (!in_array($k, $this->klassen)) {
+        $this->klassen[] = $k;
+      }
+    }
 		return $this;
 	}
 
@@ -201,30 +205,28 @@ abstract class Element {
       $rueck = "<";
     }
 
-    $self = clone $this;
-
-    if($self->hinweis !== null && !in_array("hinweis", $nicht)) {
-      $self->addKlasse("dshUiHinweisTraeger");
+    if($this->hinweis !== null && !in_array("hinweis", $nicht)) {
+      $this->addKlasse("dshUiHinweisTraeger");
     }
 
-	  $rueck .= $self->tag;
-		if($self->tag === null)
+	  $rueck .= $this->tag;
+		if($this->tag === null)
 			$rueck = "";
 
-		if($self->id !== null && !in_array("id", $nicht)) {
-			$rueck .= " id=\"{$self->id}\"";
+		if($this->id !== null && !in_array("id", $nicht)) {
+			$rueck .= " id=\"{$this->id}\"";
     }
 
-		if(count($self->klassen) > 0 && !in_array("class", $nicht)) {
-			$rueck .= " class=\"".join(" ", $self->klassen)."\"";
+		if(count($this->klassen) > 0 && !in_array("class", $nicht)) {
+			$rueck .= " class=\"".join(" ", $this->klassen)."\"";
     }
 
-		if($self->aktionen->count() > 0 && !in_array("aktionen", $nicht)) {
-			$rueck .= " {$self->aktionen}";
+		if($this->aktionen->count() > 0 && !in_array("aktionen", $nicht)) {
+			$rueck .= " {$this->aktionen}";
     }
 
     if(!in_array("attribute", $nicht)) {
-      foreach($self->attribute as $attribut => $wert) {
+      foreach($this->attribute as $attribut => $wert) {
         $rueck .= " $attribut=\"$wert\"";
       }
     }
@@ -241,8 +243,8 @@ abstract class Element {
       $rueck .= ">";
     }
 
-    if($self->hinweis !== null && !in_array("hinweis", $nicht)) {
-      $rueck .= $self->hinweis;
+    if($this->hinweis !== null && !in_array("hinweis", $nicht)) {
+      $rueck .= $this->hinweis;
     }
 
 		return $rueck;

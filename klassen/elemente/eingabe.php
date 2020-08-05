@@ -159,6 +159,18 @@ class Uhrzeitfeld extends Eingabe {
   /** @var boolean Ob bei der Ausgabe Sekunden angezeigt werden sollen */
   protected $zeigeSekunden = false;
 
+  public function __construct($id, $sekunden = false) {
+    parent::__construct($id);
+    $this->zeigeSekunden = $sekunden;
+    if ($sekunden) {
+      $sek = "1";
+    } else {
+      $sek = "0";
+    }
+    $this->aktionen->addFunktionPrioritaet("onchange", 3, "ui.datumsanzeige.checkUhrzeit('{$this->id}', $sek)");
+    $this->aktionen->addFunktionPrioritaet("onkeyup",  3, "ui.datumsanzeige.checkUhrzeit('{$this->id}', $sek)");
+  }
+
   public function __toString() : string {
     // Werte richtig setzen
     $uhrzeit = explode(":", $this->wert);
@@ -170,22 +182,13 @@ class Uhrzeitfeld extends Eingabe {
       }
     }
 
-    $sekunden = "0";
-    if($this->zeigeSekunden)
-      $sekunden = "1";
-
-    $self = clone $this;
-
-    $self->aktionen->addFunktionPrioritaet("onchange", 3, "ui.datumsanzeige.checkUhrzeit('{$self->id}', $sekunden)");
-    $self->aktionen->addFunktionPrioritaet("onkeyup",  3, "ui.datumsanzeige.checkUhrzeit('{$self->id}', $sekunden)");
-
-    $code    = "<{$self->codeAuf(false, "id", "value", "class")} id=\"{$self->id}Std\" value=\"{$uhrzeit[0]}\" class=\"dshUiEingabefeld dshUiUhrzeitfeldStd".join(" ", array_merge(array(""), $self->klassen))."\">{$self->codeZu()}";
+    $code    = "<{$this->codeAuf(false, "id", "value", "class")} id=\"{$this->id}Std\" value=\"{$uhrzeit[0]}\" class=\"dshUiEingabefeld dshUiUhrzeitfeldStd".join(" ", array_merge(array(""), $this->klassen))."\">{$this->codeZu()}";
     $code   .= " : ";
-    $code   .= "<{$self->codeAuf(false, "id", "value", "class")} id=\"{$self->id}Min\" value=\"{$uhrzeit[1]}\" class=\"dshUiEingabefeld dshUiUhrzeitfeldMin".join(" ", array_merge(array(""), $self->klassen))."\">{$self->codeZu()}";
+    $code   .= "<{$this->codeAuf(false, "id", "value", "class")} id=\"{$this->id}Min\" value=\"{$uhrzeit[1]}\" class=\"dshUiEingabefeld dshUiUhrzeitfeldMin".join(" ", array_merge(array(""), $this->klassen))."\">{$this->codeZu()}";
 
-    if ($self->zeigeSekunden) {
+    if ($this->zeigeSekunden) {
       $code .= " : ";
-      $code .= "<{$self->codeAuf(false, "id", "value", "class")} id=\"{$self->id}Sek\" value=\"$uhrzeit[2]\" class=\"dshUiEingabefeld dshUiUhrzeitfeldSek".join(" ", array_merge(array(""), $self->klassen))."\">{$self->codeZu()}";
+      $code .= "<{$this->codeAuf(false, "id", "value", "class")} id=\"{$this->id}Sek\" value=\"$uhrzeit[2]\" class=\"dshUiEingabefeld dshUiUhrzeitfeldSek".join(" ", array_merge(array(""), $this->klassen))."\">{$this->codeZu()}";
     }
 
     return $code;
@@ -194,6 +197,14 @@ class Uhrzeitfeld extends Eingabe {
 
 class Datumfeld extends Eingabe {
   protected $typ = "text";
+
+
+  public function __construct($id) {
+    parent::__construct($id);
+    $this->aktionen->addFunktionPrioritaet("onfocus",  3, "ui.datumsanzeige.aktion('{$this->id}', true)");
+    $this->aktionen->addFunktionPrioritaet("onkeydown",  3, "ui.datumsanzeige.aktion('{$this->id}', false)");
+    $this->aktionen->addFunktionPrioritaet("onchange", 3, "ui.datumsanzeige.checkTag('{$this->id}')");
+  }
 
   /**
    * Gibt den Code für die Tageswahl zurück
@@ -290,20 +301,12 @@ class Datumfeld extends Eingabe {
       $datum[1] = date("m");
       $datum[2] = date("Y");
     }
-
-    $self = clone $this;
-
-    $self->aktionen->addFunktionPrioritaet("onfocus",  3, "ui.datumsanzeige.aktion('{$self->id}', true)");
-    $self->aktionen->addFunktionPrioritaet("onkeydown",  3, "ui.datumsanzeige.aktion('{$self->id}', false)");
-    $self->aktionen->addFunktionPrioritaet("onchange", 3, "ui.datumsanzeige.checkTag('{$self->id}')");
-
     $code  = "<span class=\"dshUiDatumwahlFeld dshUiFeld\">";
-    $code .= "<{$self->codeAuf(false, "id", "value", "class")} id=\"{$self->id}T\" value=\"{$datum[0]}\" class=\"dshUiEingabefeld dshUiDatumfeld dshUiDatumfeldT".join(" ", array_merge(array(""), $self->klassen))."\">{$self->codeZu()} . ";
-    $code .= "<{$self->codeAuf(false, "id", "value", "class")} id=\"{$self->id}M\" value=\"{$datum[1]}\" class=\"dshUiEingabefeld dshUiDatumfeld dshUiDatumfeldM".join(" ", array_merge(array(""), $self->klassen))."\">{$self->codeZu()} . ";
-    $code .= "<{$self->codeAuf(false, "id", "value", "class")} id=\"{$self->id}J\" value=\"{$datum[2]}\" class=\"dshUiEingabefeld dshUiDatumfeld dshUiDatumfeldJ".join(" ", array_merge(array(""), $self->klassen))."\">{$self->codeZu()} ";
-    $code .= "<div class=\"dshUiDatumwahl\" id=\"{$self->id}Datumwahl\"></div>";
+    $code .= "<{$this->codeAuf(false, "id", "value", "class")} id=\"{$this->id}T\" value=\"{$datum[0]}\" class=\"dshUiEingabefeld dshUiDatumfeld dshUiDatumfeldT".join(" ", array_merge(array(""), $this->klassen))."\">{$this->codeZu()} . ";
+    $code .= "<{$this->codeAuf(false, "id", "value", "class")} id=\"{$this->id}M\" value=\"{$datum[1]}\" class=\"dshUiEingabefeld dshUiDatumfeld dshUiDatumfeldM".join(" ", array_merge(array(""), $this->klassen))."\">{$this->codeZu()} . ";
+    $code .= "<{$this->codeAuf(false, "id", "value", "class")} id=\"{$this->id}J\" value=\"{$datum[2]}\" class=\"dshUiEingabefeld dshUiDatumfeld dshUiDatumfeldJ".join(" ", array_merge(array(""), $this->klassen))."\">{$this->codeZu()} ";
+    $code .= "<div class=\"dshUiDatumwahl\" id=\"{$this->id}Datumwahl\"></div>";
     $code .= "</span>";
-
     return $code;
   }
 }
@@ -314,20 +317,18 @@ class Schieber extends Eingabe {
   public function __construct($id) {
     parent::__construct($id);
     $this->removeKlasse("dshUiEingabefeld");
+    $this->aktionen->addFunktionPrioritaet("onclick", 3, "ui.schieber.aktion('{$this->id}')");
   }
 
   public function __toString() : string {
-    $wert = "0";
-    $self = clone $this;
-    if($self->wert === 1) {
+    if($this->wert === 1) {
       $wert = "1";
+    } else {
+      $wert = "0";
     }
 
-    $self->aktionen->addFunktionPrioritaet("onclick", 3, "ui.schieber.aktion('{$self->id}')");
-
-    $code  = "<{$self->codeAuf(false, "id", "value", "class")} id=\"{$self->id}Schieber\" class=\"dshUiSchieberAussen dshUiSchieber$wert ".join(" ", $self->klassen)."\"><span class=\"dshUiSchieber\"></span>{$self->codeZu()}";
-    $code .= new VerstecktesFeld($self->id, $wert);
-
+    $code  = "<{$this->codeAuf(false, "id", "value", "class")} id=\"{$this->id}Schieber\" class=\"dshUiSchieberAussen dshUiSchieber$wert ".join(" ", $this->klassen)."\"><span class=\"dshUiSchieber\"></span>{$this->codeZu()}";
+    $code .= new VerstecktesFeld($this->id, $wert);
     return $code;
   }
 }
@@ -346,9 +347,11 @@ class Toggle extends Schieber {
    */
   public function __construct($id, $text) {
     parent::__construct($id);
+    $this->aktionen->reset();
     $this->text = $text;
     $this->addKlasse("dshUiKnopf");
     $this->addKlasse("dshUiToggle");
+    $this->aktionen->addFunktionPrioritaet("onclick", 3, "ui.toggle.aktion('{$this->id}')");
   }
 
   /**
@@ -356,13 +359,10 @@ class Toggle extends Schieber {
    * @return self
    */
   public function toStringVorbereitung() : self {
-    $self = clone $this;
-
-    if ($self->getAktionen()->hatAusloeser("href")) {
-      $self->setTag("a");
+    if ($this->getAktionen()->hatAusloeser("href")) {
+      $this->setTag("a");
     }
-
-    return $self;
+    return $this;
   }
 
   /**
@@ -370,18 +370,16 @@ class Toggle extends Schieber {
    * @return string [description]
    */
   public function __toString() : string {
-    $self = $this->toStringVorbereitung();
-    $wert = "0";
-    if($self->wert === 1) {
+    $this->toStringVorbereitung();
+    if($this->wert === 1) {
       $wert = "1";
-      $self->addKlasse("dshUiToggled");
+      $this->addKlasse("dshUiToggled");
+    } else {
+      $wert = "0";
+      $this->removeKlasse("dshUiToggled");
     }
-
-    $self->aktionen->addFunktionPrioritaet("onclick", 3, "ui.toggle.aktion('{$this->id}')");
-
-    $code  = "<{$self->codeAuf(false, "id", "value")} id=\"{$self->id}Toggle\">{$self->text}{$this->codeZu()}";
-
-    $code .= new VerstecktesFeld($self->id, $wert);
+    $code  = "<{$this->codeAuf(false, "id", "value")} id=\"{$this->id}Toggle\">{$this->text}{$this->codeZu()}";
+    $code .= new VerstecktesFeld($this->id, $wert);
     return $code;
   }
 }
@@ -407,19 +405,16 @@ class IconToggle extends Toggle {
    * @return string [description]
    */
   public function __toString() : string {
-    $self = clone $this;
-    $wert = "0";
-    if($self->wert === 1) {
+    $this->toStringVorbereitung();
+    if($this->wert === 1) {
       $wert = "1";
-      $self->addKlasse("dshUiToggled");
+      $this->addKlasse("dshUiToggled");
+    } else {
+      $wert = "0";
+      $this->removeKlasse("dshUiToggled");
     }
-
-    $self->aktionen->addFunktionPrioritaet("onclick", 3, "ui.toggle.aktion('{$this->id}')");
-
-    $code  = "<{$self->codeAuf(false, "id", "value")} id=\"{$self->id}Toggle\">$self->icon $self->text{$this->codeZu()}";
-
-    $code .= new VerstecktesFeld($self->id, $wert);
-
+    $code  = "<{$this->codeAuf(false, "id", "value")} id=\"{$this->id}Toggle\">$this->icon $this->text{$this->codeZu()}";
+    $code .= new VerstecktesFeld($this->id, $wert);
     return $code;
   }
 }
@@ -442,20 +437,20 @@ class IconToggleGross extends IconToggle {
    * @return string [description]
    */
   public function __toString() : string {
-    $self = clone $this;
-    $wert = "0";
-    if($self->wert === 1) {
+    $this->toStringVorbereitung();
+    if($this->wert === 1) {
       $wert = "1";
-      $self->addKlasse("dshUiToggled");
+      $this->addKlasse("dshUiToggled");
+    } else {
+      $wert = "0";
+      $this->removeKlasse("dshUiToggled");
     }
-
-    $self->aktionen->addFunktionPrioritaet("onclick", 3, "ui.toggle.aktion('{$this->id}')");
 
     $toggleinhalt = new InhaltElement($this->text);
     $toggleinhalt->setTag("span");
     $toggleinhalt->addKlasse("dshUiToggleGrossText");
-    $code  = "<{$self->codeAuf(false, "id", "value")} id=\"{$self->id}Toggle\">$self->icon $toggleinhalt{$this->codeZu()}";
-    $code .= new VerstecktesFeld($self->id, $wert);
+    $code  = "<{$this->codeAuf(false, "id", "value")} id=\"{$this->id}Toggle\">$this->icon $toggleinhalt{$this->codeZu()}";
+    $code .= new VerstecktesFeld($this->id, $wert);
 
     return $code;
   }
@@ -584,16 +579,10 @@ class Passwortfeld extends Textfeld {
   public function __construct($id, $bezug = null) {
     parent::__construct($id);
     $this->bezug = $bezug;
-  }
-
-  /**
-   * Setzt das Bezugsfeld des Eingabefelds
-   * @param   Textfeld $bezug :)
-   * @return  self
-   */
-  public function setBezugsfeld($bezug) : self {
-    $this->bezug = $bezug;
-    return $this;
+    if($this->bezug !== null) {
+      $this->aktionen->addFunktionPrioritaet("onchange", 3, "ui.passwort.aktion('{$this->bezug->getID()}', '{$this->id}')");
+      $this->aktionen->addFunktionPrioritaet("oninput", 3, "ui.passwort.aktion('{$this->bezug->getID()}', '{$this->id}')");
+    }
   }
 
   /**
@@ -603,27 +592,15 @@ class Passwortfeld extends Textfeld {
   public function getBezugsfeld() : Textfeld {
     return $this->bezug;
   }
-
-  public function __toString() : string {
-    $self = clone $this;
-    if($self->bezug !== null) {
-      $self->aktionen->addFunktionPrioritaet("onchange", 3, "ui.passwort.aktion('{$self->bezug->getID()}', '{$self->id}')");
-      $self->aktionen->addFunktionPrioritaet("oninput", 3, "ui.passwort.aktion('{$self->bezug->getID()}', '{$self->id}')");
-    }
-
-    return "{$self->codeAuf()}{$self->codeZu()}";
-  }
 }
 
 class Mailfeld extends Textfeld {
   protected $typ = "text";
 
-  public function __toString() : string {
-    $self = clone $this;
-    $self->aktionen->addFunktionPrioritaet("onchange", 3,  "ui.mail.aktion('{$self->id}')");
-    $self->aktionen->addFunktionPrioritaet("oninput", 3,  "ui.mail.aktion('{$self->id}')");
-
-    return "{$self->codeAuf()}{$self->codeZu()}";
+  public function __construct($id) {
+    parent::__construct($id);
+    $this->aktionen->addFunktionPrioritaet("onchange", 3,  "ui.mail.aktion('{$this->id}')");
+    $this->aktionen->addFunktionPrioritaet("oninput", 3,  "ui.mail.aktion('{$this->id}')");
   }
 }
 
@@ -641,6 +618,8 @@ class Spamschutz extends Textfeld {
 
   public function __construct($id, $stellen = 5) {
     parent::__construct($id);
+    $this->addKlasse("dshUiSpamschutz");
+
     // Zufallstext erstellen
     $auswahlzeichen = "abdefhijkmnpqrtyABDEFGHJKLMNPRTY2345678";
     $text = [];
@@ -739,16 +718,12 @@ class Spamschutz extends Textfeld {
       $code .= "<img id=\"{$this->id}Spamschutz\" src=\"data:image/png;base64, {$b64}\" class=\"dshUiSpamschutzBild\" style=\"float: left; margin-right: 10px;\">";
       $code .= "<div class=\"dshUiSpamschutzEingabe\">";
         $code .= "<span class=\"dshUiSpamschutzHinweis\">Bitte die Zeichen aus dem Bild in das Eingabefeld übertragen.</span>";
-        $self = clone $this;
-        $self->addKlasse("dshUiSpamschutz");
-        $code .= "{$self->codeAuf()}{$self->codeZu()}";
-        $code .= "<input type=\"hidden\" id=\"{$this->id}Spamid\" value=\"{$this->spamid}\">";
+        $code .= "{$this->codeAuf()}{$this->codeZu()}";
+        $code .= new VerstecktesFeld("{$this->id}Spamid", $this->spamid);
       $code .= "</div>";
     $code .= "</div>";
     return $code;
   }
-
-
 
 }
 
@@ -819,8 +794,9 @@ class Option extends Eingabe {
   public function __toString() : string {
     if ($this->gesetzt) {
       $wahl = " selected";
+    } else {
+      $wahl = "";
     }
-    else {$wahl = "";}
     return "<{$this->codeAuf(false)}$wahl>{$this->text}{$this->codeZu()}";
   }
 }
@@ -839,14 +815,15 @@ class Toggleoption extends Option {
    * @return string       Code der Option
    */
   public function __toString() : string {
-    $self = clone $this;
-    if ($self->gesetzt) {
-      $self->addKlasse("dshUiToggled");
+    if ($this->gesetzt) {
+      $this->addKlasse("dshUiToggled");
+    } else {
+      $this->removeKlasse("dshUiToggled");
     }
-    if ($self->getAktionen()->hatAusloeser("href")) {
-      $self->setTag("a");
+    if ($this->getAktionen()->hatAusloeser("href")) {
+      $this->setTag("a");
     }
-    return "{$self->codeAuf()}{$self->text}{$self->codeZu()}";
+    return "{$this->codeAuf()}{$this->text}{$this->codeZu()}";
   }
 }
 
@@ -888,21 +865,20 @@ class Togglegruppe extends Eingabe {
     $code   = "<{$this->codeAuf(false, "value", "id")} id=\"{$this->getID()}Feld\">";
     $knopfId = 0;
     $anzahl = count($this->optionen);
-    $self = clone $this;
 
     for ($i=0; $i<$anzahl; $i++) {
-      $self = clone $this->optionen[$i];
-      if ($self->getWert() == $this->getWert()) {
-        $self->setGesetzt(true);
+      $o = $this->optionen[$i];
+      if ($o->getWert() == $this->getWert()) {
+        $o->setGesetzt(true);
         $knopfId = $i;
       }
       else {
-        $self->setGesetzt(false);
+        $o->setGesetzt(false);
       }
-      $self->setID("{$this->id}Knopf$i");
-      $self->getAktionen()->addFunktionPrioritaet("onclick", 3, "ui.togglegruppe.aktion('$this->id', '$i', '$anzahl', '{$self->getWert()}')");
+      $o->setID("{$this->id}Knopf$i");
+      $o->getAktionen()->setFunktion("onclick", 3, "ui.togglegruppe.aktion('$this->id', '$i', '$anzahl', '{$o->getWert()}')");
 
-      $code .= $self." ";
+      $code .= "$o ";
     }
 
     if ($anzahl > 0) {$code = substr($code, 0, strlen($code)-1);}
@@ -944,18 +920,19 @@ class Auswahl extends Eingabe {
    * @return string Code der Selectbox
    */
   public function __toString() : string {
-    $self   = clone $this;
-    $code   = $self->codeAuf();
-    if($self->wert === null) {
+    $code   = $this->codeAuf();
+    if($this->wert === null) {
       $code  .= "<option selected disabled value=\"\" style=\"display:none\">Auswählen</option>";
     }
-    foreach ($self->optionen as $opt) {
-      if ($opt->getWert() == $self->wert) {
+    foreach ($this->optionen as $opt) {
+      if ($opt->getWert() == $this->wert) {
         $opt->setGesetzt(true);
+      } else {
+        $opt->setGesetzt(false);
       }
       $code .= $opt;
     }
-    $code .= $self->codeZu();
+    $code .= $this->codeZu();
     return $code;
   }
 }

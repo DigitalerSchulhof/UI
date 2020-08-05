@@ -38,6 +38,7 @@ class Link extends InhaltElement {
       $this->addKlasse("dshExtern");
     }
     $this->extern = $extern;
+    $this->addKlasse("dshUiLink");
   }
 
   public function setZiel($ziel) : self {
@@ -46,12 +47,10 @@ class Link extends InhaltElement {
   }
 
   public function __toString() : string {
-    $self = clone $this;
-    $self->addKlasse("dshUiLink");
-    if ($self->extern) {
-      return "{$self->codeAuf()}{$self->inhalt} ".(new Icon(Konstanten::LINKEXT))."{$self->codeZu()}";
+    if ($this->extern) {
+      return "{$this->codeAuf()}{$this->inhalt} ".(new Icon(Konstanten::LINKEXT))."{$this->codeZu()}";
     } else {
-      return "{$self->codeAuf()}{$self->inhalt}{$self->codeZu()}";
+      return "{$this->codeAuf()}{$this->inhalt}{$this->codeZu()}";
     }
   }
 }
@@ -77,6 +76,7 @@ class Liste extends Element {
       $this->punkte[] = $p;
     }
     parent::__construct();
+    $this->addKlasse("dshUiListe");
   }
 
   /**
@@ -96,13 +96,11 @@ class Liste extends Element {
    * @return string HTML-Code der Liste
    */
   public function __toString() : string {
-    $self = clone $this;
-    $self->addKlasse("dshUiListe");
-    $code = $self->codeAuf();
-    foreach ($self->punkte as $p) {
+    $code = $this->codeAuf();
+    foreach ($this->punkte as $p) {
       $code .= "<li>$p</li>";
     }
-    return "$code{$self->codeZu()}";
+    return "$code{$this->codeZu()}";
   }
 }
 ?>

@@ -71,7 +71,7 @@
   $spalte->addElement(new UI\Farbfeld("dshUiDemoFarbfeld")."<br>");
 
   $spalte->addElement("<h3>Passwort</h3>");
-  $spalte->addElement((new UI\Passwortfeld("dshUiDemoPasswortfeld"))->setPlatzhalter("Platzhalter...")->setBezugsfeld($textfeld)."<br>");
+  $spalte->addElement((new UI\Passwortfeld("dshUiDemoPasswortfeld", $textfeld))->setPlatzhalter("Platzhalter...")."<br>");
 
   $spalte->addElement("<h3>E-Mail</h3>");
   $spalte->addElement((new UI\Mailfeld("dshUiDemoMailfeld"))->setPlatzhalter("Platzhalter...")."<br>");

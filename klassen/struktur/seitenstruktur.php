@@ -25,6 +25,7 @@ class Spalte extends Element implements \ArrayAccess {
     $this->typ      = $typ;
     $this->elemente = $elemente;
     $this->addKlasse("dshSpalte");
+    $this->addKlasse("dshSpalte{$typ}");
   }
 
   /**
@@ -52,10 +53,12 @@ class Spalte extends Element implements \ArrayAccess {
    * @return self
    */
   public function setTyp($typ) : self {
+    $this->removeKlasse("dshSpalte{$this->typ}");
     if($typ !== null && !in_array($typ, self::TYPEN)) {
       $typ = self::TYPEN[0];
     }
     $this->typ = $typ;
+    $this->addKlasse("dshSpalte{$typ}");
     return $this;
   }
 
@@ -68,14 +71,11 @@ class Spalte extends Element implements \ArrayAccess {
   }
 
   public function __toString() : string {
-    $self = clone $this;
-
-    $self->addKlasse("dshSpalte{$self->typ}");
-    $r = $self->codeAuf();
-    foreach($self->elemente as $element) {
+    $r = $this->codeAuf();
+    foreach($this->elemente as $element) {
       $r .= $element;
     }
-    $r .= $self->codeZu();
+    $r .= $this->codeZu();
     return $r;
   }
 
@@ -140,11 +140,10 @@ class Zeile extends Element {
     }));
 
     foreach($this->spalten as $spalte) {
-      $klon = clone $spalte;
-      if($klon->getTyp() === null) {
-        $klon->setTyp("A$nullspaltenanz");
+      if($spalte->getTyp() === null) {
+        $spalte->setTyp("A$nullspaltenanz");
       }
-      $r .= $klon;
+      $r .= $spalte;
     }
     $r .= "<div class=\"dshClear\"></div>";
     $r .= $this->codeZu();

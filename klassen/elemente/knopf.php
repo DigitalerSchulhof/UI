@@ -54,33 +54,32 @@ class Knopf extends InhaltElement {
    * @return self
    */
   public function toStringVorbereitung() : self {
-    $self = clone $this;
-    if ($self->aktionen->count() === 0 && !$self->istSubmit()) {
-      $self->addKlasse("dshUiKnopfLeer");
-      $self->setAttribut("aria-disabled", "true");
-      $self->setAttribut("tabindex", "-1");
-      $self->aktionen->addFunktion("onclick", "this.blur()");
+    if ($this->aktionen->count() === 0 && !$this->istSubmit()) {
+      $this->addKlasse("dshUiKnopfLeer");
+      $this->setAttribut("aria-disabled", "true");
+      $this->setAttribut("tabindex", "-1");
+      $this->aktionen->addFunktion("onclick", "this.blur()");
     } else {
-      $self->setAttribut("aria-disabled", "false");
-      $self->setAttribut("tabindex", "0");
+      $this->setAttribut("aria-disabled", "false");
+      $this->setAttribut("tabindex", "0");
     }
 
-    if ($self->getAktionen()->hatAusloeser("href")) {
-      $self->setTag("a");
+    if ($this->getAktionen()->hatAusloeser("href")) {
+      $this->setTag("a");
     }
-    if($self->istSubmit()) {
-      $self->setAttribut("type", "submit");
+    if($this->istSubmit()) {
+      $this->setAttribut("type", "submit");
     }
 
-    $self->addKlasse("dshUiKnopf{$self->art}");
-    $self->setInhalt((new InhaltElement($self->inhalt))->setTag("span"));
+    $this->addKlasse("dshUiKnopf{$this->art}");
+    $this->setInhalt((new InhaltElement($this->inhalt))->setTag("span"));
 
-    return $self;
+    return $this;
   }
 
   public function __toString() : string {
-    $self = $this->toStringVorbereitung();
-    return "{$self->codeAuf()}{$self->inhalt}{$self->codeZu()}";
+    $this->toStringVorbereitung();
+    return "{$this->codeAuf()}{$this->inhalt}{$this->codeZu()}";
   }
 
   /**
@@ -114,8 +113,8 @@ class IconKnopf extends Knopf {
   }
 
   public function __toString() : string {
-    $self = $this->toStringVorbereitung();
-    return "{$self->codeAuf()}{$self->icon}{$self->inhalt}{$self->codeZu()}";
+    $this->toStringVorbereitung();
+    return "{$this->codeAuf()}{$this->icon}{$this->inhalt}{$this->codeZu()}";
   }
 }
 
@@ -132,9 +131,8 @@ class GrossIconKnopf extends IconKnopf {
   }
 
   public function __toString() : string {
-    $self = $this->toStringVorbereitung();
-
-    return "{$self->codeAuf()}{$self->icon}{$self->inhalt}{$self->codeZu()}";
+    $this->toStringVorbereitung();
+    return "{$this->codeAuf()}{$this->icon}{$this->inhalt}{$this->codeZu()}";
   }
 }
 
@@ -153,9 +151,9 @@ class MiniIconKnopf extends IconKnopf {
   }
 
   public function __toString() : string {
-    $self = $this->toStringVorbereitung();
+    $this->toStringVorbereitung();
 
-    return "{$self->codeAuf()}{$self->icon}{$self->codeZu()}";
+    return "{$this->codeAuf()}{$this->icon}{$this->codeZu()}";
   }
 }
 
@@ -194,17 +192,9 @@ class Sortierknopf extends MiniIconKnopf {
     $this->hinweis = null;
     $this->tabelleId = $tabelleId;
     $this->spaltenname = $spaltenname;
-  }
 
-  /**
-   * Gibt einen Klon mit passenden Klassen zurück
-   * @return self
-   */
-  public function toStringVorbereitung() : self {
-    $self = clone $this;
-    $self->aktionen->addFunktion("onclick", "ui.tabelle.sortieren('{$this->richtung}', '{$this->tabelleId}', '{$this->spaltenname}')");
-    $self->addKlasse("dshUiSortierknopf");
-    return $self;
+    $this->aktionen->addFunktionPrioritaet("onclick", 3, "ui.tabelle.sortieren('{$this->richtung}', '{$this->tabelleId}', '{$this->spaltenname}')");
+    $this->addKlasse("dshUiSortierknopf");
   }
 }
 ?>

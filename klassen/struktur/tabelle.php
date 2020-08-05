@@ -24,6 +24,7 @@ class Tabelle extends Element {
       }
     }
     $this->addKlasse("dshUiTabelle");
+    $this->addKlasse("dshUiTabelleListe");
   }
 
   /**
@@ -62,32 +63,30 @@ class Tabelle extends Element {
    * @return string :)
    */
   public function __toString() : string {
-    $self = clone $this;
-    $self->addKlasse("dshUiTabelleListe");
-    $code  = $self->codeAuf();
+    $code  = $this->codeAuf();
     $spaltennr = 0;
     $code .= "<thead id=\"{$this->id}Kopf\"><tr>";
-    foreach ($self->titel as $t) {
-      $aufsteigend = new Sortierknopf("ASC", $self->id, $spaltennr);
-      $absteigend = new Sortierknopf("DESC", $self->id, $spaltennr);
+    foreach ($this->titel as $t) {
+      $aufsteigend = new Sortierknopf("ASC", $this->id, $spaltennr);
+      $absteigend = new Sortierknopf("DESC", $this->id, $spaltennr);
       $code .= "<th>$t{$aufsteigend}{$absteigend}</th>";
       $spaltennr++;
     }
     $code .= "</tr></thead><tbody id=\"{$this->id}Koerper\">";
     $zeilenr = 0;
-    foreach($self->zellen as $z) {
+    foreach($this->zellen as $z) {
       $code .= "<tr>";
       $spaltennr = 0;
-      foreach ($self->titel as $t) {
+      foreach ($this->titel as $t) {
         $code .= "<td id=\"{$this->id}Z{$zeilenr}S$spaltennr\">{$z[$t]}</td>";
         $spaltennr++;
       }
       $code .= "</tr>";
       $zeilenr ++;
     }
-    $code .= "</tbody>{$self->codeZu()}";
-    $code .= new VerstecktesFeld("{$self->id}ZAnzahl", $zeilenr);
-    $code .= new VerstecktesFeld("{$self->id}SAnzahl", $spaltennr);
+    $code .= "</tbody>{$this->codeZu()}";
+    $code .= new VerstecktesFeld("{$this->id}ZAnzahl", $zeilenr);
+    $code .= new VerstecktesFeld("{$this->id}SAnzahl", $spaltennr);
     return $code;
   }
 }
@@ -117,12 +116,11 @@ class FormularFeld {
    * @return string :)
    */
   public function __toString() : string {
-    $self = clone $this;
-    if ($self->eingabe->getID() === null) {
+    if ($this->eingabe->getID() === null) {
       throw new \Exception("Keine ID übergeben");
     }
-    $self->label->setAttribut("for", $self->eingabe->getID());
-    return "<tr><th>{$self->label}</th><td>{$self->eingabe}</td></tr>";
+    $this->label->setAttribut("for", $this->eingabe->getID());
+    return "<tr><th>{$this->label}</th><td>{$this->eingabe}</td></tr>";
   }
 }
 
@@ -138,6 +136,8 @@ class FormularTabelle extends Element implements \ArrayAccess{
   public function __construct(...$zeilen) {
     parent::__construct();
     $this->zeilen = $zeilen;
+    $this->addKlasse("dshUiFormular");
+    $this->aktionen->setFunktion("onsubmit", -1, "return false");
   }
 
   /**
@@ -179,12 +179,9 @@ class FormularTabelle extends Element implements \ArrayAccess{
    * @return string :)
    */
   public function __toString() : string {
-    $self = clone $this;
-    $self->addKlasse("dshUiFormular");
-    $self->getAktionen()->addFunktionPrioritaet("onsubmit", -1, "return false");
-    $code  = $self->codeAuf();
+    $code  = $this->codeAuf();
     $code .= "<table class=\"dshUiTabelle dshUiTabelleFormular\"><tbody>";
-    foreach($self->zeilen as $z) {
+    foreach($this->zeilen as $z) {
       $code .= $z;
     }
     $code .= "<tr><td colspan=\"2\">";
@@ -194,7 +191,7 @@ class FormularTabelle extends Element implements \ArrayAccess{
     $code .= "</td></tr>";
     $code .= "</tbody></table>";
     $code .= (new Icon(Konstanten::AUSFUELLEN))->addKlasse("dshUiFormularAusfuellen");
-    $code .= $self->codeZu();
+    $code .= $this->codeZu();
     return $code;
   }
 

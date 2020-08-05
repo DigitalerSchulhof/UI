@@ -14,6 +14,7 @@ class Icon extends Element {
     parent::__construct();
     $this->icon = $icon;
     $this->addKlasse("dshUiIcon");
+    $this->addKlasse($icon);
   }
 
   /**
@@ -22,13 +23,13 @@ class Icon extends Element {
    * @return self
    */
   public function setIcon($icon) : self {
+    $this->removeKlasse($this->icon);
     $this->icon = $icon;
+    $this->addKlasse($icon);
   }
 
   public function __toString() : string {
-    $self = clone $this;
-    $self->addKlasse($self->icon);
-    return "{$self->codeAuf()}{$self->codeZu()}";
+    return "{$this->codeAuf()}{$this->codeZu()}";
   }
 }
 ?>
