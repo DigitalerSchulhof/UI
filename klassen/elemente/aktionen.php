@@ -125,15 +125,16 @@ class Aktionen {
 					$rueck .= " ";
 				}
 				$rueck .= "$ausloeser=\"";
+        $i = 0;
 				foreach($prioritaeten as $funktionen) {
 					foreach($funktionen as $fi => $funktion) {
-						if($fi > 0) {
+						if($fi+($i++) > 0) {
 							$rueck .= ";";
 						}
 						$rueck .= $funktion;
 					}
-					$rueck .= "\"";
 				}
+        $rueck .= "\"";
 			}
 		}
 		return $rueck;
