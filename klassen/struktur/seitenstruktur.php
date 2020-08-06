@@ -107,7 +107,7 @@ class Spalte extends Element implements \ArrayAccess {
   }
 }
 
-class Zeile extends Element {
+class Zeile extends Element implements \ArrayAccess {
   protected $tag = "div";
 
   /** @var Spalte[] Spalten dieser Zeile */
@@ -157,6 +157,36 @@ class Zeile extends Element {
    */
   public static function standard(...$element) : Zeile {
     return new Zeile(new Spalte(null, ...$element));
+  }
+
+  /*
+   * ArrayAccess Methoden
+   */
+
+  public function offsetSet($o, $v) {
+    if(!($v instanceof Spalte)) {
+      throw new \TypeError("Die übergebene Spalte ist nicht vom Typ \\UI\\Spalte");
+    }
+    if(!is_int($o) && !is_null($o)) {
+      throw new \TypeError("Der übergebene Offset ist keine Ganzzahl und nicht null");
+    }
+    if(is_null($o)) {
+      $this->spalten[]    = $v;
+    } else {
+      $this->spalten[$o]  = $v;
+    }
+  }
+
+  public function offsetExists($o) {
+    throw new \Exception("Nicht implementiert! Spezifische Methoden nutzen.");
+  }
+
+  public function offsetUnset($o) {
+    throw new \Exception("Nicht implementiert! Spezifische Methoden nutzen.");
+  }
+
+  public function offsetGet($o) {
+    throw new \Exception("Nicht implementiert! Spezifische Methoden nutzen.");
   }
 }
 ?>

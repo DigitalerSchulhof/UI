@@ -202,6 +202,17 @@ abstract class Element {
     return $this;
   }
 
+  /**
+   * Setzt den Titel des Elements
+   * Kurzform für Element::setAttribut("title", $titel);
+   * @param  string $titel :)
+   * @return self
+   */
+  public function setTitel($titel) : self {
+    $this->setAttribut("title", $titel);
+    return $this;
+  }
+
   public function toStringVorbereitung() : self {
 
   }
