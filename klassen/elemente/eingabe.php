@@ -96,6 +96,7 @@ class VerstecktesFeld extends Eingabe {
   public function __construct($id, $wert) {
     parent::__construct($id);
     $this->wert = $wert;
+    $this->setAttribut("tabindex", "-1");
   }
 }
 
