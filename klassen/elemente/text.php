@@ -131,6 +131,7 @@ class Datum {
    */
   public function kurz($vorgabe = "MU") : string {
     $rueck = "";
+    $vorgabe = " ".$vorgabe;
     // Wochentag
     if (strpos($vorgabe, "w")) {$rueck .= $this->getWochentag(true).", den ";}
     else if (strpos($vorgabe, "W")) {$rueck .= $this->getWochentag().", den ";}
