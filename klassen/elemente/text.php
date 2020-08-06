@@ -121,7 +121,7 @@ class Datum {
    * @return string :)
    */
   public function __toString() : string {
-    return kurz("WMU");
+    return $this->kurz("WMU");
   }
 
   /**
