@@ -3,14 +3,19 @@ namespace UI;
 
 class Konstanten {
   // Knöpfe
-  const ZURUECK  = "fas fa-angle-double-left";
-  const VOR      = "fas fa-angle-double-right";
-  const DRUCKEN  = "fas fa-print";
-  const LOESCHEN = "fas fa-minus-circle";
-  const ASC      = "fas fa-sort-alpha-down";
-  const DESC     = "fas fa-sort-alpha-down-alt";
-  const LINKEXT  = "fas fa-external-link-alt";
-  const LINK     = "fas fa-link";
+  const ZURUECK     = "fas fa-angle-double-left";
+  const VOR         = "fas fa-angle-double-right";
+  const DRUCKEN     = "fas fa-print";
+  const ASC         = "fas fa-sort-alpha-down";
+  const DESC        = "fas fa-sort-alpha-down-alt";
+  const LINKEXT     = "fas fa-external-link-alt";
+  const LINK        = "fas fa-link";
+	const SCHLIESSEN  = "fas fa-times";
+	const HAKEN       = "fas fa-check-square";
+	const LOESCHEN    = "fas fa-minus-circle";
+	const BEARBEITEN  = "fas fa-pencil-alt";
+	const NEU         = "fas fa-plus-circle";
+	const PAPIERKORB  = "fas fa-trash";
 
   // Meldungen
   const STANDARD    = "fas fa-caret-right";
@@ -25,9 +30,6 @@ class Konstanten {
   const ABMELDEN    = "fas fa-sign-out-alt";
   const VERSCHICKEN = "fas fa-envelope-open-text";
   const COOKIE      = "fas fa-cookie";
-
-	const SCHLIESSEN  = "fas fa-times";
-	const HAKEN       = "fas fa-check-square";
 
   // OS
   const APPLE     = "fab fa-apple";

@@ -174,6 +174,38 @@ class MiniIconKnopf extends IconKnopf {
 
     return "{$this->codeAuf()}{$this->icon}{$this->codeZu()}";
   }
+
+  /**
+   * Gibt das Standardknopf für Löschen zurück
+   * @return MiniIconKnopf :)
+   */
+  public static function loeschen() : MiniIconKnopf {
+    return new MiniIconKnopf(Icon::loeschen(), "Löschen", "Warnung");
+  }
+
+  /**
+   * Gibt das Standardknopf für Papierkorb zurück
+   * @return MiniIconKnopf :)
+   */
+  public static function papierkorb() : MiniIconKnopf {
+    return new MiniIconKnopf(Icon::papierkorb(), "In den Papierkorb bewegen", "Warnung");
+  }
+
+  /**
+   * Gibt das Standardknopf für Bearbeiten zurück
+   * @return MiniIconKnopf :)
+   */
+  public static function bearbeiten() : MiniIconKnopf {
+    return new MiniIconKnopf(Icon::bearbeiten(), "bearbeiten", "Standard");
+  }
+
+  /**
+   * Gibt das Standardknopf für Neues zurück
+   * @return MiniIconKnopf :)
+   */
+  public static function neu() : MiniIconKnopf {
+    return new MiniIconKnopf(Icon::neu(), "Neu", "Erfolg");
+  }
 }
 
 

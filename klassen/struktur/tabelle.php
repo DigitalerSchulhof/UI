@@ -13,12 +13,12 @@ class Tabelle extends Element {
   /** @var string $sortierung Spalte nach der sortiert werden soll */
   protected $sortierung;
 
-  public function __construct($id, $titel, ...$zellen) {
+  public function __construct($id, $titel, ...$zeilen) {
     parent::__construct();
     $this->id = $id;
     $this->titel = $titel;
     $this->zellen = [];
-    foreach ($zellen as $z) {
+    foreach ($zeilen as $z) {
       if ($this->pruefeZeile($z)) {
         $this->zellen[] = $z;
       }
@@ -66,10 +66,16 @@ class Tabelle extends Element {
     $code  = $this->codeAuf();
     $spaltennr = 0;
     $code .= "<thead id=\"{$this->id}Kopf\"><tr>";
+    $anzzeilen = count($this->zellen);
+    $anzspalten = count($this->titel);
     foreach ($this->titel as $t) {
-      $aufsteigend = new Sortierknopf("ASC", $this->id, $spaltennr);
-      $absteigend = new Sortierknopf("DESC", $this->id, $spaltennr);
-      $code .= "<th>$t{$aufsteigend}{$absteigend}</th>";
+      if ($anzzeilen > 0) {
+        $aufsteigend = new Sortierknopf("ASC", $this->id, $spaltennr);
+        $absteigend = new Sortierknopf("DESC", $this->id, $spaltennr);
+        $code .= "<th>$t{$aufsteigend}{$absteigend}</th>";
+      } else {
+        $code .= "<th>$t</th>";
+      }
       $spaltennr++;
     }
     $code .= "</tr></thead><tbody id=\"{$this->id}Koerper\">";
@@ -83,6 +89,9 @@ class Tabelle extends Element {
       }
       $code .= "</tr>";
       $zeilenr ++;
+    }
+    if ($anzzeilen == 0) {
+      $code .= "<tr><td colspan=\"$anzspalten\" class=\"dshUiNotiz\">-- keine Datensätze --</td></tr>";
     }
     $code .= "</tbody>{$this->codeZu()}";
     $code .= new VerstecktesFeld("{$this->id}ZAnzahl", $zeilenr);

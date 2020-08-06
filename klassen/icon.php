@@ -31,5 +31,37 @@ class Icon extends Element {
   public function __toString() : string {
     return "{$this->codeAuf()}{$this->codeZu()}";
   }
+
+  /**
+   * Gibt das Standardicon für Löschen zurück
+   * @return Icon :)
+   */
+  public static function loeschen() : Icon {
+    return new Icon(Konstanten::LOESCHEN);
+  }
+
+  /**
+   * Gibt das Standardicon für Papierkorb zurück
+   * @return Icon :)
+   */
+  public static function papierkorb() : Icon {
+    return new Icon(Konstanten::PAPIERKORB);
+  }
+
+  /**
+   * Gibt das Standardicon für Bearbeiten zurück
+   * @return Icon :)
+   */
+  public static function bearbeiten() : Icon {
+    return new Icon(Konstanten::BEARBEITEN);
+  }
+
+  /**
+   * Gibt das Standardicon für Neues zurück
+   * @return Icon :)
+   */
+  public static function neu() : Icon {
+    return new Icon(Konstanten::NEU);
+  }
 }
 ?>

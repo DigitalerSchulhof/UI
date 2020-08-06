@@ -332,9 +332,11 @@ ui.togglegruppe = {
 ui.reiter = {
   aktion: (id, nr, anzahl) => {
     for (var i = 0; i < anzahl; i++) {
-      $("#"+id+"Koerper"+i, "#"+id+"Kopf"+i).removeKlasse("dshUiReiterKoerperAktiv").addKlasse("dshUiReiterKoerperInaktiv");
+      $("#"+id+"Koerper"+i).removeKlasse("dshUiReiterKoerperAktiv").addKlasse("dshUiReiterKoerperInaktiv");
+      $("#"+id+"Kopf"+i).removeKlasse("dshUiReiterKopfAktiv").addKlasse("dshUiReiterKopfInaktiv");
     }
-    $("#"+id+"Koerper"+nr, "#"+id+"Kopf"+nr).removeKlasse("dshUiReiterKoerperInaktiv").addKlasse("dshUiReiterKoerperAktiv");
+    $("#"+id+"Koerper"+nr).removeKlasse("dshUiReiterKoerperInaktiv").addKlasse("dshUiReiterKoerperAktiv");
+    $("#"+id+"Kopf"+nr).removeKlasse("dshUiReiterKopfInaktiv").addKlasse("dshUiReiterKopfAktiv");
   }
 };
 
