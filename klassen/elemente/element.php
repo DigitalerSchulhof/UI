@@ -67,6 +67,19 @@ abstract class Element {
 		return in_array($klasse, $this->klassen);
 	}
 
+  /**
+   * Setzt oder entfernt je nach <code>$set</code> eine oder mehrere CSS-Klassen
+   * @param  bool   $set     Ob die CSS-Klassen gesetzt oder entfernt werden sollen
+   * @param  string ...$klassen :)
+   * @return self
+   */
+  public function setKlasse($set, ...$klassen) : self {
+    if($set) {
+      return $this->addKlasse(...$klassen);
+    }
+    return $this->removeKlasse(...$klassen);
+  }
+
 
 	/**
 	 * Setzt ein Attribut

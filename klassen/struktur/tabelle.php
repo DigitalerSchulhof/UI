@@ -143,9 +143,10 @@ class FormularFeld {
     }
     $this->label->setAttribut("for", $this->eingabe->getID());
     $code = "<tr><th>{$this->label}</th>";
+    $this->eingabe->setKlasse($this->optional, "dshUiEingabefeldOptional");
     $code .= "<td>{$this->eingabe}";
     if ($this->optional) {
-      $code .= "<span class=\"dshUiFormularfeldOptional\">optional</span>";
+      $code .= new Notiz("Optional");
     }
     $code .= "</td></tr>";
     return $code;
@@ -199,7 +200,7 @@ class FormularTabelle extends Element implements \ArrayAccess{
    * @return self
    */
   public function addSubmit($submit) : self {
-    $this->aktionen->addFunktionPrioritaet("onsubmit", 0, $submit);
+    $this->aktionen->addFunktionPrioritaet("onsubmit", 0, "try{{$submit}}catch(_){console.error(_)}");
     return $this;
   }
 

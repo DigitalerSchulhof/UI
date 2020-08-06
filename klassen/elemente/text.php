@@ -24,6 +24,15 @@ class Absatz extends InhaltElement {
   protected $tag = "p";
 }
 
+class Notiz extends InhaltElement {
+  protected $tag = "p";
+
+  public function __construct($inhalt = "") {
+    parent::__construct($inhalt);
+    $this->addKlasse("dshNotiz");
+ }
+}
+
 class Link extends InhaltElement {
   protected $tag = "a";
 
