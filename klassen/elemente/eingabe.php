@@ -656,10 +656,10 @@ class Spamschutz extends Textfeld {
     imagefilledrectangle($bild, 0, 0,count($this->text)*40, 50,$hintergrund);
 
     // Hintergrund füllen
-    if ($this->typ == "Linie") {
-      $anzahl = ($breite*$hoehe)/60;
+    if ($this->bildtyp == "Linie") {
+      $anzahl = (($breite*$hoehe)/10) / rand(3,5);
     } else {
-      $anzahl = ($breite*$hoehe)/13;
+      $anzahl = (($breite*$hoehe)/40) / rand(2,4);
     }
     for ($i=0; $i<$anzahl; $i++) {
       $g = rand(0,255);
