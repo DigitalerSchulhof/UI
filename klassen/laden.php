@@ -57,12 +57,12 @@ class Balken extends UI\Element {
    */
   public function __toString() : string {
     $code = $this->codeAuf();
-      $prozent = \Check::prozent($this->belegt, $this->ganz);
+      $prozent = UI\Check::prozent($this->belegt, $this->ganz);
       $code .= "<div class=\"dshUiBalkenA\" id=\"{$this->id}A\">";
         $code .= "<div class=\"dshUiBalkenI\" id=\"{$this->id}I\" style=\"width: {$prozent["style"]}\"></div>";
       $code .= "</div>";
       $uebrig = $this->ganz - $this->belegt;
-      $uebrigprozent = \Check::prozent($uebrig, $this->ganz);
+      $uebrigprozent = UI\Check::prozent($uebrig, $this->ganz);
       if ($this->art == "Schritte") {
         if ($this->belegt == 1) {
           $einheitpos = "Schritt";
@@ -87,16 +87,16 @@ class Balken extends UI\Element {
           $code .= "(<span id=\"{$this->id}UebrigPro\">{$uebrigprozent["anzeige"]}</span>).";
         $code .= "</p>";
       } else if ($this->art == "Zeit") {
-        $uebrigprozent = \Check::prozent($uebrig, $this->limit);
-        $uebrig = \Check::zeit($uebrig);
+        $uebrigprozent = UI\Check::prozent($uebrig, $this->limit);
+        $uebrig = UI\Check::zeit($uebrig);
         $code .= "<p class=\"dshUiNotiz\">";
           $code .= "Aktiv bis ".date("d.m.Y", $this->ganz)." um ".date("H:i", $this->ganz)." Uhr - ";
           $code .= "noch <span id=\"{$this->id}UebrigAbs\">{$uebrig}</span>.";
         $code .= "</p>";
       } else if ($this->art == "Speicher") {
-        $belegt = \Check::speicher($this->belegt);
-        $gesamt = \Check::speicher($this->ganz);
-        $frei = \Check::speicher($uebrig);
+        $belegt = UI\Check::speicher($this->belegt);
+        $gesamt = UI\Check::speicher($this->ganz);
+        $frei = UI\Check::speicher($uebrig);
         $code .= "<p class=\"dshUiNotiz\">";
           $code .= "<span id=\"{$this->id}BelegtAbs\">{$belegt}</span> ";
           $code .= "(<span id=\"{$gesamt}BelegtPro\">{$prozent["anzeige"]}</span>) ";

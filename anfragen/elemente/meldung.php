@@ -1,10 +1,10 @@
 <?php
 Anfrage::post("meldemodul", "meldeid", "meldeparameter");
 
-if (!Check::istZahl($meldeid)) {
+if (!UI\Check::istZahl($meldeid)) {
   Anfrage::addFehler(2);
 }
-if (!Check::istLatein($meldemodul)) {
+if (!UI\Check::istLatein($meldemodul)) {
   Anfrage::addFehler(3);
 }
 Anfrage::checkFehler();
