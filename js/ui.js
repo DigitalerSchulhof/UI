@@ -77,7 +77,13 @@ ui.generieren = {
     }
   },
   laden: {
-    icon: () => "<div class=\"dshUiLadenIcon\"><div></div><div></div><div></div><div></div></div>",
+    icon: (inhalt) => {
+      var code = "<div class=\"dshUiLaden\">";
+      code += "<div class=\"dshUiLadenIcon\"><div></div><div></div><div></div><div></div></div>";
+      code += "<span class=\"dshUiLadenStatus\">"+inhalt+"...</span>";
+      code += "</div>";
+      return code;
+    },
     balken: {
       speicher: (id, belegt, gesamt, art) => {
         var belegt = belegt || null;
@@ -351,10 +357,7 @@ ui.laden = {
   },
   an: (titel, inhalt) => {
     $("#dshLadenFensterTitel").setHTML(titel);
-    var code = "<div class=\"dshUiLaden\">";
-    code += ui.generieren.laden.icon();
-    code += "<span class=\"dshUiLadenStatus\">"+inhalt+"...</span>";
-    code += "</div>";
+    var code = ui.generieren.laden.icon(inhalt);
     $("#dshLadenFensterInhalt").setHTML(code);
     $("#dshLadenFensterAktionen").setHTML("");
     $("#dshBlende").einblenden();

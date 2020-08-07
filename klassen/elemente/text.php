@@ -24,6 +24,10 @@ class Absatz extends InhaltElement {
   protected $tag = "p";
 }
 
+class Code extends InhaltElement {
+  protected $tag = "pre";
+}
+
 class Notiz extends InhaltElement {
   protected $tag = "p";
 
@@ -140,17 +144,36 @@ class Datum {
    */
   public function kurz($vorgabe = "MU") : string {
     $rueck = "";
-    $vorgabe = " ".$vorgabe;
+    $vorgabe = $vorgabe;
     // Wochentag
-    if (strpos($vorgabe, "w")) {$rueck .= $this->getWochentag(true).", den ";}
-    else if (strpos($vorgabe, "W")) {$rueck .= $this->getWochentag().", den ";}
+    if (strpos($vorgabe, "w") !== false) {
+      $rueck .= $this->getWochentag(true).", den ";
+    }
+    else if (strpos($vorgabe, "W") !== false) {
+      $rueck .= $this->getWochentag().", den ";
+    }
     // Monat
-    if (strpos($vorgabe, "m")) {$rueck .= date("d", $this->zeit).". ".$this->getMonatname(true)." ".date("Y", $this->zeit);}
-    else if (strpos($vorgabe, "M")) {$rueck .= date("d", $this->zeit).". ".$this->getMonatname()." ".date("Y", $this->zeit);}
-    else {$rueck .= date("d.m.Y", $this->zeit);}
+    if (strpos($vorgabe, "m") !== false) {
+      $rueck .= date("d", $this->zeit).". ".$this->getMonatname(true)." ".date("Y", $this->zeit);
+    } else if (strpos($vorgabe, "M") !== false) {
+      $rueck .= date("d", $this->zeit).". ".$this->getMonatname()." ".date("Y", $this->zeit);}
+    else {
+      $rueck .= date("d.m.Y", $this->zeit);
+    }
     // Uhrzeit
-    if (strpos($vorgabe, "u")) {$rueck .= " ".date("H:i", $this->zeit);}
-    else if (strpos($vorgabe, "U")) {$rueck .= " um ".date("H:i", $this->zeit)." Uhr";}
+    if (strpos($vorgabe, "u") !== false) {
+      if (strpos($vorgabe, "s") !== false) {
+        $rueck .= " ".date("H:i:s", $this->zeit);
+      } else {
+        $rueck .= " ".date("H:i", $this->zeit);
+      }
+    } else if (strpos($vorgabe, "U") !== false) {
+      if (strpos($vorgabe, "s") !== false) {
+        $rueck .= " um ".date("H:i:s", $this->zeit)." Uhr";
+      } else {
+        $rueck .= " um ".date("H:i", $this->zeit)." Uhr";
+      }
+    }
 
     return $rueck;
   }

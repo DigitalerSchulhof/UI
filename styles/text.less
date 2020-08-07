@@ -78,6 +78,17 @@ td.dshUiNotiz {
   font-size: inherit;
 }
 
+pre {
+  font-family: monospace;
+  padding: 5px;
+  border-radius: @radius2;
+  border: 1px solid;
+}
+
+pre * {
+  font-family: monospace;
+}
+
 // FARBEN;
 
 a.dshUiLink {
@@ -90,4 +101,14 @@ a.dshUiLink:hover {
 
 .dshUiNotiz {
   color: @abstufung3;
+}
+
+pre {
+  background-color: @abstufung3;
+  border-color: @schriftfarbePositiv;
+  color: @schriftfarbePositiv;
+}
+
+pre * {
+  color: @schriftfarbePositiv;
 }
