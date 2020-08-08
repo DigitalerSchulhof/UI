@@ -39,6 +39,15 @@ class Fenster extends InhaltElement{
   }
 
   /**
+   * Fügt einen Knopf in die Fensteraktionen ein
+   * @param Knopf $knopf Neuer Knopf
+   */
+  public function addFensteraktion($knopf) {
+    $this->fensteraktionen[] = $knopf;
+    return $this;
+  }
+
+  /**
 	* Gibt das Fenster als Code aus
 	* @return string HTML-Code für das Fenster
 	*/

@@ -105,6 +105,14 @@ class Knopf extends InhaltElement {
   }
 
   /**
+   * Gibt den Standard-OK Knopf zurück
+   * @return Knopf
+   */
+  public static function schliessen($id) : Knopf {
+    return new Knopf("Schließen", "Standard", "ui.fenster.schliessen('$id')");
+  }
+
+  /**
    * Gibt den Standard-Abbrechen Knopf zurück
    * @return Knopf
    */

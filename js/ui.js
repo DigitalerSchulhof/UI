@@ -457,11 +457,13 @@ document.addEventListener("keydown", (e) => {
 });
 
 ui.fenster = {
-  schliessen: () => {
-    $("#dshBlende").ausblenden();
+  schliessen: (id) => {
+    $("#"+id).ausblenden();
   },
-  anzeigen: () => {
-    $("#dshBlende").einblenden();
+  anzeigen: (code) => {
+    var neu = document.createElement("DIV");
+    neu.innerHTML = code;
+    document.getElementById("dshFenstersammler").appendChild(neu);
   }
 };
 
