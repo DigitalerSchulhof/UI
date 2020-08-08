@@ -22,6 +22,5 @@ if (!is_file(__DIR__."/../../../$meldemodul/meldungen.php")) {
 if (!$gefunden) {
   Anfrage::setTyp("Meldung");
   Anfrage::setRueck("Meldung", new UI\Meldung("Meldung nicht gefunden", "Das was hier stehen sollte, muss erst noch geschrieben werden ...", "Fehler"));
-  Anfrage::setRueck("Knöpfe", [UI\Knopf::ok()]);
 }
 ?>

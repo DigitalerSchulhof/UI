@@ -10,3 +10,6 @@
 4:
   ort: anfragen/elemente/meldung.php
   beschreibung: Das <b>Meldungs-Datei</b> wurde nicht gefunden.
+5:
+  ort: anfragen/elemente/komponente.php
+  beschreibung: Die <b>Komponente</b> ist nicht definiert.
