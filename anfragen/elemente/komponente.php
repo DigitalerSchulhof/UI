@@ -10,7 +10,7 @@ switch ($komponente) {
   case "IconKnopf":
     Anfrage::post("inhalt", "icon");
     Anfrage::post(false, "art", "klickaktion");
-    $knopf = new UI\IconKnopf($icon, $inhalt, $art);
+    $knopf = new UI\IconKnopf(new UI\Icon($icon), $inhalt, $art);
     if ($klickaktion != null) {$knopf->addFunktion("onklick", $klickaktion);}
     $code = (string) $knopf;
     break;
