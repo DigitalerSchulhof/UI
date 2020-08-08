@@ -457,6 +457,7 @@ document.addEventListener("keydown", (e) => {
 });
 
 ui.fenster = {
+  schiebend: null,
   schliessen: (id) => {
     $("#"+id).ausblenden();
   },
@@ -466,6 +467,31 @@ ui.fenster = {
     document.getElementById("dshFenstersammler").appendChild(neu);
   }
 };
+
+document.addEventListener("mousedown", (e) => {
+  if(e.which === 1 && $(e.path[0]).ist(".dshUiFenster:not(#dshLaden) .dshUiFensterTitelzeile") || $(e.path[1]).ist(".dshUiFenster:not(#dshLaden) .dshUiFensterTitelzeile")) {
+    let f = $(e.path[0]).parentSelector(".dshUiFenster");
+    f.addKlasse("dshUiFensterSchiebend");
+    ui.fenster.schiebend = f;
+    ui.fenster.schiebend.mx = parseInt((f.getCss("transform").match(/translateX\(((?:-)?\d+)px\)/) || ["hi","0"])[1]);
+    ui.fenster.schiebend.my = parseInt((f.getCss("transform").match(/translateY\(((?:-)?\d+)px\)/) || ["hi","0"])[1]);
+  }
+});
+
+document.addEventListener("mousemove", (e) => {
+  if(ui.fenster.schiebend !== null) {
+    ui.fenster.schiebend.mx = ui.fenster.schiebend.mx+e.movementX;
+    ui.fenster.schiebend.my = ui.fenster.schiebend.my+e.movementY;
+    ui.fenster.schiebend.setCss("transform", "translateX("+ui.fenster.schiebend.mx+"px) translateY("+ui.fenster.schiebend.my+"px)");
+  }
+});
+
+document.addEventListener("mouseup", (e) => {
+  if(ui.fenster.schiebend !== null) {
+    ui.fenster.schiebend.removeKlasse("dshUiFensterSchiebend");
+    ui.fenster.schiebend = null;
+  }
+});
 
 ui.meldung = {
   brclick: (ev) => {

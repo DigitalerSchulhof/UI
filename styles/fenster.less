@@ -1,5 +1,14 @@
 // LAYOUT;
 
+.dshUiFenster:not(#dshLaden) .dshUiFensterTitelzeile {
+  cursor: grab;
+  user-select: none;
+}
+
+.dshUiFenster:not(#dshLaden).dshUiFensterSchiebend .dshUiFensterTitelzeile {
+  cursor: grabbing;
+}
+
 .dshUiFenster {
   border-radius: @radius3;
   background-color: @seitenhintergrund;
