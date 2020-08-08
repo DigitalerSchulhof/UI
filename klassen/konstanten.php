@@ -16,6 +16,7 @@ class Konstanten {
 	const BEARBEITEN  = "fas fa-pencil-alt";
 	const NEU         = "fas fa-plus-circle";
 	const PAPIERKORB  = "fas fa-trash";
+  const UPDATE      = "fas fa-sync-alt";
 
   // Meldungen
   const STANDARD    = "fas fa-caret-right";

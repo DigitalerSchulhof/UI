@@ -431,6 +431,10 @@ ui.laden = {
       var laden = ["Laden", "Bitte warten"];
     }
     core.ajax("UI", 1, laden, {meldemodul: modul, meldeid: id, meldeparameter:parameter});
+  },
+  komponente: (komponenteninfo) => {
+    alert(komponenteninfo);
+    core.ajax("UI", 2, null, komponenteninfo);
   }
 };
 
