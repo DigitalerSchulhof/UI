@@ -469,12 +469,14 @@ ui.fenster = {
 };
 
 document.addEventListener("mousedown", (e) => {
-  if(e.which === 1 && $(e.path[0]).ist(".dshUiFenster:not(#dshLaden) .dshUiFensterTitelzeile") || $(e.path[1]).ist(".dshUiFenster:not(#dshLaden) .dshUiFensterTitelzeile")) {
-    let f = $(e.path[0]).parentSelector(".dshUiFenster");
-    f.addKlasse("dshUiFensterSchiebend");
-    ui.fenster.schiebend = f;
-    ui.fenster.schiebend.mx = parseInt((f.getCss("transform").match(/translateX\(((?:-)?\d+)px\)/) || ["hi","0"])[1]);
-    ui.fenster.schiebend.my = parseInt((f.getCss("transform").match(/translateY\(((?:-)?\d+)px\)/) || ["hi","0"])[1]);
+  if(e.path) {
+    if(e.which === 1 && $(e.path[0]).ist(".dshUiFenster:not(#dshLaden) .dshUiFensterTitelzeile") || $(e.path[1]).ist(".dshUiFenster:not(#dshLaden) .dshUiFensterTitelzeile")) {
+      let f = $(e.path[0]).parentSelector(".dshUiFenster");
+      f.addKlasse("dshUiFensterSchiebend");
+      ui.fenster.schiebend = f;
+      ui.fenster.schiebend.mx = parseInt((f.getCss("transform").match(/translateX\(((?:-)?\d+)px\)/) || ["hi","0"])[1]);
+      ui.fenster.schiebend.my = parseInt((f.getCss("transform").match(/translateY\(((?:-)?\d+)px\)/) || ["hi","0"])[1]);
+    }
   }
 });
 
