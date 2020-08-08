@@ -329,4 +329,46 @@ class InhaltElement extends Element {
 	}
 }
 
+class Box extends Element implements \ArrayAccess {
+  protected $tag = "div";
+  /** @var string[] Kinder der Box */
+  protected $kinder;
+
+  /**
+   * Erzeugt eine neue Box
+   * @param string ...$kinder :)
+   */
+  public function __construct(...$kinder) {
+    parent::__construct();
+    $this->kinder = $kinder;
+  }
+
+  public function __toString() : string {
+    return "{$this->codeAuf()}".join("", $this->kinder)."{$this->codeZu()}";
+  }
+
+  /*
+   * ArrayAccess Methoden
+   */
+
+  public function offsetSet($o, $v) {
+    if(!is_null($o)) {
+      throw new \Exception("Nicht implementiert!");
+    }
+    $this->kinder[]   = (string) $v;
+  }
+
+  public function offsetExists($o) {
+    throw new \Exception("Nicht implementiert!");
+  }
+
+  public function offsetUnset($o) {
+    throw new \Exception("Nicht implementiert!");
+  }
+
+  public function offsetGet($o) {
+    throw new \Exception("Nicht implementiert!");
+  }
+}
+
 ?>

@@ -1,7 +1,5 @@
 <?php
-  $DSH_TITEL = "UI-Demonstration";
-  $CODE .= new Kern\Aktionszeile(true, false);
-
+  $SEITE = new Kern\Seite("UI-Demonstration", false, false);
 
   $spalte = new UI\Spalte();
   $spalte->addElement("<h1>Meldungen</h1>");
@@ -110,5 +108,5 @@
 
   $spalter = new UI\Spalte("A1", $reiter);
 
-  $CODE .= new UI\Zeile($spalte, $spalter);
+  $SEITE[] = new UI\Zeile($spalte, $spalter);
 ?>
