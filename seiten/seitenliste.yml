@@ -1,2 +1,3 @@
 seiten:
-  "UI/Demo": "UI/seiten/demonstration.php"
+  "UI/Demo":                        "UI/seiten/demonstration.php"
+  "Schulhof/Verwaltung/Module/UI" : "UI/seiten/einstellungen.php"

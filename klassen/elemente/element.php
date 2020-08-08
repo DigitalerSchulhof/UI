@@ -302,6 +302,7 @@ abstract class Element {
  * Generisches Element mit Inhalt ohne festen Verwendungszweck
  */
 class InhaltElement extends Element {
+  protected $tag = "span";
 	/** @var string Inhalt des Absatzes */
 	protected $inhalt;
 

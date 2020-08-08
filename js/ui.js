@@ -459,7 +459,8 @@ document.addEventListener("keydown", (e) => {
 ui.fenster = {
   schiebend: null,
   schliessen: (id) => {
-    $("#"+id).ausblenden();
+    var fenster = document.getElementById(id);
+    fenster.parentNode.removeChild(fenster);
   },
   anzeigen: (code) => {
     var neu = document.createElement("DIV");
