@@ -25,7 +25,7 @@
     font-weight: bold;
   }
 
-  #dshBlendeI .dshUiFenster .dshUiFensterTitelzeile .dshUiFensterSchliessen {
+  .dshUiFenster .dshUiFensterTitelzeile .dshUiFensterSchliessen {
     position: absolute !important;
     right: 10px;
     top: 5px;
@@ -57,6 +57,14 @@
   .dshUiFensterAktionen .dshUiKnopf:last-child {
     border-bottom-right-radius: @radius3;
   }
+
+#dshFenstersammler .dshUiFenster {
+  position: fixed;
+  top: 30px;
+  left: 35%;
+  z-index: 10000;
+  box-shadow: 0px 0px 20px @schriftfarbePositiv;
+}
 
 
 // FARBEN;
