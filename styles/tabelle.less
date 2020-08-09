@@ -8,15 +8,24 @@
 }
 
 .dshUiTabelleListe th:first-child {
-  width: 40px;
+  width: 1px;
+}
+
+.dshUiTabelleListe th:last-child {
+  width: 1px;
+}
+
+.dshUiTabelleListe th:first-child .dshUiSortierknopf,
+.dshUiTabelleListe th:last-child .dshUiSortierknopf {
+  display: none;
 }
 
 .dshUiTabelleListe td:first-child {
-  text-align: center;
+  white-space: nowrap;
 }
 
 .dshUiTabelleListe td:last-child {
-  text-align: right;
+  white-space: nowrap;
 }
 
 .dshUiTabelleListe th {
