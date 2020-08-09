@@ -91,7 +91,7 @@ class Tabelle extends Element {
       $zeilenr ++;
     }
     if ($anzzeilen == 0) {
-      $code .= "<tr><td colspan=\"$anzspalten\" class=\"dshUiNotiz\">-- keine Datensätze --</td></tr>";
+      $code .= "<tr><td colspan=\"$anzspalten\" class=\"dshUiNotiz\">keine Datensätze</td></tr>";
     }
     $code .= "</tbody>{$this->codeZu()}";
     $code .= new VerstecktesFeld("{$this->id}ZAnzahl", $zeilenr);
