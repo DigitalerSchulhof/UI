@@ -458,6 +458,7 @@ document.addEventListener("keydown", (e) => {
 
 ui.fenster = {
   schiebend: null,
+  maxz: 10000,
   schliessen: (id) => {
     var fenster = document.getElementById(id);
     fenster.parentNode.removeChild(fenster);
@@ -465,17 +466,21 @@ ui.fenster = {
   anzeigen: (code) => {
     var neu = document.createElement("DIV");
     neu.innerHTML = code;
+    $(neu).kinder().setCss("z-index", ui.fenster.maxz++);
     document.getElementById("dshFenstersammler").appendChild(neu);
   }
 };
 
 document.addEventListener("mousedown", (e) => {
-  if(e.which === 1 && $(e.target).ist(".dshUiFenster:not(#dshLaden) .dshUiFensterTitelzeile") || $(e.target).parentSelector(".dshUiFenster:not(#dshLaden) .dshUiFensterTitelzeile").length > 0) {
-    let f = $(e.target).parentSelector(".dshUiFenster");
-    f.addKlasse("dshUiFensterSchiebend");
-    ui.fenster.schiebend = f;
-    ui.fenster.schiebend.mx = parseInt((f.getCss("transform").match(/translateX\(((?:-)?\d+)px\)/) || ["hi","0"])[1]);
-    ui.fenster.schiebend.my = parseInt((f.getCss("transform").match(/translateY\(((?:-)?\d+)px\)/) || ["hi","0"])[1]);
+  if($(e.target).parentSelector(".dshUiFenster").existiert()) {
+    $(e.target).parentSelector(".dshUiFenster").setCss("z-index", ++ui.fenster.maxz);
+    if(e.which === 1 && $(e.target).ist(".dshUiFenster:not(#dshLaden) .dshUiFensterTitelzeile") || $(e.target).parentSelector(".dshUiFenster:not(#dshLaden) .dshUiFensterTitelzeile").length > 0) {
+      let f = $(e.target).parentSelector(".dshUiFenster");
+      f.addKlasse("dshUiFensterSchiebend");
+      ui.fenster.schiebend = f;
+      ui.fenster.schiebend.mx = parseInt((f.getCss("transform").match(/translateX\(((?:-)?\d+)px\)/) || ["hi","0"])[1]);
+      ui.fenster.schiebend.my = parseInt((f.getCss("transform").match(/translateY\(((?:-)?\d+)px\)/) || ["hi","0"])[1]);
+    }
   }
 });
 
