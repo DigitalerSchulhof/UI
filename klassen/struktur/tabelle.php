@@ -163,9 +163,24 @@ namespace UI {
 
       foreach($this->spalten as $nr => $s) {
         if($anzzeilen > 0) {
-          $aufsteigend = new Sortierknopf("ASC", $this->id, $nr);
-          $absteigend = new Sortierknopf("DESC", $this->id, $nr);
-          $code .= "<th>$s{$aufsteigend}{$absteigend}</th>";
+
+          $istVerschieden = false;
+          $spalteWert = null;
+          foreach($this->zeilen as $z) {
+            if($spalteWert !== null) {
+              if($spalteWert !== (string) $z[$s]) {
+                $istVerschieden = true;
+                break;
+              }
+            }
+            $spalteWert = (string) $z[$s];
+          }
+          $code .= "<th>$s";
+          if($istVerschieden) {
+            $code .= new Sortierknopf("ASC", $this->id, $nr);
+            $code .= new Sortierknopf("DESC", $this->id, $nr);
+          }
+          $code .= "</th>";
         } else {
           $code .= "<th>$s</th>";
         }
