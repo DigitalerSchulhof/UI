@@ -229,45 +229,6 @@ namespace UI {
       return $code;
     }
 
-    public function __toStaring() : string {
-      $code  = $this->codeAuf();
-      $spaltennr = 0;
-      $code .= "<thead id=\"{$this->id}Kopf\"><tr>";
-      $anzzeilen = count($this->zellen);
-      $anzspalten = count($this->titel);
-      foreach ($this->titel as $t) {
-        if ($anzzeilen > 0) {
-          $aufsteigend = new Sortierknopf("ASC", $this->id, $spaltennr);
-          $absteigend = new Sortierknopf("DESC", $this->id, $spaltennr);
-          $code .= "<th>$t{$aufsteigend}{$absteigend}</th>";
-        } else {
-          $code .= "<th>$t</th>";
-        }
-        $spaltennr++;
-      }
-      $code .= "</tr></thead><tbody id=\"{$this->id}Koerper\">";
-      $zeilenr = 0;
-      foreach($this->zellen as $z) {
-        $code .= "<tr>";
-        $spaltennr = 0;
-        foreach ($this->titel as $t) {
-          $code .= "<td id=\"{$this->id}Z{$zeilenr}S$spaltennr\">{$z[$t]}</td>";
-          $spaltennr++;
-
-        }
-        $code .= "</tr>";
-        $zeilenr ++;
-      }
-      if ($anzzeilen == 0) {
-        $code .= "<tr><td colspan=\"$anzspalten\" class=\"dshUiNotiz\">keine Datensätze</td></tr>";
-        return $this->zellen[$o];
-      }
-      $code .= "</tbody>{$this->codeZu()}";
-      $code .= new VerstecktesFeld("{$this->id}ZAnzahl", $zeilenr);
-      $code .= new VerstecktesFeld("{$this->id}SAnzahl", $spaltennr);
-      return $code;
-    }
-
     /*
      * ArrayAccess Methoden
      */
@@ -404,7 +365,8 @@ namespace UI {
      * @return string :)
      */
     public function __toString() : string {
-      $code  = $this->codeAuf();
+      $code  = "<div class=\"dshUiTabelleO\">";
+      $code .= $this->codeAuf();
       $code .= "<table class=\"dshUiTabelle dshUiTabelleFormular\"><tbody>";
       foreach($this->zeilen as $z) {
         $code .= $z;
@@ -419,6 +381,7 @@ namespace UI {
       $code .= "</tbody></table>";
       $code .= (new Icon(Konstanten::AUSFUELLEN))->addKlasse("dshUiFormularAusfuellen");
       $code .= $this->codeZu();
+      $code .= "</div>";
       return $code;
     }
 
