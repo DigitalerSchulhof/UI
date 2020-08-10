@@ -1,7 +1,6 @@
-modul:
-  name: UI
-  beschreibung: Alle Userinterfaces
-  lehrernetz: false
-  autor: Digitaler Schulhof
-  version: 1.0
-  einstellungen: false
+name: UI
+beschreibung: Alle Userinterfaces
+lehrernetz: false
+autor: Digitaler Schulhof
+version: 1.0
+einstellungen: false

@@ -32,6 +32,7 @@ class Knopf extends InhaltElement {
     }
     $this->addKlasse("dshUiKnopf");
     $this->setAttribut("role", "button");
+    $this->setAttribut("type", "button");
   }
 
   /**
@@ -76,7 +77,6 @@ class Knopf extends InhaltElement {
 
     $this->addKlasse("dshUiKnopf{$this->art}");
     $this->setInhalt((new InhaltElement($this->inhalt))->setTag("span"));
-
     return $this;
   }
 
