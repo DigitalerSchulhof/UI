@@ -152,7 +152,8 @@ namespace UI {
     }
 
     public function __toString() : string {
-      $code  = $this->codeAuf();
+      $code = "<div class=\"dshUiTabelleO\">";
+      $code .= $this->codeAuf();
       $code .= "<thead id=\"{$this->id}Kopf\"><tr>";
       $anzzeilen  = count($this->zeilen);
       $anzspalten = count($this->spalten);
@@ -224,6 +225,7 @@ namespace UI {
       $code .= "</tbody>{$this->codeZu()}";
       $code .= new VerstecktesFeld("{$this->id}ZAnzahl", $anzzeilen);
       $code .= new VerstecktesFeld("{$this->id}SAnzahl", $anzspalten);
+      $code .= "</div>";
       return $code;
     }
 
