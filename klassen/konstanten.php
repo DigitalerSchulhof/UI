@@ -18,6 +18,9 @@ class Konstanten {
 	const PAPIERKORB  = "fas fa-trash";
 	const DETAILS     = "fas fa-info";
 
+  // Verwaltung
+  const MODUL       = "fas fa-puzzle-piece";
+
   // Meldungen
   const STANDARD    = "fas fa-caret-right";
   const ERFOLG      = "fas fa-check-circle";
