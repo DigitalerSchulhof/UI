@@ -100,6 +100,14 @@
   box-shadow: 2px 2px 4px 1px rgba(33, 33, 33, 0.1);
 }
 
+.dshSeiteH .dshUiFormular {
+  border-left: 2px solid;
+}
+
+.dshSeiteH .dshUiFormular>.dshUiIcon {
+  display: none;
+}
+
 .dshUiFormular .dshUiFormularAusfuellen {
   position: absolute;
   left: -18px;
@@ -117,6 +125,27 @@
   font-size: 70%;
 }
 
+.dshSeiteH .dshUiTabelleFormular th {
+  position: absolute;
+  width: 100%;
+}
+
+.dshSeiteH .dshUiTabelleFormular th label {
+  font-size: 90%;
+}
+
+.dshSeiteH .dshUiTabelleFormular td {
+  padding-top: 24px;
+}
+
+.dshSeiteH .dshUiEingabefeldOptional {
+  margin-bottom: inherit;
+}
+
+.dshSeiteH .dshUiEingabefeldOptional+.dshNotiz {
+  bottom: -5px;
+}
+
 // FARBEN;
 .dshUiTabelleListe th {
   border-color: @abstufung2;
@@ -127,7 +156,7 @@
 }
 
 .dshUiFormular {
-  border-color: @abstufung4;
+  border-color: @abstufung4 !important;
 }
 
 .dshUiFormular .dshUiFormularAusfuellen {

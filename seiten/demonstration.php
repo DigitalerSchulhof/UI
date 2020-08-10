@@ -87,26 +87,5 @@
   $spalte->addElement(new UI\IconToggleGross("dshUiDemoIconToggleGross", "Text", new UI\Icon(UI\Konstanten::PERSON))."<br>");
   $spalte->addElement("<br><br>");
 
-  // $spalte = new UI\Spalte();
-
-  $titel = array("", "Vorname", "Nachname", " ");
-  $person1 = array("" => new UI\Icon(UI\Konstanten::LEHRER), "Vorname" => "Sascha", "Nachname" => "Mäderhaußer", " " => new UI\MiniIconKnopf(new UI\Icon(UI\Konstanten::LOESCHEN), "Person löschen", "Warnung"));
-  $person2 = array("" => new UI\Icon(UI\Konstanten::SCHUELER), "Vorname" => "Fritzi", "Nachname" => "Freigeist", " " => new UI\MiniIconKnopf(new UI\Icon(UI\Konstanten::LOESCHEN), "Person löschen", "Warnung"));
-  $tabelle = new UI\Tabelle("DemoTabelle", $titel, $person1, $person2);
-
-  $reiter = new UI\Reiter("DemoReiter");
-  $rkopf = new UI\Reiterkopf("Test");
-  $rkoerper = new UI\Reiterkoerper(new UI\Spalte("A1", $tabelle));
-  $rs = new UI\Reitersegment($rkopf, $rkoerper);
-  $reiter->addReitersegment($rs);
-
-  $rkopf = new UI\Reiterkopf("Noch N Test");
-  $r1p = (new UI\InhaltElement("Ich bin noch doofer"))->setTag("p");
-  $rkoerper = new UI\Reiterkoerper(new UI\Spalte("A1", $r1p));
-  $rs = new UI\Reitersegment($rkopf, $rkoerper);
-  $reiter->addReitersegment($rs);
-
-  $spalter = new UI\Spalte("A1", $reiter);
-
-  $SEITE[] = new UI\Zeile($spalte, $spalter);
+  $SEITE[] = new UI\Zeile($spalte, $spalte);
 ?>
