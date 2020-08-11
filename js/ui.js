@@ -458,7 +458,7 @@ document.addEventListener("keydown", (e) => {
 
 ui.fenster = {
   schiebend: null,
-  maxz: 10000,
+  maxz: 100000,
   schliessen: (id) => {
     var fenster = document.getElementById(id);
     fenster.parentNode.removeChild(fenster);
