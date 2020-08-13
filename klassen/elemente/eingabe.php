@@ -383,6 +383,11 @@ class Toggle extends Schieber {
     $code .= new VerstecktesFeld($this->id, $wert);
     return $code;
   }
+
+  public function addFunktion($ausloeser, $funktion) {
+    $this->aktionen->addFunktion($ausloeser, $funktion);
+    return $this;
+  }
 }
 
 class IconToggle extends Toggle {
@@ -825,6 +830,31 @@ class Toggleoption extends Option {
       $this->setTag("a");
     }
     return "{$this->codeAuf()}{$this->text}{$this->codeZu()}";
+  }
+}
+
+class Multitoggle extends Eingabe {
+  protected $tag = "span";
+  /** @var Toggle[]  */
+  private $toggles;
+
+  public function __construct($id) {
+    parent::__construct($id);
+    $toggles = [];
+  }
+
+  /**
+   * Fügt einen Toggle zum Multitoggle hinzu
+   * @param  [type] $t [description]
+   * @return self      [description]
+   */
+  public function add($t) : self {
+    $this->toggles[] = $t;
+    return $this;
+  }
+
+  public function __toString () : string {
+    return join(" ", $this->toggles);
   }
 }
 
