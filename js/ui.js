@@ -356,9 +356,13 @@ ui.laden = {
     }
   },
   an: (titel, inhalt) => {
-    $("#dshLadenFensterTitel").setHTML(titel);
+    if(titel !== null) {
+      $("#dshLadenFensterTitel").setHTML(titel);
+    }
     var code = ui.generieren.laden.icon(inhalt);
-    $("#dshLadenFensterInhalt").setHTML(code);
+    if(inhalt !== null) {
+      $("#dshLadenFensterInhalt").setHTML(code);
+    }
     $("#dshLadenFensterAktionen").setHTML("");
     $("#dshBlende").einblenden();
     ui.laden.istAn    = true;
@@ -425,12 +429,8 @@ ui.laden = {
     })
   },
   meldung: (modul, id, laden, parameter) => {
-    var laden = laden || ["Die Meldung wird geladen", "Bitte warten"];
-    var parameter = parameter || null;
-    if (!Array.isArray(laden)) {
-      var laden = ["Die Meldung wird geladen", "Bitte warten"];
-    }
-    core.ajax("UI", 1, laden, {meldemodul: modul, meldeid: id, meldeparameter:parameter}).then((r) => ui.laden.aendern(null, r.Meldung, r.Knoepfe));
+    laden = laden || null;
+    core.ajax("UI", 1, [laden, "Die Meldung wird geladen"], {meldemodul: modul, meldeid: id, meldeparameter:parameter}).then((r) => ui.laden.aendern(null, r.Meldung, r.Knoepfe));
   },
   komponente: (komponenteninfo) => {
     return core.ajax("UI", 2, null, komponenteninfo);

@@ -13,6 +13,19 @@ $gefunden = false;
 $knoepfe = [];
 $parameter = json_decode($meldeparameter, true);
 
+if($parameter !== null) {
+  extract($parameter);
+}
+global $parameter;
+
+function parameter(...$ps) {
+  global $parameter;
+  foreach($ps as $p) {
+    global $$p;
+    $$p = $parameter[$p];
+  }
+}
+
 if (!is_file("$DSH_MODULE/$meldemodul/funktionen/meldungen.php")) {
   Anfrage::addFehler(4, true);
 } else {

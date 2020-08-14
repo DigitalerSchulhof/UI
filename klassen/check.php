@@ -100,19 +100,16 @@ class Check {
 
   public static function istName($x, $min = 1, $max = null) {
     if (preg_match("/^[- _äöüÄÖÜßáéíóúàèìòùÁÉÍÓÚÀÈÌÒÙæÆâêîôûÂÊÎÔÛøØÅÇËÃÏÕãåçëïõÿñ0-9a-zA-Z]*$/", $x) !== 1) {
-      echo "JA1";
       return false;
     }
     $fehler = false;
     if ($min !== null) {
       if (strlen($x) < $min) {
-        echo "JA2";
         $fehler = true;
       }
     }
     if ($max !== null) {
       if (strelan($x) > $max) {
-        echo "JA3";
         $fehler = true;
       }
     }
