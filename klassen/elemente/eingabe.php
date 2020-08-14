@@ -70,7 +70,6 @@ abstract class Eingabe extends Element {
     return $this->wert;
   }
 
-
   /**
    * Setzt den Wert des Autocomplete-Attributs
    * @param   string $autocomplete :)
@@ -226,9 +225,9 @@ class Datumfeld extends Eingabe {
 
     $r = "<table>";
     $monatz = new MiniIconKnopf(new \UI\Icon(\UI\Konstanten::ZURUECK), "Vorheriger Monat", null, "OR");
-    $monatz->getAktionen()->addFunktion("onclick", "ui.datumsanzeige.monataendern('{$this->id}', $tag, ".($monat-1).", $jahr)");
+    $monatz->addFunktion("onclick", "ui.datumsanzeige.monataendern('{$this->id}', $tag, ".($monat-1).", $jahr)");
     $monatv = new MiniIconKnopf(new \UI\Icon(\UI\Konstanten::VOR), "Nächster Monat", null, "OL");
-    $monatv->getAktionen()->addFunktion("onclick", "ui.datumsanzeige.monataendern('{$this->id}', $tag, ".($monat+1).", $jahr)");
+    $monatv->addFunktion("onclick", "ui.datumsanzeige.monataendern('{$this->id}', $tag, ".($monat+1).", $jahr)");
 
     $r .= "<tr><th>$monatz</th><th colspan=\"6\" class=\"dshUiTageswahlMonatname\">".\UI\Generieren::monatnameLang($monat)." $jahr</th><th>$monatv</th></tr>";
 
@@ -259,7 +258,7 @@ class Datumfeld extends Eingabe {
       if ($nr == $tag) {
         $tagknopf->addKlasse("dshUiTagGewaehlt");
       }
-      $tagknopf->getAktionen()->addFunktion("onclick", "ui.datumsanzeige.tageswahl.aktion('{$this->id}', $nr, $monat, $jahr)");
+      $tagknopf->addFunktion("onclick", "ui.datumsanzeige.tageswahl.aktion('{$this->id}', $nr, $monat, $jahr)");
       $r .= "<td>$tagknopf</td>";
       $nr ++;
     }
@@ -276,7 +275,7 @@ class Datumfeld extends Eingabe {
       if ($nr == $tag) {
         $tagknopf->addKlasse("dshUiTagGewaehlt");
       }
-      $tagknopf->getAktionen()->addFunktion("onclick", "ui.datumsanzeige.tageswahl.aktion('{$this->id}', $nr, $monat, $jahr)");
+      $tagknopf->addFunktion("onclick", "ui.datumsanzeige.tageswahl.aktion('{$this->id}', $nr, $monat, $jahr)");
       $r .= "<td>$tagknopf</td>";
       $nr ++;
       $wochentag ++;
@@ -382,11 +381,6 @@ class Toggle extends Schieber {
     $code  = "<{$this->codeAuf(false, "id", "value")} id=\"{$this->id}Toggle\">{$this->text}{$this->codeZu()}";
     $code .= new VerstecktesFeld($this->id, $wert);
     return $code;
-  }
-
-  public function addFunktion($ausloeser, $funktion) {
-    $this->aktionen->addFunktion($ausloeser, $funktion);
-    return $this;
   }
 }
 

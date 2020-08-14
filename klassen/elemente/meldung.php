@@ -62,7 +62,7 @@ class Meldung extends Element {
       }
     }
     $this->icon = $icon;
-    $this->aktionen->addFunktion("onclick", "ui.meldung.brclick(event)");
+    $this->addFunktion("onclick", "ui.meldung.brclick(event)");
 
     $this->addKlasse("dshUiMeldung");
     $this->addKlasse("dshUiMeldung{$art}");

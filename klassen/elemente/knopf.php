@@ -62,7 +62,7 @@ class Knopf extends InhaltElement {
       $this->addKlasse("dshUiKnopfLeer");
       $this->setAttribut("aria-disabled", "true");
       $this->setAttribut("tabindex", "-1");
-      $this->aktionen->addFunktion("onclick", "this.blur()");
+      $this->addFunktion("onclick", "this.blur()");
     } else {
       $this->setAttribut("aria-disabled", "false");
       $this->setAttribut("tabindex", "0");
@@ -83,17 +83,6 @@ class Knopf extends InhaltElement {
   public function __toString() : string {
     $this->toStringVorbereitung();
     return "{$this->codeAuf()}{$this->inhalt}{$this->codeZu()}";
-  }
-
-  /**
-   * Shortcut zu Aktionen addFunktion
-   * @param 	string|string[] $ausloeser Auslöser der Funktionen<br>Wenn array, dann für jeden Auslöser hinzugefügt
-	 * @param 	string ...$funktionen Was passiert, wenn der Auslöser auftritt
-	 * @return 	self
-	 */
-  public function addFunktion($ausloeser, ...$funktionen) : self {
-    $this->aktionen->addFunktion($ausloeser, ...$funktionen);
-    return $this;
   }
 
   /**

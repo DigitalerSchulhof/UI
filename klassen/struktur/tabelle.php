@@ -351,7 +351,7 @@ namespace UI {
     }
 
     /**
-     * Kurz für <code>$this->getAktionen()->addFunktion("submit", $submit);</code>
+     * Kurz für <code>$this->addFunktion("submit", $submit);</code>
      * @param  string $submit :)
      * @return self
      */
