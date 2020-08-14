@@ -48,6 +48,17 @@ abstract class Element {
 		return $this;
 	}
 
+  /**
+   * Ermöglicht den direkten Zugriff auf das Hinzufügen von Aktionen
+   * @param  string $ausloeser  :)
+   * @param  string $funktionen :)
+   * @return self
+   */
+  public function addFunktion($ausloeser, ...$funktionen) : self {
+    $this->aktionen->addFunktion($ausloeser, ...$funktionen);
+    return $this;
+  }
+
 	/**
 	 * Entfernt eine oder mehrere CSS-Klasse(n)
 	 * @param 	string ...$klassen Zu entfernende Klasse(n)

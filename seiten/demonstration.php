@@ -12,25 +12,25 @@
 
   foreach(UI\Knopf::ARTEN as $art) {
     $knopf = new UI\Knopf($art, $art);
-    $knopf->getAktionen()->addFunktion("onclick", "alert('$art')");
+    $knopf->addFunktion("onclick", "alert('$art')");
     $spalte->addElement($knopf." ");
   }
   $spalte->addElement("<br><br><br>");
   foreach(UI\Knopf::ARTEN as $art) {
     $knopf = new UI\IconKnopf(new UI\Icon(UI\Konstanten::STANDARD), $art, $art);
-    $knopf->getAktionen()->addFunktion("onclick", "alert('$art')");
+    $knopf->addFunktion("onclick", "alert('$art')");
     $spalte->addElement($knopf." ");
   }
   $spalte->addElement("<br><br><br>");
   foreach(UI\Knopf::ARTEN as $art){
     $knopf = new UI\GrossIconKnopf(new UI\Icon(UI\Konstanten::STANDARD), $art, $art);
-    $knopf->getAktionen()->addFunktion("onclick", "alert('$art')");
+    $knopf->addFunktion("onclick", "alert('$art')");
     $spalte->addElement($knopf." ");
   }
   $spalte->addElement("<br><br><br>");
   foreach(UI\Knopf::ARTEN as $art){
     $knopf = new UI\MiniIconKnopf(new UI\Icon(UI\Konstanten::STANDARD), $art, $art);
-    $knopf->getAktionen()->addFunktion("onclick", "alert('$art')");
+    $knopf->addFunktion("onclick", "alert('$art')");
     $spalte->addElement($knopf." ");
   }
   $spalte->addElement("<h2>Knöpfe (Inaktiv)</h2>");
