@@ -462,6 +462,44 @@ class IconToggleGross extends IconToggle {
   }
 }
 
+class MiniIconToggle extends IconToggle {
+  protected $position;
+
+  /**
+   * Erstellt einen neuen Toggle-Knopf
+   * @param string $id   :)
+   * @param string $text :)
+   * @param Icon $icon :)
+   */
+  public function __construct($id, $text, $icon, $position = "OR") {
+    parent::__construct($id, $text, $icon);
+    $this->addKlasse("dshUiKnopfIconMini");
+    $this->addKlasse("dshUiHinweisTraeger");
+    $this->position = $position;
+  }
+
+  /**
+   * Gibt den HTML-Code eines Toggle-Knopfes aus
+   * @return string [description]
+   */
+  public function __toString() : string {
+    $this->toStringVorbereitung();
+    if($this->wert === "1") {
+      $wert = "1";
+      $this->addKlasse("dshUiToggled");
+    } else {
+      $wert = "0";
+      $this->removeKlasse("dshUiToggled");
+    }
+
+    $hinweis = new Hinweis($this->text, $this->position);
+    $code  = "<{$this->codeAuf(false, "id", "value")} id=\"{$this->id}Toggle\">$hinweis $this->icon{$this->codeZu()}";
+    $code .= new VerstecktesFeld($this->id, $wert);
+
+    return $code;
+  }
+}
+
 class Textfeld extends PlatzhalterEingabe {
   protected $typ = "text";
 
