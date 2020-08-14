@@ -13,14 +13,16 @@ $gefunden = false;
 $knoepfe = [];
 $parameter = json_decode($meldeparameter, true);
 
-if (!is_file(__DIR__."/../../../$meldemodul/meldungen.php")) {
+if (!is_file("$DSH_MODULE/$meldemodul/funktionen/meldungen.php")) {
   Anfrage::addFehler(4, true);
 } else {
-  include(__DIR__."/../../../$meldemodul/meldungen.php");
+  include("$DSH_MODULE/$meldemodul/funktionen/meldungen.php");
 }
 
-if (!$gefunden) {
-  Anfrage::setTyp("Meldung");
+if (Anfrage::getRueck("Meldung") === null) {
   Anfrage::setRueck("Meldung", new UI\Meldung("Meldung nicht gefunden", "Das was hier stehen sollte, muss erst noch geschrieben werden...", "Fehler"));
 }
+
+Anfrage::setRueck("Meldung", (string) Anfrage::getRueck("Meldung"));
+Anfrage::setRueck("Knoepfe", join("", Anfrage::getRueck("Knöpfe") ?? [UI\Knopf::ok()]));
 ?>

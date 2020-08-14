@@ -16,6 +16,5 @@ switch ($komponente) {
     break;
 }
 
-Anfrage::setTyp("Code");
 Anfrage::setRueck("Code", $code);
 ?>

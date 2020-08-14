@@ -425,12 +425,12 @@ ui.laden = {
     })
   },
   meldung: (modul, id, laden, parameter) => {
-    var laden = laden || ["Laden", "Bitte warten"];
+    var laden = laden || ["Die Meldung wird geladen", "Bitte warten"];
     var parameter = parameter || null;
     if (!Array.isArray(laden)) {
-      var laden = ["Laden", "Bitte warten"];
+      var laden = ["Die Meldung wird geladen", "Bitte warten"];
     }
-    core.ajax("UI", 1, laden, {meldemodul: modul, meldeid: id, meldeparameter:parameter});
+    core.ajax("UI", 1, laden, {meldemodul: modul, meldeid: id, meldeparameter:parameter}).then((r) => ui.laden.aendern(null, r.Meldung, r.Knoepfe));
   },
   komponente: (komponenteninfo) => {
     return core.ajax("UI", 2, null, komponenteninfo);
