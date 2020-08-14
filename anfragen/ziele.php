@@ -1,5 +1,5 @@
 <?php
-$ZIELE[0] = "anfragen/elemente/datumfeld.php";
-$ZIELE[1] = "anfragen/elemente/meldung.php";
-$ZIELE[2] = "anfragen/elemente/komponente.php";
+$ZIELE[0] = "elemente/datumfeld.php";
+$ZIELE[1] = "elemente/meldung.php";
+$ZIELE[2] = "elemente/komponente.php";
 ?>
