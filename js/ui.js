@@ -463,11 +463,12 @@ ui.fenster = {
     var fenster = document.getElementById(id);
     fenster.parentNode.removeChild(fenster);
   },
-  anzeigen: (code) => {
-    var neu = document.createElement("DIV");
-    neu.innerHTML = code;
-    $(neu).kinder().setCss("z-index", ui.fenster.maxz++);
-    document.getElementById("dshFenstersammler").appendChild(neu);
+  anzeigen: (code, fensterid) => {
+    if (document.getElementById(fensterid) === null) {
+      document.getElementById("dshFenstersammler").innerHTML += code;
+      var test = $("#dshFenstersammler").kinder();
+      var neu = $(test[test.length-1]).setCss("z-index", ui.fenster.maxz++);
+    }
   }
 };
 

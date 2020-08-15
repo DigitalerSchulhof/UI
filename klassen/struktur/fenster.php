@@ -18,14 +18,18 @@ class Fenster extends InhaltElement{
 	 * @param string $id  :)
 	 * @param string $titel :)
 	 * @param string $inhalt Inhalt des Fensters
+	 * @param bool   $gross Fenster mit Seitenbreite
 	 */
-  public function __construct($id, $titel, $inhalt) {
+  public function __construct($id, $titel, $inhalt, $gross = false) {
     $this->schliessen = true;
     $this->titel = $titel;
     $this->fensteraktionen = [];
     parent::__construct($inhalt);
     $this->addKlasse("dshUiFenster");
     $this->setID($id);
+    if ($gross) {
+      $this->addKlasse("dshUiFensterGross");
+    }
   }
 
   /**
