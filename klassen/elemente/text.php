@@ -139,15 +139,23 @@ class Datum {
 
   /**
    * Gibt dieses Datum gemäß der vorgabe aus
-   * @param
+   * @param string $vorgabe Ww Wochentag, Mm Monat, Uu Uhrzeit s mit Sekunden, x = d.m.Y, X = d.m.y h:i
    * @return string :)
    */
   public function kurz($vorgabe = "MU") : string {
     $rueck = "";
     $vorgabe = $vorgabe;
+
+    if ($vorgabe == "x") {
+      return date("d.m.Y", $this->zeit);
+    }
+    else if ($vorgabe == "X") {
+      return date("d.m.Y H:i", $this->zeit);
+    }
+
     // Wochentag
     if (strpos($vorgabe, "w") !== false) {
-      $rueck .= $this->getWochentag(true).", den ";
+      $rueck .= $this->getWochentag(true).", ";
     }
     else if (strpos($vorgabe, "W") !== false) {
       $rueck .= $this->getWochentag().", den ";
