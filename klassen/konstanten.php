@@ -47,6 +47,6 @@ class Konstanten {
 	const SCHUELER   = "fas fa-user-graduate";
 	const VERWALTUNG = "fas fa-user-cog";
 	const EXTERN     = "fas fa-user-astronaut";
-	const ELTERN     = "fas fa-user-friends";
+	const ERZIEHER   = "fas fa-user-friends";
 }
 ?>
