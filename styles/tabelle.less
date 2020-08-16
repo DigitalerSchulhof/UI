@@ -59,15 +59,18 @@
   margin-bottom: 0px;
 }
 
-.dshUiTabelle th:hover .dshUiSortierknopf {
+.dshUiTabelle th:hover .dshUiSortierknopf,
+.dshUiTabelle .dshUiSortierknopf:focus {
   opacity: 1;
 }
 
-.dshUiTabelle th:hover .dshUiSortierenASC {
+.dshUiTabelle th:hover .dshUiSortierenASC,
+.dshUiTabelle .dshUiSortierenASC:focus {
   right: 28px;
 }
 
-.dshUiTabelle th:hover .dshUiSortierenDESC {
+.dshUiTabelle th:hover .dshUiSortierenDESC,
+.dshUiTabelle .dshUiSortierenDESC:focus {
   right: 0px;
 }
 
@@ -146,12 +149,12 @@
   bottom: -5px;
 }
 
-.dshUiTabelleFuss {
+.dshUiTabellenFuss {
   padding: 5px 7px;
   text-align: right;
 }
 
-.dshUiTabelleFuss input.dshUiEingabefeld {
+.dshUiTabellenFuss .dshUiEingabefeld {
   width: 50px !important;
 }
 
