@@ -4,14 +4,22 @@ namespace UI\Tabelle {
     /** @var \UI\Icon Icon der Zeile */
     protected $icon;
 
+    /** @var int ID der Zelle als Referenz für das Contextmenü */
+    protected $id;
+
     /** @var string[] Zellen - Assoziatives Array [Spaltenname => Inhalt] */
     protected $zellen;
 
     /** @var \UI\MiniIconKnopf[] $aktionen Aktionen */
     protected $aktionen;
 
-    public function __construct() {
+    /**
+     * Erzeugt eine neue Zeile einer Tabelle
+     * @param int $id Die ID der Zeile
+     */
+    public function __construct($id = null) {
       $this->icon     = null;
+      $this->id       = $id;
       $this->zellen   = array();
       $this->aktionen = [];
     }
@@ -32,6 +40,23 @@ namespace UI\Tabelle {
      */
     public function getIcon() : ?\UI\Icon {
       return $this->icon;
+    }
+
+    /**
+     * Setzt die ID (als Referenz für das Contextmenü)
+     * @param  int $id :)
+     * @return self
+     */
+    public function setID($id) : self {
+      $this->id = $id;
+    }
+
+    /**
+     * Gibt die ID der Zeile zurück
+     * @return int|null
+     */
+    public function getID() : ?int {
+      return $thid->id;
     }
 
     /**
@@ -64,7 +89,7 @@ namespace UI\Tabelle {
     }
 
     public function offsetExists($o) {
-      throw new \Exception("Nicht implementiert!");
+      return isset($this->zellen[$o]);
     }
 
     public function offsetUnset($o) {
@@ -75,7 +100,7 @@ namespace UI\Tabelle {
       if(!is_string($o)) {
         throw new \TypeError("Ungültige Spaltenbezeichnung!");
       }
-      return $this->zellen[$o];
+      return $this->zellen[$o] ?? null;
     }
   }
 }
@@ -212,11 +237,14 @@ namespace UI {
             $code .= "<td class=\"dshUiTabelleIconSpalte\">$icon</td>";
           }
           foreach ($this->spalten as $snr => $s) {
-            $code .= "<td id=\"{$this->id}Z{$znr}S$snr\">{$z[$s]}</td>";
+            $code .= "<td id=\"{$this->id}Z{$znr}S$snr\">".($z[$s] ?? "")."</td>";
           }
           if($hatAktionen) {
             $a = join(" ", $z->getAktionen());
-            $code .= "<td class=\"dshUiTabelleIconSpalte\">{$a}</td>";
+            if($z->getID() !== null) {
+              $a .= (new \UI\VerstecktesFeld(null, $z->getID()))->addKlasse("dshTabelleZeileID");
+            }
+            $code .= "<td class=\"dshUiTabelleIconSpalte\">$a</td>";
           }
           $code .= "</tr>";
         }
