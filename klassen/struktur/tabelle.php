@@ -96,6 +96,12 @@ namespace UI {
     /** @var bool $hatIcon Hat die Tabelle ein Icon in der ersten Spalte? */
     protected $hatIcon;
 
+    protected $seite;
+
+    protected $seitenanzahl;
+
+    protected $datensaetzeProSeite;
+
     /**
      * Erzeugt eine neue Tabelle
      * @param string $id :)
@@ -111,6 +117,15 @@ namespace UI {
       $this->hatIcon  = true;
       $this->addKlasse("dshUiTabelle");
       $this->addKlasse("dshUiTabelleListe");
+      $this->seite = 1;
+      $this->seitenanzahl = 1;
+      $this->datensaetzeProSeite = 50;
+    }
+
+    public function setSeiten($seite, $seitenanzahl, $proSeite) {
+      $this->seite = $seite;
+      $this->seitenanzahl = $seitenanzahl;
+      $this->datensaetzeProSeite = $proSeite;
     }
 
     /**
@@ -220,6 +235,22 @@ namespace UI {
           }
           $code .= "</tr>";
         }
+
+        $spanz = $anzspalten;
+        if ($this->hatIcon) {$spanz++;}
+        if ($hatAktionen) {$spanz++;}
+
+        $code .= "<tr><td class=\"dshUiTabellenFuss\" colspan=\"$spanz\">";
+        $seitenfeld = (new Zahlenfeld("{$this->id}Seite", 1, $this->seitenanzahl))->setWert($this->seite);
+        $code .= "Seite $seitenfeld von {$this->seitenanzahl} - ";
+        $auswahl = new Auswahl("{$this->id}DatenProSeite", $this->datensaetzeProSeite);
+        $auswahl->add("25", "25");
+        $auswahl->add("50", "50");
+        $auswahl->add("75", "75");
+        $auswahl->add("100", "100");
+        $auswahl->add("alle", "alle");
+        $code .= "$auswahl pro Seite";
+        $code .= "</td></tr>";
       }
 
       $code .= "</tbody>{$this->codeZu()}";
