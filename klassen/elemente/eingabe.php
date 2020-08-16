@@ -167,8 +167,7 @@ class Uhrzeitfeld extends Eingabe {
     } else {
       $sek = "0";
     }
-    $this->aktionen->addFunktionPrioritaet("onchange", 3, "ui.datumsanzeige.checkUhrzeit('{$this->id}', $sek)");
-    $this->aktionen->addFunktionPrioritaet("onkeyup",  3, "ui.datumsanzeige.checkUhrzeit('{$this->id}', $sek)");
+    $this->aktionen->addFunktionPrioritaet("oninput",  3, "ui.datumsanzeige.checkUhrzeit('{$this->id}', $sek)");
   }
 
   public function __toString() : string {
@@ -618,7 +617,6 @@ class Passwortfeld extends Textfeld {
     parent::__construct($id);
     $this->bezug = $bezug;
     if($this->bezug !== null) {
-      $this->aktionen->addFunktionPrioritaet("onchange", 3, "ui.passwort.aktion('{$this->bezug->getID()}', '{$this->id}')");
       $this->aktionen->addFunktionPrioritaet("oninput", 3, "ui.passwort.aktion('{$this->bezug->getID()}', '{$this->id}')");
     }
   }
@@ -637,7 +635,6 @@ class Mailfeld extends Textfeld {
 
   public function __construct($id) {
     parent::__construct($id);
-    $this->aktionen->addFunktionPrioritaet("onchange", 3,  "ui.mail.aktion('{$this->id}')");
     $this->aktionen->addFunktionPrioritaet("oninput", 3,  "ui.mail.aktion('{$this->id}')");
   }
 }
