@@ -56,7 +56,7 @@ namespace UI\Tabelle {
      * @return int|null
      */
     public function getID() : ?int {
-      return $thid->id;
+      return $this->id;
     }
 
     /**
