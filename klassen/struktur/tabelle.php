@@ -379,7 +379,8 @@ namespace UI {
     }
   }
 
-  class FormularFeld {
+  class FormularFeld extends InhaltElement {
+    protected $tag = "tr";
     /** @var InhaltElement Bezeichnung des Eingabefeldes */
     private $label;
     /** @var Eingabe */
@@ -393,6 +394,7 @@ namespace UI {
      * @param Eingabe       $eingabe :)
      */
     public function __construct($label, $eingabe) {
+      parent::__construct();
       $this->label = $label;
       $this->label->setTag("label");
       $this->eingabe = $eingabe;
@@ -421,13 +423,13 @@ namespace UI {
         throw new \Exception("Keine ID übergeben");
       }
       $this->label->setAttribut("for", $this->eingabe->getID());
-      $code = "<tr><th>{$this->label}</th>";
+      $code = $this->codeAuf()."<th>{$this->label}</th>";
       $this->eingabe->setKlasse($this->optional, "dshUiEingabefeldOptional");
       $code .= "<td>{$this->eingabe}";
       if ($this->optional) {
         $code .= new Notiz("Optional");
       }
-      $code .= "</td></tr>";
+      $code .= "</td>".$this->codeZu();
       return $code;
     }
   }
