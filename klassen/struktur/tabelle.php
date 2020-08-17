@@ -160,7 +160,7 @@ namespace UI {
       $this->addKlasse("dshUiTabelleListe");
       $this->seite = 1;
       $this->seitenanzahl = 1;
-      $this->datensaetzeProSeite = 50;
+      $this->datensaetzeProSeite = 25;
       $this->sortierfunktion = "alert";
       $this->autoladen = false;
       $this->sortierrichtung = "ASC";
@@ -325,7 +325,7 @@ namespace UI {
       if ($hatAktionen) {$spanz++;}
 
       $code .= "<tr><td class=\"dshUiTabelleFuss\" colspan=\"$spanz\">";
-      $seitenfeld = new Auswahl("{$this->id}Seite", $this->seitenanzahl);
+      $seitenfeld = new Auswahl("{$this->id}Seite", $this->seite);
       $seitenfeld->addFunktion("oninput", "ui.tabelle.sortieren({$this->sortierfunktion}, '{$this->id}')");
       for ($i=1; $i<=$this->seitenanzahl; $i++) {
         $seitenfeld->add($i, $i);
@@ -346,7 +346,7 @@ namespace UI {
       $code .= "</div>";
 
       if ($this->autoladen) {
-        $code .= "<script>ui.tabelle.sortieren({$this->sortierfunktion}, '{$this->id}', 'ASC', '0')</script>";
+        $code .= "<script>ui.tabelle.sortieren({$this->sortierfunktion}, '{$this->id}')</script>";
         $code .= "</div>";
       }
       return $code;
