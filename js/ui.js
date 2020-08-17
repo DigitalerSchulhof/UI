@@ -638,3 +638,19 @@ ui.tabelle = {
     return 0;
   }
 };
+
+ui.formular = {
+  anzeigenwenn: (id, vergleichswert, klasse) => {
+    var wert = $("#"+id).getWert();
+    var felder = $("."+klasse);
+    if (wert == vergleichswert) {
+      felder.each((el) => {
+        el.style.display = "table-row";
+      });
+    } else {
+      felder.each((el) => {
+        el.style.display = "none";
+      });
+    }
+  }
+}
