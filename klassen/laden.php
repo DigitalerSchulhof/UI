@@ -79,7 +79,7 @@ class Balken extends UI\Element {
         } else {
           $einheitgesamt = "Schritten";
         }
-        $code .= "<p class=\"dshUiNotiz\">";
+        $code .= "<p class=\"dshUiNotiz\" id=\"{$this->id}Infotext\">";
           $code .= "<span id=\"{$this->id}BelegtAbs\">{$this->belegt}</span> ";
           $code .= "(<span id=\"{$this->id}BelegtPro\">{$prozent["anzeige"]}</span>) ";
           $code .= "{$einheitpos} von {$this->ganz} {$einheitgesamt} ausgeführt - ";
@@ -89,7 +89,7 @@ class Balken extends UI\Element {
       } else if ($this->art == "Zeit") {
         $uebrigprozent = UI\Check::prozent($uebrig, $this->limit);
         $uebrig = UI\Check::zeit($uebrig);
-        $code .= "<p class=\"dshUiNotiz\">";
+        $code .= "<p class=\"dshUiNotiz\" id=\"{$this->id}Infotext\">";
           $code .= "Aktiv bis ".date("d.m.Y", $this->ganz)." um ".date("H:i", $this->ganz)." Uhr - ";
           $code .= "noch <span id=\"{$this->id}UebrigAbs\">{$uebrig}</span>.";
         $code .= "</p>";
@@ -97,7 +97,7 @@ class Balken extends UI\Element {
         $belegt = UI\Check::speicher($this->belegt);
         $gesamt = UI\Check::speicher($this->ganz);
         $frei = UI\Check::speicher($uebrig);
-        $code .= "<p class=\"dshUiNotiz\">";
+        $code .= "<p class=\"dshUiNotiz\" id=\"{$this->id}Infotext\">";
           $code .= "<span id=\"{$this->id}BelegtAbs\">{$belegt}</span> ";
           $code .= "(<span id=\"{$gesamt}BelegtPro\">{$prozent["anzeige"]}</span>) ";
           $code .= " von {$this->ganz} belegt - ";
@@ -105,7 +105,7 @@ class Balken extends UI\Element {
           $code .= "(<span id=\"{$this->id}UebrigPro\">{$uebrigprozent["anzeige"]}</span>).";
         $code .= "</p>";
       } else {
-        $code .= "<p class=\"dshUiNotiz\">";
+        $code .= "<p class=\"dshUiNotiz\" id=\"{$this->id}Infotext\">";
           $code .= "<span id=\"{$this->id}BelegtPro\">{$prozent["anzeige"]}</span> ausgeführt - ";
           $code .= "<span id=\"{$this->id}UebrigPro\">{$uebrigprozent["anzeige"]}</span> ausstehend.";
         $code .= "</p>";

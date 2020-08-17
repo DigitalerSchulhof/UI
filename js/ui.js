@@ -123,6 +123,7 @@ ui.generieren = {
     var datum = new Date(x);
     return datum.getHours()+":"+datum.getMinutes()+" Uhr";
   },
+  minuten: (x) => Math.floor((x/1000)/60),
   komma: (x) => (Math.round(bytes*100)/100).toString().replace('.', ','),
   speicherplatz: (bytes) => {
     if (bytes/1000 > 1) {
