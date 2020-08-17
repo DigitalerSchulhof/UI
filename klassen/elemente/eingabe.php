@@ -605,7 +605,7 @@ class Farbfeld extends Textfeld {
 
 class Passwortfeld extends Textfeld {
   protected $typ = "password";
-  /** @var Textfeld $bezug Textfeld, mit dem das Passwort verglichen werden soll */
+  /** @var Passwortfeld $bezug Passwortfeld, mit dem das Passwort verglichen werden soll */
   protected $bezug = null;
 
   /**
@@ -619,14 +619,15 @@ class Passwortfeld extends Textfeld {
     $this->bezug = $bezug;
     if($this->bezug !== null) {
       $this->aktionen->addFunktionPrioritaet("oninput", 3, "ui.passwort.aktion('{$this->bezug->getID()}', '{$this->id}')");
+      $this->bezug->getAktionen()->addFunktionPrioritaet("oninput", 3, "ui.passwort.aktion('{$this->bezug->getID()}', '{$this->id}')");
     }
   }
 
   /**
    * Gibt das Bezugsfeld des Eingabefelds zurück
-   * @return  Textfeld
+   * @return  Passwortfeld
    */
-  public function getBezugsfeld() : Textfeld {
+  public function getBezugsfeld() : Passwortfeld {
     return $this->bezug;
   }
 }
