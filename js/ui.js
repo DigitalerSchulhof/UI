@@ -644,13 +644,9 @@ ui.formular = {
     var wert = $("#"+id).getWert();
     var felder = $("."+klasse);
     if (wert == vergleichswert) {
-      felder.each((el) => {
-        el.style.display = "table-row";
-      });
+      felder.einblenden("table-row");
     } else {
-      felder.each((el) => {
-        el.style.display = "none";
-      });
+      felder.ausblenden();
     }
   }
 }
