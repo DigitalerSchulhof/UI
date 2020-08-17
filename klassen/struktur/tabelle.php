@@ -161,7 +161,7 @@ namespace UI {
       $this->seite = 1;
       $this->seitenanzahl = 1;
       $this->datensaetzeProSeite = 25;
-      $this->sortierfunktion = "alert";
+      $this->sortierfunktion = "null";
       $this->autoladen = false;
       $this->sortierrichtung = "ASC";
       $this->sortierspalte = 0;
