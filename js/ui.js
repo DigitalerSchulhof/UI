@@ -586,6 +586,7 @@ ui.tabelle = {
     var sortDatenproseite = $("#"+id+"DatenProSeite").getWert();
     var sortRichtung = richtung || $("#"+id+"SortierenRichtung").getWert();
     var sortSpalte = spalte || $("#"+id+"SortierenSpalte").getWert();
+    feld.kinder().addKlasse("dshUiTabelleLaedt");
     sortierfunktion(feld, id, {sortSeite:sortSeite, sortDatenproseite:sortDatenproseite, sortRichtung:sortRichtung, sortSpalte:sortSpalte});
   },
   sortieren2: (richtung, id, spalte) => {

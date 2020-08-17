@@ -139,7 +139,7 @@ namespace UI {
     /** @var string Spalte, nach der die Tabelle sortiert ist */
     protected $sortierspalte;
 
-    /** @var string Wenn true wird sortieren zu Beginn ausgeführt */
+    /** @var bool Wenn true wird sortieren zu Beginn ausgeführt */
     protected $autoladen;
 
 
@@ -243,10 +243,10 @@ namespace UI {
 
     public function __toString() : string {
       $code = "";
-      if ($this->autoladen) {
-        $code = "<div id=\"{$this->id}Ladebereich\">";
+      if($this->autoladen) {
+        $code = "<div id=\"{$this->id}Ladebereich\" class=\"dshUiTabelleO\">";
       }
-      $code .=  "<div class=\"dshUiTabelleO\">";
+      $code .=  "<div class=\"dshUiTabelleI\">";
 
       $code .= $this->codeAuf();
       $code .= "<thead><tr>";
@@ -298,7 +298,11 @@ namespace UI {
       $code .= "</tr></thead><tbody>";
 
       if($anzzeilen === 0) {
-        $code .= "<tr><td colspan=\"$anzspalten\" class=\"dshUiTabelleLeer dshUiNotiz\">– Keine Datensätze –</td></tr>";
+        if($this->autoladen) {
+          $code .= "<tr><td colspan=\"$anzspalten\" class=\"dshUiTabelleLeer dshUiNotiz\">– Der Inhalt wird geladen –</td></tr>";
+        } else {
+          $code .= "<tr><td colspan=\"$anzspalten\" class=\"dshUiTabelleLeer dshUiNotiz\">– Keine Datensätze –</td></tr>";
+        }
       } else {
         foreach($this->zeilen as $znr => $z) {
           $code .= "<tr>";
@@ -491,6 +495,7 @@ namespace UI {
      */
     public function __toString() : string {
       $code  = "<div class=\"dshUiTabelleO\">";
+      $code .= "<div class=\"dshUiTabelleI\">";
       $code .= $this->codeAuf();
       $code .= "<table class=\"dshUiTabelle dshUiTabelleFormular\"><tbody>";
       foreach($this->zeilen as $z) {
@@ -506,7 +511,7 @@ namespace UI {
       $code .= "</tbody></table>";
       $code .= (new Icon(Konstanten::AUSFUELLEN))->addKlasse("dshUiFormularAusfuellen");
       $code .= $this->codeZu();
-      $code .= "</div>";
+      $code .= "</div></div>";
       return $code;
     }
 

@@ -1,10 +1,15 @@
 // LAYOUT;
 
-.dshUiTabelleO.dshUiTabelleLaedt {
+.dshUiTabelleI {
+  margin-top: 2px;
+}
+
+.dshUiTabelleI.dshUiTabelleLaedt {
+  margin-top: 0;
   opacity: 0.5;
 }
 
-.dshUiTabelleO.dshUiTabelleLaedt::before {
+.dshUiTabelleI.dshUiTabelleLaedt::before {
     content: " ";
     width: 0%;
     height: 2px;
@@ -12,6 +17,7 @@
     background: rgba(11,74,149,1);
     cursor: default !important;
     animation: tabelleladenbefore .85s linear infinite;
+    animation-delay: 0.1s;
 }
 
 @keyframes tabelleladenbefore {
@@ -33,7 +39,7 @@
   }
 }
 
-.dshUiTabelleO {
+.dshUiTabelleI {
   width: 100%;
   overflow-x: auto;
 }
