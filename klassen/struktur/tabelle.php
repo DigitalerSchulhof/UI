@@ -121,11 +121,27 @@ namespace UI {
     /** @var bool $hatIcon Hat die Tabelle ein Icon in der ersten Spalte? */
     protected $hatIcon;
 
+    /** @var int Seite auf der die Tabelle angezeigt wird **/
     protected $seite;
 
+    /** @var int Gesamtzahl an Seiten, die der Tabelle zur Verfügung stehen */
     protected $seitenanzahl;
 
+    /** @var int Anzahl an Datensätzen, die auf einer Seite angezeigt werden können */
     protected $datensaetzeProSeite;
+
+    /** @var string Javascript-Funktion zum neuladen der Tabelle */
+    protected $sortierfunktion;
+
+    /** @var string Sortierrichtung der Tabelle */
+    protected $sortierrichtung;
+
+    /** @var string Spalte, nach der die Tabelle sortiert ist */
+    protected $sortierspalte;
+
+    /** @var string Wenn true wird sortieren zu Beginn ausgeführt */
+    protected $autoladen;
+
 
     /**
      * Erzeugt eine neue Tabelle
@@ -145,12 +161,46 @@ namespace UI {
       $this->seite = 1;
       $this->seitenanzahl = 1;
       $this->datensaetzeProSeite = 50;
+      $this->sortierfunktion = "alert";
+      $this->autoladen = false;
+      $this->sortierrichtung = "ASC";
+      $this->sortierspalte = 0;
     }
 
-    public function setSeiten($seite, $seitenanzahl, $proSeite) {
-      $this->seite = $seite;
-      $this->seitenanzahl = $seitenanzahl;
-      $this->datensaetzeProSeite = $proSeite;
+    /**
+     * Setzt das Attribut autoladen
+     * @param  bool $autoladen true = Autoladen, false tabelle statisch
+     * @return self            :)
+     */
+    public function setAutoladen($autoladen) : self {
+      $this->autoladen = $autoladen;
+      return $this;
+    }
+
+    /**
+     * Setzt das Attribut sortierfunktion (JS-Funktion zum Sortieren)
+     * @param  string $sortierfunktion
+     * @return self            :)
+     */
+    public function setSortierfunktion($sortierfunktion) : self {
+      $this->sortierfunktion = $sortierfunktion;
+      return $this;
+    }
+
+    /**
+     * Setzt alle Variablen zur Verwendung von Seiten
+     * @param array  Rückgabe einer Tabellenanfrage   :)
+     * @param string $sortierfunktion    JS-Funktion zum Sortieren
+     * @return self
+     */
+    public function setSeiten($tanfrage, $sortierfunktion) : self {
+      $this->seite = $tanfrage["Seite"];
+      $this->seitenanzahl = $tanfrage["Seitenanzahl"];
+      $this->datensaetzeProSeite = $tanfrage["DatenProSeite"];
+      $this->sortierrichtung = $tanfrage["Richtung"];
+      $this->sortierspalte = $tanfrage["Spalte"];
+      $this->sortierfunktion = $sortierfunktion;
+      return $this;
     }
 
     /**
@@ -192,9 +242,14 @@ namespace UI {
     }
 
     public function __toString() : string {
-      $code = "<div class=\"dshUiTabelleO\">";
+      $code = "";
+      if ($this->autoladen) {
+        $code = "<div id=\"{$this->id}Ladebereich\">";
+      }
+      $code .=  "<div class=\"dshUiTabelleO\">";
+
       $code .= $this->codeAuf();
-      $code .= "<thead id=\"{$this->id}Kopf\"><tr>";
+      $code .= "<thead><tr>";
       $anzzeilen  = count($this->zeilen);
       $anzspalten = count($this->spalten);
 
@@ -218,8 +273,8 @@ namespace UI {
           }
           $code .= "<th>$s";
           if($istVerschieden) {
-            $code .= new Sortierknopf("ASC", $this->id, $nr);
-            $code .= new Sortierknopf("DESC", $this->id, $nr);
+            $code .= new Sortierknopf($this->sortierfunktion, $this->id, "ASC", $nr);
+            $code .= new Sortierknopf($this->sortierfunktion, $this->id, "DESC", $nr);
           }
           $code .= "</th>";
         } else {
@@ -240,7 +295,7 @@ namespace UI {
         $code .= "<th class=\"dshUiTabelleIconSpalte\"></th>";
       }
 
-      $code .= "</tr></thead><tbody id=\"{$this->id}Koerper\">";
+      $code .= "</tr></thead><tbody>";
 
       if($anzzeilen === 0) {
         $code .= "<tr><td colspan=\"$anzspalten\" class=\"dshUiTabelleLeer dshUiNotiz\">– Keine Datensätze –</td></tr>";
@@ -252,7 +307,7 @@ namespace UI {
             $code .= "<td class=\"dshUiTabelleIconSpalte\">$icon</td>";
           }
           foreach ($this->spalten as $snr => $s) {
-            $code .= "<td id=\"{$this->id}Z{$znr}S$snr\">".($z[$s] ?? "")."</td>";
+            $code .= "<td>".($z[$s] ?? "")."</td>";
           }
           if($hatAktionen) {
             $a = join(" ", $z->getAktionen());
@@ -263,28 +318,37 @@ namespace UI {
           }
           $code .= "</tr>";
         }
-
-        $spanz = $anzspalten;
-        if ($this->hatIcon) {$spanz++;}
-        if ($hatAktionen) {$spanz++;}
-
-        $code .= "<tr><td class=\"dshUiTabellenFuss\" colspan=\"$spanz\">";
-        $seitenfeld = (new Zahlenfeld("{$this->id}Seite", 1, $this->seitenanzahl))->setWert($this->seite);
-        $code .= "Seite $seitenfeld von {$this->seitenanzahl} - ";
-        $auswahl = new Auswahl("{$this->id}DatenProSeite", $this->datensaetzeProSeite);
-        $auswahl->add("25", "25");
-        $auswahl->add("50", "50");
-        $auswahl->add("75", "75");
-        $auswahl->add("100", "100");
-        $auswahl->add("alle", "alle");
-        $code .= "$auswahl pro Seite";
-        $code .= "</td></tr>";
       }
 
+      $spanz = $anzspalten;
+      if ($this->hatIcon) {$spanz++;}
+      if ($hatAktionen) {$spanz++;}
+
+      $code .= "<tr><td class=\"dshUiTabelleFuss\" colspan=\"$spanz\">";
+      $seitenfeld = new Auswahl("{$this->id}Seite", $this->seitenanzahl);
+      $seitenfeld->addFunktion("oninput", "ui.tabelle.sortieren({$this->sortierfunktion}, '{$this->id}')");
+      for ($i=1; $i<=$this->seitenanzahl; $i++) {
+        $seitenfeld->add($i, $i);
+      }
+      $code .= "Seite $seitenfeld von {$this->seitenanzahl} - ";
+      $proSeite = new Auswahl("{$this->id}DatenProSeite", $this->datensaetzeProSeite);
+      $proSeite->addFunktion("oninput", "ui.tabelle.sortieren({$this->sortierfunktion}, '{$this->id}')");
+      $proSeite->add("25", "25");
+      $proSeite->add("50", "50");
+      $proSeite->add("75", "75");
+      $proSeite->add("100", "100");
+      $proSeite->add("alle", "alle");
+      $code .= "$proSeite pro Seite";
+      $code .= new VerstecktesFeld("{$this->id}SortierenRichtung", $this->sortierrichtung);
+      $code .= new VerstecktesFeld("{$this->id}SortierenSpalte", $this->sortierspalte);
+      $code .= "</td></tr>";
       $code .= "</tbody>{$this->codeZu()}";
-      $code .= new VerstecktesFeld("{$this->id}ZAnzahl", $anzzeilen);
-      $code .= new VerstecktesFeld("{$this->id}SAnzahl", $anzspalten);
       $code .= "</div>";
+
+      if ($this->autoladen) {
+        $code .= "<script>ui.tabelle.sortieren({$this->sortierfunktion}, '{$this->id}', 'ASC', '0')</script>";
+        $code .= "</div>";
+      }
       return $code;
     }
 
