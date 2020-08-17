@@ -372,7 +372,7 @@ ui.laden = {
       ui.laden.fokusVor = $(document.activeElement);
       knopefe[0].focus();
     }
-    $("[tabindex]").each(function () {
+    $("[tabindex]:not([tabindexAlt])").each(function () {
       if(this.parentSelector("#dshBlende").length === 0) {
         this.setAttr("tabindexAlt", this.getAttr("tabindex"));
         this.setAttr("tabindex",    "-1");
@@ -425,7 +425,7 @@ ui.laden = {
     ui.laden.fokusVor = null;
     $("[tabindexAlt]").each(function () {
       this.setAttr("tabindex",    this.getAttr("tabindexAlt"));
-      this.setAttr("tabindexAlt", "");
+      this.setAttr("tabindexAlt", null);
     })
   },
   meldung: (modul, id, laden, parameter) => {
