@@ -3,7 +3,7 @@ namespace UI;
 use UI\Konstanten;
 
 
-class Fenster extends InhaltElement{
+class Fenster extends InhaltElement {
   protected $tag = "div";
 
   /** @var bool Schließen-Button im Fenster anzeigen */
@@ -12,21 +12,24 @@ class Fenster extends InhaltElement{
   private $titel;
   /** @var Knopf[] Aktionen des Fensters */
   private $fensteraktionen;
-
+  /** @var bool Ob der Fensterinhalt kein Padding links und rechts bekommt */
+  private $ohnePadding;
 
 	/**
 	 * @param string $id  :)
 	 * @param string $titel :)
 	 * @param string $inhalt Inhalt des Fensters
 	 * @param bool   $gross Fenster mit Seitenbreite
+	 * @param bool   $ohnePadding Soll der Fensterinhalt ohne Padding links und rechts ausgegeben werden? In Verwendung bei mehreren Spalten in einem Fenster
 	 */
-  public function __construct($id, $titel, $inhalt, $gross = false) {
+  public function __construct($id, $titel, $inhalt, $gross = false, $ohnePadding = false) {
+    parent::__construct($inhalt);
     $this->schliessen = true;
     $this->titel = $titel;
     $this->fensteraktionen = [];
-    parent::__construct($inhalt);
     $this->addKlasse("dshUiFenster");
     $this->setID($id);
+    $this->ohnePadding = $ohnePadding;
     if ($gross) {
       $this->addKlasse("dshUiFensterGross");
     }
@@ -69,7 +72,11 @@ class Fenster extends InhaltElement{
         $code .= "</div>";
 
         // Fensterinhalt
-        $code .= "<div id=\"{$this->id}FensterInhalt\" class=\"dshSpalte dshSpalteA1\">";
+        $ohnePadding = "";
+        if($this->ohnePadding) {
+          $ohnePadding = " dshUiOhnePadding";
+        }
+        $code .= "<div id=\"{$this->id}FensterInhalt\" class=\"dshSpalte dshSpalteA1$ohnePadding\">";
           $code .= $this->inhalt;
         $code .= "</div>";
 

@@ -465,10 +465,9 @@ ui.fenster = {
     fenster.parentNode.removeChild(fenster);
   },
   anzeigen: (code, fensterid) => {
-    if (document.getElementById(fensterid) === null) {
-      document.getElementById("dshFenstersammler").innerHTML += code;
-      var test = $("#dshFenstersammler").kinder();
-      var neu = $(test[test.length-1]).setCss("z-index", ui.fenster.maxz++);
+    if(!$("#"+fensterid).existiert()) {
+      $("#dshFenstersammler")[0].innerHTML += code;
+      $("#"+fensterid).setCss("z-index", ++ui.fenster.maxz);
     }
   }
 };
@@ -476,7 +475,7 @@ ui.fenster = {
 document.addEventListener("mousedown", (e) => {
   if($(e.target).parentSelector(".dshUiFenster").existiert()) {
     $(e.target).parentSelector(".dshUiFenster").setCss("z-index", ++ui.fenster.maxz);
-    if(e.which === 1 && $(e.target).ist(".dshUiFenster:not(#dshLaden) .dshUiFensterTitelzeile") || $(e.target).parentSelector(".dshUiFenster:not(#dshLaden) .dshUiFensterTitelzeile").length > 0) {
+    if(e.which === 1 && $(e.target).ist(".dshUiFenster:not(#dshLaden) .dshUiFensterTitelzeile") || $(e.target).parentSelector(".dshUiFenster:not(#dshLaden) .dshUiFensterTitelzeile").existiert()) {
       let f = $(e.target).parentSelector(".dshUiFenster");
       f.addKlasse("dshUiFensterSchiebend");
       ui.fenster.schiebend = f;
