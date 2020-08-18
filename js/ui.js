@@ -125,38 +125,23 @@ ui.generieren = {
   },
   minuten: (x) => Math.floor((x/1000)/60),
   komma: (x) => (Math.round(bytes*100)/100).toString().replace('.', ','),
-  speicherplatz: (bytes) => {
-    if (bytes/1000 > 1) {
-      bytes = bytes/1000;
-      if (bytes/1000 > 1) {
-        bytes = bytes/1000;
-        if (bytes/1000 > 1) {
-          bytes = bytes/1000;
-          if (bytes/1000 > 1) {
-            bytes = bytes/1000;
-            if (bytes/1000 > 1) {
-              bytes = bytes/1000;
-              if (bytes/1000 > 1) {
-                bytes = bytes/1000;
-                bytes = (Math.round(bytes*100)/100).toString().replace('.', ',');
-                return bytes+" EB";
-              }
-              bytes = (Math.round(bytes*100)/100).toString().replace('.', ',');
-              return bytes+" PB";
-            }
-            bytes = (Math.round(bytes*100)/100).toString().replace('.', ',');
-            return bytes+" TB";
-          }
-          bytes = (Math.round(bytes*100)/100).toString().replace('.', ',');
-          return bytes+" GB";
-        }
-        bytes = (Math.round(bytes*100)/100).toString().replace('.', ',');
-        return bytes+" MB";
-      }
-      bytes = (Math.round(bytes*100)/100).toString().replace('.', ',');
-      return bytes+" KB";
+  speicherplatz: (bytes, lang) => {
+    lang = lang || false;
+    let einheiten = [
+      ["B", "KB", "MB", "GB", "TB", "PB", "EB"],
+      ["Byte", "Kilobyte", "Megabyte", "Gigabyte", "Terabyte", "Petabyte", "Exabyte"]
+    ];
+    let x = 0;
+    if(lang) {
+      x = 1;
     }
-    return bytes+" B";
+    for(e of einheiten[x]) {
+      if(bytes / 1000 < 1) {
+        return (Math.round(bytes*100)/100).toString().replace('.', ',') + " " + e;
+      }
+      bytes = bytes / 1000;
+    }
+    return "Zu viel";
   },
   rgba2hex: (orig) => {
     if(orig === undefined || orig === null) {
