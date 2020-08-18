@@ -28,6 +28,7 @@ class Fenster extends InhaltElement {
     $this->titel = $titel;
     $this->fensteraktionen = [];
     $this->addKlasse("dshUiFenster");
+    $this->setAttribut("tabindex", "-1");
     $this->setID($id);
     $this->ohnePadding = $ohnePadding;
     if ($gross) {

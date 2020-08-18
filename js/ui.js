@@ -469,9 +469,20 @@ ui.fenster = {
         n.parentNode.replaceChild(c, n);
       });
     }
-    $("#"+fensterid).setCss("z-index", ++ui.fenster.maxz);
+    ui.laden.fokusVor = null;
+    $("#"+fensterid).setCss("z-index", ++ui.fenster.maxz)[0].focus();
+    console.log(document.activeElement);
   }
 };
+
+document.addEventListener("keydown", (e) => {
+  if([27].includes(e.keyCode)) {
+    let ae = $(document.activeElement);
+    if(ae.ist(".dshUiFenster")) {
+      ui.fenster.schliessen(ae.getID());
+    }
+  }
+});
 
 document.addEventListener("mousedown", (e) => {
   if($(e.target).parentSelector(".dshUiFenster").existiert()) {
