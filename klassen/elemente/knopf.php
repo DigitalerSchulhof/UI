@@ -19,6 +19,8 @@ class Knopf extends InhaltElement {
 	/**
 	* @param string $inhalt :)
 	* @param string $art :)
+	* @param string $aktion Standardaktion des Knopfes
+	*  Alias für $knopf->addFunktion("onclick", $aktion);
 	*/
   public function __construct($inhalt, $art = null, $aktion = null) {
     parent::__construct($inhalt);

@@ -79,7 +79,7 @@ class Fenster extends InhaltElement {
         }
         $code .= "<div id=\"{$this->id}FensterInhalt\" class=\"dshSpalte dshSpalteA1$ohnePadding\">";
           $code .= $this->inhalt;
-        $code .= "</div>";
+        $code .= "</div><div class=\"dshClear\"></div>";
 
         // Fensteraktionen ausgeben
         $code .= "<div  id=\"{$this->id}FensterAktionen\" class=\"dshUiFensterAktionen\">";
