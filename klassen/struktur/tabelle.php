@@ -331,9 +331,13 @@ namespace UI {
       $seitenfeld = new Auswahl("{$this->id}Seite", $this->seite);
       $seitenfeld->addFunktion("oninput", "ui.tabelle.sortieren({$this->sortierfunktion}, '{$this->id}')");
       for ($i=1; $i<=$this->seitenanzahl; $i++) {
-        $seitenfeld->add($i, $i);
+        $seitenfeld->add("$i / {$this->seitenanzahl}", $i);
       }
-      $code .= "Seite $seitenfeld von {$this->seitenanzahl} - ";
+      if($this->seitenanzahl > 1) {
+        $code .= "$seitenfeld - ";
+      } else {
+        $code .= "<span style=\"display: none\">$seitenfeld - </span>";
+      }
       $proSeite = new Auswahl("{$this->id}DatenProSeite", $this->datensaetzeProSeite);
       $proSeite->addFunktion("oninput", "ui.tabelle.sortieren({$this->sortierfunktion}, '{$this->id}')");
       $proSeite->add("25", "25");
@@ -341,9 +345,15 @@ namespace UI {
       $proSeite->add("75", "75");
       $proSeite->add("100", "100");
       $proSeite->add("alle", "alle");
+      if($anzzeilen === 0) {
+        $code .= "<span style=\"display: none\">";
+      }
       $code .= "$proSeite pro Seite";
       $code .= new VerstecktesFeld("{$this->id}SortierenRichtung", $this->sortierrichtung);
       $code .= new VerstecktesFeld("{$this->id}SortierenSpalte", $this->sortierspalte);
+      if($anzzeilen === 0) {
+        $code .= "</span>";
+      }
       $code .= "</td></tr>";
       $code .= "</tbody>{$this->codeZu()}";
       $code .= "</div>";
