@@ -464,32 +464,36 @@ ui.fenster = {
     var fenster = document.getElementById(id);
     fenster.parentNode.removeChild(fenster);
   },
-  anzeigen: (code, fensterid) => {
+  anzeigen: (code) => {
+    let fenster   = eQuery.parse(code);
+    let fensterid = fenster.getID();
     if(!$("#"+fensterid).existiert()) {
-      $("#dshFenstersammler")[0].innerHTML += code;
-      $("#"+fensterid).setCss("z-index", ++ui.fenster.maxz);
+      fenster.setCss({top: "30px", left: "0px"});
+      $("#dshFenstersammler").anhaengen(fenster);
     }
+    $("#"+fensterid).setCss("z-index", ++ui.fenster.maxz);
   }
 };
 
 document.addEventListener("mousedown", (e) => {
   if($(e.target).parentSelector(".dshUiFenster").existiert()) {
     $(e.target).parentSelector(".dshUiFenster").setCss("z-index", ++ui.fenster.maxz);
-    if(e.which === 1 && $(e.target).ist(".dshUiFenster:not(#dshLaden) .dshUiFensterTitelzeile") || $(e.target).parentSelector(".dshUiFenster:not(#dshLaden) .dshUiFensterTitelzeile").existiert()) {
+    if(e.which === 1 && ($(e.target).ist(".dshUiFenster:not(#dshLaden) .dshUiFensterTitelzeile") || $(e.target).parentSelector(".dshUiFenster:not(#dshLaden) .dshUiFensterTitelzeile").existiert())) {
       let f = $(e.target).parentSelector(".dshUiFenster");
       f.addKlasse("dshUiFensterSchiebend");
       ui.fenster.schiebend = f;
-      ui.fenster.schiebend.mx = parseInt((f.getCss("transform").match(/translateX\(((?:-)?\d+)px\)/) || ["hi","0"])[1]);
-      ui.fenster.schiebend.my = parseInt((f.getCss("transform").match(/translateY\(((?:-)?\d+)px\)/) || ["hi","0"])[1]);
+      ui.fenster.schiebend.my = parseInt(f.getCss("top"));
+      ui.fenster.schiebend.mx = parseInt(f.getCss("left"));
+      console.log({top: ui.fenster.schiebend.my+"px", left: ui.fenster.schiebend.mx+"px"});
     }
   }
 });
 
 document.addEventListener("mousemove", (e) => {
   if(ui.fenster.schiebend !== null) {
-    ui.fenster.schiebend.mx = ui.fenster.schiebend.mx+e.movementX;
-    ui.fenster.schiebend.my = ui.fenster.schiebend.my+e.movementY;
-    ui.fenster.schiebend.setCss("transform", "translateX("+ui.fenster.schiebend.mx+"px) translateY("+ui.fenster.schiebend.my+"px)");
+    ui.fenster.schiebend.mx += e.movementX;
+    ui.fenster.schiebend.my += e.movementY;
+    ui.fenster.schiebend.setCss({top: ui.fenster.schiebend.my+"px", left: ui.fenster.schiebend.mx+"px"});
   }
 });
 
