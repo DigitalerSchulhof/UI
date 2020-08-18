@@ -253,7 +253,7 @@ namespace UI {
       $anzzeilen  = count($this->zeilen);
       $anzspalten = count($this->spalten);
 
-      if($this->hatIcon && $anzzeilen > 0) {
+      if(!$this->autoladen && $this->hatIcon && $anzzeilen > 0) {
         $code .= "<th class=\"dshUiTabelleIconSpalte\"></th>";
       }
 
@@ -291,36 +291,35 @@ namespace UI {
         }
       }
 
-      if($hatAktionen) {
+      if(!$this->autoladen && $hatAktionen) {
         $code .= "<th class=\"dshUiTabelleIconSpalte\"></th>";
       }
 
       $code .= "</tr></thead><tbody>";
-
-      if($anzzeilen === 0) {
-        if($this->autoladen) {
-          $code .= "<tr><td colspan=\"$anzspalten\" class=\"dshUiTabelleLeer dshUiNotiz\">– Der Inhalt wird geladen –</td></tr>";
-        } else {
-          $code .= "<tr><td colspan=\"$anzspalten\" class=\"dshUiTabelleLeer dshUiNotiz\">– Keine Datensätze –</td></tr>";
-        }
+      if($this->autoladen) {
+        $code .= "<tr><td colspan=\"$anzspalten\" class=\"dshUiTabelleLeer dshUiNotiz\">– Der Inhalt wird geladen –</td></tr>";
       } else {
-        foreach($this->zeilen as $znr => $z) {
-          $code .= "<tr>";
-          if($this->hatIcon) {
-            $icon = $z->getIcon() ?? $this->getIcon();
-            $code .= "<td class=\"dshUiTabelleIconSpalte\">$icon</td>";
-          }
-          foreach ($this->spalten as $snr => $s) {
-            $code .= "<td>".($z[$s] ?? "")."</td>";
-          }
-          if($hatAktionen) {
-            $a = join(" ", $z->getAktionen());
-            if($z->getID() !== null) {
-              $a .= (new \UI\VerstecktesFeld(null, $z->getID()))->addKlasse("dshTabelleZeileID");
+        if($anzzeilen === 0) {
+          $code .= "<tr><td colspan=\"$anzspalten\" class=\"dshUiTabelleLeer dshUiNotiz\">– Keine Datensätze –</td></tr>";
+        } else {
+          foreach($this->zeilen as $znr => $z) {
+            $code .= "<tr>";
+            if($this->hatIcon) {
+              $icon = $z->getIcon() ?? $this->getIcon();
+              $code .= "<td class=\"dshUiTabelleIconSpalte\">$icon</td>";
             }
-            $code .= "<td class=\"dshUiTabelleIconSpalte\">$a</td>";
+            foreach ($this->spalten as $snr => $s) {
+              $code .= "<td>".($z[$s] ?? "")."</td>";
+            }
+            if($hatAktionen) {
+              $a = join(" ", $z->getAktionen());
+              if($z->getID() !== null) {
+                $a .= (new \UI\VerstecktesFeld(null, $z->getID()))->addKlasse("dshTabelleZeileID");
+              }
+              $code .= "<td class=\"dshUiTabelleIconSpalte\">$a</td>";
+            }
+            $code .= "</tr>";
           }
-          $code .= "</tr>";
         }
       }
 
