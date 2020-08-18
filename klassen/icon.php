@@ -14,7 +14,9 @@ class Icon extends Element {
     parent::__construct();
     $this->icon = $icon;
     $this->addKlasse("dshUiIcon");
-    $this->addKlasse($icon);
+    if($icon !== null) {
+      $this->addKlasse($icon);
+    }
   }
 
   /**
@@ -62,6 +64,32 @@ class Icon extends Element {
    */
   public static function neu() : Icon {
     return new Icon(Konstanten::NEU);
+  }
+}
+
+class IconStack extends Icon {
+  protected $tag = "span";
+
+  /** @var string[] Icons, die gestapelt werden sollen */
+  private $icons;
+
+  /**
+   * @param string $icons Fontawesome Klassen der Icons, die gestapelt werden sollen
+   * Bsp: <code>"fas fa-user"</code> bzw. <code>\UI\Konstanten::PERSON</code>
+   */
+  public function __construct(...$icons) {
+    parent::__construct(null);
+    $this->icons = $icons;
+    $this->addKlasse("fa-stack");
+  }
+
+  public function __toString() : string {
+    $code  = "{$this->codeAuf()}";
+    foreach($this->icons as $i) {
+      $code .= "<i class=\"$i fa-stack-1x\"></i>";
+    }
+    $code .= "{$this->codeZu()}";
+    return $code;
   }
 }
 ?>
