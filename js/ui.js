@@ -453,13 +453,21 @@ ui.fenster = {
     let fenster   = eQuery.parse(code);
     let fensterid = fenster.getID();
     if(!$("#"+fensterid).existiert()) {
-      let top = 30, left = 0;
+      let top = 30, left = 30;
       while($(".dshUiFenster").filter(e => e.getCss("top") == top+"px" && e.getCss("left") == left+"px").existiert()) {
         top   += 10;
         left  += 10;
       }
       fenster.setCss({top: top+"px", left: left+"px"});
       $("#dshFenstersammler").anhaengen(fenster);
+      fenster.finde("script").each((n) => {
+        var c  = document.createElement("script");
+        c.text = n.innerHTML;
+        for(let i = 0; i < n.attributes.length; i++) {
+          c.setAttribute(n.attributes[i].name, n.attributes[i].value);
+        }
+        n.parentNode.replaceChild(c, n);
+      });
     }
     $("#"+fensterid).setCss("z-index", ++ui.fenster.maxz);
   }

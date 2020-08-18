@@ -33,7 +33,7 @@
 }
 
 .dshUiKnopf:not(.dshUiKnopfLeer),
-.dshUiKnopf:not(.dshUiKnopfLeer) i.dshUiIcon {
+.dshUiKnopf:not(.dshUiKnopfLeer) .dshUiIcon {
   transition: all 250ms ease-in-out;
   position: static;
 }
@@ -65,7 +65,7 @@
   transition: all 250ms ease-in-out;
 }
 
-.dshUiKnopfIcon:not(.dshUiKnopfGross):not(.dshUiKnopfIconMini) i.dshUiIcon {
+.dshUiKnopfIcon:not(.dshUiKnopfGross):not(.dshUiKnopfIconMini) .dshUiIcon {
   position: absolute;
   top: 5px;
   left: -1px;
@@ -133,11 +133,11 @@ foreach($arten as $css => $var) {
         .   "background-color:@{$var}Akzent;"
         . "}"
 
-        . ".dshUi$css.dshUiKnopfIcon i.dshUiIcon {"
+        . ".dshUi$css.dshUiKnopfIcon .dshUiIcon {"
         .   "color:@{$var}Akzent;"
         . "}"
 
-        . ".dshUi$css.dshUiKnopfIcon:not(.dshUiKnopfGross):not(.dshUiKnopfIconMini) i.dshUiIcon {"
+        . ".dshUi$css.dshUiKnopfIcon:not(.dshUiKnopfGross):not(.dshUiKnopfIconMini) .dshUiIcon {"
         .   "color:@{$var}Hintergrund;"
         . "}"
 

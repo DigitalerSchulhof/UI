@@ -29,18 +29,18 @@
       font-weight: 600;
     }
 
-    .dshUiMeldungTitel i.dshUiIcon {
+    .dshUiMeldungTitel .dshUiIcon {
       position: absolute;
       top: 15px;
       z-index: -1;
       width: 23px;
       text-align: center;
     }
-    .dshUiMeldungTitel i.i1.dshUiIcon {
+    .dshUiMeldungTitel .i1.dshUiIcon {
       left: -23px;
       transition: left 250ms ease-in-out;
     }
-    .dshUiMeldungTitel i.i2.dshUiIcon {
+    .dshUiMeldungTitel .i2.dshUiIcon {
       right: 23px;
       transition: right 250ms ease-in-out;
     }
@@ -103,7 +103,7 @@ foreach($arten as $var => $css) {
     "color:@{$var}Schrift"
   ."}";
 
-  echo ".dshUiMeldung$css .dshUiMeldungTitel i.dshUiIcon{color:@{$var}Hintergrund}";
+  echo ".dshUiMeldung$css .dshUiMeldungTitel .dshUiIcon{color:@{$var}Hintergrund}";
 }
 
 ?>
