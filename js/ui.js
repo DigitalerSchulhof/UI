@@ -371,7 +371,7 @@ ui.laden = {
     let knopefe = $("#dshBlende").finde(".dshUiKnopf");
     if(knopefe.length !== 0) {
       ui.laden.fokusVor = $(document.activeElement);
-      knopefe[0].focus();
+      knopefe[knopefe.length-1].focus();
     }
     $("[tabindex]:not([tabindexAlt])").each(function () {
       if(this.parentSelector("#dshBlende").length === 0) {
@@ -397,7 +397,7 @@ ui.laden = {
       let knopefe = $("#dshBlende").finde(".dshUiKnopf");
       if(knopefe.length !== 0) {
         ui.laden.fokusVor = $(document.activeElement);
-        knopefe[0].focus();
+        knopefe[knopefe.length-1].focus();
       }
     }
     $("[tabindex]:not([tabindexAlt])").each(function () {
