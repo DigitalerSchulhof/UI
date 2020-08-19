@@ -189,7 +189,7 @@ namespace UI {
 
     /**
      * Setzt alle Variablen zur Verwendung von Seiten
-     * @param array  Rückgabe einer Tabellenanfrage   :)
+     * @param array  $tanfrage Rückgabe einer Tabellenanfrage   :)
      * @param string $sortierfunktion    JS-Funktion zum Sortieren
      * @return self
      */
