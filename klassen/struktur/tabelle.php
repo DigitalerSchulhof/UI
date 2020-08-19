@@ -330,13 +330,23 @@ namespace UI {
       $code .= "<tr><td class=\"dshUiTabelleFuss\" colspan=\"$spanz\">";
       $seitenfeld = new Auswahl("{$this->id}Seite", $this->seite);
       $seitenfeld->addFunktion("oninput", "ui.tabelle.sortieren({$this->sortierfunktion}, '{$this->id}')");
+      $vis = "";
+      if($this->seite == 1) {
+        $vis = "; visibility: collapse";
+      }
+      $nachlinks = "<i class=\"fas fa-caret-left\" style=\"padding: 10px;cursor:pointer$vis\" onclick=\"$('#{$this->id}Seite').setWert(".($this->seite-1).");ui.tabelle.sortieren({$this->sortierfunktion}, '{$this->id}')\"></i>";
+      $vis = "";
+      if($this->seite == $this->seitenanzahl) {
+        $vis = "; visibility: collapse";
+      }
+      $nachrechts = "<i class=\"fas fa-caret-right\" style=\"padding: 10px;cursor:pointer$vis\" onclick=\"$('#{$this->id}Seite').setWert(".($this->seite+1).");ui.tabelle.sortieren({$this->sortierfunktion}, '{$this->id}')\"></i>";
       for ($i=1; $i<=$this->seitenanzahl; $i++) {
         $seitenfeld->add("$i / {$this->seitenanzahl}", $i);
       }
       if($this->seitenanzahl > 1) {
-        $code .= "$seitenfeld - ";
+        $code .= "<span style=\"float:left\">$nachlinks$seitenfeld$nachrechts</span>";
       } else {
-        $code .= "<span style=\"display: none\">$seitenfeld - </span>";
+        $code .= "<span style=\"display: none;float:left\">$seitenfeld</span>";
       }
       $proSeite = new Auswahl("{$this->id}DatenProSeite", $this->datensaetzeProSeite);
       $proSeite->addFunktion("oninput", "ui.tabelle.sortieren({$this->sortierfunktion}, '{$this->id}')");
