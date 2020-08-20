@@ -453,7 +453,7 @@ ui.fenster = {
     let fenster   = eQuery.parse(code);
     let fensterid = fenster.getID();
     if(!$("#"+fensterid).existiert()) {
-      let top = 30, left = 30;
+      let top = 30+window.pageYOffset, left = 30;
       while($(".dshUiFenster").filter(e => e.getCss("top") == top+"px" && e.getCss("left") == left+"px").existiert()) {
         top   += 10;
         left  += 10;
