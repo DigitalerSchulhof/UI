@@ -352,7 +352,8 @@ ui.laden = {
     $("#dshLadenFensterAktionen").setHTML("");
     $("#dshBlende").einblenden();
     ui.laden.istAn    = true;
-
+    $("#dshLaden")[0].offsetHeight;
+    $("#dshLaden").setCss("opacity", "1");
     let knopefe = $("#dshBlende").finde(".dshUiKnopf");
     if(knopefe.length !== 0) {
       ui.laden.fokusVor = $(document.activeElement);
