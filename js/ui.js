@@ -471,6 +471,20 @@ ui.fenster = {
     }
     ui.laden.fokusVor = null;
     $("#"+fensterid).setCss("z-index", ++ui.fenster.maxz)[0].focus();
+    ui.fenster.ladesymbol(false);
+  },
+  laden: (modul, ziel, laden, daten, meldung, host) => {
+    ui.fenster.ladesymbol(true);
+    core.ajax(modul, ziel, laden, daten, meldung, host).then((r) => {
+      ui.fenster.anzeigen(r.Code);
+    });
+  },
+  ladesymbol: (an) => {
+    if (an) {
+      $("#dshUiFensterLadesymbol").einblenden();
+    } else {
+      $("#dshUiFensterLadesymbol").ausblenden();
+    }
   }
 };
 
