@@ -352,7 +352,8 @@ ui.laden = {
     $("#dshLadenFensterAktionen").setHTML("");
     $("#dshBlende").einblenden();
     ui.laden.istAn    = true;
-
+    $("#dshLaden")[0].offsetHeight;
+    $("#dshLaden").setCss("opacity", "1");
     let knopefe = $("#dshBlende").finde(".dshUiKnopf");
     if(knopefe.length !== 0) {
       ui.laden.fokusVor = $(document.activeElement);
@@ -445,15 +446,17 @@ document.addEventListener("keydown", (e) => {
 ui.fenster = {
   schiebend: null,
   maxz: 100000,
-  ladetimeout: null,
   ladend: 0,
   schliessen: (id) => {
     var fenster = document.getElementById(id);
     fenster.parentNode.removeChild(fenster);
   },
-  anzeigen: (code) => {
+  anzeigen: (code, ueberschreiben) => {
     let fenster   = eQuery.parse(code);
     let fensterid = fenster.getID();
+    if(ueberschreiben && $("#"+fensterid).existiert()) {
+      $("#"+fensterid).entfernen();
+    }
     if(!$("#"+fensterid).existiert()) {
       let top = 30+window.pageYOffset, left = 30;
       while($(".dshUiFenster").filter(e => e.getCss("top") == top+"px" && e.getCss("left") == left+"px").existiert()) {
@@ -476,20 +479,15 @@ ui.fenster = {
     ui.laden.fokusVor = null;
     $("#"+fensterid).setCss("z-index", ++ui.fenster.maxz)[0].focus();
     if(--ui.fenster.ladend === 0) {
-      if(ui.fenster.ladetimeout !== null) {
-        clearTimeout(ui.fenster.ladetimeout);
-      }
       ui.fenster.ladesymbol(false);
     }
   },
-  laden: (modul, ziel, laden, daten, meldung, host) => {
+  laden: (modul, ziel, laden, daten, meldung, host, ueberschreiben) => {
     ui.fenster.ladend++;
-    ui.fenster.ladetimeout = setTimeout(() => {
-      ui.fenster.ladesymbol(true);
-      core.ajax(modul, ziel, laden, daten, meldung, host).then((r) => {
-        ui.fenster.anzeigen(r.Code);
-      });
-    }), 100;
+    ui.fenster.ladesymbol(true);
+    return core.ajax(modul, ziel, laden, daten, meldung, host).then((r) => {
+      ui.fenster.anzeigen(r.Code, ueberschreiben);
+    });
   },
   ladesymbol: (an) => {
     if (an) {

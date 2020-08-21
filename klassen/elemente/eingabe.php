@@ -382,6 +382,20 @@ class Toggle extends Schieber {
     $code .= new VerstecktesFeld($this->id, $wert);
     return $code;
   }
+
+  /**
+   * Setzt, ob der Toggle toggled ist.
+   * @param  bool $toggled :)
+   * @return self
+   */
+  public function setToggled($toggled) : self {
+    if($toggled) {
+      $this->setWert("1");
+    } else {
+      $this->setWert("0");
+    }
+    return $this;
+  }
 }
 
 class IconToggle extends Toggle {
