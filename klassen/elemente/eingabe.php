@@ -796,6 +796,20 @@ class Textarea extends Textfeld {
   }
 }
 
+class Editor extends Textarea {
+  protected $tag = "textarea";
+
+  /**
+   * Erstellt eine neue Eingabe
+   *
+   * @param   string $id ID der Textarea
+   */
+  public function __construct($id) {
+    parent::__construct($id);
+    $this->addKlasse("dshUiTextarea");
+  }
+}
+
 
 class Option extends Eingabe {
   protected $tag = "option";
