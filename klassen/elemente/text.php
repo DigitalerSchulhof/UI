@@ -37,6 +37,18 @@ class Notiz extends InhaltElement {
  }
 }
 
+class Meldezahl extends InhaltElement {
+  protected $tag = "span";
+
+  public function __construct($inhalt) {
+    parent::__construct($inhalt);
+    if (strpos($inhalt, "/") !== false) {
+      $this->addKlasse("dshUiMeldezahlWichtig");
+    }
+    $this->addKlasse("dshUiMeldezahl");
+ }
+}
+
 class Link extends InhaltElement {
   protected $tag = "a";
 

@@ -90,6 +90,20 @@ pre * {
   font-family: monospace;
 }
 
+.dshUiMeldezahl {
+  font-size: 80%;
+  padding: 1px 4px;
+  border-radius: @radius5;
+  min-width: 20px;
+  display: inline-block;
+  text-align: center;
+  margin-left: 5px;
+}
+
+.dshUiMeldezahlWichtig {
+  font-weight: bold;
+}
+
 // FARBEN;
 
 a.dshUiLink {
@@ -112,4 +126,13 @@ pre {
 
 pre * {
   color: @schriftfarbePositiv;
+}
+
+.dshUiMeldezahl {
+  background-color: @abstufung4;
+  color: @schriftfarbeNegativ;
+}
+
+.dshUiMeldezahlWichtig {
+  background-color: @fehlerAkzent;
 }

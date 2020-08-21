@@ -31,7 +31,7 @@ class Balken extends UI\Element {
 
   /**
    * Erstellt einen neuen Balken
-   * @param string $art   :)
+   * @param string $art   Schritte, Zeit, Prozent, Speicher
    * @param float $belegt :)
    * @param float $ganz   :)
    * @param float $limit  Nur für Zeit notwendig - gibt die maximale Zeitspanne an
@@ -99,8 +99,8 @@ class Balken extends UI\Element {
         $frei = UI\Check::speicher($uebrig);
         $code .= "<p class=\"dshUiNotiz\" id=\"{$this->id}Infotext\">";
           $code .= "<span id=\"{$this->id}BelegtAbs\">{$belegt}</span> ";
-          $code .= "(<span id=\"{$gesamt}BelegtPro\">{$prozent["anzeige"]}</span>) ";
-          $code .= " von {$this->ganz} belegt - ";
+          $code .= "(<span id=\"{$this->id}BelegtPro\">{$prozent["anzeige"]}</span>) ";
+          $code .= " von {$gesamt} belegt - ";
           $code .= "<span id=\"{$this->id}UebrigAbs\">{$frei}</span> frei ";
           $code .= "(<span id=\"{$this->id}UebrigPro\">{$uebrigprozent["anzeige"]}</span>).";
         $code .= "</p>";
