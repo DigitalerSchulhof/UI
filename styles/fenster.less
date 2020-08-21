@@ -91,9 +91,31 @@
   left: 0%;
 }
 
+#dshUiFensterLadesymbol {
+  position: fixed;
+  display: none;
+  right: 10px;
+  bottom: 0px;
+  text-align: center;
+  padding: 5px;
+  z-index: 100001;
+  border-top-left-radius: @radius2;
+  border-top-right-radius: @radius2;
+}
+
+#dshUiFensterLadesymbol i {
+  font-size: 150%;
+  margin-bottom: 5px;
+}
+
 
 // FARBEN;
   .dshUiFensterTitelzeile {
     background-color: @standardHintergrund;
     color: @standardSchrift;
   }
+
+#dshUiFensterLadesymbol {
+  color: @schriftfarbeNegativ;
+  background-color: @abstufung3;
+}
