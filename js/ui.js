@@ -445,6 +445,8 @@ document.addEventListener("keydown", (e) => {
 ui.fenster = {
   schiebend: null,
   maxz: 100000,
+  ladetimeout: null,
+  ladend: 0,
   schliessen: (id) => {
     var fenster = document.getElementById(id);
     fenster.parentNode.removeChild(fenster);
@@ -460,6 +462,8 @@ ui.fenster = {
       }
       fenster.setCss({top: top+"px", left: left+"px"});
       $("#dshFenstersammler").anhaengen(fenster);
+      fenster[0].offsetHeight;
+      fenster.setCss("opacity", "1");
       fenster.finde("script").each((n) => {
         var c  = document.createElement("script");
         c.text = n.innerHTML;
@@ -471,19 +475,27 @@ ui.fenster = {
     }
     ui.laden.fokusVor = null;
     $("#"+fensterid).setCss("z-index", ++ui.fenster.maxz)[0].focus();
-    ui.fenster.ladesymbol(false);
+    if(--ui.fenster.ladend === 0) {
+      if(ui.fenster.ladetimeout !== null) {
+        clearTimeout(ui.fenster.ladetimeout);
+      }
+      ui.fenster.ladesymbol(false);
+    }
   },
   laden: (modul, ziel, laden, daten, meldung, host) => {
-    ui.fenster.ladesymbol(true);
-    core.ajax(modul, ziel, laden, daten, meldung, host).then((r) => {
-      ui.fenster.anzeigen(r.Code);
-    });
+    ui.fenster.ladend++;
+    ui.fenster.ladetimeout = setTimeout(() => {
+      ui.fenster.ladesymbol(true);
+      core.ajax(modul, ziel, laden, daten, meldung, host).then((r) => {
+        ui.fenster.anzeigen(r.Code);
+      });
+    }), 100;
   },
   ladesymbol: (an) => {
     if (an) {
-      $("#dshUiFensterLadesymbol").einblenden();
+      $("#dshUiFensterLadesymbol").setCss("bottom", "0");
     } else {
-      $("#dshUiFensterLadesymbol").ausblenden();
+      $("#dshUiFensterLadesymbol").setCss("bottom", "");
     }
   }
 };

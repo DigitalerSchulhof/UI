@@ -39,7 +39,7 @@ class Meldung extends Element {
     $this->inhalt = $inhalt;
 
     if($this->art === "Laden") {
-      $this->inhalt  = "<div class=\"dshUiLaden\">".new Ladesymbol().new Notiz("Dieser  Inhalt wird geladen...")."</div>";
+      $this->inhalt  = "<div class=\"dshUiLaden\">".new Ladesymbol().new Notiz($titel ?? "Dieser Inhalt wird geladen...")."</div>";
     }
 
     $articons = array(

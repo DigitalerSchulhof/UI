@@ -17,6 +17,8 @@
   margin: 0px auto;
   border: 1px solid @standardAkzent;
   border-bottom: 0;
+  opacity: 0;
+  transition: opacity 100ms ease-in-out;
   outline: none !important;
 }
 
@@ -93,14 +95,17 @@
 
 #dshUiFensterLadesymbol {
   position: fixed;
-  display: none;
   right: 10px;
-  bottom: 0px;
+  bottom: -80px;
+  border-top-width: 0;
   text-align: center;
   padding: 5px;
   z-index: 100001;
+  width: 150px;
+  margin: 0;
   border-top-left-radius: @radius2;
   border-top-right-radius: @radius2;
+  transition: bottom 250ms ease-in-out;
 }
 
 #dshUiFensterLadesymbol i {
@@ -114,8 +119,3 @@
     background-color: @standardHintergrund;
     color: @standardSchrift;
   }
-
-#dshUiFensterLadesymbol {
-  color: @schriftfarbeNegativ;
-  background-color: @abstufung3;
-}

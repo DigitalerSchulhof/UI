@@ -6,4 +6,4 @@ use UI\Icon;
 
 $technik    = Liste::getKategorie("technik");
 
-$technik[] = new Element("Style",     "Style",              new Icon("fas fa-palette"),         "Schulhof/Verwaltung/Style");
+if($DSH_BENUTZER->hatRecht("technik.style"))    $technik[] = new Element("Style",     "Style",              new Icon("fas fa-palette"),         "Schulhof/Verwaltung/Style");
