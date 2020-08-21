@@ -49,6 +49,7 @@ class Link extends InhaltElement {
     $this->setAttribut("tabindex", "0");
     if ($extern) {
       $this->addKlasse("dshExtern");
+      $this->setAttribut("rel", "noopener");
     }
     $this->extern = $extern;
     $this->addKlasse("dshUiLink");
