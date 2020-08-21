@@ -471,7 +471,6 @@ ui.fenster = {
     }
     ui.laden.fokusVor = null;
     $("#"+fensterid).setCss("z-index", ++ui.fenster.maxz)[0].focus();
-    console.log(document.activeElement);
   }
 };
 
@@ -493,7 +492,6 @@ document.addEventListener("mousedown", (e) => {
       ui.fenster.schiebend = f;
       ui.fenster.schiebend.my = parseInt(f.getCss("top"));
       ui.fenster.schiebend.mx = parseInt(f.getCss("left"));
-      console.log({top: ui.fenster.schiebend.my+"px", left: ui.fenster.schiebend.mx+"px"});
     }
   }
 });
