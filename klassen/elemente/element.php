@@ -155,7 +155,7 @@ abstract class Element {
 	 * Gibt die ID zurück
 	 * @return 	string
 	 */
-	public function getID() : string {
+	public function getID() : ?string {
 		return $this->id;
 	}
 
