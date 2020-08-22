@@ -246,8 +246,8 @@ namespace UI {
       if($this->autoladen) {
         $code = "<div id=\"{$this->id}Ladebereich\" class=\"dshUiTabelleO\">";
       }
+      $this->setAttribut("data-sortierfunktion", $this->sortierfunktion);
       $code .=  "<div class=\"dshUiTabelleI\">";
-
       $code .= $this->codeAuf();
       $code .= "<thead><tr>";
       $anzzeilen  = count($this->zeilen);
@@ -273,8 +273,8 @@ namespace UI {
           }
           $code .= "<th>$s";
           if($istVerschieden) {
-            $code .= new Sortierknopf($this->sortierfunktion, $this->id, "ASC", $nr);
-            $code .= new Sortierknopf($this->sortierfunktion, $this->id, "DESC", $nr);
+            $code .= new Sortierknopf($this->id, "ASC", $nr);
+            $code .= new Sortierknopf($this->id, "DESC", $nr);
           }
           $code .= "</th>";
         } else {
@@ -329,17 +329,17 @@ namespace UI {
 
       $code .= "<tr><td class=\"dshUiTabelleFuss\" colspan=\"$spanz\">";
       $seitenfeld = new Auswahl("{$this->id}Seite", $this->seite);
-      $seitenfeld->addFunktion("oninput", "ui.tabelle.sortieren({$this->sortierfunktion}, '{$this->id}')");
+      $seitenfeld->addFunktion("oninput", "ui.tabelle.sortieren('{$this->id}')");
       $vis = "";
       if($this->seite == 1) {
         $vis = "; visibility: collapse";
       }
-      $nachlinks = "<i class=\"fas fa-caret-left\" style=\"padding: 10px;cursor:pointer$vis\" onclick=\"$('#{$this->id}Seite').setWert(".($this->seite-1).");ui.tabelle.sortieren({$this->sortierfunktion}, '{$this->id}')\"></i>";
+      $nachlinks = "<i class=\"fas fa-caret-left\" style=\"padding: 10px;cursor:pointer$vis\" onclick=\"$('#{$this->id}Seite').setWert(".($this->seite-1).");ui.tabelle.sortieren('{$this->id}')\"></i>";
       $vis = "";
       if($this->seite == $this->seitenanzahl) {
         $vis = "; visibility: collapse";
       }
-      $nachrechts = "<i class=\"fas fa-caret-right\" style=\"padding: 10px;cursor:pointer$vis\" onclick=\"$('#{$this->id}Seite').setWert(".($this->seite+1).");ui.tabelle.sortieren({$this->sortierfunktion}, '{$this->id}')\"></i>";
+      $nachrechts = "<i class=\"fas fa-caret-right\" style=\"padding: 10px;cursor:pointer$vis\" onclick=\"$('#{$this->id}Seite').setWert(".($this->seite+1).");ui.tabelle.sortieren('{$this->id}')\"></i>";
       for ($i=1; $i<=$this->seitenanzahl; $i++) {
         $seitenfeld->add("$i / {$this->seitenanzahl}", $i);
       }
@@ -349,7 +349,7 @@ namespace UI {
         $code .= "<span style=\"display: none;float:left\">$seitenfeld</span>";
       }
       $proSeite = new Auswahl("{$this->id}DatenProSeite", $this->datensaetzeProSeite);
-      $proSeite->addFunktion("oninput", "ui.tabelle.sortieren({$this->sortierfunktion}, '{$this->id}')");
+      $proSeite->addFunktion("oninput", "ui.tabelle.sortieren('{$this->id}')");
       $proSeite->add("25", "25");
       $proSeite->add("50", "50");
       $proSeite->add("75", "75");
@@ -369,7 +369,7 @@ namespace UI {
       $code .= "</div>";
 
       if ($this->autoladen) {
-        $code .= "<script>ui.tabelle.sortieren({$this->sortierfunktion}, '{$this->id}')</script>";
+        $code .= "<script>ui.tabelle.sortieren('{$this->id}')</script>";
         $code .= "</div>";
       }
       return $code;

@@ -615,13 +615,21 @@ window.addEventListener("resize", (e) => {
 });
 
 ui.tabelle = {
-  sortieren: (sortierfunktion, id, richtung, spalte) => {
+  sortieren: (id, richtung, spalte) => {
     var feld = $("#"+id+"Ladebereich");
     var sortSeite = $("#"+id+"Seite").getWert();
     var sortDatenproseite = $("#"+id+"DatenProSeite").getWert();
     var sortRichtung = richtung || $("#"+id+"SortierenRichtung").getWert();
     var sortSpalte = spalte || $("#"+id+"SortierenSpalte").getWert();
-    feld.kinder().addKlasse("dshUiTabelleLaedt");
+    var i = feld.kinderSelector(".dshUiTabelleI");
+    i.addKlasse("dshUiTabelleLaedt");
+    let s = i.kinderSelector("table").getAttr("data-sortierfunktion");
+    s = s.split(".");
+    // String zu Funktion
+    let sortierfunktion = window;
+    while(s.length > 0) {
+      sortierfunktion = sortierfunktion[s.shift()];
+    }
     sortierfunktion(feld, id, {sortSeite:sortSeite, sortDatenproseite:sortDatenproseite, sortRichtung:sortRichtung, sortSpalte:sortSpalte});
   },
   sortieren2: (richtung, id, spalte) => {

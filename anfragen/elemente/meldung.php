@@ -13,16 +13,16 @@ $gefunden = false;
 $knoepfe = [];
 $parameter = json_decode($meldeparameter, true);
 
-if($parameter !== null) {
-  extract($parameter);
-}
-global $parameter;
-
 function parameter(...$ps) {
   global $parameter;
-  foreach($ps as $p) {
-    global $$p;
-    $$p = $parameter[$p];
+  if(is_array($parameter)) {
+    global $parameter;
+    foreach($ps as $p) {
+      global $$p;
+      $$p = $parameter[$p];
+    }
+  } else {
+    Anfrage::addFehler(-3, true);
   }
 }
 
