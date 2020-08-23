@@ -42,7 +42,7 @@ class Konstanten {
   const LINUX     = "fab fa-linux";
 
   // Personen
-	const PERSON     = "fa fa-user";
+	const PERSON     = "fas fa-user";
 	const LEHRER     = "fas fa-chalkboard-teacher";
 	const SCHUELER   = "fas fa-user-graduate";
 	const VERWALTUNG = "fas fa-user-cog";

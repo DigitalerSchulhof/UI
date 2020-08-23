@@ -467,14 +467,7 @@ ui.fenster = {
       $("#dshFenstersammler").anhaengen(fenster);
       fenster[0].offsetHeight;
       fenster.setCss("opacity", "1");
-      fenster.finde("script").each((n) => {
-        var c  = document.createElement("script");
-        c.text = n.innerHTML;
-        for(let i = 0; i < n.attributes.length; i++) {
-          c.setAttribute(n.attributes[i].name, n.attributes[i].value);
-        }
-        n.parentNode.replaceChild(c, n);
-      });
+      core.scriptAn(fenster);
     }
     ui.laden.fokusVor = null;
     $("#"+fensterid).setCss("z-index", ++ui.fenster.maxz)[0].focus();
@@ -615,6 +608,16 @@ window.addEventListener("resize", (e) => {
 });
 
 ui.tabelle = {
+  standardsortieren: (feld, id, sortieren) => {
+    let sort = feld.finde("table[data-sort]").getAttr("data-sort");
+    sort = sort.split(";");
+    core.ajax(sort[0], sort[1], null, {...sortieren}).then((r) => {
+      if (r.Code) {
+        feld.setHTML(r.Code);
+        core.scriptAn(feld);
+      }
+    });
+  },
   sortieren: (id, richtung, spalte) => {
     var feld = $("#"+id+"Ladebereich");
     var sortSeite = $("#"+id+"Seite").getWert();
