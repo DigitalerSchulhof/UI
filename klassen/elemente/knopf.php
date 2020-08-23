@@ -247,4 +247,23 @@ class Sortierknopf extends MiniIconKnopf {
     $this->addKlasse("dshUiSortierknopf");
   }
 }
+
+class Badge extends IconKnopf {
+  /**
+  * @param Icon   $icon :)
+  * @param string $inhalt :)
+  * @param string $art :)
+  */
+  public function __construct($icon, $inhalt, $art = null) {
+    parent::__construct($icon, $inhalt, $art);
+    $this->icon = $icon;
+    $this->addKlasse("dshUiKnopfIcon");
+  }
+
+  public function __toString() : string {
+    $this->toStringVorbereitung();
+    $this->removeKlasse("dshUiKnopfLeer");
+    return "{$this->codeAuf()}{$this->icon}{$this->inhalt}{$this->codeZu()}";
+  }
+}
 ?>

@@ -219,7 +219,7 @@ namespace UI {
     }
 
     /**
-     * Setzt, ob die Tabelle ein Icon in der ersten Spalte hat hat
+     * Setzt, ob die Tabelle ein Icon in der ersten Spalte hat
      * @param  bool $icon :)
      * @return self
      */
