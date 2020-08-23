@@ -15,9 +15,9 @@ class Konstanten {
 	const LOESCHEN    = "fas fa-minus-circle";
 	const BEARBEITEN  = "fas fa-pencil-alt";
 	const NEU         = "fas fa-plus-circle";
-	const PAPIERKORB  = "fas fa-trash";
+	const PAPIERKORB  = "fas fa-trash-alt";
 	const DETAILS     = "fas fa-info";
-
+  const EINSTELLUNGEN     = "fas fa-cogs";
   // Verwaltung
   const MODUL       = "fas fa-puzzle-piece";
 

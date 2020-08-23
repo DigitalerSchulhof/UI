@@ -9,19 +9,22 @@
     width: 100%;
     overflow-x: auto;
     white-space: nowrap;
+    display: flex;
   }
 
   .dshUiReiterKoepfe .dshUiReiterKopfInaktiv,
   .dshUiReiterKoepfe .dshUiReiterKopfAktiv {
-    padding: 5px 10px;
+    padding: 8px 16px;
     border-top-left-radius: @radius3;
     border-top-right-radius: @radius3;
-    border: 1px solid;
-    border-bottom: none;
+    border-bottom: 2px solid transparent;
     cursor: pointer;
     display: inline-block;
-    margin-right: 5px;
     transition: 250ms ease-in-out;
+    user-select: none;
+    height: 34px;
+    flex-grow: 1;
+    text-align: center;
   }
 
   .dshUiReiterKoerper {
@@ -33,22 +36,9 @@
   .dshUiReiterKoerperInaktiv {display: none;}
 
 // FARBEN;
-  .dshUiReiterKoerper {
-    border-color: @abstufung3;
-  }
-
-  .dshUiReiterKoepfe .dshUiReiterKopfInaktiv,
-  .dshUiReiterKoepfe .dshUiReiterKopfAktiv {
-    border-color: @abstufung3;
-  }
-
-  .dshUiReiterKoepfe .dshUiReiterKopfInaktiv {
-    background-color: @abstufung2;
-    color: @schriftfarbePositiv;
-  }
 
   .dshUiReiterKoepfe .dshUiReiterKopfAktiv,
   .dshUiReiterKoepfe .dshUiReiterKopfInaktiv:hover {
-    background-color: @abstufung3;
-    color: @schriftfarbeNegativ;
+    border-bottom-color: @infoAkzent;
+    transition-timing-function: ease-out;
   }
