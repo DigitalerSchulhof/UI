@@ -188,6 +188,21 @@ namespace UI {
     }
 
     /**
+     * Setzt die Suchfunktion auf <code>ui.tabelle.standardsortieren</code> und das passende Attribut auf das Ziel
+     * @param  int    $ziel  Das Anfrageziel der Sortierfunktion
+     * @param  string $modul Das Modul der Anfrage
+     * Wenn <code>null</code>: Der Wert von <code>$MODUL</code>
+     * @return self
+     */
+    public function setAnfrageziel($ziel, $modul = null) : self {
+      global $MODUL;
+      $modul = $modul ?? $MODUL;
+      $this->setAttribut("data-sort", "$modul;$ziel");
+      $this->setSortierfunktion("ui.tabelle.standardsortieren");
+      return $this;
+    }
+
+    /**
      * Setzt alle Variablen zur Verwendung von Seiten
      * @param array  $tanfrage Rückgabe einer Tabellenanfrage   :)
      * @param string $sortierfunktion    JS-Funktion zum Sortieren
@@ -229,6 +244,71 @@ namespace UI {
      */
     public function getIcon() : ?Icon {
       return $this->icon;
+    }
+
+    /**
+     * Gibt die Spaltenüberschriften zurück
+     * @return string[]
+     */
+    public function getSpalten() : array {
+      return $this->spalten;
+    }
+
+    /**
+     * Gibe die Zeilen zurück
+     * @return \UI\Tabelle\Zeile[]
+     */
+    public function getZeile() : array {
+      return $this->zeilen;
+    }
+
+    /**
+    * Sortiert die Tabelle nach <code>$sort...</code>
+     * @param  int    $seite         :)
+     * @param  int    $datenproseite :)
+     * @param  string $richtung      :)
+     * @param  int    $spalte        :)
+     * @return self   Die sortierte Tabelle
+     */
+    public function sortieren($seite = null, $datenproseite = null, $richtung = null, $spalte = null) : self {
+      global $sortSeite, $sortDatenproseite, $sortRichtung, $sortSpalte;
+      $seite    = $seite    ?? intval($sortSeite);
+      $datenproseite  = $datenproseite   ?? intval($sortDatenproseite);
+      $richtung = $richtung ?? $sortRichtung;
+      $spalte   = $spalte   ?? intval($sortSpalte);
+
+      // Sortieren
+      $spaltenn = $this->spalten[$spalte];
+      $faktor       = 1;
+      if($richtung == "DESC") {
+        $faktor   = -1;
+      }
+
+      $this->seitenanzahl = ceil(count($this->zeilen) / $datenproseite);
+      $this->seite        = $seite;
+
+      // Informatiker-Seite
+      $seite--;
+      uasort($this->zeilen,
+        /**
+         * @param \UI\Tabelle\Zeile $z1
+         * @param \UI\Tabelle\Zeile $z2
+         */
+        function($z1, $z2) use ($spaltenn, $faktor) {
+          return $faktor*($z1[$spaltenn] <=> $z2[$spaltenn]);
+        });
+
+      $z = [];
+      $c = count($this->zeilen);
+      // Seite festlegen
+      for($i = $seite*$datenproseite; $i < ($seite+1)*$datenproseite; $i++) {
+        if($c == $i) {
+          break;
+        }
+        $z[] = $this->zeilen[$i];
+      }
+      $this->zeilen = $z;
+      return $this;
     }
 
     /**
