@@ -35,6 +35,7 @@ class Reiterkopf extends InhaltElement {
     $this->icon           = $icon;
     $this->meldezahl      = $meldezahl;
     $this->reitersegment  = null;
+    $this->addKlasse("dshUiReiterKopf");
   }
 
   /**

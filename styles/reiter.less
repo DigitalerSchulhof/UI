@@ -12,19 +12,19 @@
     display: flex;
   }
 
-  .dshUiReiterKoepfe .dshUiReiterKopfInaktiv,
-  .dshUiReiterKoepfe .dshUiReiterKopfAktiv {
+  .dshUiReiterKoepfe .dshUiReiterKopf {
     padding: 8px 16px;
-    border-top-left-radius: @radius3;
-    border-top-right-radius: @radius3;
-    border-bottom: 2px solid transparent;
-    cursor: pointer;
     display: inline-block;
     transition: 250ms ease-in-out;
     user-select: none;
     height: 34px;
     flex-grow: 1;
     text-align: center;
+  }
+
+  .dshUiReiterKoepfe .dshUiReiterKopf:not(:only-child) {
+    border-bottom: 2px solid transparent;
+    cursor: pointer;
   }
 
   .dshUiReiterKoerper {
@@ -39,6 +39,6 @@
 
   .dshUiReiterKoepfe .dshUiReiterKopfAktiv,
   .dshUiReiterKoepfe .dshUiReiterKopfInaktiv:hover {
-    border-bottom-color: @infoAkzent;
+    border-color: @infoAkzent !important;
     transition-timing-function: ease-out;
   }
