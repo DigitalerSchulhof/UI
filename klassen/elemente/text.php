@@ -40,9 +40,15 @@ class Notiz extends InhaltElement {
 class Meldezahl extends InhaltElement {
   protected $tag = "span";
 
-  public function __construct($inhalt) {
-    parent::__construct($inhalt);
-    if (strpos($inhalt, "/") !== false) {
+  /**
+   * Erzeugt eine neue Meldezahl
+   * @param string $wert :)
+   * Wenn <code>/</code> enthalten ist, wird die Meldezahl wichtig, sofern <code>$unwichtig</code> nicht <code>=== true</code>
+   * @param bool|null $unwichtig <i>Nur relevant, wenn die Meldezahl <code>/</code>enthält.</i>
+   */
+  public function __construct($wert, $unwichtig = null) {
+    parent::__construct($wert);
+    if (strpos($wert, "/") !== false && $unwichtig !== null) {
       $this->addKlasse("dshUiMeldezahlWichtig");
     }
     $this->addKlasse("dshUiMeldezahl");

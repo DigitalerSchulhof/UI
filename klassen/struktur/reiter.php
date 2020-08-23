@@ -22,12 +22,19 @@ class Reiterkopf extends InhaltElement {
   private $nr;
 
   /**
-   * @param string        $inhalt :)
+   * Erzugt einen neuen Reiterkopf
+   * @param string $text Textinhalt
+   * @param Icon|null $icon Icon des Reiterkopfes
+   * Wenn <code>null</code>: Weggelassen
+   * @param int|null $meldezahl Meldezahl des Reiterkopfes
+   * Wenn <code>null</code>: Weggelassen
    */
-  public function __construct($inhalt) {
-    parent::__construct($inhalt);
-    $this->nr = null;
-    $this->reitersegment = null;
+  public function __construct($text, $icon = null, $meldezahl = null) {
+    parent::__construct($text);
+    $this->nr             = null;
+    $this->icon           = $icon;
+    $this->meldezahl      = $meldezahl;
+    $this->reitersegment  = null;
   }
 
   /**
@@ -63,32 +70,16 @@ class Reiterkopf extends InhaltElement {
    */
   public function __toString() : string {
     $this->toStringVorbereitung();
-    return "{$this->codeAuf()}{$this->inhalt}{$this->codeZu()}";
+    $icon = $this->icon;
+    if($icon !== null) {
+      $icon = "$icon ";
+    }
+    $zahl = $this->meldezahl;
+    if($zahl !== null) {
+      $zahl = " ".new Meldezahl($zahl);
+    }
+    return "{$this->codeAuf()}$icon{$this->inhalt}$zahl{$this->codeZu()}";
   }
-}
-
-class Reitericonkopf extends Reiterkopf {
-  /** @var Icon $icon :) */
-  private $icon;
-
-  /**
-   * @param string $inhalt :)
-   * @param Icon   $icon   :)
-   */
-  public function __construct($inhalt, $icon) {
-    parent::_construct($inhalt);
-    $this->icon = $icon;
-  }
-
-  /**
-   * HTML-Code des Reiterkopfes
-   * @return string :)
-   */
-  public function __toString() : string {
-    $this->toStringVorbereitung();
-    return "{$this->codeAuf()}{$this->icon} {$this->inhalt}{$this->codeZu()}";
-  }
-
 }
 
 class Reitersegment {
@@ -179,7 +170,7 @@ class Reitersegment {
 
 }
 
-class Reiter extends Element {
+class Reiter extends Element implements \ArrayAccess {
   protected $tag = "div";
 
   /** @var Reitersegment[] Enthält alle Reitersegmente */
@@ -271,5 +262,32 @@ class Reiter extends Element {
     $code .= "<div class=\"dshUiReiterKoerper\">$koerper</div>";
     return $code.$this->codeZu();
   }
+
+  /*
+   * AccesAcces-Methoden
+   */
+
+  public function offsetSet($o, $v) {
+    if(!($v instanceof Reitersegment)) {
+      throw new \TypeError("Das übergebene Element ist nicht vom Typ \\UI\\Reitersegment");
+    }
+    if(!is_null($o)) {
+      throw new \Exception("Nicht implementiert!");
+    }
+    $this->addReitersegment($v);
+  }
+
+  public function offsetExists($o) {
+    throw new \Exception("Nicht implementiert!");
+  }
+
+  public function offsetUnset($o) {
+    throw new \Exception("Nicht implementiert!");
+  }
+
+  public function offsetGet($o) {
+    throw new \Exception("Nicht implementiert!");
+  }
+
 }
 ?>
