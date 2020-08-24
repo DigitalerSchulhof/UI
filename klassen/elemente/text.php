@@ -44,11 +44,10 @@ class Meldezahl extends InhaltElement {
    * Erzeugt eine neue Meldezahl
    * @param string $wert :)
    * Wenn <code>/</code> enthalten ist, wird die Meldezahl wichtig, sofern <code>$unwichtig</code> nicht <code>=== true</code>
-   * @param bool|null $unwichtig <i>Nur relevant, wenn die Meldezahl <code>/</code>enthält.</i>
    */
-  public function __construct($wert, $unwichtig = null) {
+  public function __construct($wert) {
     parent::__construct($wert);
-    if (strpos($wert, "/") !== false && $unwichtig !== null) {
+    if (strpos($wert, "/") !== false) {
       $this->addKlasse("dshUiMeldezahlWichtig");
     }
     $this->addKlasse("dshUiMeldezahl");

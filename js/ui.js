@@ -609,80 +609,37 @@ window.addEventListener("resize", (e) => {
 
 ui.tabelle = {
   standardsortieren: (feld, id, sortieren) => {
-    let sort = feld.finde("table[data-sort]").getAttr("data-sort");
-    sort = sort.split(";");
-    core.ajax(sort[0], sort[1], null, {...sortieren}).then((r) => {
-      if (r.Code) {
-        feld.setHTML(r.Code);
-        core.scriptAn(feld);
-      }
-    });
+    var tabelle = $("#"+id);
+    if (tabelle.existiert()) {
+      let sort = feld.finde("table[data-sort]").getAttr("data-sort");
+      sort = sort.split(";");
+      core.ajax(sort[0], sort[1], null, {...sortieren}).then((r) => {
+        if (r.Code) {
+          feld.setHTML(r.Code);
+          core.scriptAn(feld);
+        }
+      });
+    }
   },
   sortieren: (id, richtung, spalte) => {
-    var feld = $("#"+id+"Ladebereich");
-    var sortSeite = $("#"+id+"Seite").getWert();
-    var sortDatenproseite = $("#"+id+"DatenProSeite").getWert();
-    var sortRichtung = richtung || $("#"+id+"SortierenRichtung").getWert();
-    var sortSpalte = spalte || $("#"+id+"SortierenSpalte").getWert();
-    var i = feld.kinderSelector(".dshUiTabelleI");
-    i.addKlasse("dshUiTabelleLaedt");
-    let s = i.kinderSelector("table").getAttr("data-sortierfunktion");
-    s = s.split(".");
-    // String zu Funktion
-    let sortierfunktion = window;
-    while(s.length > 0) {
-      sortierfunktion = sortierfunktion[s.shift()];
-    }
-    sortierfunktion(feld, id, {sortSeite:sortSeite, sortDatenproseite:sortDatenproseite, sortRichtung:sortRichtung, sortSpalte:sortSpalte});
-  },
-  sortieren2: (richtung, id, spalte) => {
-    if (richtung != "ASC" && richtung != "DESC") {return;}
-
-    // Zeilen einlesen
-    var zAnzahl = $("#"+id+"ZAnzahl").getWert();
-    var sAnzahl = $("#"+id+"SAnzahl").getWert();
-    var umsortieren = new Array(zAnzahl);
-    // initialisieren
-    for (var z=0; z<zAnzahl; z++) {
-      umsortieren[z] = new Array(2);
-      umsortieren[z][0] = z;
-      umsortieren[z][1] = $("#"+id+"Z"+z+"S"+spalte).getHTML();
-    }
-
-    if (richtung == "ASC") {
-      umsortieren.sort(ui.tabelle.aufsteigend);
-    } else {
-      umsortieren.sort(ui.tabelle.absteigend);
-    }
-    var neu = {};
-    // Tabelle neu zusammenbauen
-    for (var z=0; z<zAnzahl; z++) {
-      for (var s=0; s<sAnzahl; s++) {
-        neu["#"+id+"Z"+z+"S"+s] = $("#"+id+"Z"+umsortieren[z][0]+"S"+s).getHTML();
+    var tabelle = $("#"+id);
+    if (tabelle.existiert()) {
+      var feld = $("#"+id+"Ladebereich");
+      var sortSeite = $("#"+id+"Seite").getWert();
+      var sortDatenproseite = $("#"+id+"DatenProSeite").getWert();
+      var sortRichtung = richtung || $("#"+id+"SortierenRichtung").getWert();
+      var sortSpalte = spalte || $("#"+id+"SortierenSpalte").getWert();
+      var i = feld.kinderSelector(".dshUiTabelleI");
+      i.addKlasse("dshUiTabelleLaedt");
+      let s = i.kinderSelector("table").getAttr("data-sortierfunktion");
+      s = s.split(".");
+      // String zu Funktion
+      let sortierfunktion = window;
+      while(s.length > 0) {
+        sortierfunktion = sortierfunktion[s.shift()];
       }
+      sortierfunktion(feld, id, {sortSeite:sortSeite, sortDatenproseite:sortDatenproseite, sortRichtung:sortRichtung, sortSpalte:sortSpalte});
     }
-    for(let s in neu) {
-      $(s).setHTML(neu[s]);
-    }
-    // $("#"+id+"Koerper").setHTML(code);
-  },
-  aufsteigend: (a, b) => {
-    if (a[1] < b[1]) {
-    return -1;
-    }
-    if (a[1] > b[1]) {
-      return 1;
-    }
-    return 0;
-  },
-  absteigend: (a, b) => {
-    if (a[1] > b[1]) {
-    return -1;
-    }
-    if (a[1] < b[1]) {
-      return 1;
-    }
-    return 0;
   }
 };
 
