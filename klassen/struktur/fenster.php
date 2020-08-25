@@ -8,6 +8,8 @@ class Fenster extends InhaltElement {
 
   /** @var bool Schließen-Button im Fenster anzeigen */
   private $schliessen;
+  /** @var bool Minimieren-Button im Fenster anzeigen */
+  private $minimieren;
   /** @var string Titel des Fensters */
   private $titel;
   /** @var Knopf[] Aktionen des Fensters */
@@ -25,6 +27,7 @@ class Fenster extends InhaltElement {
   public function __construct($id, $titel, $inhalt, $gross = false, $ohnePadding = false) {
     parent::__construct($inhalt);
     $this->schliessen = true;
+    $this->minimieren = false;
     $this->titel = $titel;
     $this->fensteraktionen = [];
     $this->addKlasse("dshUiFenster");
@@ -47,6 +50,16 @@ class Fenster extends InhaltElement {
   }
 
   /**
+   * Setzt, ob das Minimieren-Icon angezeigt wird
+   * @param  bool $schliessen :)
+   * @return self
+   */
+  public function setMinimieren($minimieren) : self {
+    $this->minimieren = $minimieren;
+    return $this;
+  }
+
+  /**
    * Fügt einen Knopf in die Fensteraktionen ein
    * @param Knopf $knopf Neuer Knopf
    */
@@ -64,8 +77,18 @@ class Fenster extends InhaltElement {
       // Fensteritel
       $code .= "<div class=\"dshUiFensterTitelzeile\">";
         $code .= "<span id=\"{$this->id}FensterTitel\" class=\"dshUiFensterTitel\">$this->titel</span>";
+        if($this->minimieren) {
+          $minimieren = new MiniIconKnopf(new Icon("fas fa-window-minimize"), "Minimieren", "Standard", "UL");
+          $minimieren->addFunktion("onclick", "ui.fenster.minimieren('{$this->id}')");
+          $minimieren->addKlasse("dshUiFensterMinimieren");
+          $code .= $minimieren;
+          $maximieren = new MiniIconKnopf(new Icon("fas fa-window-maximize"), "Maximieren", "Standard", "UL");
+          $maximieren->addFunktion("onclick", "ui.fenster.minimieren('{$this->id}')");
+          $maximieren->addKlasse("dshUiFensterMaximieren");
+          $code .= $maximieren;
+        }
         if ($this->schliessen) {
-          $schliessen = new MiniIconKnopf(new Icon(Konstanten::SCHLIESSEN), "Schließen", "Fehler", "UL");
+          $schliessen = new MiniIconKnopf(new Icon("fas fa-window-close"), "Schließen", "Fehler", "UL");
           $schliessen->addFunktion("onclick", "ui.fenster.schliessen('{$this->id}')");
           $schliessen->addKlasse("dshUiFensterSchliessen");
           $code .= $schliessen;

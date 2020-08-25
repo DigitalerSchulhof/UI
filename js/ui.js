@@ -451,6 +451,13 @@ ui.fenster = {
     var fenster = document.getElementById(id);
     fenster.parentNode.removeChild(fenster);
   },
+  minimieren: (id) => {
+    $("#"+id).toggleKlasse("dshUiFensterMinimiert");
+    let ae = $(document.activeElement);
+    if(ae.parentSelector(".dshUiFenster").existiert()) {
+      ae[0].blur();
+    }
+  },
   anzeigen: (code, ueberschreiben) => {
     let fenster   = eQuery.parse(code);
     let fensterid = fenster.getID();
