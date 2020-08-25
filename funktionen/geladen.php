@@ -1,6 +1,7 @@
 <?php
 include_once("$KLASSEN/check.php");
 include_once("$KLASSEN/konstanten.php");
+include_once("$KLASSEN/generieren.php");
 include_once("$KLASSEN/elemente/aktionen.php");
 include_once("$KLASSEN/elemente/element.php");
 include_once("$KLASSEN/elemente/eingabe.php");

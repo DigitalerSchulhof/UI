@@ -7,6 +7,5 @@ if(!UI\Check::istDatum("$tag.$monat.$jahr")) {
 
 $r = new UI\Datumfeld($id);
 $r->setWert("$tag.$monat.$jahr");
-Anfrage::setTyp("Code");
 Anfrage::setRueck("Code", (string) $r->tageswahlGenerieren());
 ?>
