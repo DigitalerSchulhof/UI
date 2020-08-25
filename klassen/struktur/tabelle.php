@@ -146,11 +146,11 @@ namespace UI {
     /**
      * Erzeugt eine neue Tabelle
      * @param string $id :)
-     * @param integer $anfrageziel Das Anfrageziel um die Tabelle nachzuladen
+     * @param string $sortierfunktion JS-Sortierfunktion für die Tabelle
      * @param Icon $icon Standard-Icon für Zeilen
      * @param string[] $spalten Spaltenüberschriften
      */
-    public function __construct($id, $anfrageziel, $icon = null, ...$spalten) {
+    public function __construct($id, $sortierfunktion, $icon = null, ...$spalten) {
       parent::__construct();
       $this->id               = $id;
       $this->spalten          = $spalten;
@@ -162,14 +162,11 @@ namespace UI {
       $this->seite            = 1;
       $this->seitenanzahl     = 1;
       $this->datensaetzeProSeite = 25;
-      $this->sortierfunktion  = "null";
+      $this->sortierfunktion  = $sortierfunktion;
       $this->autoladen        = false;
       $this->sortierrichtung  = "ASC";
       $this->sortierspalte    = 0;
-      $this->drucken          = true;
-      if($anfrageziel !== null) {
-        $this->setAnfrageziel($anfrageziel);
-      }
+      $this->drucken          = false;
     }
 
     /**
@@ -199,21 +196,6 @@ namespace UI {
      */
     public function setSortierfunktion($sortierfunktion) : self {
       $this->sortierfunktion = $sortierfunktion;
-      return $this;
-    }
-
-    /**
-     * Setzt die Suchfunktion auf <code>ui.tabelle.standardsortieren</code> und das passende Attribut auf das Ziel
-     * @param  int    $ziel  Das Anfrageziel der Sortierfunktion
-     * @param  string $modul Das Modul der Anfrage
-     * Wenn <code>null</code>: Der Wert von <code>$MODUL</code>
-     * @return self
-     */
-    public function setAnfrageziel($ziel, $modul = null) : self {
-      global $MODUL;
-      $modul = $modul ?? $MODUL;
-      $this->setAttribut("data-sort", "$modul;$ziel");
-      $this->setSortierfunktion("ui.tabelle.standardsortieren");
       return $this;
     }
 
@@ -341,6 +323,9 @@ namespace UI {
       $code = "";
       if($this->autoladen) {
         $code = "<div id=\"{$this->id}Ladebereich\" class=\"dshUiTabelleO\">";
+      }
+      if($this->sortierfunktion === null) {
+        throw new \Exception("Sortierfunktion ist null");
       }
       $this->setAttribut("data-sortierfunktion", $this->sortierfunktion);
       $code .=  "<div class=\"dshUiTabelleI\">";

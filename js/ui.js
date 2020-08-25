@@ -592,7 +592,6 @@ ui.meldung = {
 ui.farbbeispiel = {
   aktion: (t) => {
     let fb = t.closest(".dshUiFarbbeispiele");
-    fb.nextSibling.style["background-color"] = t.style["background-color"] || ui.generieren.hex2rgba(t.value);
     if(t.tagName !== "INPUT") {
       fb.querySelectorAll("input[type=color]")[0].value = ui.generieren.rgba2hex(t.style["background-color"]);
     }
@@ -618,19 +617,6 @@ window.addEventListener("resize", (e) => {
 });
 
 ui.tabelle = {
-  standardsortieren: (feld, id, sortieren) => {
-    var tabelle = $("#"+id);
-    if (tabelle.existiert()) {
-      let sort = feld.finde("table[data-sort]").getAttr("data-sort");
-      sort = sort.split(";");
-      core.ajax(sort[0], sort[1], null, {...sortieren}).then((r) => {
-        if (r.Code) {
-          feld.setHTML(r.Code);
-          core.scriptAn(feld);
-        }
-      });
-    }
-  },
   sortieren: (id, richtung, spalte) => {
     var tabelle = $("#"+id);
     if (tabelle.existiert()) {
@@ -648,7 +634,12 @@ ui.tabelle = {
       while(s.length > 0) {
         sortierfunktion = sortierfunktion[s.shift()];
       }
-      sortierfunktion(feld, id, {sortSeite:sortSeite, sortDatenproseite:sortDatenproseite, sortRichtung:sortRichtung, sortSpalte:sortSpalte});
+      sortierfunktion({sortSeite:sortSeite, sortDatenproseite:sortDatenproseite, sortRichtung:sortRichtung, sortSpalte:sortSpalte}, id).then((r) => {
+        if (r.Code) {
+          feld.setHTML(r.Code);
+          core.scriptAn(feld);
+        }
+      });
     }
   }
 };

@@ -576,14 +576,19 @@ class Zahlenfeld extends PlatzhalterEingabe {
 class Farbfeld extends Textfeld {
   protected $tag = "span";
 
+  /** @var bool Ob der Farbpicker sichtbar ist */
+  protected $picker;
+
   /**
    * Erstellt eine neue Eingabe
    *
-   * @param   string $id ID des Eingabeelements
+   * @param string $id      ID des Eingabeelements
+   * @param bool   $picker  Ob der Farbpicker sichtbar ist
    */
-  public function __construct($id) {
+  public function __construct($id, $picker = true) {
     parent::__construct($id);
     $this->addKlasse("dshUiFarbfeld");
+    $this->picker = $picker;
   }
 
   public function __toString() : string {
@@ -606,9 +611,11 @@ class Farbfeld extends Textfeld {
           }
           $r .= "</div>";
         }
-        $r .= "<input id=\"{$this->id}\" class=\"dshUiFeld\" type=\"color\" oninput=\"ui.farbbeispiel.aktion(this)\">";
-      $r .= "</div>";
-      $r .= "<div class=\"dshUiFarbvorschau\">";
+        $verborgen = "";
+        if(!$this->picker) {
+          $verborgen = " dshUiUnsichtbar";
+        }
+        $r .= "<input id=\"{$this->id}\" class=\"dshUiFeld$verborgen\" type=\"color\" oninput=\"ui.farbbeispiel.aktion(this)\">";
       $r .= "</div>";
     $r .= "{$this->codeZu()}";
 
