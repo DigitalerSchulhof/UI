@@ -417,6 +417,7 @@ ui.laden = {
   },
   meldung: (modul, id, laden, parameter) => {
     laden = laden || null;
+    parameter = parameter || {};
     core.ajax("UI", 1, [laden, "Die Meldung wird geladen"], {meldemodul: modul, meldeid: id, meldeparameter:parameter}).then((r) => ui.laden.aendern(null, r.Meldung, r.Knoepfe));
   },
   komponente: (komponenteninfo) => {
