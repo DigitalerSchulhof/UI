@@ -455,7 +455,9 @@ ui.fenster = {
     let fenster   = eQuery.parse(code);
     let fensterid = fenster.getID();
     if(ueberschreiben && $("#"+fensterid).existiert()) {
-      $("#"+fensterid).entfernen();
+      let f = $("#"+fensterid);
+      fenster.setCss(f.getCss(["top", "left", "opacity"]));
+      f.ersetzen(fenster[0]);
     }
     if(!$("#"+fensterid).existiert()) {
       let top = 30+window.pageYOffset, left = 30;

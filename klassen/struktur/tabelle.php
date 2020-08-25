@@ -151,20 +151,21 @@ namespace UI {
      */
     public function __construct($id, $icon = null, ...$spalten) {
       parent::__construct();
-      $this->id       = $id;
-      $this->spalten  = $spalten;
-      $this->zeilen   = [];
-      $this->icon     = $icon;
-      $this->hatIcon  = true;
+      $this->id               = $id;
+      $this->spalten          = $spalten;
+      $this->zeilen           = [];
+      $this->icon             = $icon;
+      $this->hatIcon          = true;
       $this->addKlasse("dshUiTabelle");
       $this->addKlasse("dshUiTabelleListe");
-      $this->seite = 1;
-      $this->seitenanzahl = 1;
+      $this->seite            = 1;
+      $this->seitenanzahl     = 1;
       $this->datensaetzeProSeite = 25;
-      $this->sortierfunktion = "null";
-      $this->autoladen = false;
-      $this->sortierrichtung = "ASC";
-      $this->sortierspalte = 0;
+      $this->sortierfunktion  = "null";
+      $this->autoladen        = false;
+      $this->sortierrichtung  = "ASC";
+      $this->sortierspalte    = 0;
+      $this->drucken          = true;
     }
 
     /**
@@ -174,6 +175,16 @@ namespace UI {
      */
     public function setAutoladen($autoladen) : self {
       $this->autoladen = $autoladen;
+      return $this;
+    }
+
+    /**
+     * Setzt, ob die Tabelle gedruckt werden kann/darf
+     * @param  bool $druckbar :)
+     * @return self
+     */
+    public function setDruckbar($druckbar) : self {
+      $this->drucken = $druckbar;
       return $this;
     }
 
@@ -289,7 +300,7 @@ namespace UI {
 
       // Informatiker-Seite
       $seite--;
-      uasort($this->zeilen,
+      usort($this->zeilen,
         /**
          * @param \UI\Tabelle\Zeile $z1
          * @param \UI\Tabelle\Zeile $z2
@@ -362,17 +373,14 @@ namespace UI {
         }
       }
 
-      $hatAktionen = false;
-      foreach($this->zeilen as $z) {
-        if(count($z->getAktionen()) > 0) {
-          // Mind. 1 Zeile hat > 0 Aktionen
-          $hatAktionen = true;
-          break;
+      if(!$this->autoladen) {
+        $code .= "<th class=\"dshUiTabelleIconSpalte\">";
+        if($this->drucken) {
+          $drucken = new MiniIconKnopf(new Icon(Konstanten::DRUCKEN), "Drucken");
+          $drucken ->addFunktion("onclick", "ui.tabelle.drucken('{$this->id}')");
+          $code .= $drucken;
         }
-      }
-
-      if(!$this->autoladen && $hatAktionen) {
-        $code .= "<th class=\"dshUiTabelleIconSpalte\"></th>";
+        $code .= "</th>";
       }
 
       $code .= "</tr></thead><tbody>";
@@ -391,21 +399,18 @@ namespace UI {
             foreach ($this->spalten as $snr => $s) {
               $code .= "<td>".($z[$s] ?? "")."</td>";
             }
-            if($hatAktionen) {
-              $a = join(" ", $z->getAktionen());
-              if($z->getID() !== null) {
-                $a .= (new \UI\VerstecktesFeld(null, $z->getID()))->addKlasse("dshTabelleZeileID");
-              }
-              $code .= "<td class=\"dshUiTabelleIconSpalte\">$a</td>";
+            $a = join(" ", $z->getAktionen());
+            if($z->getID() !== null) {
+              $a .= (new VerstecktesFeld(null, $z->getID()))->addKlasse("dshTabelleZeileID");
             }
+            $code .= "<td class=\"dshUiTabelleIconSpalte\">$a</td>";
             $code .= "</tr>";
           }
         }
       }
 
-      $spanz = $anzspalten;
+      $spanz = $anzspalten+1;
       if ($this->hatIcon) {$spanz++;}
-      if ($hatAktionen) {$spanz++;}
 
       $code .= "<tr><td class=\"dshUiTabelleFuss\" colspan=\"$spanz\">";
       $seitenfeld = new Auswahl("{$this->id}Seite", $this->seite);
