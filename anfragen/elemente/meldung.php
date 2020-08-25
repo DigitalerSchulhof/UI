@@ -19,6 +19,9 @@ function parameter(...$ps) {
     global $parameter;
     foreach($ps as $p) {
       global $$p;
+      if(!isset($parameter[$p])) {
+        Anfrage::addFehler(-3, true);
+      }
       $$p = $parameter[$p];
     }
   } else {

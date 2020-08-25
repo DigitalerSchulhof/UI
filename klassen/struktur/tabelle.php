@@ -146,10 +146,11 @@ namespace UI {
     /**
      * Erzeugt eine neue Tabelle
      * @param string $id :)
+     * @param integer $anfrageziel Das Anfrageziel um die Tabelle nachzuladen
      * @param Icon $icon Standard-Icon für Zeilen
      * @param string[] $spalten Spaltenüberschriften
      */
-    public function __construct($id, $icon = null, ...$spalten) {
+    public function __construct($id, $anfrageziel, $icon = null, ...$spalten) {
       parent::__construct();
       $this->id               = $id;
       $this->spalten          = $spalten;
@@ -166,6 +167,7 @@ namespace UI {
       $this->sortierrichtung  = "ASC";
       $this->sortierspalte    = 0;
       $this->drucken          = true;
+      $this->setAnfrageziel($anfrageziel);
     }
 
     /**
@@ -216,16 +218,14 @@ namespace UI {
     /**
      * Setzt alle Variablen zur Verwendung von Seiten
      * @param array  $tanfrage Rückgabe einer Tabellenanfrage   :)
-     * @param string $sortierfunktion    JS-Funktion zum Sortieren
      * @return self
      */
-    public function setSeiten($tanfrage, $sortierfunktion) : self {
+    public function setSeiten($tanfrage) : self {
       $this->seite = $tanfrage["Seite"];
       $this->seitenanzahl = $tanfrage["Seitenanzahl"];
       $this->datensaetzeProSeite = $tanfrage["DatenProSeite"];
       $this->sortierrichtung = $tanfrage["Richtung"];
       $this->sortierspalte = $tanfrage["Spalte"];
-      $this->sortierfunktion = $sortierfunktion;
       return $this;
     }
 
