@@ -579,6 +579,8 @@ class Farbfeld extends Textfeld {
   /** @var bool Ob der Farbpicker sichtbar ist */
   protected $picker;
 
+  protected $feldid;
+
   /**
    * Erstellt eine neue Eingabe
    *
@@ -586,9 +588,10 @@ class Farbfeld extends Textfeld {
    * @param bool   $picker  Ob der Farbpicker sichtbar ist
    */
   public function __construct($id, $picker = true) {
-    parent::__construct($id);
+    parent::__construct("{$id}Auswahl");
     $this->addKlasse("dshUiFarbfeld");
     $this->picker = $picker;
+    $this->feldid = $id;
   }
 
   public function __toString() : string {
@@ -615,7 +618,7 @@ class Farbfeld extends Textfeld {
         if(!$this->picker) {
           $verborgen = " dshUiUnsichtbar";
         }
-        $r .= "<input id=\"{$this->id}\" class=\"dshUiFeld$verborgen\" type=\"color\" oninput=\"ui.farbbeispiel.aktion(this)\">";
+        $r .= "<input id=\"{$this->feldid}\" class=\"dshUiFeld$verborgen\" type=\"color\" oninput=\"ui.farbbeispiel.aktion(this)\">";
       $r .= "</div>";
     $r .= "{$this->codeZu()}";
 

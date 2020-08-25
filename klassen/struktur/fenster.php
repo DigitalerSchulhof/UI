@@ -88,7 +88,7 @@ class Fenster extends InhaltElement {
           $code .= $maximieren;
         }
         if ($this->schliessen) {
-          $schliessen = new MiniIconKnopf(new Icon("fas fa-window-close"), "Schließen", "Fehler", "UL");
+          $schliessen = new MiniIconKnopf(new Icon("fas fa-times"), "Schließen", "Fehler", "UL");
           $schliessen->addFunktion("onclick", "ui.fenster.schliessen('{$this->id}')");
           $schliessen->addKlasse("dshUiFensterSchliessen");
           $code .= $schliessen;

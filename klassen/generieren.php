@@ -85,5 +85,11 @@ class Generieren {
     }
   }
 
+  public static function HexZuRgba($x) : string {
+    $r = hexdec(substr($x, 1,2));
+    $g = hexdec(substr($x, 3,2));
+    $b = hexdec(substr($x, 5,2));
+    return "rgba($r,$g,$b,1)";
+  }
 }
 ?>
