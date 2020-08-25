@@ -167,7 +167,9 @@ namespace UI {
       $this->sortierrichtung  = "ASC";
       $this->sortierspalte    = 0;
       $this->drucken          = true;
-      $this->setAnfrageziel($anfrageziel);
+      if($anfrageziel !== null) {
+        $this->setAnfrageziel($anfrageziel);
+      }
     }
 
     /**
@@ -274,7 +276,7 @@ namespace UI {
     }
 
     /**
-    * Sortiert die Tabelle nach <code>$sort...</code>
+    * Sortiert die Tabelle nach <code>$sortWasauchimmer</code>
      * @param  int    $seite         :)
      * @param  int    $datenproseite :)
      * @param  string $richtung      :)
@@ -297,6 +299,9 @@ namespace UI {
 
       $this->seitenanzahl = ceil(count($this->zeilen) / $datenproseite);
       $this->seite        = $seite;
+      $this->datensaetzeProSeite = $datenproseite;
+      $this->sortierrichtung      = $richtung;
+      $this->sortierspalte        = $spalte;
 
       // Informatiker-Seite
       $seite--;
