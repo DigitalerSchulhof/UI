@@ -61,7 +61,7 @@ class Check {
   	return !$fehler;
   }
 
-  public static function istFarbe($x) {
+  public static function istRgbaFarbe($x) {
     $null255 = "(1?[0-9]{1,2}|2([1-4]{0,1}[0-9]{1}|5[1-5]{1}))";
     if (preg_match("/^rgba\($null255, ?$null255, ?$null255, ?(0?\.[0-9]+|1)\)$/", $x) !== 1) {
       return false;

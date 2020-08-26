@@ -9,7 +9,7 @@ class Farbbeispiel extends Element {
   protected $farbe;
 
   public function __construct($farbe) {
-    if (!Check::istFarbe($farbe)) {
+    if (!Check::istRgbaFarbe($farbe)) {
       throw new \Exception("Keine gültige Farbe übergeben.");
     }
     parent::__construct();

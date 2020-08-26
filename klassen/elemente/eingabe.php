@@ -624,6 +624,14 @@ class Farbfeld extends Textfeld {
 
     return $r;
   }
+
+  public function setWert($wert) : self {
+    if (Check::istRgbaFarbe($wert)) {
+      return parent::setWert(Generieren::RgbaZuHex($wert));
+    } else {
+      return parent::setWert($wert);
+    }
+  }
 }
 
 class Passwortfeld extends Textfeld {

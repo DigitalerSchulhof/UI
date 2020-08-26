@@ -91,5 +91,11 @@ class Generieren {
     $b = hexdec(substr($x, 5,2));
     return "rgba($r,$g,$b,1)";
   }
+
+  public static function RgbaZuHex($x) : string {
+    $werte = substr($x, 4,-1);
+    $farben = explode(",", $werte);
+    return sprintf("#%02x%02x%02x", $farben[0], $farben[1], $farben[2]);
+  }
 }
 ?>
