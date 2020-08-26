@@ -627,6 +627,10 @@ ui.tabelle = {
       var sortSpalte = spalte || $("#"+id+"SortierenSpalte").getWert();
       var i = feld.kinderSelector(".dshUiTabelleI");
       i.addKlasse("dshUiTabelleLaedt");
+      if(!i.kinderSelector("table").existiert()) {
+        console.error("Die ID »" + id + "« ist keine Tabelle", id);
+        return;
+      }
       let s = i.kinderSelector("table").getAttr("data-sortierfunktion");
       s = s.split(".");
       // String zu Funktion
