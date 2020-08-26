@@ -39,6 +39,6 @@ if (Anfrage::getRueck("Meldung") === null) {
   Anfrage::setRueck("Meldung", new UI\Meldung("Meldung nicht gefunden", "Das was hier stehen sollte, muss erst noch geschrieben werden...", "Fehler"));
 }
 
-Anfrage::setRueck("Meldung", (string) Anfrage::getRueck("Meldung"));
+Anfrage::setRueck("Meldung", (string) UI\Zeile::standard(Anfrage::getRueck("Meldung")));
 Anfrage::setRueck("Knoepfe", join("", Anfrage::getRueck("Knöpfe") ?? [UI\Knopf::ok()]));
 ?>
