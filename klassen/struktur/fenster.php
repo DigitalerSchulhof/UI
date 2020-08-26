@@ -20,7 +20,7 @@ class Fenster extends InhaltElement {
 	/**
 	 * @param string $id  :)
 	 * @param string $titel :)
-	 * @param string $inhalt Inhalt des Fensters
+	 * @param Zeile $inhalt Inhalt des Fensters
 	 * @param bool   $gross Fenster mit Seitenbreite
 	 * @param bool   $ohnePadding Soll der Fensterinhalt ohne Padding links und rechts ausgegeben werden? In Verwendung bei mehreren Spalten in einem Fenster
 	 */
