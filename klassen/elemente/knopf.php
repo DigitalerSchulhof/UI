@@ -89,10 +89,15 @@ class Knopf extends InhaltElement {
 
   /**
    * Gibt den Standard-OK Knopf zurück
+   * @param string|null $id Die Fenster-ID, welches Geschlossen wird.
    * @return Knopf
    */
-  public static function ok() : Knopf {
-    return new Knopf("OK", "Standard", "ui.laden.aus()");
+  public static function ok($id = null) : Knopf {
+    $k = new Knopf("OK", "Standard", "ui.laden.aus()");
+    if($id !== null) {
+      $k->addFunktion("onclick", "ui.fenster.schliessen('$id')");
+    }
+    return $k;
   }
 
   /**
