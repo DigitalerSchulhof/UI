@@ -491,13 +491,15 @@ namespace UI {
      * @param InhaltElement $label   :)
      * @param Eingabe       $eingabe :)
      */
-    public function __construct($label, $eingabe) {
+    public function __construct($label, $eingabe = null) {
       parent::__construct();
       $this->label = $label;
-      $this->label->setTag("label");
+      if(!($label instanceof Ueberschrift)) {
+        $this->label->setTag("label");
+      }
       $this->eingabe = $eingabe;
       $this->optional = false;
-      if ($eingabe->getID() === null) {
+      if ($eingabe !== null && $eingabe->getID() === null) {
         throw new \Exception("Keine ID übergeben");
       }
     }
@@ -517,17 +519,19 @@ namespace UI {
      * @return string :)
      */
     public function __toString() : string {
-      if ($this->eingabe->getID() === null) {
-        throw new \Exception("Keine ID übergeben");
+      $code = "";
+      if($this->eingabe === null) {
+        $code = "{$this->codeAuf()}<th colspan='2'>{$this->label}</th>{$this->codeZu()}";
+      } else {
+        $this->label->setAttribut("for", $this->eingabe->getID());
+        $code = $this->codeAuf()."<th>{$this->label}</th>";
+        $this->eingabe->setKlasse($this->optional, "dshUiEingabefeldOptional");
+        $code .= "<td>{$this->eingabe}";
+        if ($this->optional) {
+          $code .= new Notiz("Optional");
+        }
+        $code .= "</td>".$this->codeZu();
       }
-      $this->label->setAttribut("for", $this->eingabe->getID());
-      $code = $this->codeAuf()."<th>{$this->label}</th>";
-      $this->eingabe->setKlasse($this->optional, "dshUiEingabefeldOptional");
-      $code .= "<td>{$this->eingabe}";
-      if ($this->optional) {
-        $code .= new Notiz("Optional");
-      }
-      $code .= "</td>".$this->codeZu();
       return $code;
     }
   }

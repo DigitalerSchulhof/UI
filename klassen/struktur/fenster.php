@@ -100,7 +100,7 @@ class Fenster extends InhaltElement {
         if($this->ohnePadding) {
           $ohnePadding = " dshUiOhnePadding";
         }
-        $code .= "<div id=\"{$this->id}FensterInhalt\" class=\"dshSpalte dshSpalteA1$ohnePadding\">";
+        $code .= "<div id=\"{$this->id}FensterInhalt\" class=\"dshSpalte dshUiFensterInhalt dshSpalteA1$ohnePadding\">";
           $code .= $this->inhalt;
         $code .= "</div><div class=\"dshClear\"></div>";
 
