@@ -521,7 +521,7 @@ namespace UI {
     public function __toString() : string {
       $code = "";
       if($this->eingabe === null) {
-        $code = "{$this->codeAuf()}<th colspan='2'>{$this->label}</th>{$this->codeZu()}";
+        $code = "{$this->codeAuf()}<td colspan='2'>{$this->label}</td>{$this->codeZu()}";
       } else {
         $this->label->setAttribut("for", $this->eingabe->getID());
         $code = $this->codeAuf()."<th>{$this->label}</th>";
