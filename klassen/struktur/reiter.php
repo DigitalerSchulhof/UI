@@ -175,9 +175,9 @@ class Reiter extends Element implements \ArrayAccess {
   protected $tag = "div";
 
   /** @var Reitersegment[] Enthält alle Reitersegmente */
-  private $reitersegmente;
+  protected $reitersegmente;
   /** @var int Enthält den aktuell aktiven Reiter */
-  private $gewaehlt;
+  protected $gewaehlt;
 
   /**
    * Erstellt einen Reiter
@@ -215,6 +215,14 @@ class Reiter extends Element implements \ArrayAccess {
       $this->gewaehlt = 0;
     }
     return $this;
+  }
+
+  /**
+   * Gibt die Reitersegmente zurück
+   * @return Reitersegment[]
+   */
+  public function getReitersegmente() : array {
+    return $this->reitersegmente;
   }
 
   /**

@@ -58,6 +58,7 @@ class Link extends InhaltElement {
   protected $tag = "a";
 
   protected $extern;
+  protected $ziel;
 
   public function __construct($inhalt, $ziel, $extern = false) {
     parent::__construct($inhalt);
@@ -73,11 +74,16 @@ class Link extends InhaltElement {
   }
 
   public function setZiel($ziel) : self {
-    $this->setAttribut("href", $ziel);
+    $this->ziel = $ziel;
     return $this;
   }
 
+  public function getZiel() : string {
+    return $this->ziel;
+  }
+
   public function __toString() : string {
+    $this->setAttribut("href", $this->ziel);
     if ($this->extern) {
       return "{$this->codeAuf()}{$this->inhalt} ".(new Icon(Konstanten::LINKEXT))."{$this->codeZu()}";
     } else {

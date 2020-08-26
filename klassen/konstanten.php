@@ -20,6 +20,8 @@ class Konstanten {
   const EINSTELLUNGEN     = "fas fa-cogs";
   // Verwaltung
   const MODUL       = "fas fa-puzzle-piece";
+  // const ROLLE       = "fas fa-toilet-paper";
+  const ROLLE       = "fab fa-black-tie";
 
   // Meldungen
   const STANDARD    = "fas fa-caret-right";
