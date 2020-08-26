@@ -618,7 +618,7 @@ class Farbfeld extends Textfeld {
         if(!$this->picker) {
           $verborgen = " dshUiUnsichtbar";
         }
-        $r .= "<input id=\"{$this->feldid}\" class=\"dshUiFeld$verborgen\" type=\"color\" oninput=\"ui.farbbeispiel.aktion(this)\">";
+        $r .= "<input id=\"{$this->feldid}\" class=\"dshUiFeld$verborgen\" value=\"{$this->wert}\" type=\"color\" oninput=\"ui.farbbeispiel.aktion(this)\">";
       $r .= "</div>";
     $r .= "{$this->codeZu()}";
 
