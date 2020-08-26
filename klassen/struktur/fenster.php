@@ -14,17 +14,14 @@ class Fenster extends InhaltElement {
   private $titel;
   /** @var Knopf[] Aktionen des Fensters */
   private $fensteraktionen;
-  /** @var bool Ob der Fensterinhalt kein Padding links und rechts bekommt */
-  private $ohnePadding;
 
 	/**
-	 * @param string $id  :)
-	 * @param string $titel :)
-	 * @param Zeile $inhalt Inhalt des Fensters
-	 * @param bool   $gross Fenster mit Seitenbreite
-	 * @param bool   $ohnePadding Soll der Fensterinhalt ohne Padding links und rechts ausgegeben werden? In Verwendung bei mehreren Spalten in einem Fenster
+	 * @param string $id     :)
+	 * @param string $titel  :)
+	 * @param Zeile  $inhalt Inhalt des Fensters
+	 * @param bool   $gross  Fenster mit Seitenbreite
 	 */
-  public function __construct($id, $titel, $inhalt, $gross = false, $ohnePadding = false) {
+  public function __construct($id, $titel, $inhalt, $gross = true) {
     parent::__construct($inhalt);
     $this->schliessen = true;
     $this->minimieren = false;
@@ -33,7 +30,6 @@ class Fenster extends InhaltElement {
     $this->addKlasse("dshUiFenster");
     $this->setAttribut("tabindex", "-1");
     $this->setID($id);
-    $this->ohnePadding = $ohnePadding;
     if ($gross) {
       $this->addKlasse("dshUiFensterGross");
     }
@@ -96,11 +92,7 @@ class Fenster extends InhaltElement {
         $code .= "</div>";
 
         // Fensterinhalt
-        $ohnePadding = "";
-        if($this->ohnePadding) {
-          $ohnePadding = " dshUiOhnePadding";
-        }
-        $code .= "<div id=\"{$this->id}FensterInhalt\" class=\"dshSpalte dshUiFensterInhalt dshSpalteA1$ohnePadding\">";
+        $code .= "<div id=\"{$this->id}FensterInhalt\" class=\"dshSpalte dshSpalteA1 dshUiFensterInhalt\">";
           $code .= $this->inhalt;
         $code .= "</div><div class=\"dshClear\"></div>";
 
