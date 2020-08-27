@@ -25,7 +25,7 @@ class Spalte extends Element implements \ArrayAccess {
     $this->typ      = $typ;
     $this->elemente = $elemente;
     $this->addKlasse("dshSpalte");
-    $this->addKlasse("dshSpalte{$typ}");
+    $this->addKlasse("dshSpalte$typ");
   }
 
   /**
@@ -53,12 +53,14 @@ class Spalte extends Element implements \ArrayAccess {
    * @return self
    */
   public function setTyp($typ) : self {
-    $this->removeKlasse("dshSpalte{$this->typ}");
+    if($typ !== null) {
+      $this->removeKlasse("dshSpalte{$this->typ}");
+    }
     if($typ !== null && !in_array($typ, self::TYPEN)) {
       $typ = self::TYPEN[0];
     }
     $this->typ = $typ;
-    $this->addKlasse("dshSpalte{$typ}");
+    $this->addKlasse("dshSpalte$typ");
     return $this;
   }
 

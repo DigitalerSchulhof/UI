@@ -19,9 +19,9 @@ class Konstanten {
 	const DETAILS     = "fas fa-info";
   const EINSTELLUNGEN     = "fas fa-cogs";
   // Verwaltung
-  const MODUL       = "fas fa-puzzle-piece";
-  // const ROLLE       = "fas fa-toilet-paper";
-  const ROLLE       = "fab fa-black-tie";
+  const VERWALTUNGSBEREICH  = "fas fa-toolbox";
+  const MODUL               = "fas fa-puzzle-piece";
+  const ROLLE               = "fab fa-black-tie";
 
   // Meldungen
   const STANDARD    = "fas fa-caret-right";
