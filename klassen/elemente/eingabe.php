@@ -1002,6 +1002,11 @@ class Auswahl extends Eingabe {
   /** @var Option[] Optionen der Selectbox */
   private $optionen;
 
+  /**
+   * Erzeugt eine neue Artwahl
+   * @param string $id   :)
+   * @param string $wert :)
+   */
   public function __construct($id, $wert = null) {
     parent::__construct($id);
     $this->optionen = [];

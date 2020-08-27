@@ -38,17 +38,17 @@ class Konstanten {
   const COOKIE      = "fas fa-cookie";
 
   // OS
-  const APPLE     = "fab fa-apple";
-  const ANDROID   = "fab fa-android";
-  const WINDOWS   = "fab fa-windows";
-  const LINUX     = "fab fa-linux";
+  const APPLE       = "fab fa-apple";
+  const ANDROID     = "fab fa-android";
+  const WINDOWS     = "fab fa-windows";
+  const LINUX       = "fab fa-linux";
 
   // Personen
-	const PERSON     = "fas fa-user";
-	const LEHRER     = "fas fa-chalkboard-teacher";
-	const SCHUELER   = "fas fa-user-graduate";
-	const VERWALTUNG = "fas fa-user-cog";
-	const EXTERN     = "fas fa-user-astronaut";
-	const ERZIEHER   = "fas fa-user-friends";
+	const PERSON      = "fas fa-user";
+	const LEHRER      = "fas fa-chalkboard-teacher";
+	const SCHUELER    = "fas fa-user-graduate";
+	const VERWALTUNG  = "fas fa-user-cog";
+	const EXTERN      = "fas fa-user-astronaut";
+	const ERZIEHER    = "fas fa-user-friends";
 }
 ?>

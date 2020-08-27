@@ -253,18 +253,19 @@ class Sortierknopf extends MiniIconKnopf {
   }
 }
 
-class Badge extends IconKnopf {
-  /**
-  * @param Icon   $icon :)
-  * @param string $inhalt :)
-  * @param string $art :)
-  */
-  public function __construct($icon, $inhalt, $art = null) {
-    parent::__construct($icon, $inhalt, $art);
-    $this->icon = $icon;
-    $this->addKlasse("dshUiKnopfIcon");
+class Badge extends Knopf {
+  public function __construct($inhalt, $art = null) {
+    parent::__construct($inhalt, $art, null);
   }
 
+  public function __toString() : string {
+    $this->toStringVorbereitung();
+    $this->removeKlasse("dshUiKnopfLeer");
+    return "{$this->codeAuf()}{$this->inhalt}{$this->codeZu()}";
+  }
+}
+
+class IconBadge extends IconKnopf {
   public function __toString() : string {
     $this->toStringVorbereitung();
     $this->removeKlasse("dshUiKnopfLeer");
