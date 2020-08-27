@@ -840,8 +840,8 @@ class Option extends Eingabe {
    * @param string $text Text der Option
    * @param string $wert Wert der Option
    */
-  public function __construct($id, $text = null, $wert = "") {
-    parent::__construct($id);
+  public function __construct($text = null, $wert = "") {
+    parent::__construct(null);
     $this->gesetzt = false;
     $this->text = $text;
     $this->wert = $wert;
@@ -1016,7 +1016,7 @@ class Auswahl extends Eingabe {
    * @param bool   $selected  Ob die Option ausgewählt ist
    */
   public function add($text, $wert, $selected = false) {
-    $this->optionen[] = new Option (null, $text, $wert);
+    $this->optionen[] = new Option($text, $wert);
     if($selected) {
       $this->wert = $wert;
     }
