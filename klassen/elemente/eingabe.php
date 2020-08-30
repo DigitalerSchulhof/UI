@@ -304,7 +304,7 @@ class Datumfeld extends Eingabe {
     $code .= "<{$this->codeAuf(false, "id", "value", "class")} id=\"{$this->id}T\" value=\"{$datum[0]}\" class=\"dshUiEingabefeld dshUiDatumfeld dshUiDatumfeldT".join(" ", array_merge(array(""), $this->klassen))."\">{$this->codeZu()} . ";
     $code .= "<{$this->codeAuf(false, "id", "value", "class")} id=\"{$this->id}M\" value=\"{$datum[1]}\" class=\"dshUiEingabefeld dshUiDatumfeld dshUiDatumfeldM".join(" ", array_merge(array(""), $this->klassen))."\">{$this->codeZu()} . ";
     $code .= "<{$this->codeAuf(false, "id", "value", "class")} id=\"{$this->id}J\" value=\"{$datum[2]}\" class=\"dshUiEingabefeld dshUiDatumfeld dshUiDatumfeldJ".join(" ", array_merge(array(""), $this->klassen))."\">{$this->codeZu()} ";
-    $code .= "<div class=\"dshUiDatumwahl\" id=\"{$this->id}Datumwahl\"></div>";
+    $code .= "<span class=\"dshUiDatumwahl\" id=\"{$this->id}Datumwahl\"></span>";
     $code .= "</span>";
     return $code;
   }
