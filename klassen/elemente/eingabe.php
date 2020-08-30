@@ -79,6 +79,21 @@ abstract class Eingabe extends Element {
     $this->autocomplete = $autocomplete;
     return $this;
   }
+
+  /**
+   * Setzt, ob die Eingabe deaktiviert ist
+   * @param   bool $disabled :)
+   * @return  self
+   */
+  public function setDisabled($disabled) : self {
+    if($disabled) {
+      $disabled = "disabled";
+    } else {
+      $disabled = "";
+    }
+    $this->setAttribut("disabled", $disabled);
+    return $this;
+  }
 }
 
 /**
