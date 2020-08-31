@@ -355,6 +355,14 @@ class Box extends Element implements \ArrayAccess {
     $this->kinder = $kinder;
   }
 
+  /**
+   * Gibt die Kinder zurück
+   * @return string[]
+   */
+  public function getKinder() : array {
+    return $this->kinder;
+  }
+
   public function __toString() : string {
     return "{$this->codeAuf()}".join("", $this->kinder)."{$this->codeZu()}";
   }

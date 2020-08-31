@@ -32,6 +32,7 @@ function parameter(...$ps) {
 if (!is_file("$DSH_MODULE/$meldemodul/funktionen/meldungen.php")) {
   Anfrage::addFehler(4, true);
 } else {
+  $knoepfe = [];
   include("$DSH_MODULE/$meldemodul/funktionen/meldungen.php");
 }
 

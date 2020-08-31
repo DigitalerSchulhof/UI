@@ -409,12 +409,12 @@ namespace UI {
       if($this->seite == 1) {
         $vis = "; visibility: collapse";
       }
-      $nachlinks = "<i class=\"fas fa-caret-left\" style=\"padding: 10px;cursor:pointer$vis\" onclick=\"$('#{$this->id}Seite').setWert(".($this->seite-1).");ui.tabelle.sortieren('{$this->id}')\"></i>";
+      $nachlinks = "<i class=\"fas fa-caret-left\" style=\"padding: 0 10px;cursor:pointer$vis\" onclick=\"$('#{$this->id}Seite').setWert(".($this->seite-1).");ui.tabelle.sortieren('{$this->id}')\"></i>";
       $vis = "";
       if($this->seite == $this->seitenanzahl) {
         $vis = "; visibility: collapse";
       }
-      $nachrechts = "<i class=\"fas fa-caret-right\" style=\"padding: 10px;cursor:pointer$vis\" onclick=\"$('#{$this->id}Seite').setWert(".($this->seite+1).");ui.tabelle.sortieren('{$this->id}')\"></i>";
+      $nachrechts = "<i class=\"fas fa-caret-right\" style=\"padding: 0 10px;cursor:pointer$vis\" onclick=\"$('#{$this->id}Seite').setWert(".($this->seite+1).");ui.tabelle.sortieren('{$this->id}')\"></i>";
       for ($i=1; $i<=$this->seitenanzahl; $i++) {
         $seitenfeld->add("$i / {$this->seitenanzahl}", $i);
       }
@@ -431,14 +431,14 @@ namespace UI {
       $proSeite->add("100", "100");
       $proSeite->add("alle", "alle");
       if($anzzeilen === 0) {
-        $code .= "<span style=\"display: none\">";
+        $code .= "<span style=\"display: none;float:right\">";
+      } else {
+        $code .= "<span style=\"float:right\">";
       }
       $code .= "$proSeite pro Seite";
       $code .= new VerstecktesFeld("{$this->id}SortierenRichtung", $this->sortierrichtung);
       $code .= new VerstecktesFeld("{$this->id}SortierenSpalte", $this->sortierspalte);
-      if($anzzeilen === 0) {
-        $code .= "</span>";
-      }
+      $code .= "</span>";
       $code .= "</td></tr>";
       $code .= "</tbody>{$this->codeZu()}";
       $code .= "</div>";
@@ -494,7 +494,7 @@ namespace UI {
     public function __construct($label, $eingabe = null) {
       parent::__construct();
       $this->label = $label;
-      if(!($label instanceof Ueberschrift)) {
+      if($eingabe !== null) {
         $this->label->setTag("label");
       }
       $this->eingabe = $eingabe;

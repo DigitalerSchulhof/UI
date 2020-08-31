@@ -824,7 +824,7 @@ class Textarea extends Textfeld {
   }
 
   public function __toString() : string {
-    return "<{$this->codeAuf(false, "value")}>{$this->wert}{$this->codeZu()}";
+    return "{$this->codeAuf(true, "value")}{$this->wert}{$this->codeZu()}";
   }
 }
 

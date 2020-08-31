@@ -9,7 +9,7 @@ class Spalte extends Element implements \ArrayAccess {
 
   /** @var string Typ der Spalte */
   private $typ;
-  /** @var string[] Elemente der Spalte */
+  /** @var (Element|string)[] Elemente der Spalte */
   private $elemente;
 
   /**
@@ -45,6 +45,14 @@ class Spalte extends Element implements \ArrayAccess {
    */
   public function add(...$elemente) : self {
     return $this->addElement(...$elemente);
+  }
+
+  /**
+   * Gibt die Elemente der Spalte zurück
+   * @return (Element|string)[]
+   */
+  public function getElemente() : array {
+    return $this->elemente;
   }
 
   /**

@@ -393,7 +393,7 @@ ui.laden = {
       }
     });
   },
-  aus: () => {
+  aus: _ => {
     $("#dshLadenFensterTitel", "#dshLadenFensterInhal", "#dshLadenFensterAktionen").setHTML("");
     $("#dshBlende").ausblenden();
 
@@ -485,10 +485,10 @@ ui.fenster = {
       ui.fenster.ladesymbol(false);
     }
   },
-  laden: (modul, ziel, laden, daten, meldung, host, ueberschreiben) => {
+  laden: (modul, ziel, daten, meldung, host, ueberschreiben) => {
     ui.fenster.ladend++;
     ui.fenster.ladesymbol(true);
-    return core.ajax(modul, ziel, laden, daten, meldung, host).then((r) => {
+    return core.ajax(modul, ziel, null, daten, meldung, host).then((r) => {
       ui.fenster.anzeigen(r.Code, ueberschreiben);
     });
   },
