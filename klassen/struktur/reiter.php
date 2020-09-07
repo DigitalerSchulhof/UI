@@ -20,6 +20,8 @@ class Reiterkopf extends InhaltElement {
   private $reitersegment;
   /** @var int Nummer innerhalb des Reiters */
   private $nr;
+  /** @var bool Ob der Reiterkopf aktiv werden kann */
+  private $kannAktiv;
 
   /**
    * Erzugt einen neuen Reiterkopf
@@ -35,6 +37,7 @@ class Reiterkopf extends InhaltElement {
     $this->icon           = $icon;
     $this->meldezahl      = $meldezahl;
     $this->reitersegment  = null;
+    $this->kannAktiv      = true;
     $this->addKlasse("dshUiReiterKopf");
   }
 
@@ -44,6 +47,16 @@ class Reiterkopf extends InhaltElement {
    */
   public function setNr($nr) {
     $this->nr = $nr;
+  }
+
+  /**
+   * Setzt ob der Reiterkopf aktiv werden kann
+   * @param  bool $kannAktiv :)
+   * @return self
+   */
+  public function setKannAktiv($kannAktiv) : self {
+    $this->kannAktiv = $kannAktiv;
+    return $this;
   }
 
   /**
@@ -57,20 +70,13 @@ class Reiterkopf extends InhaltElement {
   }
 
   /**
-   * Gibt einen Klon mit passenden Events zurück
-   * @return self
-   */
-  public function toStringVorbereitung() : self {
-    $this->getAktionen()->setFunktion("onclick", 3, "ui.reiter.aktion('{$this->reitersegment->getReiter()->getID()}', '$this->nr', '{$this->reitersegment->getReiter()->getAnzahl()}')");
-    return $this;
-  }
-
-  /**
    * HTML-Code des Reiterkopfes
    * @return string :)
    */
   public function __toString() : string {
-    $this->toStringVorbereitung();
+    if($this->kannAktiv) {
+      $this->getAktionen()->setFunktion("onclick", 3, "ui.reiter.aktion('{$this->reitersegment->getReiter()->getID()}', '$this->nr', '{$this->reitersegment->getReiter()->getAnzahl()}')");
+    }
     $icon = $this->icon;
     if($icon !== null) {
       $icon = "$icon ";
@@ -98,7 +104,7 @@ class Reitersegment {
    * @param Reiterkopf    $kopf    Kopf des Reitersegments
    * @param Reiterkoerper $koerper Körper des Reitersegments
    */
-  public function __construct($kopf, $koerper) {
+  public function __construct($kopf, $koerper = null) {
     $this->reiter = null;
     $this->nr = null;
     $kopf->setReitersegment($this);
@@ -165,7 +171,7 @@ class Reitersegment {
    * Gibt den Reiterkörper zurück
    * @return Reiterkoerper :)
    */
-  public function getKoerper() : Reiterkoerper {
+  public function getKoerper() : ?Reiterkoerper {
     return $this->reiterkoerper;
   }
 
@@ -204,15 +210,19 @@ class Reiter extends Element implements \ArrayAccess {
    * @param  Reitersegment $reitersegment :)
    * @return self
    */
-  public function addReitersegment($reitersegment) : self {
-    $reitersegment->setReiter($this);
-    $nr = count($this->reitersegmente);
-    $reitersegment->getKoerper()->setID($this->id."Koerper".$nr);
-    $reitersegment->getKopf()->setID($this->id."Kopf".$nr);
-    $reitersegment->setNr($nr);
-    $this->reitersegmente[] = $reitersegment;
-    if ($this->gewaehlt == -1) {
-      $this->gewaehlt = 0;
+  public function addReitersegment(...$seg) : self {
+    foreach($seg as $reitersegment) {
+      $reitersegment->setReiter($this);
+      $nr = count($this->reitersegmente);
+      if($reitersegment->getKoerper() !== null) {
+        $reitersegment->getKoerper()->setID($this->id."Koerper".$nr);
+      }
+      $reitersegment->getKopf()->setID($this->id."Kopf".$nr);
+      $reitersegment->setNr($nr);
+      $this->reitersegmente[] = $reitersegment;
+      if ($this->gewaehlt == -1) {
+        $this->gewaehlt = 0;
+      }
     }
     return $this;
   }
@@ -252,20 +262,25 @@ class Reiter extends Element implements \ArrayAccess {
     $koerper = "";
     for ($i=0; $i<count($this->reitersegmente); $i++) {
       $oben = $this->reitersegmente[$i]->getKopf();
-      $unten = $this->reitersegmente[$i]->getKoerper();
       if ($i == $this->gewaehlt) {
         $oben->addKlasse("dshUiReiterKopfAktiv");
-        $unten->addKlasse("dshUiReiterKoerperAktiv");
         $oben->removeKlasse("dshUiReiterKopfInaktiv");
-        $unten->removeKlasse("dshUiReiterKoerperInaktiv");
       } else {
         $oben->addKlasse("dshUiReiterKopfInaktiv");
-        $unten->addKlasse("dshUiReiterKoerperInaktiv");
         $oben->removeKlasse("dshUiReiterKopfAktiv");
-        $unten->removeKlasse("dshUiReiterKoerperAktiv");
       }
       $koepfe .= $oben;
-      $koerper .= $unten;
+      if($this->reitersegmente[$i]->getKoerper() !== null) {
+        $unten = $this->reitersegmente[$i]->getKoerper();
+        if ($i == $this->gewaehlt) {
+          $unten->addKlasse("dshUiReiterKoerperAktiv");
+          $unten->removeKlasse("dshUiReiterKoerperInaktiv");
+        } else {
+          $unten->addKlasse("dshUiReiterKoerperInaktiv");
+          $unten->removeKlasse("dshUiReiterKoerperAktiv");
+        }
+        $koerper .= $unten;
+      }
     }
     $code .= "<div class=\"dshUiReiterKoepfe\">$koepfe</div>";
     $code .= "<div class=\"dshUiReiterKoerper\">$koerper</div>";
