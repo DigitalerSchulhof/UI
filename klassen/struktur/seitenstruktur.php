@@ -61,7 +61,7 @@ class Spalte extends Element implements \ArrayAccess {
    * @return self
    */
   public function setTyp($typ) : self {
-    if($typ !== null) {
+    if($this->typ !== null) {
       $this->removeKlasse("dshSpalte{$this->typ}");
     }
     if($typ !== null && !in_array($typ, self::TYPEN)) {

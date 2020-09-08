@@ -25,6 +25,10 @@ class Check {
     return mktime(0, 0, 0, $monat, $tag, $jahr);
   }
 
+  public static function istEditor($x) {
+    return preg_match("/^[-_ \.\/\@äöüÄÖÜßáéíóúàèìòùÁÉÍÓÚÀÈÌÒÙæÆâêîôûÂÊÎÔÛøØÅÇËÃÏÕãåçëïõÿñ0-9a-zA-Z!]*$/", $x) === 1;
+  }
+
   public static function istZahl($x, $min = null, $max = null) {
     if (preg_match("/^[0-9]+$/", $x) !== 1) {
       return false;
@@ -237,7 +241,7 @@ class Check {
         if (floor($stunden) == 1) {
           return "eine Stunde";
         } else {
-          return floor($stunden)." Stunde";
+          return floor($stunden)." Stunden";
         }
       }
       // MINUTEN AUSGEBEN
