@@ -985,14 +985,14 @@ class Togglegruppe extends Eingabe {
    */
   public function __toString() : string {
     $code   = "<{$this->codeAuf(false, "value", "id")} id=\"{$this->getID()}Feld\">";
-    $knopfId = 0;
+    $knopfI = 0;
     $anzahl = count($this->optionen);
 
     for ($i=0; $i<$anzahl; $i++) {
       $o = $this->optionen[$i];
       if ($o->getWert() == $this->getWert()) {
         $o->setGesetzt(true);
-        $knopfId = $i;
+        $knopfI = $i;
       }
       else {
         $o->setGesetzt(false);
@@ -1005,8 +1005,8 @@ class Togglegruppe extends Eingabe {
 
     if ($anzahl > 0) {$code = substr($code, 0, strlen($code)-1);}
 
-    $code .= new VerstecktesFeld($this->id, $this->optionen[$knopfId]->getWert());
-    $code .= new VerstecktesFeld("{$this->id}KnopfId", $knopfId);
+    $code .= new VerstecktesFeld($this->id, $this->optionen[$knopfI]->getWert());
+    $code .= new VerstecktesFeld("{$this->id}KnopfId", $knopfI);
     $code .= $this->codeZu();
     return $code;
   }

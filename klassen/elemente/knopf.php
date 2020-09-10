@@ -245,8 +245,6 @@ class MiniIconKnopf extends IconKnopf {
 class Sortierknopf extends MiniIconKnopf {
   /** @var string $richtung Richtung der Sortierung */
   protected $richtung;
-  /** @var string $tabelleID ID der Tabelle auf die sich das Sortieren bezieht */
-  protected $tabelleID;
   /** @var string $spaltennr Spalte, auf die sich das das Sortieren bezieht */
   protected $spaltennr;
 
@@ -258,7 +256,7 @@ class Sortierknopf extends MiniIconKnopf {
   * @param string $tabelle  TabellenID
   * @param string $spalte   Name der zu sortierenden Spalte
   */
-  public function __construct($tabelleId, $richtung, $spaltennr) {
+  public function __construct($tabelleI, $richtung, $spaltennr) {
     if (!in_array($richtung, self::RICHTUNGEN)) {
       $richtung = self::RICHTUNGEN[0];
     }
@@ -274,10 +272,9 @@ class Sortierknopf extends MiniIconKnopf {
     }
     parent::__construct($icon, $inhalt, null, "OL");
     $this->hinweis = null;
-    $this->tabelleId = $tabelleId;
     $this->spaltennr = $spaltennr;
 
-    $this->aktionen->addFunktionPrioritaet("onclick", 3, "ui.tabelle.sortieren('$tabelleId', '$richtung', '$spaltennr')");
+    $this->aktionen->addFunktionPrioritaet("onclick", 3, "ui.tabelle.sortieren('$tabelleI', '$richtung', '$spaltennr')");
     $this->addKlasse("dshUiSortierknopf");
   }
 }

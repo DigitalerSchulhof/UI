@@ -26,7 +26,7 @@ class Check {
   }
 
   public static function istEditor($x) {
-    return preg_match("/^[-_ \.\/\@äöüÄÖÜßáéíóúàèìòùÁÉÍÓÚÀÈÌÒÙæÆâêîôûÂÊÎÔÛøØÅÇËÃÏÕãåçëïõÿñ0-9a-zA-Z!]*$/", $x) === 1;
+    return preg_match("/^[-_ \.\/\@äöüÄÖÜßáéíóúàèìòùÁÉÍÓÚÀÈÌÒÙæÆâêîôûÂÊÎÔÛøØÅÇËÃÏÕãåçëïõÿñ0-9a-zA-Z,?!]*$/", $x) === 1;
   }
 
   public static function istZahl($x, $min = null, $max = null) {
@@ -58,7 +58,7 @@ class Check {
       }
     }
     if ($max !== null) {
-      if (strelan($x) > $max) {
+      if (strlen($x) > $max) {
         $fehler = true;
       }
     }
@@ -91,7 +91,7 @@ class Check {
       }
     }
     if ($max !== null) {
-      if (strelan($x) > $max) {
+      if (strlen($x) > $max) {
         $fehler = true;
       }
     }
@@ -109,12 +109,11 @@ class Check {
       }
     }
     if ($max !== null) {
-      if (strelan($x) > $max) {
+      if (strlen($x) > $max) {
         $fehler = true;
       }
     }
   	return !$fehler;
-    return true;
   }
 
   public static function istName($x, $min = 1, $max = null) {
@@ -128,7 +127,7 @@ class Check {
       }
     }
     if ($max !== null) {
-      if (strelan($x) > $max) {
+      if (strlen($x) > $max) {
         $fehler = true;
       }
     }
@@ -141,10 +140,7 @@ class Check {
    * @return bool
    */
   public static function istMail($mail) : bool {
-    if (preg_match('/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]{2,}$/', $mail) != 1) {
-  		return false;
-  	}
-  	return true;
+    return preg_match('/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]{2,}$/', $mail) === 1;
   }
 
   /**
