@@ -159,6 +159,18 @@ class Check {
   	return true;
   }
 
+  /**
+   * Gibt zurück, ob der übergebene Wert eine ID-Liste ist
+   * @param  string $wert :)
+   * @return bool
+   */
+  public static function istIDListe($wert) : bool {
+    if (preg_match('/^[0-9]*(,[0-9]+)*$/', $wert) != 1) {
+  		return false;
+  	}
+  	return true;
+  }
+
   public static function fuehrendeNull($x) {
     $check = new Check();
   	if ($check->istZahl($x)) {

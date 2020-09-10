@@ -141,6 +141,35 @@ class IconKnopf extends Knopf {
   }
 }
 
+class IconKnopfPerson extends IconKnopf {
+  /**
+   * Erzeugt einen Knopf basierend auf dem Inhalt und der Personenart
+   * @param string $inhalt      idR der Name der Person
+   * @param string $personenart slevxs
+   */
+  public function __construct($inhalt, $personenart) {
+    if ($personenart === "s") {
+      $icon = Konstanten::SCHUELER;
+      $knopfart = "Standard";
+    } else if ($personenart === "l") {
+      $icon = Konstanten::LEHRER;
+      $knopfart = "Information";
+    } else if ($personenart === "e") {
+      $icon = Konstanten::ERZIEHER;
+      $knopfart = "Warnung";
+    } else if ($personenart === "v") {
+      $icon = Konstanten::VERWALTUNG;
+      $knopfart = "Erfolg";
+    } else if ($personenart === "x") {
+      $icon = Konstanten::EXTERN;
+      $knopfart = "Extern";
+    } else {
+      throw new \Exception("Die Personenart ist ungültig.");
+    }
+    parent::__construct(new Icon($icon), $inhalt, $knopfart);
+  }
+}
+
 class GrossIconKnopf extends IconKnopf {
   /**
   * @param Icon   $icon :)
