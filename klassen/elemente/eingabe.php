@@ -1030,6 +1030,15 @@ class Auswahl extends Eingabe {
   }
 
   /**
+   * Gibt die Optionen der Auswahl zurück
+   *
+   * @return Option[]
+   */
+  public function getOptionen() : array {
+    return $this->optionen;
+  }
+
+  /**
    * Fügt der Select-Box eine Option hinzu
    * @param string $text      Text der Option
    * @param string $wert      Wert der Option

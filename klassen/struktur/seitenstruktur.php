@@ -125,7 +125,7 @@ class Zeile extends Element implements \ArrayAccess {
 
   /**
    * Erzeugt eine neue Zeile
-   * @param [type] $spalten [description]
+   * @param Spalte ...$spalten
    */
   public function __construct(...$spalten) {
     parent::__construct();
@@ -141,6 +141,15 @@ class Zeile extends Element implements \ArrayAccess {
   public function addSpalte(...$spalten) : self {
     $this->spalten = array_merge($this->spalten, $spalten);
     return $this;
+  }
+
+  /**
+   * Gibt die Spalten zurück
+   *
+   * @return Spalte[]
+   */
+  public function getSpalten() : array {
+    return $this->spalten;
   }
 
   public function __toString() : string {
