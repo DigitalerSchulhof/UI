@@ -11,6 +11,12 @@ class SeitenUeberschrift extends InhaltElement {
 class Ueberschrift extends InhaltElement {
   protected $tag = "h2";
 
+  /**
+   * Erzeugt eine neue Überschrift
+   *
+   * @param int $groesse :)
+   * @param string $inhalt :)
+   */
   public function __construct($groesse, $inhalt) {
     if (!Check::istZahl($groesse, 1, 6)) {
       throw new \Exception("Falscher Zahlbereich für Überschriften");

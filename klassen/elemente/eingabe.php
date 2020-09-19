@@ -335,7 +335,7 @@ class Schieber extends Eingabe {
   }
 
   public function __toString() : string {
-    if($this->wert === 1) {
+    if($this->wert === 1 || $this->wert === true) {
       $wert = "1";
     } else {
       $wert = "0";
@@ -848,7 +848,7 @@ class Option extends Eingabe {
 
   /** @var string $text Beschreibung der Option */
   protected $text;
-  /** @var string $gesetzt :) */
+  /** @var boolean $gesetzt :) */
   protected $gesetzt;
 
   /**
@@ -861,6 +861,24 @@ class Option extends Eingabe {
     $this->text = $text;
     $this->wert = $wert;
     $this->removeKlasse("dshUiEingabefeld");
+  }
+
+  /**
+   * Gibt den Text zurück
+   *
+   * @return string
+   */
+  public function getText() : string {
+    return $this->text;
+  }
+
+  /**
+   * Gibt zurück, on die Option gesetzt ist
+   *
+   * @return boolean
+   */
+  public function getGesetzt() : bool {
+    return $this->gesetzt;
   }
 
   /**
@@ -1012,7 +1030,7 @@ class Togglegruppe extends Eingabe {
   }
 }
 
-class Auswahl extends Eingabe {
+class Auswahl extends Eingabe implements \ArrayAccess {
   protected $tag = "select";
   /** @var Option[] Optionen der Selectbox */
   private $optionen;
@@ -1070,6 +1088,31 @@ class Auswahl extends Eingabe {
     }
     $code .= $this->codeZu();
     return $code;
+  }
+
+  /*
+   * ArrayAccess Methoden
+   */
+  public function offsetSet($o, $v) {
+    if (!($v instanceof Option)) {
+      throw new \TypeError("Die übergebene Zeile ist nicht vom Typ \\UI\\Option");
+    }
+    if (!is_null($o)) {
+      throw new \Exception("Nicht implementiert!");
+    }
+    $this->add($v->getText(), $v->getWert(), $v->getGesetzt());
+  }
+
+  public function offsetExists($o) {
+    throw new \Exception("Nicht implementiert!");
+  }
+
+  public function offsetUnset($o) {
+    throw new \Exception("Nicht implementiert!");
+  }
+
+  public function offsetGet($o) {
+    throw new \Exception("Nicht implementiert!");
   }
 }
 ?>

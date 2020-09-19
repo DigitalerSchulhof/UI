@@ -5,7 +5,7 @@ namespace UI;
  * Das Element ist die Grundklasse jeder UI-Komponente. Es enthält für jedes Element notwendige Attribute wie ID, Klassen, Tag, ... und wesentliche Funktionen um diese zu manipulieren, und das Element schließlich auszugeben.
  */
 abstract class Element {
-	/** @var string Tag des Elements */
+	/** @var string|null Tag des Elements */
 	protected $tag = null;
 	/** @var string[] CSS-Klassen des Elements */
 	protected $klassen = [];
@@ -13,11 +13,11 @@ abstract class Element {
 	protected $id = null;
 	/** @var Aktionen Aktionen des Elements */
 	protected $aktionen = null;
-  /** @var String Attribute des Elements
+  /** @var array Attribute des Elements
    * [Attribut] => Wert
    */
   protected $attribute;
-  /** @var String Extra Styles des Elements
+  /** @var array Extra Styles des Elements
    * [Property] => Wert
    */
   protected $styles;
@@ -74,7 +74,7 @@ abstract class Element {
 	 * @param 	string $klasse Die zu prüfende Klasse
 	 * @return 	boolean Ob die Klasse vorhanden ist
 	 */
-	public function hatKlasse($klasse) : boolean {
+	public function hatKlasse($klasse) : bool {
 		return in_array($klasse, $this->klassen);
 	}
 
@@ -161,7 +161,7 @@ abstract class Element {
 
 	/**
 	 * Setzt den Tag
-	 * @param 	string $tag :)
+	 * @param 	string|null $tag :)
 	 * @return 	self
 	 */
 	public function setTag($tag) : self {
@@ -225,7 +225,7 @@ abstract class Element {
   }
 
   public function toStringVorbereitung() : self {
-
+    return $this;
   }
 
   /**
@@ -235,6 +235,10 @@ abstract class Element {
 	 * @return 	string Der Code des öffnenden Tags
 	 */
 	public function codeAuf($klammer = true, ...$nicht) : string {
+    if($this->tag === null) {
+      return "";
+    }
+
     $rueck = "";
     if($klammer) {
       $rueck = "<";
