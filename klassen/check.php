@@ -81,7 +81,7 @@ class Check {
   }
 
   public static function istText($x, $min = 1, $max = null) {
-    if (preg_match("/^[-_ \.\/\@äöüÄÖÜßáéíóúàèìòùÁÉÍÓÚÀÈÌÒÙæÆâêîôûÂÊÎÔÛøØÅÇËÃÏÕãåçëïõÿñ0-9a-zA-Z]*$/", $x) !== 1) {
+    if (preg_match("/^[-_ \.\/\@äöüÄÖÜßáéíóúàèìòùÁÉÍÓÚÀÈÌÒÙæÆâêîôûÂÊÎÔÛøØÅÇËÃÏÕãåçëïõÿñ0-9a-zA-Z,]*$/", $x) !== 1) {
       return false;
     }
     $fehler = false;

@@ -94,6 +94,21 @@ abstract class Eingabe extends Element {
     $this->setAttribut("disabled", $disabled);
     return $this;
   }
+
+  /**
+   * Setzt, ob die Eingabe readonly ist
+   * @param   bool $readonly :)
+   * @return  self
+   */
+  public function setReadonly($readonly): self {
+    if ($readonly) {
+      $readonly = "readonly";
+    } else {
+      $readonly = "";
+    }
+    $this->setAttribut("readonly", $readonly);
+    return $this;
+  }
 }
 
 /**
