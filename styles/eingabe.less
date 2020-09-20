@@ -62,18 +62,28 @@
   display: inline-block;
   width: 40px;
   border: 1px solid;
-  border-radius: calc(@radius5 + 2px);
+  border-radius: @radius3;
   line-height: 0;
-  transition: 250ms ease-in-out;
+  height: 22px;
+  padding: 1px;
+  transition: background-color 250ms ease-in-out;
+  overflow: hidden;
+  outline: none;
+  text-align: left;
+}
+
+.dshUiSchieberAussen:focus {
+    box-shadow: 2px 2px 4px 1px rgba(33, 33, 33, 0.1);
+
 }
 
 .dshUiSchieber {
-  display: inline-block;
-  height: 20px;
-  width: 20px;
-  border-radius: @radius5;
-  transition: 250ms linear;
   cursor: pointer;
+  border-radius: @radius3;
+  display: inline-block;
+  height: 18px;
+  width: 18px;
+  transition: 250ms ease-out;
 }
 
 .dshUiSchieber0 .dshUiSchieber {

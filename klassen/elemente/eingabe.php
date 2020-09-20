@@ -326,7 +326,8 @@ class Datumfeld extends Eingabe {
 }
 
 class Schieber extends Eingabe {
-  protected $tag = "span";
+  protected $tag = "button";
+  protected $typ = "button";
 
   public function __construct($id) {
     parent::__construct($id);
