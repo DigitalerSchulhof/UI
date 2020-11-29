@@ -49,6 +49,7 @@ namespace UI\Tabelle {
      */
     public function setID($id) : self {
       $this->id = $id;
+      return $this;
     }
 
     /**
@@ -652,4 +653,3 @@ namespace UI {
     }
   }
 }
-?>
