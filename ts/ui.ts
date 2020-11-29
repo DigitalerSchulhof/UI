@@ -349,7 +349,7 @@ const ui = {
       fokusVor: null as eQuery,
       autoschliessen: null as number,
 
-      setFokusVor: (fokusVor: eQuery) => {
+      setFokusVor: (fokusVor: eQuery): void => {
         ui.elemente.laden.fokusVor = fokusVor;
       },
 
@@ -608,8 +608,8 @@ const ui = {
       },
 
       tageswahl: {
-        generieren: (id: string, tag: number, monat: number, jahr: number) => ajax("UI", 0, false, { id: id, tag: tag, monat: monat, jahr: jahr }),
-        aktion: (id: string, tag: number, monat: number, jahr: number) => {
+        generieren: (id: string, tag: number, monat: number, jahr: number): AjaxAntwort<AnfrageAntworten["UI"][0]> => ajax("UI", 0, false, { id: id, tag: tag, monat: monat, jahr: jahr }),
+        aktion: (id: string, tag: number, monat: number, jahr: number): void => {
           const datum = new Date(jahr, monat - 1, tag);
           $("#" + id + "T").setWert(ui.generieren.fuehrendeNull(datum.getDate()));
           $("#" + id + "M").setWert(ui.generieren.fuehrendeNull(datum.getMonth() + 1));
