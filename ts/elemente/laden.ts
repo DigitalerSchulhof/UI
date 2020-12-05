@@ -1,4 +1,4 @@
-import ajax, { AjaxAntwort, AnfrageErfolg, ANTWORTEN } from "ts/ajax";
+import ajax, { AjaxAntwort, ANTWORTEN } from "ts/ajax";
 import $, { eQuery } from "ts/eQuery";
 import { laden } from "../generieren";
 

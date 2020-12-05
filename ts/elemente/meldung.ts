@@ -1,6 +1,6 @@
 import $ from "ts/eQuery";
 
-const aktion = (ev: MouseEvent): void => {
+export const brclick = (ev: MouseEvent): void => {
   const t = $(ev.target);
   if (!t.ist(".dshUiMeldung")) {
     return;
@@ -48,5 +48,3 @@ const aktion = (ev: MouseEvent): void => {
   }
   t.finde(".dshUiFehlermeldung").toggleCss("opacity", "1");
 };
-
-export default aktion;

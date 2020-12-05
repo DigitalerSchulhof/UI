@@ -16,12 +16,15 @@ export const sortieren = (id: string, richtung?: "ASC" | "DESC", spalte?: string
       return;
     }
     const s = i.kinder("table").getAttr("data-sortierfunktion").split(".");
-
+    const fnc = [...s];
     // String zu Funktion
     let sortierfunktion = window;
-    while (s.length > 0) {
+    while (fnc.length > 0) {
       // @ts-ignore
-      sortierfunktion = sortierfunktion[s.shift()];
+      sortierfunktion = sortierfunktion[fnc.shift()];
+      if(sortierfunktion === undefined) {
+        console.error("Sortierfunktion »" + s.join(".") + "« nicht gefunden");
+      }
     }
     // @ts-ignore
     sortierfunktion({ sortSeite: sortSeite, sortDatenproseite: sortDatenproseite, sortRichtung: sortRichtung, sortSpalte: sortSpalte }, id).then((r) => {
