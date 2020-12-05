@@ -111,7 +111,7 @@ const tageswahl = {
   }
 };
 
-document.addEventListener("click", (e: MouseEvent) => {
+export const click = (e: MouseEvent): void => {
   if (offen) {
     let el = $(e.target);
     do {
@@ -124,4 +124,4 @@ document.addEventListener("click", (e: MouseEvent) => {
       }
     } while ((el = el.parent()));
   }
-});
+};

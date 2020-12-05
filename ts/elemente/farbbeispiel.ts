@@ -1,4 +1,5 @@
 import $ from "ts/eQuery";
+
 import { rgba2hex } from "../generieren";
 
 export const aktion = (t: HTMLElement): void => {
@@ -8,7 +9,7 @@ export const aktion = (t: HTMLElement): void => {
   }
 };
 
-window.addEventListener("resize", () => {
+export const resize = (): void => {
   if (document.body.clientWidth < 203) {
     $(".dshUiFarbbeispiele").each(function () {
       const s = this.finde(".dshUiFarbbeispieleSchattierung");
@@ -24,4 +25,4 @@ window.addEventListener("resize", () => {
   } else {
     $(".dshUiFarbbeispieleSchattierung.jsmod").setCss("flex-basis", "").removeKlasse("jsmod");
   }
-});
+};

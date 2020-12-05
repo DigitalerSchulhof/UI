@@ -94,7 +94,7 @@ export const meldung = (modul: string, id: number, laden?: string, parameter?: {
 
 export const komponente = (komponenteninfo: { [key: string]: any; }): AjaxAntwort<ANTWORTEN["UI"][2]> => ajax("UI", 2, false, komponenteninfo);
 
-document.addEventListener("keydown", (e) => {
+export const keydown = (e: KeyboardEvent): void => {
   if (istAn && [37, 39].includes(e.keyCode)) {
     const ae = $(document.activeElement);
     if (ae.ist("#dshLaden #dshLadenFensterAktionen>.dshUiKnopf")) {
@@ -111,4 +111,4 @@ document.addEventListener("keydown", (e) => {
       }
     }
   }
-});
+};

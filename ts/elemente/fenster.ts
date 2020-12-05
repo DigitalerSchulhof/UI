@@ -64,16 +64,16 @@ export const ladesymbol = (an: boolean): void => {
   }
 };
 
-document.addEventListener("keydown", (e) => {
+export const keydown = (e: KeyboardEvent): void => {
   if ([27].includes(e.keyCode)) {
     const ae = $(document.activeElement);
     if (ae.ist(".dshUiFenster")) {
       schliessen(ae.getID());
     }
   }
-});
+};
 
-document.addEventListener("mousedown", (e) => {
+export const mousedown = (e: MouseEvent): void => {
   if ($(e.target).parent(".dshUiFenster").existiert()) {
     $(e.target).parent(".dshUiFenster").setCss("z-index", (++maxz).toString());
     if (e.which === 1 && ($(e.target).ist(".dshUiFenster:not(#dshLaden) .dshUiFensterTitelzeile") || $(e.target).parent(".dshUiFenster:not(#dshLaden) .dshUiFensterTitelzeile").existiert())) {
@@ -84,19 +84,19 @@ document.addEventListener("mousedown", (e) => {
       schiebend.mx = parseInt(f.getCss("left"));
     }
   }
-});
+};
 
-document.addEventListener("mousemove", (e) => {
+export const mousemove = (e: MouseEvent): void => {
   if (schiebend !== null) {
     schiebend.mx += e.movementX;
     schiebend.my += e.movementY;
     schiebend.setCss({ top: schiebend.my + "px", left: schiebend.mx + "px" });
   }
-});
+};
 
-document.addEventListener("mouseup", () => {
+export const mouseup = (): void => {
   if (schiebend !== null) {
     schiebend.removeKlasse("dshUiFensterSchiebend");
     schiebend = null;
   }
-});
+};
