@@ -1,6 +1,13 @@
 import $ from "ts/eQuery";
 import { scriptAn } from "ts/laden";
 
+export interface SortierParameter {
+  sortSeite: number;
+  sortDatenproseite: number;
+  sortRichtung: "ASC" | "DESC";
+  sortSpalte: string;
+}
+
 export const sortieren = (id: string, richtung?: "ASC" | "DESC", spalte?: string): void => {
   const tabelle = $("#" + id);
   if (tabelle.existiert()) {
