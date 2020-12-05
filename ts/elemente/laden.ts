@@ -1,4 +1,5 @@
 import ajax, { AjaxAntwort, ANTWORTEN } from "ts/ajax";
+import { AnfrageDaten } from "ts/AnfrageDaten";
 import $, { eQuery } from "ts/eQuery";
 import { laden } from "../generieren";
 
@@ -92,7 +93,7 @@ export const meldung = (modul: string, id: number, laden?: string, parameter?: {
   ajax("UI", 1, { titel: laden, beschreibung: "Die Meldung wird geladen" }, { meldemodul: modul, meldeid: id, meldeparameter: parameter }).then((r) => aendern(null, r.Meldung, r.Knoepfe));
 };
 
-export const komponente = (komponenteninfo: { [key: string]: any; }): AjaxAntwort<ANTWORTEN["UI"][2]> => ajax("UI", 2, false, komponenteninfo);
+export const komponente = (komponenteninfo: AnfrageDaten["UI"][2]): AjaxAntwort<ANTWORTEN["UI"][2]> => ajax("UI", 2, false, komponenteninfo);
 
 export const keydown = (e: KeyboardEvent): void => {
   if (istAn && [37, 39].includes(e.keyCode)) {
