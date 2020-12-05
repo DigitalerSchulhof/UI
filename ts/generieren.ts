@@ -5,36 +5,36 @@ type monatnameKurz = "JAN" | "FEB" | "MÄR" | "APR" | "MAI" | "JUN" | "JUL" | "A
 export const monatname = {
   lang: (monat: number): monatnameLang | undefined => {
     switch (monat) {
-    case 1: return "Januar";
-    case 2: return "Februar";
-    case 3: return "März";
-    case 4: return "April";
-    case 5: return "Mai";
-    case 6: return "Juni";
-    case 7: return "Juli";
-    case 8: return "August";
-    case 9: return "September";
-    case 10: return "Oktober";
-    case 11: return "November";
-    case 12: return "Dezember";
-    default: return undefined;
+      case 1: return "Januar";
+      case 2: return "Februar";
+      case 3: return "März";
+      case 4: return "April";
+      case 5: return "Mai";
+      case 6: return "Juni";
+      case 7: return "Juli";
+      case 8: return "August";
+      case 9: return "September";
+      case 10: return "Oktober";
+      case 11: return "November";
+      case 12: return "Dezember";
+      default: return undefined;
     }
   },
   kurz: (monat: number): monatnameKurz | undefined => {
     switch (monat) {
-    case 1: return "JAN";
-    case 2: return "FEB";
-    case 3: return "MÄR";
-    case 4: return "APR";
-    case 5: return "MAI";
-    case 6: return "JUN";
-    case 7: return "JUL";
-    case 8: return "AUG";
-    case 9: return "SEP";
-    case 10: return "OKT";
-    case 11: return "NOV";
-    case 12: return "DEZ";
-    default: return undefined;
+      case 1: return "JAN";
+      case 2: return "FEB";
+      case 3: return "MÄR";
+      case 4: return "APR";
+      case 5: return "MAI";
+      case 6: return "JUN";
+      case 7: return "JUL";
+      case 8: return "AUG";
+      case 9: return "SEP";
+      case 10: return "OKT";
+      case 11: return "NOV";
+      case 12: return "DEZ";
+      default: return undefined;
     }
   }
 };
@@ -44,28 +44,28 @@ type tagnameKurz = "MO" | "DI" | "MI" | "DO" | "FR" | "SA" | "SO";
 export const tagname = {
   lang: (tag: number): tagnameLang | undefined => {
     switch (tag) {
-    case 0: return "Sonntag";
-    case 1: return "Montag";
-    case 2: return "Dienstag";
-    case 3: return "Mittwoch";
-    case 4: return "Donnerstag";
-    case 5: return "Freitag";
-    case 6: return "Samstag";
-    case 7: return "Sonntag";
-    default: return undefined;
+      case 0: return "Sonntag";
+      case 1: return "Montag";
+      case 2: return "Dienstag";
+      case 3: return "Mittwoch";
+      case 4: return "Donnerstag";
+      case 5: return "Freitag";
+      case 6: return "Samstag";
+      case 7: return "Sonntag";
+      default: return undefined;
     }
   },
   kurz: (tag: number): tagnameKurz | undefined => {
     switch (tag) {
-    case 0: return "SO";
-    case 1: return "MO";
-    case 2: return "DI";
-    case 3: return "MI";
-    case 4: return "DO";
-    case 5: return "FR";
-    case 6: return "SA";
-    case 7: return "SO";
-    default: return undefined;
+      case 0: return "SO";
+      case 1: return "MO";
+      case 2: return "DI";
+      case 3: return "MI";
+      case 4: return "DO";
+      case 5: return "FR";
+      case 6: return "SA";
+      case 7: return "SO";
+      default: return undefined;
     }
   }
 };

@@ -1,4 +1,4 @@
-import ajax, { AnfrageErfolg } from "ts/ajax";
+import ajax, { AjaxAntwort, AnfrageErfolg, ANTWORTEN } from "ts/ajax";
 import $, { eQuery } from "ts/eQuery";
 import { laden } from "../generieren";
 
@@ -89,13 +89,10 @@ export const aus = (): void => {
 
 export const meldung = (modul: string, id: number, laden?: string, parameter?: { [key: string]: any }): void => {
   parameter = parameter || {};
-  ajax<{
-    Meldung: string;
-    Knoepfe: string;
-  }>("UI", 1, { titel: laden, beschreibung: "Die Meldung wird geladen" }, { meldemodul: modul, meldeid: id, meldeparameter: parameter }).then((r) => aendern(null, r.Meldung, r.Knoepfe));
+  ajax("UI", 1, { titel: laden, beschreibung: "Die Meldung wird geladen" }, { meldemodul: modul, meldeid: id, meldeparameter: parameter }).then((r) => aendern(null, r.Meldung, r.Knoepfe));
 };
 
-export const komponente = (komponenteninfo: { [key: string]: any; }): Promise<AnfrageErfolg & { Code: string }> => ajax<{ Code: string }>("UI", 2, false, komponenteninfo);
+export const komponente = (komponenteninfo: { [key: string]: any; }): AjaxAntwort<ANTWORTEN["UI"][2]> => ajax("UI", 2, false, komponenteninfo);
 
 document.addEventListener("keydown", (e) => {
   if (istAn && [37, 39].includes(e.keyCode)) {

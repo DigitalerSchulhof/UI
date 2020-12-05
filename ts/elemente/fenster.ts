@@ -1,4 +1,4 @@
-import ajax, { AnfrageErfolg } from "ts/ajax";
+import ajax, { AnfrageErfolg, AntwortCode, ANTWORTEN } from "ts/ajax";
 import $, { eQuery } from "ts/eQuery";
 import { scriptAn } from "ts/laden";
 import * as uiLaden from "./laden";
@@ -48,10 +48,10 @@ export const anzeigen = (code: string, ueberschreiben: boolean): void => {
   }
 };
 
-export const laden = (modul: string, ziel: number, daten: { [key: string]: any; }, meldung: number | { modul: string; meldung: number; }, host: string | string[], ueberschreiben: boolean): Promise<void | AnfrageErfolg & { Code: string }> => {
+export const laden = <M extends keyof ANTWORTEN, Z extends keyof ANTWORTEN[M], A extends ANTWORTEN[M][Z] & AntwortCode>(modul: M, ziel: Z, daten: { [key: string]: any; }, meldung?: number | { modul: string; meldung: number; }, host?: string | string[], ueberschreiben?: boolean): Promise<void | AnfrageErfolg & A> => {
   ladend++;
   ladesymbol(true);
-  return ajax<{ Code: string }>(modul, ziel, null, daten, meldung, host).then((r) => {
+  return ajax<M, Z, A>(modul, ziel, null, daten, meldung, host).then((r) => {
     anzeigen(r.Code, ueberschreiben);
   });
 };

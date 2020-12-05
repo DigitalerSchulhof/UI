@@ -1,4 +1,4 @@
-import ajax from "ts/ajax";
+import ajax, { AjaxAntwort, ANTWORTEN } from "ts/ajax";
 import $ from "ts/eQuery";
 import { natZahl } from "../check";
 import { fuehrendeNull } from "../generieren";
@@ -101,8 +101,8 @@ export const checkUhrzeit = (id: string, sekunden: boolean): void => {
 };
 
 const tageswahl = {
-  generieren: (id: string, tag: number, monat: number, jahr: number) => ajax<{ Code: string }>("UI", 0, false, { id: id, tag: tag, monat: monat, jahr: jahr }),
-  aktion: (id: string, tag: number, monat: number, jahr: number) => {
+  generieren: (id: string, tag: number, monat: number, jahr: number): AjaxAntwort<ANTWORTEN["UI"][0]> => ajax("UI", 0, false, { id: id, tag: tag, monat: monat, jahr: jahr }),
+  aktion: (id: string, tag: number, monat: number, jahr: number): void => {
     const datum = new Date(jahr, monat - 1, tag);
     $("#" + id + "T").setWert(fuehrendeNull(datum.getDate()));
     $("#" + id + "M").setWert(fuehrendeNull(datum.getMonth() + 1));
