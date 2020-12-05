@@ -43,7 +43,7 @@ class Reiterkopf extends InhaltElement {
 
   /**
    * Setzt die Nr für den Reiterkopf neu
-   * @param int $nr :)
+   * @param int $nr
    */
   public function setNr($nr) {
     $this->nr = $nr;
@@ -51,7 +51,7 @@ class Reiterkopf extends InhaltElement {
 
   /**
    * Setzt ob der Reiterkopf aktiv werden kann
-   * @param  bool $kannAktiv :)
+   * @param  bool $kannAktiv
    * @return self
    */
   public function setKannAktiv($kannAktiv) : self {
@@ -61,7 +61,7 @@ class Reiterkopf extends InhaltElement {
 
   /**
    * Setzt das zugehörige Reitersegment
-   * @param  Reitersegment $reitersegment :)
+   * @param  Reitersegment $reitersegment
    * @return self                         :)
    */
   public function setReitersegment($reitersegment) : self {
@@ -114,7 +114,7 @@ class Reitersegment {
 
   /**
    * Reiterkopf hinzufügen
-   * @param  Reiterkopf $kopf :)
+   * @param  Reiterkopf $kopf
    * @return self             :)
    */
   public function setKopf($kopf) : self {
@@ -124,7 +124,7 @@ class Reitersegment {
 
   /**
    * Reiterkörper hinzufügen
-   * @param  Reiterkoerper $koerper :)
+   * @param  Reiterkoerper $koerper
    * @return self                   :)
    */
   public function setKoerper($koerper) : self {
@@ -134,7 +134,7 @@ class Reitersegment {
 
   /**
    * Setzt die Nr für das gesamte Reitersegment neu
-   * @param int $nr :)
+   * @param int $nr
    */
   public function setNr($nr) {
     $this->nr = $nr;
@@ -143,7 +143,7 @@ class Reitersegment {
 
   /**
    * Setzt den zugehörigen Reiter
-   * @param  Reiter $reiter :)
+   * @param  Reiter $reiter
    * @return self                         :)
    */
   public function setReiter($reiter) : self {
@@ -207,7 +207,7 @@ class Reiter extends Element implements \ArrayAccess {
 
   /**
    * Neues Reitersegment anlegen und eingliedern
-   * @param  Reitersegment $reitersegment :)
+   * @param  Reitersegment $reitersegment
    * @return self
    */
   public function addReitersegment(...$seg) : self {

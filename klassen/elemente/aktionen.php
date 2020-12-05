@@ -46,7 +46,7 @@ class Aktionen {
 
   /**
    * Gibt das Array [Priorität][Funktionen] zurück
-   * @param  string $ausloeser :)
+   * @param  string $ausloeser
    * @return string [Priorität][Funktionen]
    */
   public function getFunktionen($ausloeser) {
@@ -55,7 +55,7 @@ class Aktionen {
 
   /**
    * Prüft ob der Auslöser vorhanden ist
-   * @param  string  $ausloeser :)
+   * @param  string  $ausloeser
    * @return boolean            :)
    */
   public function hatAusloeser($ausloeser) : bool {

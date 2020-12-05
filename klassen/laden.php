@@ -18,7 +18,7 @@ class Ladesymbol extends UI\Element {
 
 class Balken extends UI\Element {
   protected $tag = "div";
-  /** @var Art des Balkens */
+  /** @var string Art des Balkens */
   protected $art;
   /** @var float Belegte Menge des Balkens */
   protected $belegt;
@@ -34,9 +34,9 @@ class Balken extends UI\Element {
   /**
    * Erstellt einen neuen Balken
    * @param string  $art   Schritte, Zeit, Prozent, Speicher
-   * @param float   $belegt :)
-   * @param float   $ganz   :)
-   * @param bool    $infotext :)
+   * @param float   $belegt
+   * @param float   $ganz
+   * @param bool    $infotext
    * @param float   $limit  Nur für Zeit notwendig - gibt die maximale Zeitspanne an
    */
   public function __construct($art, $belegt, $ganz, $infotext = true, $limit = null) {
@@ -78,7 +78,7 @@ class Balken extends UI\Element {
         } else {
           $einheitneg = "Schritte";
         }
-        if ($this->gesamt == 1) {
+        if ($this->ganz == 1) {
           $einheitgesamt = "Schritt";
         } else {
           $einheitgesamt = "Schritten";
@@ -91,7 +91,7 @@ class Balken extends UI\Element {
           $code .= "(<span id=\"{$this->id}UebrigPro\">{$uebrigprozent["anzeige"]}</span>).";
         $code .= "</p>";
       } else if ($this->art == "Zeit") {
-        $uebrigprozent = UI\Check::prozent($uebrig, $this->limit);
+        // $uebrigprozent = UI\Check::prozent($uebrig, $this->limit);
         $uebrig = UI\Check::zeit($uebrig);
         if($this->infotext) {
           $code .= "<p class=\"dshUiNotiz\" id=\"{$this->id}Infotext\">";

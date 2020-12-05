@@ -17,8 +17,8 @@ class Knopf extends InhaltElement {
   protected $submit;
 
 	/**
-	* @param string $inhalt :)
-	* @param string $art :)
+	* @param string $inhalt
+	* @param string $art
 	* @param string $aktion Standardaktion des Knopfes
 	*  Alias für $knopf->addFunktion("onclick", $aktion);
 	*/
@@ -39,7 +39,7 @@ class Knopf extends InhaltElement {
 
   /**
    * Setzt, ob der Knopf ein Submit-Knopf ist
-   * @param  bool $submit :)
+   * @param  bool $submit
    * @return self
    */
   public function setSubmit($submit) : self {
@@ -122,9 +122,9 @@ class IconKnopf extends Knopf {
   protected $icon;
 
   /**
-  * @param Icon   $icon :)
-  * @param string $inhalt :)
-  * @param string $art :)
+  * @param Icon   $icon
+  * @param string $inhalt
+  * @param string $art
   */
   public function __construct($icon, $inhalt, $art = null) {
     parent::__construct($inhalt, $art);
@@ -172,10 +172,10 @@ class IconKnopfPerson extends IconKnopf {
 
 class GrossIconKnopf extends IconKnopf {
   /**
-  * @param Icon   $icon :)
-  * @param string $inhalt :)
-  * @param string $art :)
-  * @param string $typ :)
+  * @param Icon   $icon
+  * @param string $inhalt
+  * @param string $art
+  * @param string $typ
   */
   public function __construct($icon, $inhalt, $art = null) {
     parent::__construct($icon, $inhalt, $art);
@@ -190,10 +190,10 @@ class GrossIconKnopf extends IconKnopf {
 
 class MiniIconKnopf extends IconKnopf {
   /**
-  * @param Icon   $icon :)
-  * @param string $inhalt :)
-  * @param string $art :)
-  * @param string $typ :)
+  * @param Icon   $icon
+  * @param string $inhalt
+  * @param string $art
+  * @param string $typ
   * @param string $position Position des Hinweises - ["OR", "OL", "UR", "UL"]
   */
   public function __construct($icon, $inhalt, $art = null, $position = "OL") {

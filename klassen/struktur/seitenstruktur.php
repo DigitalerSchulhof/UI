@@ -30,7 +30,7 @@ class Spalte extends Element implements \ArrayAccess {
 
   /**
    * Füngt ein oder mehrere Element(e) hinzu
-   * @param Element|string ...$elemente :)
+   * @param Element|string ...$elemente
    * @return self
    */
   public function addElement(...$elemente) : self {
@@ -40,7 +40,7 @@ class Spalte extends Element implements \ArrayAccess {
 
   /**
    * Alias für addElement
-   * @param Element|string ...$elemente :)
+   * @param Element|string ...$elemente
    * @return self
    */
   public function add(...$elemente) : self {
@@ -57,7 +57,7 @@ class Spalte extends Element implements \ArrayAccess {
 
   /**
    * Setzt den Spaltentyp
-   * @param string $typ :)
+   * @param string $typ
    * @return self
    */
   public function setTyp($typ) : self {
@@ -135,7 +135,7 @@ class Zeile extends Element implements \ArrayAccess {
 
   /**
    * Füngt eine oder mehrere Spalte(n) hinzu
-   * @param Spalte ...$spalten :)
+   * @param Spalte ...$spalten
    * @return self
    */
   public function addSpalte(...$spalten) : self {
@@ -171,7 +171,7 @@ class Zeile extends Element implements \ArrayAccess {
 
   /**
    * Gibt eine Zeile mit einer Spalte, zu welcher die übergebenen Elemente hinzugefügt werden, zurück.
-   * @param  Element|string $element :)
+   * @param  Element|string $element
    * @return Zeile
    */
   public static function standard(...$element) : Zeile {

@@ -4,7 +4,7 @@ namespace UI;
 class Check {
   /**
    * Gibt zurück, ob ein Datum gültig ist
-   * @param  string $datum :)
+   * @param  string $datum
    * @return bool
    */
   public static function istDatum($datum) : bool {
@@ -13,7 +13,7 @@ class Check {
 
   /**
    * Gibt mktime eines Datums zurück
-   * @param  string $datum :)
+   * @param  string $datum
    * @return int|false
    */
   public static function macheDatum($datum) {
@@ -65,7 +65,10 @@ class Check {
   	return !$fehler;
   }
 
-  public static function istRgbaFarbe($x) {
+  /**
+   * @param string $x
+   */
+  public static function istRgbaFarbe($x) : bool {
     $null255 = "(1?[0-9]{1,2}|2([0-4]{0,1}[0-9]{1}|5[0-5]{1}))";
     if (preg_match("/^rgba\($null255, ?$null255, ?$null255, ?(0?\.[0-9]+|1)\)$/", $x) !== 1) {
       return false;
@@ -73,14 +76,20 @@ class Check {
     return true;
   }
 
-  public static function istHexFarbe($x) {
+  /**
+   * @param string $x
+   */
+  public static function istHexFarbe($x) : bool {
     if (preg_match("/^#[0-9ABCDEFabcdef]{6}$/", $x) !== 1) {
       return false;
     }
     return true;
   }
 
-  public static function istText($x, $min = 1, $max = null) {
+  /**
+   * @param string $x
+   */
+  public static function istText($x, $min = 1, $max = null) : bool {
     if (preg_match("/^[-_ \.\/\@äöüÄÖÜßáéíóúàèìòùÁÉÍÓÚÀÈÌÒÙæÆâêîôûÂÊÎÔÛøØÅÇËÃÏÕãåçëïõÿñ0-9a-zA-Z,]*$/", $x) !== 1) {
       return false;
     }
@@ -136,7 +145,7 @@ class Check {
 
   /**
    * Gibt zurück, ob eine Mailadresse gültig ist
-   * @param  string $mail :)
+   * @param  string $mail
    * @return bool
    */
   public static function istMail($mail) : bool {
@@ -145,7 +154,7 @@ class Check {
 
   /**
    * Gibt zurück, ob der übergebene Wert 0 oder 1 ist
-   * @param  string $wert :)
+   * @param  string $wert
    * @return bool
    */
   public static function istToggle($wert) : bool {
@@ -157,7 +166,7 @@ class Check {
 
   /**
    * Gibt zurück, ob der übergebene Wert eine ID-Liste ist
-   * @param  string $wert :)
+   * @param  string $wert
    * @return bool
    */
   public static function istIDListe($wert) : bool {
@@ -182,7 +191,8 @@ class Check {
 
   /**
    * Erstellt aus einem Float-Wert einen Prozentstring
-   * @param  float $wert :)
+   * @param int $teil
+   * @param int $ganz
    * @return array ["wert"] enthält den Wert, ["anzeige"] enthält den String, ["style"] enthält den Wert mit %-Zeichen
    */
   public static function prozent($teil, $ganz) : array {
@@ -195,7 +205,7 @@ class Check {
 
   /**
    * Gibt den Speicher in der größtmöglichen Einheit aus
-   * @param  int    $bytes :)
+   * @param  int    $bytes
    * @return string        :)
    */
   public static function speicher ($bytes) : string {
@@ -234,8 +244,8 @@ class Check {
 
   /**
    * Gibt die Zeit in der größtmöglichen Einheit aus
-   * @param  int    $bytes :)
-   * @return string        :)
+   * @param int $sekunden
+   * @return string
    */
   public static function zeit ($sekunden) : string {
     if ($sekunden < 60) {
@@ -260,7 +270,4 @@ class Check {
       }
     }
   }
-
 }
-
-?>
