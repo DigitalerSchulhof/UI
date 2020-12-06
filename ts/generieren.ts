@@ -145,10 +145,12 @@ export const hex2rgba = (hex: string): string | undefined => {
 };
 
 export const laden = {
-  icon: (inhalt?: string): string => {
+  icon: (inhalt: string | null): string => {
     let code = "<div class=\"dshUiLaden\">";
     code += "<div class=\"dshUiLadenIcon\"><div></div><div></div><div></div><div></div></div>";
-    code += "<span class=\"dshUiLadenStatus\">" + inhalt + "...</span>";
+    if (inhalt !== null) {
+      code += "<span class=\"dshUiLadenStatus\">" + inhalt + "...</span>";
+    }
     code += "</div>";
     return code;
   },

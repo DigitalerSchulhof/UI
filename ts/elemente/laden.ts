@@ -11,14 +11,12 @@ export const setFokusVor = (element: eQuery | null): void => {
   fokusVor = element;
 };
 
-export const an = (titel: string, inhalt?: string): void => {
+export const an = (titel: string, inhalt: string | null): void => {
   if (titel !== null) {
     $("#dshLadenFensterTitel").setHTML(titel);
   }
   const code = laden.icon(inhalt);
-  if (inhalt !== null) {
-    $("#dshLadenFensterInhalt").setHTML(code);
-  }
+  $("#dshLadenFensterInhalt").setHTML(code);
   $("#dshLadenFensterAktionen").setHTML("");
   $("#dshBlende").einblenden();
   istAn = true;

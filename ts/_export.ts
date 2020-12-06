@@ -12,6 +12,40 @@ import * as passwort from "./elemente/passwort";
 import * as mail from "./elemente/mail";
 import * as reiter from "./elemente/reiter";
 
+export type PersonenArt = "s" | "l" | "v" | "e" | "x";
+export type PersonenGeschlecht = "w" | "m" | "d";
+export type ToggleWert = "0" | "1";
+export type ProfilArt = "person" | "nutzerkonto";
+
+export type IconArt = string;
+
+export interface Daten {
+  0: {
+    id: string;
+    tag: number;
+    monat: number;
+    jahr: number;
+  },
+  1: {
+    meldemodul: string;
+    meldeid: number;
+    meldeparameter: { [key: string]: any };
+  },
+  2: {
+    komponente: "IconKnopf",
+    inhalt: string,
+    icon: string
+    art?: IconArt,
+    klickaktion?: string;
+  } | {
+    komponente: "IconKnopfPerson"
+    inhalt: string;
+    personart: PersonenArt,
+    id?: string;
+    klickaktion?: string;
+  }
+}
+
 export default {
   laden: laden,
   meldung: meldung,
