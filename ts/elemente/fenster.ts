@@ -3,13 +3,13 @@ import $, { eQuery } from "ts/eQuery";
 import { scriptAn } from "ts/laden";
 import * as uiLaden from "./laden";
 
-let schiebend: eQuery & { my: number, mx: number } = null;
+let schiebend: eQuery & { my: number, mx: number } | null = null;
 let maxz = 100000;
 let ladend = 0;
 
 export const schliessen = (id: string): void => {
   const fenster = document.getElementById(id);
-  fenster.parentNode.removeChild(fenster);
+  fenster?.parentNode?.removeChild(fenster);
 };
 
 export const minimieren = (id: string): void => {
@@ -20,7 +20,7 @@ export const minimieren = (id: string): void => {
   }
 };
 
-export const anzeigen = (code: string, ueberschreiben: boolean): void => {
+export const anzeigen = (code: string, ueberschreiben?: boolean): void => {
   const fenster = eQuery.parse(code);
   const fensterid = fenster.getID();
   if (ueberschreiben && $("#" + fensterid).existiert()) {
@@ -31,7 +31,7 @@ export const anzeigen = (code: string, ueberschreiben: boolean): void => {
   }
   if (!$("#" + fensterid).existiert()) {
     let top = 30 + window.pageYOffset, left = 30;
-    while ($(".dshUiFenster").filter(e => e.getCss("top") == top + "px" && e.getCss("left") == left + "px").existiert()) {
+    while ($(".dshUiFenster").filter(e => e.getCss("top") === top + "px" && e.getCss("left") === left + "px").existiert()) {
       top += 10;
       left += 10;
     }
@@ -52,12 +52,13 @@ export const laden = <M extends keyof AA & keyof AD & string, Z extends keyof AA
   modul: M,
   ziel: Z,
   daten?: D,
-  meldung?: number | { modul: string; meldung: number; },
-  host?: string | string[],
+  meldung?: number | { modul: string; meldung: number; } | false,
+  host?: string,
   ueberschreiben?: boolean
 ): AjaxAntwort<A> => {
   ladend++;
   ladesymbol(true);
+  ueberschreiben = ueberschreiben || false;
   const r = ajax<M, Z, A, D, AA, AD>(modul, ziel, false, daten, meldung, host);
   r.then((r) => {
     anzeigen(r.Code, ueberschreiben);
@@ -77,7 +78,10 @@ export const keydown = (e: KeyboardEvent): void => {
   if ([27].includes(e.keyCode)) {
     const ae = $(document.activeElement);
     if (ae.ist(".dshUiFenster")) {
-      schliessen(ae.getID());
+      const id = ae.getID();
+      if (id !== null) {
+        schliessen(id);
+      }
     }
   }
 };

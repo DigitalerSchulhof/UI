@@ -93,7 +93,7 @@ export const speicherplatz = {
   }
 };
 
-export const fuehrendeNull = (x: string | number): string | undefined => {
+export const fuehrendeNull = (x: string | number): string => {
   if (natZahl(x)) {
     if ((x.toString()).length < 2) {
       return "0" + x;
@@ -101,7 +101,7 @@ export const fuehrendeNull = (x: string | number): string | undefined => {
       return "" + x;
     }
   } else {
-    return undefined;
+    return "";
   }
 };
 
@@ -121,10 +121,10 @@ export const minuten = (x: number): number => Math.floor((x / 1000) / 60);
 export const komma = (x: number): string => (Math.round(x * 100) / 100).toString().replace(".", ",");
 
 
-export const rgba2hex = (rgba: string): string | undefined => {
+export const rgba2hex = (rgba: string): string => {
   const rgb = rgba.replace(/\s/g, "").match(/^rgba?\((\d+),(\d+),(\d+),?([^,\s)]+)?/i);
   if (rgb === null) {
-    return undefined;
+    return "";
   }
   return "#" +
     (parseInt(rgb[1]) | 1 << 8).toString(16).slice(1) +
@@ -135,7 +135,7 @@ export const hex2rgba = (hex: string): string | undefined => {
   let c;
   if (/^#([A-Fa-f0-9]{3}){1,2}$/.test(hex)) {
     c = hex.substring(1).split("");
-    if (c.length == 3) {
+    if (c.length === 3) {
       c = [c[0], c[0], c[1], c[1], c[2], c[2]];
     }
     c = "0x" + c.join("");
@@ -145,7 +145,7 @@ export const hex2rgba = (hex: string): string | undefined => {
 };
 
 export const laden = {
-  icon: (inhalt: string): string => {
+  icon: (inhalt?: string): string => {
     let code = "<div class=\"dshUiLaden\">";
     code += "<div class=\"dshUiLadenIcon\"><div></div><div></div><div></div><div></div></div>";
     code += "<span class=\"dshUiLadenStatus\">" + inhalt + "...</span>";
@@ -153,7 +153,7 @@ export const laden = {
     return code;
   },
   balken: {
-    speicher: (id: string, belegt: number, gesamt: number, art: string): string => {
+    speicher: (id: string, belegt: number | null, gesamt: number | null, art: string | null): string => {
       belegt = belegt || null;
       gesamt = gesamt || null;
       art = art || null;
@@ -162,12 +162,12 @@ export const laden = {
         zusatzklasse = " dshUiLadenBalken" + art;
       }
       let code = "<div id=\"" + id + "\" class=\"dshUiLadenBalkenAussen" + zusatzklasse + "\"><div class=\"dshUiLadenBalkenInnen\"></div></div>";
-      if ((belegt !== null) && (gesamt != null)) {
+      if ((belegt !== null) && (gesamt !== null)) {
         code += "<p class=\"dshUiLadenErklaerung\">" + laden.speicher(belegt, gesamt) + "</p>";
       }
       return code;
     },
-    zeit: (id: string, beginn: number, aktuell: number, ende: number, art: string): string => {
+    zeit: (id: string, beginn: number | null, aktuell: number | null, ende: number | null, art: string | null): string => {
       beginn = beginn || null;
       aktuell = aktuell || null;
       ende = ende || null;
@@ -177,7 +177,7 @@ export const laden = {
         zusatzklasse = " dshUiLadenBalken" + art;
       }
       let code = "<div id=\"" + id + "\" class=\"dshUiLadenBalkenAussen" + zusatzklasse + "\"><div class=\"dshUiLadenBalkenInnen\"></div></div>";
-      if ((beginn !== null) && (aktuell != null) && (ende != null)) {
+      if ((beginn !== null) && (aktuell !== null) && (ende !== null)) {
         code += "<p class=\"dshUiLadenErklaerung\">" + laden.zeit(beginn, aktuell, ende) + "</p>";
       }
       return code;

@@ -4,7 +4,7 @@ import { rgba2hex } from "../generieren";
 
 export const aktion = (t: HTMLElement): void => {
   const fb = t.closest(".dshUiFarbbeispiele");
-  if (t.tagName !== "INPUT") {
+  if (fb !== null && t.tagName !== "INPUT") {
     fb.querySelectorAll<HTMLInputElement>("input[type=color]")[0].value = rgba2hex((t.style as typeof t.style & { "background-color": string })["background-color"]);
   }
 };

@@ -4,14 +4,14 @@ import $, { eQuery } from "ts/eQuery";
 import { laden } from "../generieren";
 
 let istAn = false;
-let fokusVor: eQuery = null;
-let autoschliessen: number = null;
+let fokusVor: eQuery | null= null;
+let autoschliessen: number | null = null;
 
-export const setFokusVor = (element: eQuery): void => {
+export const setFokusVor = (element: eQuery | null): void => {
   fokusVor = element;
 };
 
-export const an = (titel: string, inhalt: string): void => {
+export const an = (titel: string, inhalt?: string): void => {
   if (titel !== null) {
     $("#dshLadenFensterTitel").setHTML(titel);
   }
@@ -37,10 +37,10 @@ export const an = (titel: string, inhalt: string): void => {
   });
 };
 
-export const aendern = (titel: string, inhalt: string, aktionen?: string): void => {
+export const aendern = (titel: string | false, inhalt: string, aktionen?: string): void => {
   inhalt = inhalt || "";
   aktionen = aktionen || "";
-  if (titel !== null) {
+  if (titel !== false) {
     $("#dshLadenFensterTitel").setHTML(titel);
   }
   $("#dshLadenFensterInhalt").setHTML(inhalt);
@@ -88,9 +88,12 @@ export const aus = (): void => {
   });
 };
 
-export const meldung = (modul: string, id: number, laden?: string, parameter?: { [key: string]: any }): void => {
+export const meldung = (modul: string, id: number, laden?: string | false, parameter?: { [key: string]: any }): void => {
   parameter = parameter || {};
-  ajax("UI", 1, { titel: laden, beschreibung: "Die Meldung wird geladen" }, { meldemodul: modul, meldeid: id, meldeparameter: parameter }).then((r) => aendern(null, r.Meldung, r.Knoepfe));
+  if(laden === undefined) {
+    laden = false;
+  }
+  ajax("UI", 1, { titel: laden || "Bitte warten...", beschreibung: "Die Meldung wird geladen" }, { meldemodul: modul, meldeid: id, meldeparameter: parameter }).then((r) => aendern(false, r.Meldung, r.Knoepfe));
 };
 
 export const komponente = (komponenteninfo: AnfrageDaten["UI"][2]): AjaxAntwort<ANTWORTEN["UI"][2]> => ajax("UI", 2, false, komponenteninfo);

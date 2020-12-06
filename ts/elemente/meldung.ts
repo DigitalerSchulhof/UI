@@ -8,7 +8,7 @@ export const brclick = (ev: MouseEvent): void => {
   const ts = getComputedStyle(t[0]);
   if (ev.offsetX < 0) {
     if (t.hatAttr("brleft")) {
-      new Function(t.getAttr("brleft")).apply(t);
+      new Function(t.getAttr("brleft") || "").apply(t);
     } else {
       const i2 = t.finde("i.i2.dshUiIcon");
       const fehlercodes = t.finde(".dshFehlercode");
@@ -26,7 +26,7 @@ export const brclick = (ev: MouseEvent): void => {
   }
   if (ev.offsetX > t[0].clientWidth) {
     if (t.hatAttr("brright")) {
-      new Function(t.getAttr("brright")).apply(t);
+      new Function(t.getAttr("brright") || "").apply(t);
     } else {
       const i1 = t.finde("i.i1.dshUiIcon");
       if ((ts as typeof ts & {"border-left-width": string})["border-left-width"] === "23px") {
