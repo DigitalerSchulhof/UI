@@ -1,4 +1,4 @@
-import ajax, { AjaxAntwort, AnfrageAntwortCore, ANTWORTEN, DATEN } from "ts/ajax";
+import ajax, { AjaxAntwort, AnfrageAntwortCode, ANTWORTEN, DATEN } from "ts/ajax";
 import $, { eQuery } from "ts/eQuery";
 import { scriptAn } from "ts/laden";
 import * as uiLaden from "./laden";
@@ -48,7 +48,7 @@ export const anzeigen = (code: string, ueberschreiben?: boolean): void => {
   }
 };
 
-export const laden = <M extends keyof AA & keyof AD & string, Z extends keyof AA[M] & keyof AD[M], A extends AA[M][Z] & AnfrageAntwortCore, D extends AD[M][Z], AA = ANTWORTEN, AD = DATEN>(
+export const laden = <M extends keyof AA & keyof AD & string, Z extends keyof AA[M] & keyof AD[M], A extends AA[M][Z] & AnfrageAntwortCode, D extends AD[M][Z], AA = ANTWORTEN, AD = DATEN>(
   modul: M,
   ziel: Z,
   daten?: D,

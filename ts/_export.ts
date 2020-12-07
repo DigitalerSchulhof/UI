@@ -11,6 +11,16 @@ import * as farbbeispiel from "./elemente/farbbeispiel";
 import * as passwort from "./elemente/passwort";
 import * as mail from "./elemente/mail";
 import * as reiter from "./elemente/reiter";
+import { AnfrageAntwortCode } from "ts/ajax";
+
+export interface Antworten {
+  0: AnfrageAntwortCode;
+  1: {
+    Meldung: string;
+    Knoepfe: string;
+  };
+  2: AnfrageAntwortCode;
+}
 
 export type PersonenArt = "s" | "l" | "v" | "e" | "x";
 export type PersonenGeschlecht = "w" | "m" | "d";

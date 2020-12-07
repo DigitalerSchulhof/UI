@@ -1,4 +1,4 @@
-import { AnfrageAntwortCore } from "ts/ajax";
+import { AnfrageAntwortCode } from "ts/ajax";
 import $ from "ts/eQuery";
 import { scriptAn } from "ts/laden";
 
@@ -34,7 +34,7 @@ export const sortieren = (id: string, richtung?: "ASC" | "DESC", spalte?: string
           console.error("Sortierfunktion »" + s.join(".") + "« nicht gefunden");
         }
       }
-      (sortierfunktion as (sortieren: SortierParameter, id: string) => Promise<AnfrageAntwortCore>)({ sortSeite: sortSeite, sortDatenproseite: sortDatenproseite, sortRichtung: sortRichtung, sortSpalte: sortSpalte }, id).then((r) => {
+      (sortierfunktion as (sortieren: SortierParameter, id: string) => Promise<AnfrageAntwortCode>)({ sortSeite: sortSeite, sortDatenproseite: sortDatenproseite, sortRichtung: sortRichtung, sortSpalte: sortSpalte }, id).then((r) => {
         if (r.Code) {
           feld.setHTML(r.Code);
           scriptAn(feld);
