@@ -16,8 +16,8 @@ class Fenster extends InhaltElement {
   private $fensteraktionen;
 
 	/**
-	 * @param string $id     :)
-	 * @param string $titel  :)
+	 * @param string $id
+	 * @param string $titel
 	 * @param Zeile  $inhalt Inhalt des Fensters
 	 * @param bool   $gross  Fenster mit Seitenbreite
 	 */
@@ -47,7 +47,7 @@ class Fenster extends InhaltElement {
 
   /**
    * Setzt, ob das Minimieren-Icon angezeigt wird
-   * @param  bool $schliessen :)
+   * @param  bool $schliessen
    * @return self
    */
   public function setMinimieren($minimieren) : self {

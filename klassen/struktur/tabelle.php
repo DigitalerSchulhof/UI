@@ -26,7 +26,7 @@ namespace UI\Tabelle {
 
     /**
      * Setzt das Icon der Zeile
-     * @param  \UI\Icon $icon :)
+     * @param  \UI\Icon $icon
      * @return self
      */
     public function setIcon($icon) : self {
@@ -44,11 +44,12 @@ namespace UI\Tabelle {
 
     /**
      * Setzt die ID (als Referenz für das Contextmenü)
-     * @param  int $id :)
+     * @param  int $id
      * @return self
      */
     public function setID($id) : self {
       $this->id = $id;
+      return $this;
     }
 
     /**
@@ -61,7 +62,7 @@ namespace UI\Tabelle {
 
     /**
      * Fügt einen oder mehrer Knöpfe als Aktionen hinzu
-     * @param  \UI\MiniIconKnopf $aktionen :)
+     * @param  \UI\MiniIconKnopf $aktionen
      * @return self
      */
     public function addAktion(...$aktionen) : self {
@@ -145,7 +146,7 @@ namespace UI {
 
     /**
      * Erzeugt eine neue Tabelle
-     * @param string $id :)
+     * @param string $id
      * @param string $sortierfunktion JS-Sortierfunktion für die Tabelle
      * @param Icon $icon Standard-Icon für Zeilen
      * @param string[] $spalten Spaltenüberschriften
@@ -181,7 +182,7 @@ namespace UI {
 
     /**
      * Setzt, ob die Tabelle gedruckt werden kann/darf
-     * @param  bool $druckbar :)
+     * @param  bool $druckbar
      * @return self
      */
     public function setDruckbar($druckbar) : self {
@@ -201,7 +202,7 @@ namespace UI {
 
     /**
      * Setzt alle Variablen zur Verwendung von Seiten
-     * @param array  $tanfrage Rückgabe einer Tabellenanfrage   :)
+     * @param array  $tanfrage Rückgabe einer Tabellenanfrage
      * @return self
      */
     public function setSeiten($tanfrage) : self {
@@ -215,7 +216,7 @@ namespace UI {
 
     /**
      * Setzt, ob die Tabelle ein Icon in der ersten Spalte hat
-     * @param  bool $icon :)
+     * @param  bool $icon
      * @return self
      */
     public function setHatIcon($icon) : self {
@@ -225,7 +226,7 @@ namespace UI {
 
     /**
      * Setzt das Standard-Icon der Zeilen
-     * @param  Icon $icon :)
+     * @param  Icon $icon
      * @return self
      */
     public function setIcon($icon) : self {
@@ -259,10 +260,10 @@ namespace UI {
 
     /**
     * Sortiert die Tabelle nach <code>$sortWasauchimmer</code>
-     * @param  int    $seite         :)
-     * @param  int    $datenproseite :)
-     * @param  string $richtung      :)
-     * @param  int    $spalte        :)
+     * @param  int    $seite
+     * @param  int    $datenproseite
+     * @param  string $richtung
+     * @param  int    $spalte
      * @return self   Die sortierte Tabelle
      */
     public function sortieren($seite = null, $datenproseite = null, $richtung = null, $spalte = null) : self {
@@ -311,7 +312,7 @@ namespace UI {
 
     /**
      * Fügt eine oder mehrere Spaltenüberschriften hinzu
-     * @param  string[] $spalten :)
+     * @param  string[] $spalten
      * @return self
      */
     public function addSpalte(...$spalten) : self {
@@ -488,8 +489,8 @@ namespace UI {
 
     /**
      * Erstellt ein neues FormularFeld
-     * @param InhaltElement $label   :)
-     * @param Eingabe       $eingabe :)
+     * @param InhaltElement $label
+     * @param Eingabe       $eingabe
      */
     public function __construct($label, $eingabe = null) {
       parent::__construct();
@@ -579,7 +580,7 @@ namespace UI {
 
     /**
      * Kurz für <code>$this->addFunktion("submit", $submit);</code>
-     * @param  string $submit :)
+     * @param  string $submit
      * @return self
      */
     public function addSubmit($submit) : self {
@@ -652,4 +653,3 @@ namespace UI {
     }
   }
 }
-?>

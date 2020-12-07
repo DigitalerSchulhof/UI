@@ -14,8 +14,8 @@ class Ueberschrift extends InhaltElement {
   /**
    * Erzeugt eine neue Überschrift
    *
-   * @param int $groesse :)
-   * @param string $inhalt :)
+   * @param int $groesse
+   * @param string $inhalt
    */
   public function __construct($groesse, $inhalt) {
     if (!Check::istZahl($groesse, 1, 6)) {
@@ -48,7 +48,7 @@ class Meldezahl extends InhaltElement {
 
   /**
    * Erzeugt eine neue Meldezahl
-   * @param string $wert :)
+   * @param string $wert
    * Wenn <code>/</code> enthalten ist, wird die Meldezahl wichtig, sofern <code>$unwichtig</code> nicht <code>=== true</code>
    */
   public function __construct($wert) {

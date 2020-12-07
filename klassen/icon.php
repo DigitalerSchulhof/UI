@@ -28,6 +28,7 @@ class Icon extends Element {
     $this->removeKlasse($this->icon);
     $this->icon = $icon;
     $this->addKlasse($icon);
+    return $this;
   }
 
   public function __toString() : string {
@@ -74,7 +75,7 @@ class IconStack extends Icon {
   private $icons;
 
   /**
-   * @param string $icons Fontawesome Klassen der Icons, die gestapelt werden sollen
+   * @param string ...$icons Fontawesome Klassen der Icons, die gestapelt werden sollen
    * Bsp: <code>"fas fa-user"</code> bzw. <code>\UI\Konstanten::PERSON</code>
    */
   public function __construct(...$icons) {

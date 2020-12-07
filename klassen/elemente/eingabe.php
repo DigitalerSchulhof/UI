@@ -54,7 +54,7 @@ abstract class Eingabe extends Element {
 
     /**
      * Setzt den Wert des Eingabefelds
-     * @param   string $wert :)
+     * @param   string $wert
      * @return  self
      */
     public function setWert($wert) : self {
@@ -72,7 +72,7 @@ abstract class Eingabe extends Element {
 
   /**
    * Setzt den Wert des Autocomplete-Attributs
-   * @param   string $autocomplete :)
+   * @param   string $autocomplete
    * @return  self
    */
   public function setAutocomplete($autocomplete) : self {
@@ -82,7 +82,7 @@ abstract class Eingabe extends Element {
 
   /**
    * Setzt, ob die Eingabe deaktiviert ist
-   * @param   bool $disabled :)
+   * @param   bool $disabled
    * @return  self
    */
   public function setDisabled($disabled) : self {
@@ -97,7 +97,7 @@ abstract class Eingabe extends Element {
 
   /**
    * Setzt, ob die Eingabe readonly ist
-   * @param   bool $readonly :)
+   * @param   bool $readonly
    * @return  self
    */
   public function setReadonly($readonly): self {
@@ -168,7 +168,7 @@ abstract class PlatzhalterEingabe extends Eingabe {
 
   /**
    * Setzt den Platzhalter des Eingabefelds
-   * @param   string $platzhalter :)
+   * @param   string $platzhalter
    * @return  self
    */
   public function setPlatzhalter($platzhalter) : self {
@@ -372,8 +372,8 @@ class Toggle extends Schieber {
 
   /**
    * Erstellt einen neuen Toggle-Knopf
-   * @param string $id   :)
-   * @param string $text :)
+   * @param string $id
+   * @param string $text
    */
   public function __construct($id, $text) {
     parent::__construct($id);
@@ -415,7 +415,7 @@ class Toggle extends Schieber {
 
   /**
    * Setzt, ob der Toggle toggled ist.
-   * @param  bool $toggled :)
+   * @param  bool $toggled
    * @return self
    */
   public function setToggled($toggled) : self {
@@ -434,9 +434,9 @@ class IconToggle extends Toggle {
 
   /**
    * Erstellt einen neuen Toggle-Knopf
-   * @param string $id   :)
-   * @param string $text :)
-   * @param Icon $icon :)
+   * @param string $id
+   * @param string $text
+   * @param Icon $icon
    */
   public function __construct($id, $text, $icon) {
     parent::__construct($id, $text);
@@ -467,9 +467,9 @@ class IconToggleGross extends IconToggle {
 
   /**
    * Erstellt einen neuen Toggle-Knopf
-   * @param string $id   :)
-   * @param string $text :)
-   * @param Icon $icon :)
+   * @param string $id
+   * @param string $text
+   * @param Icon $icon
    */
   public function __construct($id, $text, $icon) {
     parent::__construct($id, $text, $icon);
@@ -505,9 +505,9 @@ class MiniIconToggle extends IconToggle {
 
   /**
    * Erstellt einen neuen Toggle-Knopf
-   * @param string $id   :)
-   * @param string $text :)
-   * @param Icon $icon :)
+   * @param string $id
+   * @param string $text
+   * @param Icon $icon
    */
   public function __construct($id, $text, $icon, $position = "OR") {
     parent::__construct($id, $text, $icon);
@@ -565,8 +565,8 @@ class Zahlenfeld extends PlatzhalterEingabe {
    * Erstellt eine neue Eingabe
    *
    * @param   string $id ID des Eingabeelements
-   * @param   string $min Minimalwert des Zahlbereichs
-   * @param   string $max Maximalwert des Zahlbereichs
+   * @param   int $min Minimalwert des Zahlbereichs
+   * @param   int $max Maximalwert des Zahlbereichs
    * @param   string $schritt Schrittweite des Zahlbereichs
    */
   public function __construct($id, $min = null, $max = null, $schritt = null) {
@@ -899,7 +899,7 @@ class Option extends Eingabe {
 
   /**
    * Setzt den Text der Option
-   * @param  string $text :)
+   * @param  string $text
    * @return self         :)
    */
   public function setText($text) : self {
@@ -909,7 +909,7 @@ class Option extends Eingabe {
 
   /**
    * Gibt an, ob das Objekt aktiv ist
-   * @param  boolean $gesetzt :)
+   * @param  boolean $gesetzt
    * @return self             :)
    */
   public function setGesetzt($gesetzt) : self {
@@ -1005,7 +1005,7 @@ class Togglegruppe extends Eingabe {
 
   /**
    * Fügt der Togglegruppe-Box eine Option hinzu
-   * @param Toggleoption $option :)
+   * @param Toggleoption $option
    */
   public function addOption($option) {
     $option->setTag("span");
@@ -1053,8 +1053,8 @@ class Auswahl extends Eingabe implements \ArrayAccess {
 
   /**
    * Erzeugt eine neue Artwahl
-   * @param string $id   :)
-   * @param string $wert :)
+   * @param string $id
+   * @param string $wert
    */
   public function __construct($id, $wert = null) {
     parent::__construct($id);

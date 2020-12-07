@@ -4,7 +4,7 @@ namespace UI;
 class Generieren {
   /**
    * Gibt den langen Namen des Monats zurück
-   * @param  int $monat :)
+   * @param  int $monat
    * @return string
    */
   public static function monatnameLang($monat) : string {
@@ -26,7 +26,7 @@ class Generieren {
   }
   /**
    * Gibt den kurzen Namen des Monats zurück
-   * @param  int $monat :)
+   * @param  int $monat
    * @return string
    */
   public static function monatnameKurz($monat) : string {
@@ -49,7 +49,7 @@ class Generieren {
 
   /**
    * Gibt den langen Namen des Tags zurück
-   * @param  int $tag :)
+   * @param  int $tag
    * @return string
    */
   public static function tagnameLang($tag) : string {
@@ -68,7 +68,7 @@ class Generieren {
 
   /**
    * Gibt den kurzen Namen des Tags zurück
-   * @param  int $tag :)
+   * @param  int $tag
    * @return string
    */
   public static function tagnameKurz($tag) : string {
@@ -92,10 +92,13 @@ class Generieren {
     return "rgba($r,$g,$b,1)";
   }
 
+  /**
+   * @param string $x
+   * @return string
+   */
   public static function RgbaZuHex($x) : string {
-    $werte = substr($x, 5,-1);
+    $werte = substr($x, 5, -1);
     $farben = explode(",", $werte);
     return sprintf("#%02x%02x%02x", $farben[0], $farben[1], $farben[2]);
   }
 }
-?>

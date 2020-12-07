@@ -50,8 +50,8 @@ abstract class Element {
 
   /**
    * Ermöglicht den direkten Zugriff auf das Hinzufügen von Aktionen
-   * @param  string $ausloeser  :)
-   * @param  string $funktionen :)
+   * @param  string $ausloeser
+   * @param  string $funktionen
    * @return self
    */
   public function addFunktion($ausloeser, ...$funktionen) : self {
@@ -81,7 +81,7 @@ abstract class Element {
   /**
    * Setzt oder entfernt je nach <code>$set</code> eine oder mehrere CSS-Klassen
    * @param  bool   $set     Ob die CSS-Klassen gesetzt oder entfernt werden sollen
-   * @param  string ...$klassen :)
+   * @param  string ...$klassen
    * @return self
    */
   public function setKlasse($set, ...$klassen) : self {
@@ -94,8 +94,8 @@ abstract class Element {
 
 	/**
 	 * Setzt ein Attribut
-	 * @param 	string $attribut :)
-	 * @param 	string $wert :)
+	 * @param 	string $attribut
+	 * @param 	string $wert
 	 * @return 	self
 	 */
 	public function setAttribut($attribut, $wert = "true") : self {
@@ -109,7 +109,7 @@ abstract class Element {
 
   /**
    * Gibt den Wert eines Attributes zurück. <code>null</code> wenn es nicht gesetzt ist.
-   * @param  string $attribut :)
+   * @param  string $attribut
    * @return mixed
    */
   public function getAttribut($attribut) {
@@ -120,7 +120,7 @@ abstract class Element {
 	/**
 	 * Setzt einen extra Style
 	 * @param 	string $property CSS-Property
-	 * @param 	string $wert :)
+	 * @param 	string $wert
 	 * @return 	self
 	 */
 	public function setStyle($property, $wert = "true") : self {
@@ -134,7 +134,7 @@ abstract class Element {
 
   /**
    * Gibt den Wert einer CSS-Property zurück. <code>null</code> wenn diese nicht gesetzt ist.
-   * @param  string $property :)
+   * @param  string $property
    * @return mixed
    */
   public function getStyle($property) {
@@ -143,7 +143,7 @@ abstract class Element {
 
 	/**
 	 * Setzt die ID
-	 * @param 	string $id :)
+	 * @param 	string $id
 	 * @return 	self
 	 */
 	public function setID($id) : self {
@@ -161,7 +161,7 @@ abstract class Element {
 
 	/**
 	 * Setzt den Tag
-	 * @param 	string|null $tag :)
+	 * @param 	string|null $tag
 	 * @return 	self
 	 */
 	public function setTag($tag) : self {
@@ -179,7 +179,7 @@ abstract class Element {
 
 	/**
 	 * Überschreibt den Hinweis
-	 * @param  Hinweis $hinweis :)
+	 * @param  Hinweis $hinweis
 	 * @return self
 	 */
 	public function setHinweis($hinweis) : self {
@@ -197,7 +197,7 @@ abstract class Element {
 
 	/**
 	 * Überschreibt die Aktionen
-	 * @param 	Aktionen $aktionen :)
+	 * @param 	Aktionen $aktionen
 	 * @return 	self
 	 */
 	public function setAktionen($aktionen) : self {
@@ -216,7 +216,7 @@ abstract class Element {
   /**
    * Setzt den Titel des Elements
    * Kurzform für Element::setAttribut("title", $titel);
-   * @param  string $titel :)
+   * @param  string $titel
    * @return self
    */
   public function setTitel($titel) : self {
@@ -332,7 +332,7 @@ class InhaltElement extends Element {
 
   /**
    * Setzt den Inhalt
-   * @param string $inhalt :)
+   * @param string $inhalt
    * @return self
    */
   public function setInhalt($inhalt) : self {
@@ -352,7 +352,7 @@ class Box extends Element implements \ArrayAccess {
 
   /**
    * Erzeugt eine neue Box
-   * @param string ...$kinder :)
+   * @param string ...$kinder
    */
   public function __construct(...$kinder) {
     parent::__construct();
